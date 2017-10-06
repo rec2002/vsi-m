@@ -210,4 +210,55 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    /**
+     * Displays FAQ page.
+     *
+     * @return mixed
+     */
+    public function actionFaq()
+    {
+        return $this->render('Faq');
+    }
+
+    /**
+     * Displays Privacy page.
+     *
+     * @return mixed
+     */
+    public function actionPrivacy()
+    {
+        return $this->render('Privacy');
+    }
+
+    /**
+     * Displays How itd work page.
+     *
+     * @return mixed
+     */
+    public function actionHowitwork()
+    {
+        return $this->render('Howitwork');
+    }
+
+    /**
+     * Displays How itd work page.
+     *
+     * @return mixed
+     */
+    public function actionHowitworkmaster()
+    {
+        return $this->render('Howitworkmaster');
+    }
+
+    /**
+     * Displays How itd work page.
+     *
+     * @return mixed
+     */
+    public function actionCategory()
+    {
+        return $this->render('Category');
+    }
+
 }
