@@ -5,6 +5,7 @@ namespace backend\models;
 use Yii;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
+use yii\helpers\Url;
 
 
 /**
@@ -106,7 +107,7 @@ class Publish extends \yii\db\ActiveRecord
     public function getSmallImage() {
         if($this->image){
             if ($this->image) {
-                return /*str_replace('admin', '', Url::home(true)).*/'http://frontend.dev/uploads/publish/'.$this->image;
+                return str_replace('admin', '', Url::home(true)).'/uploads/publish/'.$this->image;
             }
         }
     }

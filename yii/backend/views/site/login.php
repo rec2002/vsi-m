@@ -24,7 +24,7 @@ $fieldOptions2 = [
         <!--<a href="#"><b>Admin</b>LTE</a>-->
 
 
-        <img src="/img/logo_icon.png" alt=""><img src="/img/logo_text.png" alt="">
+        <img src="/admin/img/logo_icon.png" alt=""><img src="/admin/img/logo_text.png" alt="">
 
     </div>
     <!-- /.login-logo -->

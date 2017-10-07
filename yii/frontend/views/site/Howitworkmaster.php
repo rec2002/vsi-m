@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Як це працює';
 $this->params['breadcrumbs'][] = $this->title;
@@ -17,8 +18,8 @@ $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 <div class="tt-banner type-6 wth-swicher background-block" style="background-image:url(/img/imgblock/banner_18.jpg);">
     <div class="container">
         <div class="tt-swicher">
-            <a href="/site/howitwork">Замовник</a>
-            <a class="active" href="/site/howitworkmaster">Виконавець</a>
+            <a href="<?=Url::to(['/site/howitwork'])?>">Замовник</a>
+            <a class="active" href="<?=Url::to(['/site/howitworkmaster'])?>">Виконавець</a>
         </div>
         <h2 class="tt-banner-title h2 small light">Отримуйте замовлення на пряму</h2>
         <div class="row">
@@ -99,52 +100,9 @@ $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
         </div>
         <div class="empty-space marg-sm-b30 marg-lg-b35"></div>
 
-        <!-- tt-table-responsive -->
-        <div class="tt-table-responsive">
-            <table class="tt-table">
-                <thead>
-                <tr>
-                    <th>Максимальний бюджет замовлень</th>
-                    <th>Вартість доступа</th>
-                    <th>Скільки контактів доступно</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td data-title="Максимальний бюджет замовлень"><b>Мілкий</b> (до 2 000 грн.)</td>
-                    <td data-title="Вартість доступа">500 грн.</td>
-                    <td data-title="Скільки контактів доступно">
-                        10
-                        <div class="tt-info-btn tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації перевірені адміністраціює сайту">?</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td data-title="Максимальний бюджет замовлень"><b>Середній</b> (до 10 000 грн.)</td>
-                    <td data-title="Вартість доступа">2 000 грн.</td>
-                    <td data-title="Скільки контактів доступно">
-                        від 10 до 50
-                        <div class="tt-info-btn tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації перевірені адміністраціює сайту">?</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td data-title="Максимальний бюджет замовлень"><b>Великий</b> (до 50 000 грн.)</td>
-                    <td data-title="Вартість доступа">5 000 грн.</td>
-                    <td data-title="Скільки контактів доступно">
-                        від 10 до 200
-                        <div class="tt-info-btn tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації перевірені адміністраціює сайту">?</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td data-title="Максимальний бюджет замовлень"><b>Дуже великий</b> (більше 100 000 грн.)</td>
-                    <td data-title="Вартість доступа">12 000 грн.</td>
-                    <td data-title="Скільки контактів доступно">
-                        від 10 до 400
-                        <div class="tt-info-btn tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації перевірені адміністраціює сайту">?</div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+
+        <?=\common\widgets\PriceTable::widget()?>
+
         <div class="empty-space marg-sm-b40 marg-lg-b85"></div>
     </div>
     <div class="tt-devider"></div>
@@ -213,32 +171,9 @@ $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
         <div class="empty-space marg-sm-b40 marg-lg-b75"></div>
         <h3 class="h3 text-center">Часті питання по роботі на “ВсіМайстри”</h3>
         <div class="empty-space marg-lg-b30"></div>
-        <div class="accordeon">
-            <div class="accordeon-title active">
-                <div class="accordeon-icon"></div>Що таке ВсіМайстри?
-            </div>
-            <div class="accordeon-toggle" style="display: block;">
-                <div class="simple-text size-3">
-                    <p>Morbi bibendum hendrerit felis, ac consequat sapien viverra vel. Fusce nunc tellus, pulvinar vitae congue ac, hendrerit sit amet lorem. Nullam bibendum venenatis varius. Donec fringilla erat quis rhoncus mollis. Nunc non consectetur ante, in viverra ipsum.</p>
-                </div>
-            </div>
-            <div class="accordeon-title">
-                <div class="accordeon-icon"></div>Чи потрібно платити за реєстрацію?
-            </div>
-            <div class="accordeon-toggle">
-                <div class="simple-text size-3">
-                    <p>Morbi bibendum hendrerit felis, ac consequat sapien viverra vel. Fusce nunc tellus, pulvinar vitae congue ac, hendrerit sit amet lorem. Nullam bibendum venenatis varius. Donec fringilla erat quis rhoncus mollis. Nunc non consectetur ante, in viverra ipsum.</p>
-                </div>
-            </div>
-            <div class="accordeon-title">
-                <div class="accordeon-icon"></div>Що робити, коли є скарги на замовника?
-            </div>
-            <div class="accordeon-toggle">
-                <div class="simple-text size-3">
-                    <p>Morbi bibendum hendrerit felis, ac consequat sapien viverra vel. Fusce nunc tellus, pulvinar vitae congue ac, hendrerit sit amet lorem. Nullam bibendum venenatis varius. Donec fringilla erat quis rhoncus mollis. Nunc non consectetur ante, in viverra ipsum.</p>
-                </div>
-            </div>
-        </div>
+
+        <?=\common\widgets\faq::widget(array('id' => '2')) ?>
+
         <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
     </div>
     <div class="tt-devider"></div>

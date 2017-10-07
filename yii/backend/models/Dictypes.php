@@ -101,7 +101,7 @@ class Dictypes extends \yii\db\ActiveRecord
     public function getSmallImage() {
         if($this->image){
             if ($this->image) {
-                return /*str_replace('admin', '', Url::home(true)).*/'http://frontend.dev/uploads/types/'.$this->image;
+                return str_replace('admin', '', Url::home(true)).'/uploads/types/'.$this->image;
             }
         }
     }

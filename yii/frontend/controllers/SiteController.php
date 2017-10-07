@@ -261,4 +261,14 @@ class SiteController extends Controller
         return $this->render('Category');
     }
 
+    /**
+     * Displays Why we.
+     *
+     * @return mixed
+     */
+    public function actionWhywe()
+    {
+        return $this->render('Whywe');
+    }
+
 }

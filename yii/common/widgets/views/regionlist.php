@@ -1,74 +1,85 @@
 <?
 
-echo $dataTotal;
+use yii\helpers\Url;
 
-if (sizeof($dataProvider)) foreach ($dataProvider as $key=>$val){
+$j=1; $arr = array();
 
-
-    echo "<pre>";
-
-    echo $key;
-    echo ($val->id);
-    echo "</pre>";
+if (sizeof($dataTotal)) foreach ($dataProvider as $val){
+    $arr[$j][]=array('id'=>$val->id, 'name'=>$val->name_short);
+    if ($j==6) $j=1; else $j++;
 }
+
 
 
 ?>
 
-<div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-2">
-        <ul class="simple-list city">
-            <li><a href="city.html">Київська</a></li>
-            <li><a href="city.html">Львівська</a></li>
-            <li><a href="city.html">Полтавська</a></li>
-            <li><a href="city.html">Рівненська</a></li>
-        </ul>
-        <div class="empty-space marg-sm-b15"></div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-2">
-        <ul class="simple-list city">
-            <li><a href="city.html">Харківська</a></li>
-            <li><a href="city.html">Миколаївська</a></li>
-            <li><a href="city.html">Черкаська</a></li>
-            <li><a href="city.html">Кропивницька</a></li>
-        </ul>
-        <div class="empty-space marg-sm-b15"></div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-2">
-        <ul class="simple-list city">
-            <li><a href="city.html">Одеська</a></li>
-            <li><a href="city.html">Луганська</a></li>
-            <li><a href="city.html">Хмельницька</a></li>
-            <li><a href="city.html">Івано-Франківська</a></li>
-        </ul>
-        <div class="empty-space marg-sm-b15"></div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-2">
-        <ul class="simple-list city">
-            <li><a href="city.html">Дніпровська</a></li>
-            <li><a href="city.html">Вінницька</a></li>
-            <li><a href="city.html">Сумська</a></li>
-            <li><a href="city.html">Тернопільська</a></li>
-        </ul>
-        <div class="empty-space marg-sm-b15"></div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-2">
-        <ul class="simple-list city">
-            <li><a href="city.html">Донецька</a></li>
-            <li><a href="city.html">Херсонська</a></li>
-            <li><a href="city.html">Житомирська</a></li>
-            <li><a href="city.html">Волинська</a></li>
-        </ul>
-        <div class="empty-space marg-sm-b15"></div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-2">
-        <ul class="simple-list city">
-            <li><a href="city.html">Запорізька</a></li>
-            <li><a href="city.html">Чернігівська</a></li>
-            <li><a href="city.html">Чернівецька</a></li>
-            <li><a href="city.html">Закарпатська</a></li>
-        </ul>
-        <div class="empty-space marg-sm-b15"></div>
+
+<div class="tt-bg-grey">
+    <div class="container">
+        <div class="empty-space marg-sm-b40 marg-lg-b80"></div>
+        <h3 class="h3 text-center">Знайдіть майстра у своєму регіоні</h3>
+        <div class="empty-space marg-lg-b30"></div>
+        <div class="empty-space marg-sm-b40 marg-lg-b50"></div>
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <ul class="simple-list city">
+                    <? if (sizeof($arr[1])) foreach($arr[1] as $val) { ?>
+                        <li><a href="<?=Url::to(['site/index'])?>"><?=$val['name']?></a></li>
+                    <? } ?>
+                </ul>
+                <div class="empty-space marg-sm-b15"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <ul class="simple-list city">
+                    <? if (sizeof($arr[2])) foreach($arr[2] as $val) { ?>
+                        <li><a href="<?=Url::to(['site/index'])?>"><?=$val['name']?></a></li>
+                    <? } ?>
+                </ul>
+                <div class="empty-space marg-sm-b15"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <ul class="simple-list city">
+                    <? if (sizeof($arr[3])) foreach($arr[3] as $val) { ?>
+                        <li><a href="<?=Url::to(['site/index'])?>"><?=$val['name']?></a></li>
+                    <? } ?>
+
+                </ul>
+                <div class="empty-space marg-sm-b15"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <ul class="simple-list city">
+                    <? if (sizeof($arr[4])) foreach($arr[4] as $val) { ?>
+                        <li><a href="<?=Url::to(['site/index'])?>"><?=$val['name']?></a></li>
+                    <? } ?>
+
+                </ul>
+                <div class="empty-space marg-sm-b15"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <ul class="simple-list city">
+                    <? if (sizeof($arr[5])) foreach($arr[5] as $val) { ?>
+                        <li><a href="<?=Url::to(['site/index'])?>"><?=$val['name']?></a></li>
+                    <? } ?>
+
+                </ul>
+                <div class="empty-space marg-sm-b15"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <ul class="simple-list city">
+                    <? if (sizeof($arr[6])) foreach($arr[6] as $val) { ?>
+                        <li><a href="<?=Url::to(['site/index'])?>"><?=$val['name']?></a></li>
+                    <? } ?>
+
+                </ul>
+                <div class="empty-space marg-sm-b15"></div>
+            </div>
+        </div>
+
+
+        <div class="empty-space marg-sm-b40 marg-lg-b85"></div>
     </div>
 </div>
+
+
 
