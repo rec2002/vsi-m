@@ -6,7 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\captcha\Captcha;
+use common\widgets\Alert;
 
 $this->title = 'Контакти';
 $this->params['breadcrumbs'][] = $this->title;
@@ -58,36 +58,33 @@ $this->registerMetaTag(['name' => 'description', 'content' => 'Description 1',],
                 <div class="col-sm-7">
                     <h4 class="h4">Написати повідомлення</h4>
                     <div class="empty-space marg-lg-b20"></div>
+                    <?= Alert::widget() ?>
+
                     <div class="tt-contact-form">
-                        <form data-rel="4">
-                            <input class="simple-input" type="text" name="name"  required="" placeholder="Ваше ім’я *">
+                        <?php $form = ActiveForm::begin(['id' => 'contact-form', 'action' =>['site/contact']]); ?>
+                            <?= $form->field($model, 'name')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Ваше ім’я *"])->label(false); ?>
                             <div class="row row10">
                                 <div class="col-sm-6">
-                                    <input class="simple-input" type="tel" name="phone" placeholder="Контактний телефон">
+                                    <?= $form->field($model, 'phone')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Контактний телефон"])->label(false); ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input class="simple-input" type="email" name="email" required="" placeholder="Email *">
+                                    <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Email *"])->label(false); ?>
                                 </div>
                             </div>
                             <div class="row row10">
-                                <div class="col-sm-6">
-                                    <div class="simple-select">
-                                        <select name="department">
-                                            <option selected disabled>Відділ</option>
-                                            <option value="">Відділ №1</option>
-                                            <option value="">Відділ №2</option>
-                                            <option value="">Відділ №3</option>
-                                            <option value="">Відділ №4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <input class="simple-input" type="text" name="subject" required="" placeholder="Тема повідомлення *">
+                                <div class="col-sm-12">
+                                    <?= $form->field($model, 'subject')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Тема повідомлення *"])->label(false); ?>
                                 </div>
                             </div>
-                            <textarea class="simple-input height-3" name="message" required="" placeholder="Повідомлення *"></textarea>
-                            <div class="button type-1 size-3 color-3">Надіслати повідомлення <input type="submit"></div>
-                        </form>
+
+                             <?= $form->field($model, 'message')->textarea(['rows' => 6, 'class' => 'simple-input height-3', 'placeholder' => "Повідомлення *"])->label(false); ?>
+
+
+                            <?= Html::submitButton('Надіслати повідомлення', ['class' => 'button type-1 size-3 color-3', 'name' => 'contact-button']) ?>
+
+                        <?php ActiveForm::end(); ?>
+
+
                     </div>
                 </div>
             </div>

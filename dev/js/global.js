@@ -471,7 +471,8 @@ $(function() {
     	$('.tt-underheading-item').addClass('active');
     });
 
-	/*submit form*/
+/*
+
 	$('.tt-contact-form form, .tt-send-question-form form').on('submit',function(e){
 	   submitFrom($(this),$(this).data('rel'));
 	   e.preventDefault();
@@ -485,7 +486,7 @@ $(function() {
         }});                
         return false;
     }      
-
+*/
 
     _functions.pageformCalculate = function(){
     	if(!$('.tt-pageform-wrapper').length) return false;
@@ -1099,8 +1100,39 @@ $(function() {
 
 	        }
 	    });
-	}  	
+	}
+
+    $('#modalButton, .modalButton').click(function () {
+        $('#modal').modal('show').find('#modalContent').load($(this).attr('href'));
+        return false;
+    });
+
+    $(document).on("click", "div.button-close", function() {
+        $('#modal').modal('hide');
+        return false;
+	});
+
+    $(document).on("beforeSubmit", "form#faq-form", function(e) {
+
+        e.preventDefault();
+        var form =jQuery('form#faq-form');
+        jQuery.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: new FormData(form[0]),
+            mimeType: 'multipart/form-data',
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: 'json',
+            success: function (data) {
+            	if (data.status==1){
+                    $('.popup-align').html('<div class="empty-space marg-lg-b35"></div><h4 class="h4 text-center">Ваше питання надіслано</h4><div class="empty-space marg-lg-b15"></div><div class="simple-text size-4 text-center"><p>'+data.msg+'</p></div><div class="empty-space marg-lg-b30"></div>');
+				}
+            }
+        });
+        return false;
+	});
 
 
-	
 });

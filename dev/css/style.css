@@ -203,9 +203,15 @@ body.mobile .fixed-background { background-attachment: scroll; }
 .button.type-1.icon-left span, .button.type-1.icon-right span { position: relative; padding-left: 15px; }
 .button.type-1.icon-right span { padding-left: 0; padding-right: 15px; }
 .button.type-1.icon-left span:before, .button.type-1.icon-left span:after, .button.type-1.icon-right span:before, .button.type-1.icon-right span:after { content: ''; display: block; position: absolute; top: 50%; left: 0; width: 6px; height: 12px; margin-top: -6px; background-repeat: no-repeat; background-position: center center; -webkit-transition: opacity .3s ease-in-out; transition: opacity .3s ease-in-out; }
+/*
+.button.type-1.icon-left a:before, .button.type-1.icon-left a:after, .button.type-1.icon-right a:before, .button.type-1.icon-right a:after { content: ''; display: block; position: absolute; top: 50%; left: 0; width: 6px; height: 12px; margin-top: -6px; background-repeat: no-repeat; background-position: center center; -webkit-transition: opacity .3s ease-in-out; transition: opacity .3s ease-in-out; }
+*/
 .button.type-1.icon-right span:before, .button.type-1.icon-right span:after { left: auto; right: 0; }
 .button.type-1.icon-left span:after, .button.type-1.icon-right span:after { opacity: 0; }
+
 .button.type-1.icon-left span:before, .button.type-1.icon-right span:before { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAMCAYAAABBV8wuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJhJREFUeNpi/P//PwMy0DN3CQBSa5nQBB2B1DogbmSE6QAKmgCpU0A8+dLJPflgCaCgGlDgOhAvBQrGgRQy6po5SwDpJ0C8AyjoAzMWZMdjID6BLAiTYATirwxoACQhA8QuQHuWoUgAjXgBpDWBOBwoOQVZBwNQ8haQsgLiLKBkM9hVyD4HCnoBqS1AXMKIJUjigdRcgAADAIMlNnAKjoULAAAAAElFTkSuQmCC"); }
+.button.type-1.icon-left span:before, .button.type-1.icon-right a { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAMCAYAAABBV8wuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJhJREFUeNpi/P//PwMy0DN3CQBSa5nQBB2B1DogbmSE6QAKmgCpU0A8+dLJPflgCaCgGlDgOhAvBQrGgRQy6po5SwDpJ0C8AyjoAzMWZMdjID6BLAiTYATirwxoACQhA8QuQHuWoUgAjXgBpDWBOBwoOQVZBwNQ8haQsgLiLKBkM9hVyD4HCnoBqS1AXMKIJUjigdRcgAADAIMlNnAKjoULAAAAAElFTkSuQmCC"); }
+
 .button.type-1.icon-left span:after, .button.type-1.icon-left.color-3 span:before, .button.type-1.icon-left.color-4 span:before, .button.type-1.icon-right span:after, .button.type-1.icon-right.color-3 span:before, .button.type-1.icon-right.color-4 span:before { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAMCAYAAABBV8wuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDM5RDhBMjMzQTFDMTFFNzg4Q0JDMUU3NTUzQjk3MEIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDM5RDhBMjQzQTFDMTFFNzg4Q0JDMUU3NTUzQjk3MEIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0MzlEOEEyMTNBMUMxMUU3ODhDQkMxRTc1NTNCOTcwQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0MzlEOEEyMjNBMUMxMUU3ODhDQkMxRTc1NTNCOTcwQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Psua41YAAABrSURBVHjaYvj//z8DGg4A4r/ogo5A/A+I65AFTaCCE0F8mKAaSDsQL4IpBBESQPwHiLcgGwsifgPxEXRHMDEwMDAC8VcGdAA1CmT+MnSjkC2fgi4BwuZQ5zajS4CwF1SyiAFLkMSDnA8QYAAMHdiLVD5ZFQAAAABJRU5ErkJggg=="); }
 .button.type-1.icon-right span:before, .button.type-1.icon-right span:after { -webkit-transform: rotate(180deg); transform: rotate(180deg); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .button.type-1.icon-left:hover span:before, .button.type-1.icon-right:hover span:before, .button.type-1.icon-left.active span:before, .button.type-1.icon-right.active span:before { opacity: 0; }
@@ -744,6 +750,7 @@ textarea.simple-input.height-4, textarea.simple-input.size-2.height-4 { height: 
 .tt-header .main-nav:before, .tt-header .nav-right:before { content: ''; display: inline-block; width: 0; height: 70px; vertical-align: middle; }
 .tt-header .nav-right > * { content: ''; display: inline-block; vertical-align: middle; margin-right: 45px; }
 .tt-header .nav-right > *:last-child { margin-right: 0; }
+.main-nav.nav li a:hover{background-color: inherit;}
 /*nav-more*/
 .tt-header .nav-more { font-size: 0; position: relative; }
 .tt-header .nav-more li { display: inline-block; position: relative; font-size: 14px; padding-right: 30px; margin-right: 20px; }
@@ -1158,12 +1165,14 @@ a.tt-masterbox-title:hover { color: #ff8a00; }
 /* 16 - TT-PAGINATION */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 .tt-pagination { position: relative; text-align: center; }
-.tt-pagination-left { position: absolute; top: 50%; left: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); }
-.tt-pagination-right { position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); }
+.tt-pagination-left { position: absolute; top: 10%; left: 0px; -webkit-transform: translateY(-50%); transform: translateY(-10%); }
+.tt-pagination-right { position: absolute; top: 10%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-10%); }
 .tt-pagination ul { font-size: 0; }
 .tt-pagination li { display: inline-block; }
 .tt-pagination ul a, .tt-pagination ul span { display: block; min-width: 40px; height: 40px; font-size: 14px; line-height: 40px; font-weight: 700; border-radius: 3px; }
 .tt-pagination .active span, .tt-pagination li:not(.disable):hover a { background: #ff8a00; color: #fff; }
+div.tt-pagination ul li.active a { background: #ff8a00; color: #fff; }
+
 @media (max-width: 767px) { .tt-pagination-left, .tt-pagination-right { display: none; } }
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /* 17 - TT-HEADING */
@@ -1521,7 +1530,8 @@ a.tt-masterbox-title:hover { color: #ff8a00; }
 /* 27 - TT-CONTACT-FORM */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 .tt-contact-form .simple-input, .tt-contact-form .simple-select { margin-bottom: 10px; }
-.tt-contact-form textarea.simple-input { margin-bottom: 40px; }
+/*.tt-contact-form textarea.simple-input { margin-bottom: 40px; }*/
+
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /* 28 - TT-PERSON */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
@@ -1917,6 +1927,8 @@ a.tt-messages-head-name:hover { color: #ff8a00; }
 .tt-footer-nav li { display: inline-block; margin-right: 28px; }
 .tt-footer-nav li:last-child { margin-right: 0; }
 .tt-footer-nav a { display: block; font-size: 13px; line-height: 28px; color: #2d3642; padding: 6px 0; }
+.tt-footer-nav.nav li a {padding: 10px 0;}
+.tt-footer-nav.nav li a:hover{background-color:inherit; }
 .tt-footer-nav a:hover, .tt-footer-nav li.active a { color: #ff8a00; }
 .tt-footer-social.style-2 { text-align: left; }
 .tt-footer-social.style-2 .tt-footer-social-label { font-size: 18px; line-height: 26px; }
@@ -2224,3 +2236,12 @@ a.tt-messages-head-name:hover { color: #ff8a00; }
 @media (min-width: 1200px) { .text-lg-left { text-align: left; }
   .text-lg-center { text-align: center; }
   .text-lg-right { text-align: right; } }
+
+
+
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* 43 - FORM VALIDATION */
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+p.help-block.help-block-error {font-size: 13px;margin-bottom: 10px;color:#FF0000;}
+div.help-block {font-size: 13px;margin-top: 5px;color:#FF0000!important;}

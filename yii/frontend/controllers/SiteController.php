@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\base\InvalidParamException;
+use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -12,6 +13,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\FaqForm;
 
 /**
  * Site controller
@@ -115,20 +117,72 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
+
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            $this->GetMailTemplate(1, $model->attributes);
+/*
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
             } else {
                 Yii::$app->session->setFlash('error', 'There was an error sending your message.');
             }
-
+*/
             return $this->refresh();
         } else {
             return $this->render('contact', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionFaqform()
+    {
+        $model = new Faqform();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            $msg = $this->GetMailTemplate(2, $model->attributes);
+
+            Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+            return['status'=>1, 'msg'=>$msg];
+
+        } else {
+            return $this->renderAjax('faqform', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+
+    public function GetMailTemplate($id, $data = array()) {
+
+        $template = Yii::$app->db->createCommand("SELECT `subject`, `emails`, `notices`, `mail_content`, `sms_content`, `message` FROM `mail_template` WHERE `id`= '".$id."' ")->queryAll();
+
+        if (!sizeof($template) && !sizeof($data) && empty($id)) {
+            Yii::$app->session->setFlash('error', 'Помилка надсилання пошти.');
+            return false;
+        }
+
+        foreach($data as $key=>$val) {
+            $template[0]['mail_content'] = str_replace('{'.strtoupper($key).'}', $val, $template[0]['mail_content']);
+        }
+
+        $emails = array();
+        $arr = explode(',', $template[0]['emails']);
+        if (sizeof($arr)) {
+            foreach ($arr as $val) {
+                $emails[trim($val)]= '';
+            }
+        } else $emails[$template[0]['emails']] = '';
+
+        $template[0]['emails'] = $emails;
+
+        Yii::$app->mailer->compose()->setTo($template[0]['emails'])->setFrom(Yii::$app->params['adminEmail'])->setSubject($template[0]['subject'])->setHtmlBody($template[0]['mail_content'])->send();
+        Yii::$app->session->setFlash('success', $template[0]['message']);
+
+        return $template[0]['message'];
     }
 
     /**
@@ -209,6 +263,50 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+
+    /**
+     * Displays Publish.
+     *
+     * @return mixed
+     */
+    public function actionPublish($id=0)
+    {
+
+
+
+        if ($id>0) {
+            $publish = new ActiveDataProvider(['query' => \backend\models\Publish::find()->where(['id' => $id, 'active' => 1])]);
+
+            $publish_last = new ActiveDataProvider(['query' => \backend\models\Publish::find()->where(['active' => 1])->andWhere(['!=', 'id', $id]),
+                'pagination' => ['pageSize' => 3],
+                'sort' => [
+                    'defaultOrder' => [
+                        'date_publish' => SORT_DESC,
+                        'created_at' => SORT_DESC
+                    ]
+                ]
+            ]);
+
+
+            return $this->render('Publish_detail', ['publish_detail'=>$publish->getModels(), 'publish_last'=>$publish_last]);
+
+        }   else  {
+            $publish = new ActiveDataProvider(['query' => \backend\models\Publish::find()->where(['active' => 1]),
+                'pagination' => ['pageSize' => 6, 'pageParam' => 'стр', 'pageSizeParam' => 'лім'],
+                'sort' => [
+                    'defaultOrder' => [
+                        'date_publish' => SORT_DESC,
+                        'created_at' => SORT_DESC
+                    ]
+                ]
+            ]);
+
+            return $this->render('Publish', ['publish_items'=>$publish]);
+        }
+
+
     }
 
     /**

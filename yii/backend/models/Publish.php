@@ -69,6 +69,7 @@ class Publish extends \yii\db\ActiveRecord
             'title' => 'Заголовок',
             'short_desc' => 'Короткий опис',
             'image' => 'Картинка 360х220px  ',
+            'file' => 'Картинка 360х220px  ',
             'content' => 'Повний опис',
             'active' => 'Статус',
             'url_tag'=>'URL тег',
@@ -96,7 +97,7 @@ class Publish extends \yii\db\ActiveRecord
             }
             $this->image = strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$file->extension;
             $file->saveAs($dir.$this->image);
-            Image::thumbnail($dir.$this->image, 328, 200)->save($dir.$this->image, ['quality' => 90]);
+            Image::thumbnail($dir.$this->image, 360, 200)->save($dir.$this->image, ['quality' => 90]);
 
         }
 

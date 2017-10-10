@@ -17,6 +17,7 @@ use yii\bootstrap\Nav;
                             ['label' => 'Питання та відповіді', 'url' => ['site/faq']],
                             ['label' => 'Правила користування', 'url' => ['site/privacy']],
                             ['label' => 'Як це працює', 'url' => ['site/howitwork']],
+                            ['label' => 'Блог', 'url' => ['site/publish']],
                         ],
                         'options' => ['class' =>'tt-footer-nav'], // set this to nav-tab to get tab-styled navigation
                     ]);

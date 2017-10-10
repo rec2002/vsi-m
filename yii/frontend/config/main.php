@@ -8,6 +8,8 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
+    'language' => 'uk',
+    'sourceLanguage'=>'uk',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
@@ -38,11 +40,14 @@ return [
         ],
         'assetManager' => [
             'bundles' => [
+                /*
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [
                         'bootstrap.css' => '/css/bootstrap.min.css'
                     ]
                 ],
+
+                */
                 'yii\web\JqueryAsset' => [
                     'sourcePath' => null,
                     'basePath' => '@webroot',
@@ -58,6 +63,16 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'блог/<id:\d+>/<slug>'=>'site/publish',
+                'блог'=>'site/publish',
+                'каталог-майстрів'=>'site/category',
+                'як-це-працює'=>'site/howitwork',
+                'як-це-працює-для-майстра'=>'site/howitworkmaster',
+                'правила-користування'=>'site/privacy',
+                'питання-та-відповіді'=>'site/faq',
+                'про-нас'=>'site/about',
+                'контакти'=>'site/contact',
+                'defaultRoute' => 'site/index',
             ],
         ],
 
