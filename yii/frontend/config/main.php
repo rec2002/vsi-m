@@ -13,6 +13,14 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+
+
+
+    'modules' => [
+        'members' => [
+            'class' => 'common\modules\members\members',
+        ]
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -72,6 +80,7 @@ return [
                 'питання-та-відповіді'=>'site/faq',
                 'про-нас'=>'site/about',
                 'контакти'=>'site/contact',
+                'чому-варто-обирати-нас'=>'site/whywe',
                 'defaultRoute' => 'site/index',
             ],
         ],

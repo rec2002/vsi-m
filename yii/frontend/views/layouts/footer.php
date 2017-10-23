@@ -4,6 +4,7 @@ use yii\bootstrap\Nav;
 
 ?>
 
+<? if (Yii::$app->controller->id!='registration') { ?>
 <!-- TT-FOOTER -->
 <footer class="tt-footer">
     <div class="tt-footer-bottom">
@@ -12,12 +13,12 @@ use yii\bootstrap\Nav;
                 <div class="col-sm-8">
                     <?=Nav::widget([
                         'items' => [
-                            ['label' => 'Про нас', 'url' => ['site/about']],
-                            ['label' => 'Контакти', 'url' => ['site/contact']],
-                            ['label' => 'Питання та відповіді', 'url' => ['site/faq']],
-                            ['label' => 'Правила користування', 'url' => ['site/privacy']],
-                            ['label' => 'Як це працює', 'url' => ['site/howitwork']],
-                            ['label' => 'Блог', 'url' => ['site/publish']],
+                            ['label' => 'Про нас', 'url' => ['/site/about']],
+                            ['label' => 'Контакти', 'url' => ['/site/contact']],
+                            ['label' => 'Питання та відповіді', 'url' => ['/site/faq']],
+                            ['label' => 'Правила користування', 'url' => ['/site/privacy']],
+                            ['label' => 'Як це працює', 'url' => ['/site/howitwork']],
+                            ['label' => 'Блог', 'url' => ['/site/publish']],
                         ],
                         'options' => ['class' =>'tt-footer-nav'], // set this to nav-tab to get tab-styled navigation
                     ]);
@@ -47,3 +48,4 @@ use yii\bootstrap\Nav;
         </div>
     </div>
 </footer>
+<? } ?>

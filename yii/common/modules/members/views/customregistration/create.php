@@ -1,0 +1,289 @@
+<?
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
+use kartik\select2\Select2;
+use common\components\MemberHelper;
+$this->title = 'Додати замовлення';
+?>
+    <div class="tt-header-margin"></div>
+    <div class="tt-bg-grey">
+        <div class="container">
+            <div class="tt-pageform-wrapper padding0" style="height: 469px;">
+                <div class="empty-space marg-sm-b40 marg-lg-b80"></div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <?php $form = ActiveForm::begin(['id' => 'reg-customer',
+                            'enableAjaxValidation'=>true,
+                            'validationUrl'=>Url::toRoute('/members/customregistration/validation/?scenario=add-order'),
+                            'action' =>['/members/customregistration/?scenario=add-order'],
+                            'options' => ['enctype'=>'multipart/form-data']
+                        ]);
+                        ?>
+
+                            <h3 class="h3">Додати замовлення</h3>
+                            <div class="empty-space marg-lg-b30"></div>
+
+                            <div class="tt-autocomplete type-2">
+                                <div class="tt-autocomplete-input">
+                                    <?= $form->field($model, 'title')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['title'], 'class' => 'simple-input', 'tabindex' => '1', 'autocomplete'=>'off', 'placeholder' => "Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+
+                                </div>
+                            </div>
+                            <?= $form->field($model, 'descriptions')->textarea(['value'=>@Yii::$app->session['newCustomerSession']['descriptions'], 'class' => 'simple-input', 'tabindex' => '2', 'maxlength'=>'800', 'autocomplete'=>'off', 'placeholder' => "Опишіть завдання як омога детальніше, все що може бути корисно для майстрів (розміри, об’єм робіт, типи робіт, матеріали ... )", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
+
+
+
+
+                            <div class="tt-project-new-img">
+                                <div class="button-upload tt-icon-hover tt-img-upload">
+                                        <span class="tt-icon-entry">
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAARCAMAAAAIRmf1AAAAclBMVEUAAAA7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZeykJCtAAAAJXRSTlMAKNBtnGHm1enbRBn3r6qhcx0T4ZllUj0zLse3k4AHlpJnWFUK0CMq7AAAAKdJREFUGNNNzVcShCAQBNAGFRF1zTlsnPtfcQlK0T9UveoeEGTkRSFqhOlpn6aDqoBiUsgBRe+AlnYVmcKT31TRwmib+xQf6YkxKoFRIunuIWvoAeRyx1pePy6W2ozjIOZasx3mmiL6XkNmWo3gqCkx9KLJUitS3YoMDaTAS3NLk2tBVsBsb3mCexs9rGmAS7dBtzp/y2SkWEUFP82PPoksRHz+0sHLH6CfC0vDb7GcAAAAAElFTkSuQmCC" alt="">
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAARCAMAAAAIRmf1AAAAe1BMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igC3rmZwAAAAKHRSTlMAbemc5dXRJmUrHRn326+qoXNhQZlSE9/Mx7eTgFpIPDMwB5aSZ1UKZrVu5QAAAKpJREFUGNNNjUcSgzAQBAcBIhgwGZMxTvv/F3olQKU+dk2ARSOTxCtgU9NYrRPllnKpQgxU9LFUdOtFuuAlL5XTM6Jhq33MwqggoIxvBELvKgYx3YGbGNFn52OkVdtJTBTplNrKOJU+4ND3LAYqFQuJgkowb1q1aj2fUw6YkCrIjFWqVAiFyIHt2pqhOQZiLhacOugGcMpsaRpyFyeRu3o0lCLx3P3nh8b8AUc2DFhDAdVcAAAAAElFTkSuQmCC" alt="">
+                                        </span>
+                                    Додати зображення
+                                    <input type="file" data-name="CustomerRegistration" accept="image/x-png,image/gif,image/jpeg">
+                                </div>
+                                <div class="empty-space marg-lg-b10"></div>
+                            </div>
+                            <div class="empty-space marg-lg-b20"></div>
+
+                            <div class="tt-input-label">Коли потрібно починати</div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="simple-select task-duration">
+                                        <?
+
+                                        echo $form->field($model, 'when_start')->widget(Select2::classname(), [
+                                            'data' => MemberHelper::WHEN_START,
+                                            'language' => 'uk',
+                                            'hideSearch' => true,
+                                            'size' => Select2::LARGE,
+                                            'theme' => Select2::THEME_BOOTSTRAP,
+                                            'pluginOptions' => [
+                                                'allowClear' => false,
+                                                'tabindex' => '3'
+                                            ],
+                                        ])->label(false); ?>
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="task-duration-dates">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="tt-input-wrapper style-2">
+                                                    <div class="tt-input-label">Від</div>
+                                                    <div class="tt-input-entry">
+                                                        <div class="simple-input-icon">
+                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
+
+                                                            <?= $form->field($model, 'date_from')->textInput(['class' => 'simple-input simple-datapicker', 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="tt-input-wrapper style-2">
+                                                    <div class="tt-input-label">До</div>
+                                                    <div class="tt-input-entry">
+                                                        <div class="simple-input-icon">
+                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
+                                                            <?= $form->field($model, 'date_to')->textInput(['class' => 'simple-input simple-datapicker', 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="empty-space marg-lg-b30"></div>
+
+                        <div class="tt-input-label">Виберіть бюджет</div>
+                        <!-- SLIDER-RANGE -->
+
+                        <?=\common\widgets\PriceSlider::widget() ?>
+
+
+
+
+                        <div class="empty-space marg-lg-b30"></div>
+
+                        <div class="tt-input-label">Місцерозташування об`єкту</div>
+                            <div class="tt-map-search-form">
+                                <div class="row row10">
+                                    <div class="col-sm-9">
+
+                                        <?= $form->field($model, 'location')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['location'], 'class' => 'simple-input size-1', 'tabindex' => '4', 'autocomplete'=>'off', 'placeholder' => "Почніть вводити адресу", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+                                        <div class="empty-space marg-xs-b20"></div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a class="tt-map-search button type-1 size-3 full color-3 uppercase" href="#">знайти на карті</a>
+                                    </div>
+                                </div>
+                                <div class="simple-text size-2">
+                                    <p>Пересуньте мітку у правильне місцерозташування об`єкту</p>
+                                </div>
+                                <div class="empty-space marg-lg-b15"></div>
+                            </div>
+
+                        <div id="map-canvas" class="style-3" data-lat="48.644031" data-lng="30.953243" data-zoom="6" data-draggable="1" data-geolocation="1"></div>
+                        <div class="addresses-block">
+                            <a class="marker" data-lat="49.507769" data-lng="32.133032" data-marker="<?=Yii::$app->getUrlManager()->getBaseUrl()?>/img/map/marker_3.png"  data-string="<b>Пересуньте мітку у правильне місцерозташування об`єкту"></a>
+                        </div>
+                        <div class="empty-space marg-sm-b30 marg-lg-b35"></div>
+
+                            <div class="row row130">
+                                <div class="col-sm-9">
+                                    <div class="tt-input-label">Як до Вас звертатись? (публікується)</div>
+                                    <?= $form->field($model, 'first_name')->textInput(['class' => 'simple-input', 'tabindex' => '5', 'autocomplete'=>'off', 'placeholder' => "Введіть своє ім`я"])->label(false); ?>
+
+
+
+
+                                    <div class="tt-input-label">Електронна адреса (не публікується)</div>
+                                    <?=$form->field($model, 'email')->textInput(['class' => 'simple-input', 'tabindex' => '6', 'autocomplete'=>'off', 'placeholder' => "Введіть email"])->label(false); ?>
+
+
+                                    <div class="tt-input-label">Телефон (не публікується)</div>
+                                    <div class="tt-fadein-top">
+                                        <div class="row">
+                                            <div class="col-sm-8 col-md-9">
+                                                <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '7',  'placeholder' => "+38 (ххх) ххх - хх - хх"])->label(false); ?>
+                                                <div class="empty-space marg-xs-b20"></div>
+                                            </div>
+                                            <div class="col-sm-4 col-md-3">
+                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit disabled" href="javascript:">Підтвердити</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tt-fadein-bottom">
+                                        <div class="simple-text size-3"></div>
+                                        <div class="empty-space marg-lg-b15"></div>
+                                        <div class="row">
+                                            <div class="col-sm-8 col-md-9">
+                                                <?= $form->field($model, 'confirm_sms')->textInput(['class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
+                                                <div class="empty-space marg-xs-b20"></div>
+                                            </div>
+                                            <!--<div class="col-sm-4 col-md-3">
+                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link" href="#">ОК</a>
+                                            </div>-->
+                                        </div>
+                                    </div>
+
+                                    <div class="simple-text size-2">
+                                        <p>Ніяких зайвих дзвінків! Жоден виконавець не побачить ваш номер, поки ви самі не передасте його.</p>
+                                    </div>
+                                    <div class="empty-space marg-lg-b30"></div>
+
+                                    <?
+
+                                    if (@Yii::$app->session['newUserSession']['agree']==1) $model->agree = TRUE;
+                                    echo $form->field($model, 'agree')->checkbox([
+                                    'template' => '<label class="checkbox-entry blue-links tt-terms-checkbox">{input}<span>Із <a href="'.Url::to(['/site/privacy']).'">"Правилами користування"</a> погоджуюсь</span></label><div>{error}</div>'
+                                    ])
+                                    ?>
+
+
+                                    <div class="empty-space marg-lg-b45"></div>
+                                    <?= Html::submitButton('<span>Додати завдання</span>', ['class' => 'button type-1 size-3 full color-3 uppercase', 'name' => 'create-order']) ?>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="text-center">
+                                        <div class="empty-space marg-sm-b30 marg-lg-b40"></div>
+                                        <div class="tt-devider vertical left"></div>
+                                        <div class="empty-space marg-xs-b30"></div>
+                                        <div class="simple-text size-2 bold-style-2 uppercase">
+                                            <b>Або ввійти через</b>
+                                        </div>
+                                        <div class="empty-space marg-lg-b25"></div>
+                                        <a href="javascript:" onclick="alert('UNDER CONSTRUCTION');" class="button type-1 btn-social single"><span></span></a>
+                                        <div class="empty-space marg-xs-b0 marg-lg-b75"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
+                <div class="empty-space marg-sm-b40 marg-lg-b80"></div>
+            </div>
+        </div>
+        <div class="tt-devider"></div>
+    </div>
+
+
+<?
+
+$gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
+echo $this->registerJsFile($gpJsLink);
+
+$options = '{"types":["address"],"componentRestrictions":{"country":"ua"}}';
+echo $this->registerJs("(function(){
+        var input = document.getElementById('customerregistration-location');
+        var options = $options;        
+        searchbox = new google.maps.places.Autocomplete(input, options);
+})();" , \yii\web\View::POS_END );
+
+
+
+echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
+
+?>
+
+<style>
+
+
+
+    .select2-container--bootstrap.input-lg .select2-selection--single, .input-group-lg .select2-container--bootstrap .select2-selection--single, .form-group-lg .select2-container--bootstrap .select2-selection--single {
+        border-radius: 3px;
+        color: #6c7076;
+        font-size: 16px;
+        height: 55px;
+        line-height: 53px;
+        padding: 0 16px;
+        border: 1px solid #e3e6e8;
+        background: #fcfcfc none repeat scroll 0 0;
+        width: 100%;
+        font-family: "Roboto";
+        font-weight: 400;
+    }
+
+
+    .select2-dropdown, .select2-container--bootstrap .select2-dropdown {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.11);
+        box-sizing: border-box;
+        overflow: hidden;
+
+    }
+
+    .select2-results__option {
+        font-size: 16px;
+        line-height: 22px;
+        padding: 10px 18px;
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+
+    .has-success .select2-container--bootstrap.select2-container--focus .select2-selection, .has-success .select2-container--bootstrap.select2-container--open .select2-selection {
+        border-color: #ff8a00;
+        box-shadow: none;
+    }
+
+    .select2-container--bootstrap .select2-results__option--highlighted[aria-selected] {
+        background-color: #f5f5f5;
+        color: #262626;
+    }
+
+    .pac-container:after {
+        background-image: none !important;
+        height: 0px;
+    }
+
+
+
+
+</style>

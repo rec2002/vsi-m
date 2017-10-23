@@ -51,6 +51,7 @@ AppAsset::register($this);
 
     <?php $this->endBody() ?>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;subset=cyrillic" rel="stylesheet">
+
 </body>
 </html>
 <?php $this->endPage() ?>

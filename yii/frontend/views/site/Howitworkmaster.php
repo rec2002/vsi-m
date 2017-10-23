@@ -172,7 +172,7 @@ $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
         <h3 class="h3 text-center">Часті питання по роботі на “ВсіМайстри”</h3>
         <div class="empty-space marg-lg-b30"></div>
 
-        <?=\common\widgets\faq::widget(array('id' => '2')) ?>
+        <?=\common\widgets\Faq::widget(array('id' => '2')) ?>
 
         <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
     </div>

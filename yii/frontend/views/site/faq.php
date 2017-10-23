@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-            <?=\common\widgets\faq::widget(array('id' => '0')) ?>
+            <?=\common\widgets\Faq::widget(array('id' => '0')) ?>
 
 
         </div>

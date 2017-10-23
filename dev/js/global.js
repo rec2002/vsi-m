@@ -177,6 +177,8 @@ $(function() {
 	});
 
 	/*simple-select*/
+
+	/*
 	if($('.simple-select select').length){
 		$('.simple-select:not(.multy) select').SumoSelect();
 		$('.simple-select.multy.region select').SumoSelect({
@@ -194,6 +196,8 @@ $(function() {
     		locale :  ['OK', 'Відмінити ', 'Будь який бюджет'],		
 		});		
 	}
+
+	*/
 	$('.simple-select select').on('change', function(){
 		var $selected = $(this).find('option:selected');
 		if($selected.data('link')){
@@ -342,8 +346,11 @@ $(function() {
 		e.preventDefault();
 	}); 
 
+
+
   	/*autocomplete*/
- 	var autocomplete_values = [
+ 	/*
+  	var autocomplete_values = [
       'Ремонт квартири',
       'Ремонт кухні',
       'Ремонт будинку',
@@ -398,7 +405,7 @@ $(function() {
 		    }
 	    });    	
     }
-   
+   */
 
     /*tooltip*/
     $('.tt-tooltip').on({
@@ -570,7 +577,10 @@ $(function() {
 		if (this.files && this.files[0]) {
 	        var reader = new FileReader();
 	        reader.onload = function (e) {
-	        	$t.closest('.tt-project-new-img').append('<div class="tt-project-pic-loaded"><span style="background-image:url('+e.target.result+');"></span><div class="button-close small"></div></div>');
+                var clone = $t.clone();
+                clone.css({'visibility': 'hidden'}).attr('name', $t.data('name')+'[image][]');
+	        	$t.closest('.tt-project-new-img').append('<div class="tt-project-pic-loaded" id="image_'+($(".tt-project-pic-loaded").length+1)+'"><span style="background-image:url('+e.target.result+');"></span><div class="button-close small"></div></div>');
+                clone.appendTo("#image_"+$('.tt-project-pic-loaded').length);
 	        };
 	        reader.readAsDataURL(this.files[0]);
 	    }		
@@ -599,8 +609,8 @@ $(function() {
 	});
 
 	//slider range
-	var trueValues = [1000, 3000, 5000, 10000];
-    var simValues =  [1, 2, 3, 5];	
+	var trueValues = [1000, 5000, 10000, 50000, 100000];
+    var simValues =  [1, 2, 3, 4, 5];
   	$(".slider-range" ).each(function(index) {
      	var $t = $(this),
      		valueVal = parseInt($t.data('value'),10),   	     	
@@ -651,9 +661,10 @@ $(function() {
     function rangeGroup($slider,value){
     	var $target = $slider.find('.slider-range-group');
 		if(value==trueValues[1]){$target.addClass('active1').text('Мілкий');}
-		else if(value==trueValues[2]){$target.addClass('active2').text('Середній');}
-		else if(value==trueValues[3]){$target.addClass('active2').text('Великий');}
-		else if(value==trueValues[4]){$target.addClass('active2').text('Дуже великий');}
+		else if(value==trueValues[2]){$target.addClass('active2').text('Невеликий');}
+		else if(value==trueValues[3]){$target.addClass('active2').text('Середній');}
+		else if(value==trueValues[4]){$target.addClass('active2').text('Великий');}
+        else if(value==trueValues[4]){$target.addClass('active2').text('Дуже великий');}
     }
 
     _functions.rangeSkew = function(){
@@ -679,12 +690,15 @@ $(function() {
 	});
 
 	/*tt-fadein-link*/
+	/*
 	$('.tt-fadein-link').on('click', function(e){
 		$(this).closest('.tt-fadein-top').fadeOut(300, function(){
 			$(this).siblings('.tt-fadein-bottom').fadeIn(300);
 		});
 		e.preventDefault();
 	});
+
+	*/
 	$('.tt-fadein-close').on('click', function(e){
 		$(this).closest('.tt-fadein-bottom').fadeOut(300, function(){
 			$(this).siblings('.tt-fadein-top').fadeIn(300);
@@ -693,17 +707,51 @@ $(function() {
 	});
 
 	$('.tt-phone-submit').on('click', function(e){
-		var number = $(this).closest('.tt-fadein-top').find('.simple-input').val();
-		$(this).closest('.tt-fadein-top').siblings('.tt-fadein-bottom').find('.simple-text').text(number);
+
+		var obj = $(this);
+
+		var number = obj.closest('.tt-fadein-top').find('.simple-input').val();
+		var RegX = /([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/;
+        if (RegX.test(number)) {
+            $.post( "/members/registration/sendphonecode", {'phone' : number},  function( data ) {
+                var data = JSON.parse(data);
+                if (data.status==1){
+                    obj.closest('.tt-fadein-top').siblings('.tt-fadein-bottom').find('.simple-text').text(number);
+                    obj.closest('.tt-fadein-top').fadeOut(300, function(){
+                        $(this).siblings('.tt-fadein-bottom').fadeIn(300);
+                    });
+				} else {
+                	console.log('Wrong phone number');
+				}
+            });
+		}
+
 		e.preventDefault();
+		return false;
 	});
 
+
+    $('body').on('keyup','input.simple-input[type="tel"]', function(event) {
+        var number = $(this).val();
+        var RegX = /([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/;
+        if (RegX.test(number)) {
+            $(".tt-fadein-link.tt-phone-submit").removeClass('disabled');
+            $(this).next().html('');
+		} else{
+            $(".tt-fadein-link.tt-phone-submit").addClass('disabled');
+            $(this).next().html('Невірний номер мобільного телефону');
+		}
+    });
+
 	/*phone mask*/
+/*
 	$('input.simple-input[type="tel"]').on('focus', function(){
         $(this).inputmask({"mask": "+38 (099) 999-9999"});
     });
-
+*/
     /*tt-terms-checkbox*/
+/*
+
     $('.tt-terms-checkbox input').on('change', function(){
     	if($(this).is(':checked')){
     		$(this).closest('form').find('.button.disabled').removeClass('disabled').addClass('enable');
@@ -711,7 +759,7 @@ $(function() {
     		$(this).closest('form').find('.button.enable').removeClass('enable').addClass('disabled');
     	}
     });
-
+*/
     /*tt-order-filter*/
     $('.checkbox-entry.check-all input').on('change', function(){
 		if($(this).is(':checked')){
@@ -882,7 +930,7 @@ $(function() {
 
 	$('.task-duration select').on('change', function(){
 		var optionSelected = $(this).find("option:selected").val();
-	    if(optionSelected=='show_dates'){
+	    if(optionSelected=='1'){
 	    	$('.task-duration-dates').fadeIn(300);
 	    } else {
 	    	$('.task-duration-dates').fadeOut(300);
@@ -1133,6 +1181,81 @@ $(function() {
         });
         return false;
 	});
+
+
+    $('.upload_avatar').on("change", function(e) {
+
+        var Upload = function (file) { this.file = file;};
+
+        Upload.prototype.getType = function() {return this.file.type;};
+        Upload.prototype.getSize = function() {return this.file.size;};
+        Upload.prototype.getName = function() {return this.file.name;};
+        Upload.prototype.doUpload = function () {
+            var that = this;
+            var formData = new FormData();
+
+            // add assoc key values, this will be posts values
+            formData.append("file", this.file, this.getName());
+            formData.append("upload_file", true);
+
+            $.ajax({
+                type: "POST",
+                url: "/members/registration/uploadavatar/",
+                xhr: function () {
+                    var myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) {
+	                   	$('#progress-wrp').css({'visibility':'visible'});
+                        $("#progress-wrp .progress-bar").css("width", "0%");
+                        myXhr.upload.addEventListener('progress', that.progressHandling, false);
+                    }
+                    return myXhr;
+                },
+                success: function (data) {
+                    var data = JSON.parse(data);
+                    if (data.status==1){
+						$(".img-responsive").attr('src', data.avatar_image);
+					}
+                    // your callback here
+                },
+                error: function (error) {
+                    console.log('Error uploading file');
+                    // handle error
+                },
+                async: true,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                timeout: 60000
+            });
+        };
+
+        Upload.prototype.progressHandling = function (event) {
+            var percent = 0;
+            var position = event.loaded || event.position;
+            var total = event.total;
+            var progress_bar_id = "#progress-wrp";
+            if (event.lengthComputable) {
+                percent = Math.ceil(position / total * 100);
+            }
+            // update progressbars classes so it fits your code
+            $(progress_bar_id + " .progress-bar").css("width", +percent + "%");
+            $(progress_bar_id + " .status").text(percent + "%");
+        };
+
+
+        var file = $(this)[0].files[0];
+        var upload = new Upload(file);
+
+        // maby check size or type here with upload.getSize() and upload.getType()
+
+        // execute upload
+        upload.doUpload();
+
+
+    });
+
 
 
 });

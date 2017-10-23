@@ -290,7 +290,7 @@ class SiteController extends Controller
             ]);
 
 
-            return $this->render('Publish_detail', ['publish_detail'=>$publish->getModels(), 'publish_last'=>$publish_last]);
+            return $this->render('publish_detail', ['publish_detail'=>$publish->getModels(), 'publish_last'=>$publish_last]);
 
         }   else  {
             $publish = new ActiveDataProvider(['query' => \backend\models\Publish::find()->where(['active' => 1]),
@@ -303,7 +303,7 @@ class SiteController extends Controller
                 ]
             ]);
 
-            return $this->render('Publish', ['publish_items'=>$publish]);
+            return $this->render('publish', ['publish_items'=>$publish]);
         }
 
 
@@ -316,7 +316,7 @@ class SiteController extends Controller
      */
     public function actionFaq()
     {
-        return $this->render('Faq');
+        return $this->render('faq');
     }
 
     /**
@@ -326,7 +326,7 @@ class SiteController extends Controller
      */
     public function actionPrivacy()
     {
-        return $this->render('Privacy');
+        return $this->render('privacy');
     }
 
     /**
@@ -336,7 +336,7 @@ class SiteController extends Controller
      */
     public function actionHowitwork()
     {
-        return $this->render('Howitwork');
+        return $this->render('howitwork');
     }
 
     /**
@@ -346,7 +346,7 @@ class SiteController extends Controller
      */
     public function actionHowitworkmaster()
     {
-        return $this->render('Howitworkmaster');
+        return $this->render('howitworkmaster');
     }
 
     /**
@@ -356,7 +356,7 @@ class SiteController extends Controller
      */
     public function actionCategory()
     {
-        return $this->render('Category');
+        return $this->render('category');
     }
 
     /**
@@ -366,7 +366,7 @@ class SiteController extends Controller
      */
     public function actionWhywe()
     {
-        return $this->render('Whywe');
+        return $this->render('whywe');
     }
 
 }

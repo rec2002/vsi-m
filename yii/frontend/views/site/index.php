@@ -13,29 +13,11 @@ $this->title = 'Всі Майстри';
         <div class="container">
             <div class="row flex-row">
                 <div class="col-md-7">
-                    <form>
-                        <h1 class="tt-banner-title h2">Замовте послуги майстрів по ремонту</h1>
-                        <div class="simple-text size-4 darker">
-                            <p>Добавте замолення, щоб отримати пропозиції від зацікавлених майстрів</p>
-                        </div>
-                        <input class="simple-input light" type="text" placeholder="Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)">
-                        <textarea class="simple-input height-4 light" placeholder="Опишіть завдання як омога детальніше, все що може бути корисно для майстрів (розміри, об’єм робіт, типи робіт, матеріали ... )"></textarea>
-                        <div class="row row10">
-                            <div class="col-sm-6 col-lg-7">
-                                <div class="simple-input-icon">
-                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAMAAACzvE1FAAAAV1BMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkLkTjgbAAAAHHRSTlMA3Z2EEHekmIsV1s9Q5KwF9sq5tWhDQTcdCmZiOw521AAAAI1JREFUGBkFwYVhw0AABDA9mJ04TL3956wEPnNJyvwBGJJtmrZkAGqmDktNhSF/AL8M9Iw4huHAOd0c9JKUzpHmtGLMsmTEWmTC9cLlihqZ8Mq25YUapxX2UnZYT1q+AHzT9IwAjOm0vAHeaVACkAKW3IBbFmDPDHN2gJYHjzQAap7PVAA4J2cA4H4H/AMiuQhmojIjvwAAAABJRU5ErkJggg==" alt="">
-                                    <input class="simple-input light" type="text" placeholder="Львів">
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-5">
-                                <a href="new_task_1.html" class="button type-1 size-3 full color-3 uppercase button-plus"><span></span>Додати замовлення</a>
-                            </div>
-                        </div>
-                    </form>
+                     <?=\common\widgets\CustomerRegistrationMain::widget() ?>
                 </div>
                 <div class="col-md-5">
                     <div class="tt-banner-img">
-                        <img class="img-responsive" src="img/imgblock/master.png" alt="">
+                        <img class="img-responsive" src="/img/imgblock/master.png" alt="">
                         <div class="tt-banner-qoute-wrapper">
                             <div class="tt-banner-qoute active">
                                 <h5 class="tt-banner-qoute-title h5">Шукаєте нових клєнтів?</h5>

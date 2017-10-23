@@ -17,6 +17,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/jquery-ui.min.js',
+        'js/datepicker-uk.js',
         'js/global.js'
     ];
     public $depends = [

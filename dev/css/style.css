@@ -369,6 +369,9 @@ textarea.simple-input.height-4, textarea.simple-input.size-2.height-4 { height: 
 .checkbox-toggle { position: relative; }
 .checkbox-toggle .checkbox-entry { position: absolute; top: 50%; left: 0; margin-top: -9px; }
 .checkbox-toggle a { display: block; font-size: 16px; line-height: 22px; padding-left: 30px; font-weight: 700; color: #2d3643; }
+span.agree {font-size: 16px; line-height: 22px;}
+span.agree a:not(:hover) { color: #3b5997; }
+span.agree a  { color: #3b5997; text-decoration: none;font-weight: 500; }
 /*checkbox-entry right*/
 .checkbox-entry.right { width: 100%; }
 .checkbox-entry.right > span { padding-left: 0; padding-right: 30px; }
@@ -1465,7 +1468,7 @@ div.tt-pagination ul li.active a { background: #ff8a00; color: #fff; }
 .tt-register .tt-popup-devider { margin-bottom: 30px; }
 .tt-register-inputs { margin-bottom: 7px; }
 .tt-register-inputs input { margin-bottom: 10px; }
-.tt-register .checkbox-entry { margin-bottom: 47px; }
+.tt-register .checkbox-entry { margin-bottom: 10px; }
 .tt-register-info { margin-bottom: 15px; }
 .tt-register-info .tt-input-label { margin-bottom: 5px; }
 .tt-register-btn { text-align: right; }

@@ -9,5 +9,12 @@ return [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD',  //GD or Imagick
         ],
+        'turbosms' => [
+            'class' => 'avator\turbosms\Turbosms',
+            'sender' => 'VsiMastry',
+            'login' => 'rec2002',
+            'password' => '74002abc',
+        //    'debug' => false,
+        ],
     ],
 ];
