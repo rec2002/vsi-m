@@ -78,10 +78,8 @@ class CustomerEdit extends Model
     }
 
     public function checkSMSCode($attribute, $params) {
-     //   $count_ = Yii::$app->db->createCommand("SELECT COUNT(*) FROM  `members` WHERE phone <> '".$this->phone."'  ORDER BY id DESC LIMIT 1 ")->queryScalar();
+
         $count = Yii::$app->db->createCommand("SELECT COUNT(*) FROM `phone_check` WHERE code = '".trim($this->confirm_sms)."' AND phone = '".$this->phone."' ORDER BY id DESC LIMIT 1 ")->queryScalar();
-
-
         if($count==0 && !empty($this->confirm_sms)) {
             $this->addError($attribute, 'Код з SMS невірний.');
             return false;
