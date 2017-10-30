@@ -70,7 +70,6 @@ class CustomerEdit extends Model
 
     public function checkSendPhoneCode($attribute, $params) {
         $count = Yii::$app->db->createCommand("SELECT COUNT(*) FROM  `phone_check` WHERE phone = '".$this->phone."'  ORDER BY id DESC LIMIT 1 ")->queryScalar();
-        //$count_ = Yii::$app->db->createCommand("SELECT COUNT(*) FROM  `members` WHERE phone = '".$this->phone."' AND id = '".Yii::$app->user->identity->getId()."' ORDER BY id DESC LIMIT 1 ")->queryScalar();
         if($this->phone!=Yii::$app->user->identity->phone && $count==0) {
             $this->addError($attribute, 'Підтвердіть контактний телефон через SMS.');
             return false;

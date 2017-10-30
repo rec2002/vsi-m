@@ -214,8 +214,6 @@ echo $this->registerJsFile($gpJsLink);
 
 
 echo $this->registerJs("(function(){
-
-
     $('body').on('keyup','#customerregistration-confirm_sms', function(event) {
         if ($(this).val()!='') {
             $(\".tt-fadein-link.tt-phone-code-submit\").removeClass('disabled');
@@ -223,10 +221,6 @@ echo $this->registerJs("(function(){
             $(\".tt-fadein-link.tt-phone-code-submit\").addClass('disabled');
 		}
     });
-
-
-
-
 
 })();" , \yii\web\View::POS_END );
 
