@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
 
-$this->title = 'Крок 2 - Реєстрація майстра';
+$this->title = 'Крок 21 - Реєстрація майстра';
 ?>
 
     <div class="tt-header-margin"></div>
