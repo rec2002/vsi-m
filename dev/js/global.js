@@ -630,6 +630,7 @@ $(function() {
 	            $("#slider-range-"+index).slider('value',value);
 	            var realValue = getRealValue(value);
 				$("#amount-value-"+index).val(realValue);
+				$(".amount-value-id").val(ui.value);
 				rangeGroup($t,realValue);
 				return false;
 			}
@@ -742,6 +743,22 @@ $(function() {
             $(this).next().html('Невірний номер мобільного телефону');
 		}
     });
+
+
+    $('.tt-phone-code-submit').on("click", function(){
+
+        var obj= $(this);
+        if (obj.closest('.tt-fadein-bottom').prev().find('.form-group').hasClass('has-success')){
+
+
+            obj.closest('.tt-fadein-bottom').fadeOut(300, function(){
+                $(this).siblings('.tt-fadein-top').fadeIn(300);
+            });
+
+		}
+
+        return false;
+    })
 
 	/*phone mask*/
 /*
@@ -1019,12 +1036,14 @@ $(function() {
 	}
 
   	//enable autocomplete
+
+/*
   	if($('#tt-google-single-autocomplete').length){
   		var input = (document.getElementById('tt-google-single-autocomplete')),
   			contentstr = $(input).val(),
 			autocomplete = new google.maps.places.Autocomplete(input);	
   	}
-
+*/
   	/*tt-proposition-show*/
   	$('.tt-proposition-show').on('click', function(){
   		$(this).closest('.tt-task-request').fadeOut();
@@ -1186,7 +1205,7 @@ $(function() {
     $('.upload_avatar').on("change", function(e) {
 
         var Upload = function (file) { this.file = file;};
-
+		var obj= $(this);
         Upload.prototype.getType = function() {return this.file.type;};
         Upload.prototype.getSize = function() {return this.file.size;};
         Upload.prototype.getName = function() {return this.file.name;};
@@ -1198,9 +1217,11 @@ $(function() {
             formData.append("file", this.file, this.getName());
             formData.append("upload_file", true);
 
+
+            console.log(obj.data('source'));
             $.ajax({
                 type: "POST",
-                url: "/members/registration/uploadavatar/",
+                url: obj.data('source'),
                 xhr: function () {
                     var myXhr = $.ajaxSettings.xhr();
                     if (myXhr.upload) {
@@ -1213,6 +1234,8 @@ $(function() {
                 success: function (data) {
                     var data = JSON.parse(data);
                     if (data.status==1){
+
+                        if ($("img.tt-profile-img").length) {  $("img.tt-profile-img").attr('src', data.avatar_image); }
 						$(".img-responsive").attr('src', data.avatar_image);
 					}
                     // your callback here
@@ -1256,6 +1279,60 @@ $(function() {
 
     });
 
+    $('div#progress-wrp').on("click", function(e) {
+        $(this).css("visibility", "hidden");
+	});
+
+
+    $(document).on("submit", "form.form-ajax", function(e) {
+        e.preventDefault();
+        var form = $(this);
+        jQuery.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: new FormData(form[0]),
+            mimeType: 'multipart/form-data',
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: 'json',
+            success: function (data) {
+                if (data.status==1){
+
+                   	if (form.hasClass('reset-form')) { form.get(0).reset();}
+                    $('.popup-align').html('<div class="empty-space marg-lg-b35"></div><h4 class="h4 text-center">'+data.msg+'</h4><div class="empty-space marg-lg-b35"></div>');
+                    $('.popup-content').removeClass('active');
+                    $('.popup-wrapper, .popup-content').addClass('active');
+                }
+            }
+        });
+        return false;
+    });
+
+
+
+    $('.notices_action').on('change', function(){
+
+        var checkbox = $(this);
+        var status = (checkbox.is(':checked')) ? 1 : 0;
+        jQuery.ajax({
+            url: '/members/customer/notices',
+            type: 'GET',
+            data: 'name='+checkbox.data('name')+'&id='+checkbox.data('id')+'&status='+status,
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: 'json',
+            success: function (data) {
+                if (data.status==1){
+                    $('.popup-align').html('<div class="empty-space marg-lg-b35"></div><h4 class="h4 text-center">'+data.msg+'</h4><div class="empty-space marg-lg-b35"></div>');
+                    $('.popup-content').removeClass('active');
+                    $('.popup-wrapper, .popup-content').addClass('active');
+                }
+            }
+        });
+
+	});
 
 
 });

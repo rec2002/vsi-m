@@ -6,6 +6,9 @@ use Yii;
 
 class PriceSlider extends \yii\bootstrap\Widget
 {
+    public $model;
+    public $form;
+
 
     public function init()
     {
@@ -16,7 +19,9 @@ class PriceSlider extends \yii\bootstrap\Widget
     {
         parent::run();
 
+
+
         $items = Yii::$app->db->createCommand("SELECT `id`,	`name`, `budget_to`, `price` FROM `dict_price_range` ORDER BY `id` ASC")->queryAll();
-        return $this->render('priceslider', ['PriceTable'=>$items]);
+        return $this->render('priceslider', ['PriceTable'=>$items, 'model'=>$this->model, 'form'=>$this->form]);
     }
 }

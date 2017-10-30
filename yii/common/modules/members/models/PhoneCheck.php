@@ -28,7 +28,7 @@ class PhoneCheck extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['phone', 'code'], 'required'],
+            [['phone', 'code', 'IP'], 'required'],
             [['create_at'], 'safe'],
             [['phone'], 'string', 'max' => 30],
             [['phone'],  'match', 'pattern' => '/([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/'],

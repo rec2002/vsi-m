@@ -781,7 +781,7 @@ span.agree a  { color: #3b5997; text-decoration: none;font-weight: 500; }
 .tt-profile-hover:before { content: ''; display: block; position: absolute; top: 0; left: 0; right: 0px; height: 100%; border: 1px solid #e5e7eb; border-bottom: 0; -webkit-box-shadow: -1px -9px 15px 0px rgba(0, 0, 0, 0.06); box-shadow: -1px -9px 15px 0px rgba(0, 0, 0, 0.06); }
 .tt-profile-hover:before, .tt-profile-dropdown { opacity: 0; visibility: hidden; -webkit-transform: translateX(20px); transform: translateX(20px); -webkit-transition: all .3s ease-in-out; transition: all .3s ease-in-out; }
 .tt-profile-img, .tt-profile-name, .tt-profile-icon { display: inline-block; vertical-align: middle; }
-.tt-profile-img { border-radius: 50%; margin-right: 5px; }
+.tt-profile-img { border-radius: 50%; margin-right: 5px;border: 1px solid #c9c9c9; width:43px; }
 .tt-profile-name { font-size: 14px; line-height: 20px; font-weight: 700; color: #2d3642; margin-right: 7px; }
 .tt-profile-dropdown { position: absolute; top: 100%; right: 0; width: 220px; background: #fff; border: 1px solid #e5e7eb; padding: 24px 28px; margin-top: -1px; -webkit-box-shadow: -1px 2px 15px 0px rgba(0, 0, 0, 0.06); box-shadow: -1px 2px 15px 0px rgba(0, 0, 0, 0.06); z-index: 1; }
 .tt-profile-dropdown ul { margin-bottom: 26px; }
@@ -1556,7 +1556,7 @@ div.tt-pagination ul li.active a { background: #ff8a00; color: #fff; }
 .tt-person-documents-entry:before { content: ''; display: inline-block; width: 0; height: 100%; vertical-align: middle; }
 .tt-person-documents .simple-text { display: inline-block; vertical-align: middle; }
 .tt-person-documents .button { position: absolute; top: 20px; right: 20px; }
-.tt-person-img { display: block; position: relative; width: 262px; margin: 0 auto; }
+.tt-person-img { display: block; position: relative; width: 262px; margin: 0 auto;border: 1px solid #c9c9c9; border-radius: 50%; }
 .tt-person-img .tt-heading-check { left: 43px; }
 .tt-preson-row { position: relative; border-top: 1px solid #e5e7eb; font-size: 0; -webkit-transition: background .3s ease-in-out; transition: background .3s ease-in-out; }
 .tt-preson-row:before { content: ''; display: block; position: absolute; top: 0; left: 32%; width: 1px; height: 100%; background: #e5e7eb; }

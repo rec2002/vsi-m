@@ -103,12 +103,7 @@ $this->title = 'Додати замовлення';
                         <div class="tt-input-label">Виберіть бюджет</div>
                         <!-- SLIDER-RANGE -->
 
-                        <?=\common\widgets\PriceSlider::widget() ?>
-
-
-
-
-                        <div class="empty-space marg-lg-b30"></div>
+                        <?=\common\widgets\PriceSlider::widget(['model'=>$model, 'form'=>$form]) ?>
 
                         <div class="tt-input-label">Місцерозташування об`єкту</div>
                             <div class="tt-map-search-form">
@@ -166,9 +161,9 @@ $this->title = 'Додати замовлення';
                                                 <?= $form->field($model, 'confirm_sms')->textInput(['class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
                                                 <div class="empty-space marg-xs-b20"></div>
                                             </div>
-                                            <!--<div class="col-sm-4 col-md-3">
-                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link" href="#">ОК</a>
-                                            </div>-->
+                                            <div class="col-sm-4 col-md-3">
+                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link  tt-phone-code-submit disabled" href="javascript:">ОК</a>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -181,7 +176,7 @@ $this->title = 'Додати замовлення';
 
                                     if (@Yii::$app->session['newUserSession']['agree']==1) $model->agree = TRUE;
                                     echo $form->field($model, 'agree')->checkbox([
-                                    'template' => '<label class="checkbox-entry blue-links tt-terms-checkbox">{input}<span>Із <a href="'.Url::to(['/site/privacy']).'">"Правилами користування"</a> погоджуюсь</span></label><div>{error}</div>'
+                                    'template' => '<label class="checkbox-entry blue-links tt-terms-checkbox">{input}<span>Із <a href="'.Url::to(['/site/privacy']).'"  target="_blank">"Правилами користування"</a> погоджуюсь</span></label><div>{error}</div>'
                                     ])
                                     ?>
 
@@ -214,76 +209,26 @@ $this->title = 'Додати замовлення';
 
 
 <?
-
 $gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
 
-$options = '{"types":["address"],"componentRestrictions":{"country":"ua"}}';
+
 echo $this->registerJs("(function(){
-        var input = document.getElementById('customerregistration-location');
-        var options = $options;        
-        searchbox = new google.maps.places.Autocomplete(input, options);
+
+
+    $('body').on('keyup','#customerregistration-confirm_sms', function(event) {
+        if ($(this).val()!='') {
+            $(\".tt-fadein-link.tt-phone-code-submit\").removeClass('disabled');
+		} else {
+            $(\".tt-fadein-link.tt-phone-code-submit\").addClass('disabled');
+		}
+    });
+
+
+
+
+
 })();" , \yii\web\View::POS_END );
 
-
-
 echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
-
 ?>
-
-<style>
-
-
-
-    .select2-container--bootstrap.input-lg .select2-selection--single, .input-group-lg .select2-container--bootstrap .select2-selection--single, .form-group-lg .select2-container--bootstrap .select2-selection--single {
-        border-radius: 3px;
-        color: #6c7076;
-        font-size: 16px;
-        height: 55px;
-        line-height: 53px;
-        padding: 0 16px;
-        border: 1px solid #e3e6e8;
-        background: #fcfcfc none repeat scroll 0 0;
-        width: 100%;
-        font-family: "Roboto";
-        font-weight: 400;
-    }
-
-
-    .select2-dropdown, .select2-container--bootstrap .select2-dropdown {
-        background: #fff none repeat scroll 0 0;
-        border: 1px solid #ddd;
-        border-radius: 3px;
-        box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.11);
-        box-sizing: border-box;
-        overflow: hidden;
-
-    }
-
-    .select2-results__option {
-        font-size: 16px;
-        line-height: 22px;
-        padding: 10px 18px;
-        border-bottom: 1px solid #f5f5f5;
-    }
-
-
-    .has-success .select2-container--bootstrap.select2-container--focus .select2-selection, .has-success .select2-container--bootstrap.select2-container--open .select2-selection {
-        border-color: #ff8a00;
-        box-shadow: none;
-    }
-
-    .select2-container--bootstrap .select2-results__option--highlighted[aria-selected] {
-        background-color: #f5f5f5;
-        color: #262626;
-    }
-
-    .pac-container:after {
-        background-image: none !important;
-        height: 0px;
-    }
-
-
-
-
-</style>

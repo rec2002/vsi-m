@@ -111,7 +111,23 @@ $(function() {
 
 			addMarker(mark_locat,mark_name,mark_str,mark_img,draggableVal);	
 		});
+
+
+
+        if ($('#customerregistration-location').length){
+            GooglePlaces('customerregistration-location');
+            if ($('#customerregistration-location').val()!='') $(".tt-map-search").click();
+		}
 	}
+
+	function GooglePlaces(id) {
+        var input = document.getElementById(id);
+        var options = '{"types":["address"],"componentRestrictions":{"country":"ua"}}';
+        searchbox = new google.maps.places.Autocomplete(input, options);
+	}
+
+
+
 
 	//geoLocation
 	function geoLocation(){
@@ -124,7 +140,7 @@ $(function() {
 	        	geoLocationMarker = new google.maps.Marker({
 		            position: pos,
 		            map: map,
-					icon: 'img/map/location.png'
+					icon: '/img/map/location.png'
 		        });
 		    geoLocationMarker.setMap(map);
           }, function() {

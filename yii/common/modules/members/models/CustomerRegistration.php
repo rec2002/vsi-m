@@ -5,6 +5,7 @@ namespace common\modules\members\models;
 use Yii;
 use yii\base\Model;
 
+
 /**
  * ContactForm is the model behind the contact form.
  */
@@ -19,6 +20,7 @@ class CustomerRegistration extends Model
     public $confirm_sms;
     public $agree = false;
     public $location;
+    public $budget;
     public $when_start;
     public $date_from;
     public $date_to;
@@ -29,15 +31,17 @@ class CustomerRegistration extends Model
     public function rules()
     {
         return [
-            [['title', 'descriptions', 'location'], 'required', 'on' => 'home-page'],
-            [['title', 'descriptions', 'location', 'first_name', 'email', 'phone', 'confirm_sms'], 'required', 'on' => 'add-order'],
+     /*       [['title', 'descriptions', 'location'], 'required', 'on' => 'home-page'],*/
+
+            [['confirm_sms'], 'checkSMSCode_', 'skipOnEmpty' => false, 'on' => 'add-order'],
+            [['title', 'descriptions', 'location', 'first_name', 'email', 'phone', 'confirm_sms', 'budget'], 'required', 'on' => 'add-order'],
             [['first_name'], 'string', 'min' => 3, 'tooShort' => 'Значення "{attribute}" повинно містити мінімум 3 символa.', 'on' => 'add-order'],
             ['agree', 'required', 'requiredValue' => 1, 'message' => 'Прочитати `правила користування`.', 'on' => 'add-order'],
             ['email', 'email', 'on' => 'add-order'],
             [['image'], 'file'],
             ['email', 'checkMyUniqunessEmail', 'on' => 'add-order'],
             ['phone', 'checkSendPhoneCode', 'on' => 'add-order'],
-            ['confirm_sms', 'checkSMSCode', 'on' => 'add-order'],
+
         ];
     }
 
@@ -77,13 +81,16 @@ class CustomerRegistration extends Model
         } else return true;
     }
 
-    public function checkSMSCode($attribute, $params) {
+    public function checkSMSCode_($attribute, $params) {
+
         $count = Yii::$app->db->createCommand("SELECT COUNT(*) FROM `phone_check` WHERE code = '".trim($this->confirm_sms)."' LIMIT 1")->queryScalar();
         if($count==0) {
             $this->addError($attribute, 'Код з SMS невірний.');
             return false;
         } else return true;
     }
+
+
 
 
 }

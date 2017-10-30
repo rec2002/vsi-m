@@ -134,7 +134,7 @@ $this->title = 'Крок 2 - Реєстрація майстра';
                             </div>
                             <div class="col-sm-5">
                                 <div class="tt-register-upload-btn">
-                                    <div class="button type-1 full">Вибрати фото на комп’ютері <input type="file" class="upload_avatar" accept="image/x-png,image/gif,image/jpeg"></div>
+                                    <div class="button type-1 full">Вибрати фото на комп’ютері <input type="file" class="upload_avatar" data-source="/members/registration/uploadavatar/" accept="image/x-png,image/gif,image/jpeg"></div>
 
                                     <div id="progress-wrp">
                                         <div class="progress-bar"></div>

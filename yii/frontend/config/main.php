@@ -25,10 +25,17 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
-        'user' => [
+/*        'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+        ],
+*/
+
+        'user' => [
+                 'identityClass' => 'common\modules\members\models\Members',
+                    'enableAutoLogin' => true,
+                    'identityCookie' => ['name' => '_identity-member', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend

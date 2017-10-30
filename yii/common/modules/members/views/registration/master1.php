@@ -107,7 +107,7 @@ $this->title = 'Реєстрація майстра';
                                     <?
                                     if (@Yii::$app->session['newUserSession']['agree']==1) $model->agree = TRUE;
                                     echo $form->field($model, 'agree')->checkbox([
-                                    'template' => '<label class="checkbox-entry blue-links tt-terms-checkbox">{input}<span>Із <a href="'.Url::to(['/site/privacy']).'">"Правилами користування"</a> погоджуюсь</span></label><div>{error}</div>'
+                                    'template' => '<label class="checkbox-entry blue-links tt-terms-checkbox">{input}<span>Із <a href="'.Url::to(['/site/privacy']).'" target="_blank">"Правилами користування"</a> погоджуюсь</span></label><div>{error}</div>'
                                      ])?>
 
                                     <div class="tt-register-btn">

@@ -1,0 +1,80 @@
+/* sumo select to select 2 */
+
+.select2-container--bootstrap.input-lg .select2-selection--single, .input-group-lg .select2-container--bootstrap .select2-selection--single, .form-group-lg .select2-container--bootstrap .select2-selection--single {
+    border-radius: 3px;
+    color: #6c7076;
+    font-size: 16px;
+    height: 55px;
+    line-height: 53px;
+    padding: 0 16px;
+    border: 1px solid #e3e6e8;
+    background: #fcfcfc none repeat scroll 0 0;
+    width: 100%;
+    font-family: "Roboto";
+    font-weight: 400;
+}
+
+
+.select2-dropdown, .select2-container--bootstrap .select2-dropdown {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.11);
+    box-sizing: border-box;
+    overflow: hidden;
+
+}
+
+.select2-results__option {
+    font-size: 16px;
+    line-height: 22px;
+    padding: 10px 18px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+
+.has-success .select2-container--bootstrap.select2-container--focus .select2-selection, .has-success .select2-container--bootstrap.select2-container--open .select2-selection {
+    border-color: #ff8a00;
+    box-shadow: none;
+}
+
+.select2-container--bootstrap .select2-results__option--highlighted[aria-selected] {
+    background-color: #f5f5f5;
+    color: #262626;
+}
+
+/* google place livehack */
+
+.pac-container:after {
+    background-image: none !important;
+    height: 0px;
+}
+
+/* procces bar upload avatar */
+
+#progress-wrp {
+    border: 1px solid #2d3643;
+    padding: 1px;
+    position: relative;
+    height: 30px;
+    border-radius: 3px;
+    text-align: left;
+    background: #fff;
+    box-shadow: inset 1px 3px 6px rgba(0, 0, 0, 0.12);
+    visibility: hidden;
+    cursor: pointer;
+}
+#progress-wrp .progress-bar{
+    height: 100%;
+    border-radius: 3px;
+    background-color: #ff8a00;
+    width: 0;
+    box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.11);
+}
+#progress-wrp .status{
+    top:3px;
+    left:50%;
+    position:absolute;
+    display:inline-block;
+    color: #000000;
+}

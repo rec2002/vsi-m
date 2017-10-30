@@ -9,7 +9,9 @@
         </div>
     </div>
     <div class="simple-text size-2 bold-style-2">
-        <b class="slider-range-group">Мілкі</b> (б`юджет до <input type="text" class="amount-value"  id="customerregistration-price_range" name="CustomerRegistration[price_range]" value="1000"> грн.)
+        <b class="slider-range-group">Мілкі</b> (б`юджет до
+        <input type="text" class="amount-value"  value="1000">   грн.)
+        <?= $form->field($model, 'budget')->hiddenInput(['value'=>1, 'class' => 'amount-value-id'])->label(false); ?>
     </div>
 </div>
 

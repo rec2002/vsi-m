@@ -4,12 +4,15 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 ?>
 
-<?php $form = ActiveForm::begin(['id' => 'reg-customer',
+<?php $form = ActiveForm::begin(['id' => 'reg-customer-home',
     'enableAjaxValidation'=>true,
     'validationUrl'=>Url::toRoute('/members/customregistration/validation/?scenario=home-page'),
     'action' =>['/members/customregistration/?scenario=home-page',
     ]]);
 ?>
+
+
+
 
     <h1 class="tt-banner-title h2">Замовте послуги майстрів по ремонту</h1>
     <div class="simple-text size-4 darker">

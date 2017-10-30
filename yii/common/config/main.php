@@ -14,7 +14,11 @@ return [
             'sender' => 'VsiMastry',
             'login' => 'rec2002',
             'password' => '74002abc',
-        //    'debug' => false,
+            'debug' => true,
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'cache' => 'cache'
         ],
     ],
 ];

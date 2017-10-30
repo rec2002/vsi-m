@@ -80,12 +80,31 @@ class RegistrationController extends \common\modules\members\controllers\Default
                 $member->first_name = @Yii::$app->session['newUserSession']['first_name'];
                 $member->last_name = @Yii::$app->session['newUserSession']['last_name'];
                 $member->email = @Yii::$app->session['newUserSession']['email'];
+                $email  = $member->email;
                 $member->phone = @Yii::$app->session['newUserSession']['phone'];
                 $member->password = @Yii::$app->session['newUserSession']['password'];
                 $member->avatar_image = @Yii::$app->session['newUserSession']['avatar_image'];
                 $member->place = @Yii::$app->session['newUserSession']['place'];
                 $member->company = @Yii::$app->session['newUserSession']['company'];
                 $member->about = @Yii::$app->session['newUserSession']['about'];
+
+
+
+
+                if (!empty($member->avatar_image)){
+
+
+                    $dest  = str_replace('/avatars/temp/', '/avatars/', $member->avatar_image);
+                    if (@copy(\Yii::getAlias('@webroot').$member->avatar_image, \Yii::getAlias('@webroot').$dest)){
+
+                        if (file_exists(\Yii::getAlias('@webroot').$member->avatar_image)) {
+                            @unlink(\Yii::getAlias('@webroot').$member->avatar_image);
+                        }
+
+                        $member->avatar_image = $dest;
+                    }
+
+                }
 
                 switch ($member->forma){
                     case '1':
@@ -101,7 +120,7 @@ class RegistrationController extends \common\modules\members\controllers\Default
                 }
 
 
-                $this->GetMailTemplate(3, $member->attributes, $member->email);
+                \common\components\MemberHelper::GetMailTemplate(3, $member->attributes, $member->email);
                 $member->password = Yii::$app->getSecurity()->generatePasswordHash(@Yii::$app->session['newUserSession']['password']);
                 $member->save(false);
 
@@ -124,55 +143,35 @@ class RegistrationController extends \common\modules\members\controllers\Default
                         $regions->save();
                     }
                 }
+
+
+                $userRole = Yii::$app->authManager->getRole('majster');
+                Yii::$app->authManager->assign($userRole, $member_id);
+
+                $permit = Yii::$app->authManager->getPermission('canMajster');
+                Yii::$app->authManager->assign($permit,$member_id);
+
+                \common\modules\members\models\PhoneCheck::deleteAll("phone ='" . @Yii::$app->session['newUserSession']['phone'] . "'");
+
+                $session = Yii::$app->session;
+                $session->destroy();
+
+                return $this->render('master'.$id, ['email'=>$email]);
+
+
                 break;
 
             default:
                 $id=1;
         }
-/*
-        if (empty(@Yii::$app->session['newUserSession']['step'])) {
-            Yii::$app->session['newUserSession'] = array_merge(array(), array('step'=>'1'));
-            return $this->redirect(['/members/registration/?id=1']);
-        }elseif ($id > @Yii::$app->session['newUserSession']['step']){
-            return $this->redirect(['/members/registration/?id='.@Yii::$app->session['newUserSession']['step']]);
-        }
-*/
+
         return $this->render('master'.$id, [
             'model' => $model,
         ]);
     }
 
 
-    public function GetMailTemplate($id, $data = array(), $client_email='') {
 
-        $template = Yii::$app->db->createCommand("SELECT `subject`, `emails`, `notices`, `mail_content`, `sms_content`, `message` FROM `mail_template` WHERE `id`= '".$id."' ")->queryAll();
-
-        if (!sizeof($template) && !sizeof($data) && empty($id)) {
-            Yii::$app->session->setFlash('error', 'Помилка надсилання пошти.');
-            return false;
-        }
-
-        foreach($data as $key=>$val) {
-            $template[0]['mail_content'] = str_replace('{'.strtoupper($key).'}', $val, $template[0]['mail_content']);
-        }
-
-        if (!empty($client_email)) $template[0]['emails'] =  str_replace('{EMAIL}', $client_email, $template[0]['emails']);
-
-        $emails = array();
-        $arr = explode(',', $template[0]['emails']);
-        if (sizeof($arr)) {
-            foreach ($arr as $val) {
-                $emails[trim($val)]= '';
-            }
-        } else $emails[$template[0]['emails']] = '';
-
-        $template[0]['emails'] = $emails;
-
-        Yii::$app->mailer->compose()->setTo($template[0]['emails'])->setFrom(Yii::$app->params['adminEmail'])->setSubject($template[0]['subject'])->setHtmlBody($template[0]['mail_content'])->send();
-        Yii::$app->session->setFlash('success', $template[0]['message']);
-
-        return $template[0]['message'];
-    }
 
     public function actionValidation($id=1)
     {
