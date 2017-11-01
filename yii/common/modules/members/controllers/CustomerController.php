@@ -27,7 +27,7 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
 
     public function beforeAction($action)
     {
-        if ((!Yii::$app->user->isGuest)) return $this->redirect(['/members/login']);
+        if (Yii::$app->user->isGuest) return $this->redirect(['/members/login']);
 
         return parent::beforeAction($action);
     }
