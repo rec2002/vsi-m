@@ -41,15 +41,15 @@ use yii\helpers\Url;
                         <div class="tt-profile">
                             <div class="tt-profile-hover">
                                 <img class="tt-profile-img" src="<?=!empty(Yii::$app->user->identity->avatar_image) ? Yii::$app->user->identity->avatar_image : '/img/header/user.png';?>" alt="<?=Yii::$app->user->identity->first_name; ?>">
-                                <span class="tt-profile-name"><?=(!empty(Yii::$app->user->identity->first_name)) ? Yii::$app->user->identity->company : Yii::$app->user->identity->first_name ?></span>
+                                <span class="tt-profile-name"><?=(!empty(Yii::$app->user->identity->company)) ? Yii::$app->user->identity->company : Yii::$app->user->identity->first_name ?></span>
                                 <img class="tt-profile-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAM1BMVEUAAAAtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkOWchbXAAAAEXRSTlMA/P63pE01JhjElJGDfnJfQVsZ+r8AAAAwSURBVAgdBcGHAYAwEAQg7lOM3f2nFeQBuOOtCzhrMOqAXh/MdFomsKXt2QBWsuAHH3AAtyQEGooAAAAASUVORK5CYII=" alt="">
                             </div>
                             <div class="tt-profile-dropdown">
                                 <ul>
-                                    <li><a href="professionals-profile.html">Особисті дані</a></li>
+                                    <li><a href="<?=Url::to(['/members/member'])?>">Особисті дані</a></li>
                                     <li><a href="professionals-profile-price.html">Послуги та ціни</a></li>
                                     <li><a href="professionals-profile-project.html">Виконанні проекти</a></li>
-                                    <li><a href="professionals-profile-password.html">Змінити пароль</a></li>
+                                    <li><a href="<?=Url::to(['/members/member/resetpwd'])?>">Змінити пароль</a></li>
                                     <li><a href="professionals-profile-notification.html">Сповіщеня</a></li>
                                     <li><a href="professionals-profile-orders.html">Доступ до замовлень</a></li>
                                 </ul>
@@ -76,8 +76,8 @@ use yii\helpers\Url;
                     <a href="<?=Url::to(['/members/customregistration/create'])?>" class="button type-1 button-plus color-3"><span></span>Додати замовлення</a>
                     <nav class="main-nav">
                         <ul>
-                            <li><a href="user-orders.html">Мої замовлення</a></li>
-                            <li><a href="professionals-list.html">Каталог майстрів</a></li>
+                            <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Мої замовлення</a></li>
+                            <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Каталог майстрів</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -142,8 +142,8 @@ use yii\helpers\Url;
                 <a href="<?=Url::to(['/members/customregistration/create'])?>" class="button type-1 button-plus color-3"><span></span>Додати замовлення</a>
                 <?=Nav::widget([
                     'items' => [
-                        ['label' => 'Каталог майстрів', 'url' => ['site/category'], 'class' =>'button type-1 btn-simple'],
-                        ['label' => 'Як це працює', 'url' => ['site/howitwork'], 'class' =>'button type-1 btn-simple'],
+                        ['label' => 'Каталог майстрів', 'url' => ['/site/category'], 'class' =>'button type-1 btn-simple'],
+                        ['label' => 'Як це працює', 'url' => ['/site/howitwork'], 'class' =>'button type-1 btn-simple'],
 
                     ],
                     'options' => ['class' =>'main-nav'], // set this to nav-tab to get tab-styled navigation

@@ -25,12 +25,19 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
      * @return string
      */
 
+    public function beforeAction($action)
+    {
+        if ((!Yii::$app->user->isGuest)) return $this->redirect(['/members/login']);
+
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex()
     {
         $MemberPassword = new MemberPasswordForm();
         $Member = new CustomerEdit();
 
-        $notices = Yii::$app->db->createCommand("SELECT n.id as notice_id, n.name, n.email as show_email, n.sms as show_sms, m.id, m.email, m.sms FROM `notices_settings` n LEFT JOIN `notices_members` m ON n.id=m.notice_id AND m.member = '".Yii::$app->user->identity->getId()."' WHERE n.active=1 AND n.type=1 ORDER BY n.prior ASC ")->queryAll();
+        $notices = Yii::$app->db->createCommand("SELECT n.id as notice_id, n.name, n.email as show_email, n.sms as show_sms, m.id, m.email, m.sms, n.type FROM `notices_settings` n LEFT JOIN `notices_members` m ON n.id=m.notice_id AND m.member = '".Yii::$app->user->identity->getId()."' WHERE n.active=1 AND n.type=1 ORDER BY n.prior ASC ")->queryAll();
 
 
         return $this->render('edit', ['MemberPassword'=>$MemberPassword, 'Member'=>$Member, 'Notices'=>$notices]);
@@ -57,8 +64,6 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
                 return['status'=>1, 'msg'=>'Персональні дані збережені.'];
             }
-
-
         }
     }
 

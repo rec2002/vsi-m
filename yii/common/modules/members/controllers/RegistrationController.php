@@ -2,6 +2,7 @@
 
 namespace common\modules\members\controllers;
 
+use common\modules\members\models\MemberPrices;
 use Yii;
 use common\modules\members\models\MasterRegistration;
 use common\modules\members\models\MemberRegions;
@@ -10,6 +11,7 @@ use common\modules\members\models\Members;
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
+use \yii\base\Action;
 
 /**
  * Default controller for the `members` module
@@ -21,10 +23,16 @@ class RegistrationController extends \common\modules\members\controllers\Default
      * @return string
      */
 
+     public function beforeAction($action)
+     {
+        if ((!Yii::$app->user->isGuest)) return $this->redirect(['/members/login']);
+
+         return parent::beforeAction($action);
+     }
+
+
     public function actionIndex($id=1)
     {
-
-
 
 
 
@@ -137,13 +145,22 @@ class RegistrationController extends \common\modules\members\controllers\Default
 
                 if (sizeof(@Yii::$app->session['newUserSession']['types'])) foreach(@Yii::$app->session['newUserSession']['types'] as $val){
                     if (!empty($val)) {
-                        $regions = new MemberTypes();
-                        $regions->type = $val;
-                        $regions->member = $member_id;
-                        $regions->save();
+                        $types = new MemberTypes();
+                        $types->type = $val;
+                        $types->member = $member_id;
+                        $types->save();
                     }
                 }
 
+                if (sizeof(@Yii::$app->session['newUserSession']['prices'])) foreach(@Yii::$app->session['newUserSession']['prices'] as $key=>$val){
+                    if (!empty($val)) {
+                        $prices = new MemberPrices();
+                        $prices->price_id = $key;
+                        $prices->price = $val;
+                        $prices->member = $member_id;
+                        $prices->save();
+                    }
+                }
 
                 $userRole = Yii::$app->authManager->getRole('majster');
                 Yii::$app->authManager->assign($userRole, $member_id);

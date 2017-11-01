@@ -5,23 +5,24 @@ namespace common\modules\members\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%member_types}}".
+ * This is the model class for table "{{%member_prices}}".
  *
  * @property integer $id
- * @property integer $type
  * @property integer $member
+ * @property integer $price_id
+ * @property double $price
  * @property string $create_at
  *
  * @property Members $member0
  */
-class MemberTypes extends \yii\db\ActiveRecord
+class MemberPrices extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%member_types}}';
+        return '{{%member_prices}}';
     }
 
     /**
@@ -30,8 +31,9 @@ class MemberTypes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'member'], 'required'],
-            [['type', 'member'], 'integer'],
+            [['member', 'price_id', 'price'], 'required'],
+            [['member', 'price_id'], 'integer'],
+            [['price'], 'number'],
             [['create_at'], 'safe'],
             [['member'], 'exist', 'skipOnError' => true, 'targetClass' => Members::className(), 'targetAttribute' => ['member' => 'id']],
         ];
@@ -44,8 +46,9 @@ class MemberTypes extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type' => 'ID виду робіт',
-            'member' => 'ID користувача',
+            'member' => 'Member',
+            'price_id' => 'Price ID',
+            'price' => 'Price',
             'create_at' => 'Create At',
         ];
     }

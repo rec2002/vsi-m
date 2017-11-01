@@ -24,6 +24,7 @@ class LoginController extends \common\modules\members\controllers\DefaultControl
         if (!Yii::$app->user->isGuest) {
             if (Yii::$app->user->can('majster')) $this->redirect(['/members/member/']);
             if (Yii::$app->user->can('zamovnyk')) return $this->redirect(['/members/customer/']);
+
         }
 
         $model = new LoginForm();

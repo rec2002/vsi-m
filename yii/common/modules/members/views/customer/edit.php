@@ -117,12 +117,12 @@ $this->title = 'Кабінет користувача';
                                 </div>
                                 <div class="tt-notification-check">
 <? if ($val['show_email']==1) {?>
-                                    <label class="checkbox-entry" ><input type="checkbox" class="notices_action" data-name="email" data-id="<?=$val['notice_id']?>" value="1" <?=($val['email']==1) ? 'checked' : ''?>><span></span></label>
+                                    <label class="checkbox-entry" ><input type="checkbox" class="notices_action" data-name="email" data-type="<?=$val['type']?>" data-id="<?=$val['notice_id']?>" value="1" <?=($val['email']==1) ? 'checked' : ''?>><span></span></label>
 <? } ?>
                                 </div>
                                 <div class="tt-notification-check">
 <? if ($val['show_sms']==1) {?>
-                                    <label class="checkbox-entry"><input type="checkbox"  class="notices_action" data-name="sms" data-id="<?=$val['notice_id']?>" value="1" <?=($val['sms']==1) ? 'checked' : ''?>><span></span></label>
+                                    <label class="checkbox-entry"><input type="checkbox"  class="notices_action" data-name="sms" data-type="<?=$val['type']?>" data-id="<?=$val['notice_id']?>" value="1" <?=($val['sms']==1) ? 'checked' : ''?>><span></span></label>
 <? } ?>
                                 </div>
                             </div>
@@ -194,18 +194,6 @@ $this->title = 'Кабінет користувача';
         <div class="tt-devider"></div>
     </div>
 
-
-
-    <div class="popup-wrapper">
-        <div class="bg-layer"></div>
-        <div class="popup-content" data-rel="15">
-            <div class="layer-close"></div>
-            <div class="popup-container size-2">
-                <div class="popup-align"></div>
-                <div class="button-close"></div>
-            </div>
-        </div>
-    </div>
 
 <? Pjax::end();?>
 <?

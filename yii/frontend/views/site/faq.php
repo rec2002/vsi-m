@@ -33,9 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2 class="h2 text-center">Не знайшли відповіді?</h2>
         <div class="empty-space marg-lg-b30"></div>
         <div class="text-center">
-
             <?= Html::a('Задайте своє питання', ['faqform'], ['class' => 'button type-1 size-4 color-3 uppercase modalButton']) ?>
-            <!--<a href="" class="button type-1 size-4 color-3 uppercase modalButton" data-rel="3">Задайте своє питання</a>-->
         </div>
         <div class="empty-space marg-sm-b40 marg-lg-b80"></div>
     </div>

@@ -16,10 +16,10 @@ $this->title = 'Кабінет користувача';
             <div class="tabs-block style-1">
                 <div class="tab-nav">
                     <a class="tab-menu redirect active" href="<?=Url::to(['/members/member/'])?>"><span>Особисті дані</span></a>
-                    <a class="tab-menu redirect" href="professionals-profile-price.html"><span>Послуги та ціни</span></a>
+                    <a class="tab-menu redirect" href="<?=Url::to(['/members/member/types'])?>"><span>Послуги та ціни</span></a>
                     <a class="tab-menu redirect" href="professionals-profile-project.html"><span>Виконані проекти</span></a>
-                    <a class="tab-menu redirect" href="professionals-profile-password.html"><span>Змінити пароль</span></a>
-                    <a class="tab-menu redirect" href="professionals-profile-notification.html"><span>Сповіщення</span></a>
+                    <a class="tab-menu redirect" href="<?=Url::to(['/members/member/resetpwd'])?>"><span>Змінити пароль</span></a>
+                    <a class="tab-menu redirect" href="<?=Url::to(['/members/member/noticesettings'])?>"><span>Сповіщення</span></a>
                     <a class="tab-menu redirect" href="professionals-profile-orders.html"><span>Доступ до замовлень</span></a>
                 </div>
                 <div class="tab-entry" style="display: block;">
@@ -104,8 +104,8 @@ $this->title = 'Кабінет користувача';
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
-                                        <?php $form = ActiveForm::begin(['id' => 'edit_first_name', 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation'), 'action' =>['/members/member']]); ?>
-                                            <?=$form->field($member, 'first_name')->textInput(['value'=>Yii::$app->user->identity->first_name, 'class' => 'simple-input', 'placeholder' => "Ваше ім’я"])->label(false); ?>
+                                        <?php $form1 = ActiveForm::begin(['id' => 'edit_first_name', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=first_name'), 'action' =>['/members/member/savemember/?scenario=first_name']]); ?>
+                                            <?=$form1->field($member, 'first_name')->textInput(['value'=>Yii::$app->user->identity->first_name, 'class' => 'simple-input', 'placeholder' => "Ваше ім’я"])->label(false); ?>
                                             <div class="tt-editable-form-btn">
                                                 <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
                                                 <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
@@ -150,10 +150,10 @@ $this->title = 'Кабінет користувача';
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
-                                        <?php $form = ActiveForm::begin(['id' => 'edit_last_name', 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation'), 'action' =>['/members/member']]); ?>
+                                        <?php $form = ActiveForm::begin(['id' => 'edit_last_name', 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=last_name'), 'action' =>['/members/member/savemember/?scenario=last_name']]); ?>
                                         <?=$form->field($member, 'last_name')->textInput(['value'=>Yii::$app->user->identity->last_name, 'class' => 'simple-input', 'placeholder' => "Прізвище"])->label(false); ?>
                                             <div class="tt-editable-form-btn">
-                                                <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                                <?= Html::resetButton('Відмінити', ['class' => 'button type-1']) ?>
                                                 <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
                                             </div>
                                         <?php ActiveForm::end(); ?>

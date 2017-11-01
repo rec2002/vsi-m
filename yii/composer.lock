@@ -959,12 +959,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-dynagrid.git",
-                "reference": "1e12d8bf411b314018512e067fafd449f683ce38"
+                "reference": "772107495f64c3ee7941ce2d8fe617849a8c2062"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-dynagrid/zipball/1e12d8bf411b314018512e067fafd449f683ce38",
-                "reference": "1e12d8bf411b314018512e067fafd449f683ce38",
+                "url": "https://api.github.com/repos/kartik-v/yii2-dynagrid/zipball/772107495f64c3ee7941ce2d8fe617849a8c2062",
+                "reference": "772107495f64c3ee7941ce2d8fe617849a8c2062",
                 "shasum": ""
             },
             "require": {
@@ -1011,7 +1011,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-10-23 14:02:31"
+            "time": "2017-10-27 13:14:15"
         },
         {
             "name": "kartik-v/yii2-grid",
@@ -1019,12 +1019,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "b74e17902f99fb52c26cee678567b53f12eb8f7b"
+                "reference": "071c9ccdbc56a2ec95cfbeec088c0664557e663d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/b74e17902f99fb52c26cee678567b53f12eb8f7b",
-                "reference": "b74e17902f99fb52c26cee678567b53f12eb8f7b",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/071c9ccdbc56a2ec95cfbeec088c0664557e663d",
+                "reference": "071c9ccdbc56a2ec95cfbeec088c0664557e663d",
                 "shasum": ""
             },
             "require": {
@@ -1064,7 +1064,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-10-22 17:25:19"
+            "time": "2017-10-25 11:57:15"
         },
         {
             "name": "kartik-v/yii2-krajee-base",

@@ -28,11 +28,14 @@ class Members extends ActiveRecord implements IdentityInterface
     public $company;
     public $avatar_image;
 */
+
+    public $types = array();
+
     /**
      * @inheritdoc
      */
 
-    public static function tableName()
+     public static function tableName()
     {
         return '{{%members}}';
     }
@@ -65,6 +68,11 @@ class Members extends ActiveRecord implements IdentityInterface
             [['types'], 'required',  'message' => 'Прошу вибрати хоча б вид робіт.', 'on' => 'step-4'],
             [['prices'], 'required', 'on' => 'step-5'],
 */
+
+
+            [['types'], 'required',  'message' => 'Прошу вибрати хоча б вид робіт.', 'on' => 'types'],
+     //       [['types'], 'exist', 'skipOnError' => true, 'targetClass' => MemberTypes::className(), 'targetAttribute' => ['member' => 'id']],
+
         ];
     }
 
@@ -89,10 +97,14 @@ class Members extends ActiveRecord implements IdentityInterface
             'avatar_image'=>'Ваше фото 262x262px;',
         ];
     }
+/*
+    // relation with MemberTypes
 
-
-
-
+    public function getMemberTypes()
+    {
+        return $this->hasMany(MemberTypes::className(), ['member' => 'id']);
+    }
+*/
 
     /**
      * @inheritdoc

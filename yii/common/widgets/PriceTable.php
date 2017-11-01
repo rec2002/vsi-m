@@ -8,7 +8,6 @@ class PriceTable extends \yii\bootstrap\Widget
 {
 
 
-
     public function init()
     {
         parent::init();

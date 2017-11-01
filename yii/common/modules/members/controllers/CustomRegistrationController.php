@@ -23,6 +23,11 @@ class CustomregistrationController extends \common\modules\members\controllers\D
      * Renders the index view for the module
      * @return string
      */
+    public function beforeAction($action)
+    {
+        if ((!Yii::$app->user->isGuest))  return $this->redirect(['/members/login']);
+        return parent::beforeAction($action);
+    }
 
     public function actionIndex($scenario='home-page')
     {
@@ -168,26 +173,6 @@ class CustomregistrationController extends \common\modules\members\controllers\D
         }
     }
 
-    public function actionTest()    {
-/*
-        $role = Yii::$app->authManager->createRole('majster');
-        $role->description = 'Майстер';
-        Yii::$app->authManager->add($role);
 
-        $role = Yii::$app->authManager->createRole('zamovnyk');
-        $role->description = 'Замовник';
-        Yii::$app->authManager->add($role);
-
-
-
-        $permit = Yii::$app->authManager->createPermission('canZamovnyk');
-        $permit->description = 'Право на вхід замовника';
-        Yii::$app->authManager->add($permit);
-        */
-
-phpinfo();
-
-        return 123;
-    }
 
 }

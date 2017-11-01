@@ -535,7 +535,10 @@ $(function() {
         });		
 		e.preventDefault();
 	});
+/*
 	$('.tt-editable-form form').on('submit',function(e){
+
+		console.log(11);
 		var dataArray = $(this).serializeArray(),
 			$wrapper = $(this).closest('.tt-editable-wrapper');
 
@@ -560,7 +563,7 @@ $(function() {
 	   	e.preventDefault();
 	});
 
-
+*/
 	/*tt-reply-write*/
 	$('.tt-reply-write-info textarea').on("focus", function(){
 		$(this).closest('.tt-reply-write-info').addClass('active');
@@ -699,14 +702,14 @@ $(function() {
 		e.preventDefault();
 	});
 
-	*/
+
 	$('.tt-fadein-close').on('click', function(e){
 		$(this).closest('.tt-fadein-bottom').fadeOut(300, function(){
 			$(this).siblings('.tt-fadein-top').fadeIn(300);
 		});
 		e.preventDefault();
 	});
-
+    */
 	$('.tt-phone-submit').on('click', function(e){
 
 		var obj = $(this);
@@ -1296,10 +1299,15 @@ $(function() {
             cache: false,
             processData: false,
             dataType: 'json',
+            async: false,
             success: function (data) {
                 if (data.status==1){
 
-                   	if (form.hasClass('reset-form')) { form.get(0).reset();}
+                   	if (form.hasClass('reset-form')) { form.get(0).reset(); }
+                   	if (form.attr('id')=='types') { $('div#prices_table').empty().html(data.prices); }
+
+
+
                     $('.popup-align').html('<div class="empty-space marg-lg-b35"></div><h4 class="h4 text-center">'+data.msg+'</h4><div class="empty-space marg-lg-b35"></div>');
                     $('.popup-content').removeClass('active');
                     $('.popup-wrapper, .popup-content').addClass('active');
@@ -1316,11 +1324,12 @@ $(function() {
         var checkbox = $(this);
         var status = (checkbox.is(':checked')) ? 1 : 0;
         jQuery.ajax({
-            url: '/members/customer/notices',
+            url: ($(this).data('type')) ? '/members/member/notices' : '/members/customer/notices',
             type: 'GET',
             data: 'name='+checkbox.data('name')+'&id='+checkbox.data('id')+'&status='+status,
             contentType: false,
             cache: false,
+            async: false,
             processData: false,
             dataType: 'json',
             success: function (data) {
@@ -1334,5 +1343,53 @@ $(function() {
 
 	});
 
+
+
+    $(document).on("submit", "form.form-edit-ajax", function(e) {
+        e.preventDefault();
+        var form = $(this);
+
+
+        var data_post = form.serializeArray();
+
+        console.log(data_post[1]['name']);
+        jQuery.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: new FormData(form[0]),
+            mimeType: 'multipart/form-data',
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                if (data.status==1){
+
+                    switch(data_post[1]['name']){
+						case 'MemberEdit[first_name]':
+                            form.closest('.tt-editable-form').prev('.tt-editable').find('.tt-editable-item').html(data_post[1]['value']);
+                    	break;
+
+
+					}
+
+
+                    form.closest('.tt-editable-form').slideUp(300).siblings('.tt-editable').slideDown(300, function(){
+                        $(this).closest('.tt-editable-wrapper').removeClass('opened');
+                    });
+
+                }
+            }
+        });
+        return false;
+    });
+
+    $(document).on("click", "button.tt-editable-close", function(e) {
+        $(this).closest('.tt-editable-form').slideUp(300).siblings('.tt-editable').slideDown(300, function(){
+            $(this).closest('.tt-editable-wrapper').removeClass('opened');
+        });
+
+	});
 
 });

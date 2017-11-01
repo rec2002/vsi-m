@@ -5,6 +5,21 @@ use yii\bootstrap\Nav;
 ?>
 
 <? if (Yii::$app->controller->id!='registration') { ?>
+
+    <!-- POP UP SMALL BEGIN -->
+    <div class="popup-wrapper">
+        <div class="bg-layer"></div>
+        <div class="popup-content" data-rel="15">
+            <div class="layer-close"></div>
+            <div class="popup-container size-2">
+                <div class="popup-align"></div>
+                <div class="button-close"></div>
+            </div>
+        </div>
+    </div>
+    <!-- POP UP SMALL END -->
+
+
 <!-- TT-FOOTER -->
 <footer class="tt-footer">
     <div class="tt-footer-bottom">
