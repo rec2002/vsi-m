@@ -47,11 +47,11 @@ use yii\helpers\Url;
                             <div class="tt-profile-dropdown">
                                 <ul>
                                     <li><a href="<?=Url::to(['/members/member'])?>">Особисті дані</a></li>
-                                    <li><a href="professionals-profile-price.html">Послуги та ціни</a></li>
-                                    <li><a href="professionals-profile-project.html">Виконанні проекти</a></li>
+                                    <li><a href="<?=Url::to(['/members/member/types'])?>">Послуги та ціни</a></li>
+                                    <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Виконанні проекти</a></li>
                                     <li><a href="<?=Url::to(['/members/member/resetpwd'])?>">Змінити пароль</a></li>
-                                    <li><a href="professionals-profile-notification.html">Сповіщеня</a></li>
-                                    <li><a href="professionals-profile-orders.html">Доступ до замовлень</a></li>
+                                    <li><a href="<?=Url::to(['/members/member/noticesettings'])?>">Сповіщеня</a></li>
+                                    <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Доступ до замовлень</a></li>
                                 </ul>
                                 <a href="<?=Url::to(['/members/login/logout'])?>" class="button type-1 size-2 full">Вихід</a>
                             </div>
@@ -83,7 +83,7 @@ use yii\helpers\Url;
                 </div>
                 <div class="nav-right">
                     <ul class="tt-profile-nav">
-                        <li><a class="tt-icon-entry tt-icon-hover" href="user-messages.html">
+                        <li><a class="tt-icon-entry tt-icon-hover" href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAMAAACgaw2xAAAAVFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkJFwZtrAAAAG3RSTlMAEQrpFPKFKGY2Dfff4x+jmNnRxbKwb1I3NAgz8zm9AAAAiElEQVQY03WQWQ7DIAwFXzA4KZA03Rff/54FIURJnPmckQw2DrEkCrTgxoPCekEgo4wJAnrMZufdOYWRZ7/10ykH1NI8Sqil+RrA5P99DaU03wUhX7x0gaPntCxGN3WjOBrgKc7Jq3s8+4R/f77dd5NXF7xH9STHR7yyHXbYNWIJohDyEkYB+AEsQQrnu/RtDgAAAABJRU5ErkJggg==" alt="">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAMAAACgaw2xAAAAV1BMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igDL/BPzAAAAHHRSTlMACBIQ6PIUhShmNA3eCvfj6h+jmDbRxbKwb1I3gtXc3QAAAIdJREFUGNN1kFkOwyAMBV9aqElYErovvv85S5AQcuLM54xksHHIxbDCkvGks8ItIC1RGZMY5j3HnbfXEhzNfuvH+xrQSveYamil+xZAxgvfQi3di8ClVM8iUPBkMuDsKEZRiMCHreWveLx6wP+mQXy3eHXBV1BPcnzEB50UytlzYoXkAAwKwB+yGwxHrDpidQAAAABJRU5ErkJggg==" alt="">
                                 <span>14</span></a></li>

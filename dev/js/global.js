@@ -1374,7 +1374,6 @@ $(function() {
 
 					}
 
-
                     form.closest('.tt-editable-form').slideUp(300).siblings('.tt-editable').slideDown(300, function(){
                         $(this).closest('.tt-editable-wrapper').removeClass('opened');
                     });

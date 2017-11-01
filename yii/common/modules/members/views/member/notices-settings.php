@@ -18,10 +18,10 @@ $this->title = 'Сповіщення користувача  - Кабінет к
                     <div class="tab-nav">
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/member'])?>"><span>Особисті дані</span></a>
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/member/types'])?>"><span>Послуги та ціни</span></a>
-                        <a class="tab-menu redirect" href="professionals-profile-project.html"><span>Виконані проекти</span></a>
+                        <a class="tab-menu redirect" href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;"><span>Виконані проекти</span></a>
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/member/resetpwd'])?>"><span>Змінити пароль</span></a>
                         <a class="tab-menu redirect active" href="<?=Url::to(['/members/member/noticesettings'])?>"><span>Сповіщення</span></a>
-                        <a class="tab-menu redirect" href="professionals-profile-orders.html"><span>Доступ до замовлень</span></a>
+                        <a class="tab-menu redirect" href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;"><span>Доступ до замовлень</span></a>
                     </div>
 
                     <div class="tab-entry" style="display: block;">
