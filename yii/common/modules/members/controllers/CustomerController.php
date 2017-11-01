@@ -13,13 +13,34 @@ use common\modules\members\models\MemberPasswordForm;
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
-use yii\db\Query;
+use yii\filters\AccessControl;
 
 /**
  * Default controller for the `members` module
  */
 class CustomerController extends \common\modules\members\controllers\DefaultController
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['zamovnyk']
+                    ],
+                    [
+                        'allow' => false,
+                        'roles' => ['?']
+                    ]
+                ]
+            ]
+        ];
+    }
+
+
     /**
      * Renders the index view for the module
      * @return string

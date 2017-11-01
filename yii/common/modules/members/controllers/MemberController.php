@@ -15,6 +15,8 @@ use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
 use yii\helpers\ArrayHelper;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 
 /**
@@ -22,17 +24,39 @@ use yii\helpers\ArrayHelper;
  */
 class MemberController extends \common\modules\members\controllers\DefaultController
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['majster']
+                    ],
+                    [
+                        'allow' => false,
+                        'roles' => ['?']
+                    ]
+                ]
+            ]
+        ];
+    }
+
     /**
      * Renders the index view for the module
      * @return string
      */
-
+/*
     public function beforeAction($action)
     {
 
         if (!Yii::$app->user->can('majster') || Yii::$app->user->isGuest)  return $this->redirect(['/members/login']);
         return parent::beforeAction($action);
     }
+
+    */
 
     public function actionIndex()
     {
