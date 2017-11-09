@@ -32,9 +32,6 @@ $this->title = 'Додати замовлення';
                             </div>
                             <?= $form->field($model, 'descriptions')->textarea(['value'=>@Yii::$app->session['newCustomerSession']['descriptions'], 'class' => 'simple-input', 'tabindex' => '2', 'maxlength'=>'800', 'autocomplete'=>'off', 'placeholder' => "Опишіть завдання як омога детальніше, все що може бути корисно для майстрів (розміри, об’єм робіт, типи робіт, матеріали ... )", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
 
-
-
-
                             <div class="tt-project-new-img">
                                 <div class="button-upload tt-icon-hover tt-img-upload">
                                         <span class="tt-icon-entry">
@@ -65,6 +62,7 @@ $this->title = 'Додати замовлення';
                                                 'tabindex' => '3'
                                             ],
                                         ])->label(false); ?>
+
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
@@ -133,9 +131,6 @@ $this->title = 'Додати замовлення';
                                 <div class="col-sm-9">
                                     <div class="tt-input-label">Як до Вас звертатись? (публікується)</div>
                                     <?= $form->field($model, 'first_name')->textInput(['class' => 'simple-input', 'tabindex' => '5', 'autocomplete'=>'off', 'placeholder' => "Введіть своє ім`я"])->label(false); ?>
-
-
-
 
                                     <div class="tt-input-label">Електронна адреса (не публікується)</div>
                                     <?=$form->field($model, 'email')->textInput(['class' => 'simple-input', 'tabindex' => '6', 'autocomplete'=>'off', 'placeholder' => "Введіть email"])->label(false); ?>
@@ -212,7 +207,6 @@ $this->title = 'Додати замовлення';
 $gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
 
-
 echo $this->registerJs("(function(){
     $('body').on('keyup','#customerregistration-confirm_sms', function(event) {
         if ($(this).val()!='') {
@@ -225,4 +219,5 @@ echo $this->registerJs("(function(){
 })();" , \yii\web\View::POS_END );
 
 echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
+
 ?>

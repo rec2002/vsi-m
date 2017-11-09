@@ -38,7 +38,7 @@ $this->title = 'Кабінет користувача';
                                     </div>
                                 </div>
                                 <div class="tt-person-form">
-                                    <?php $form = ActiveForm::begin(['id' => 'save-customer-form',  'enableAjaxValidation'=>true, 'options' => ['class'=>'form-ajax'], 'validationUrl'=>Url::toRoute('/members/customer/personalvalidation'), 'action' =>['/members/customer/personalsave', '#'=>'personal_data']]); ?>
+                                    <?php $form = ActiveForm::begin(['id' => 'save-customer-form',  'enableAjaxValidation'=>true, 'options' => ['class'=>'form-ajax'], 'validationUrl'=>Url::toRoute('/members/customer/validation/?mode=personal'), 'action' =>['/members/customer/personalsave', '#'=>'personal_data']]); ?>
                                         <div class="tt-person-inputs">
                                             <div class="tt-input-wrapper">
                                                 <div class="tt-input-label">Ім’я</div>

@@ -93,9 +93,10 @@ class RegistrationController extends \common\modules\members\controllers\Default
                 $member->password = @Yii::$app->session['newUserSession']['password'];
                 $member->avatar_image = @Yii::$app->session['newUserSession']['avatar_image'];
                 $member->place = @Yii::$app->session['newUserSession']['place'];
+                $member->brygada = @Yii::$app->session['newUserSession']['brygada'];
                 $member->company = @Yii::$app->session['newUserSession']['company'];
                 $member->about = @Yii::$app->session['newUserSession']['about'];
-
+                $member->forma = @Yii::$app->session['newUserSession']['forma'];
 
 
 

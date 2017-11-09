@@ -26,10 +26,11 @@ class CustomerEdit extends Model
         return [
             [['first_name', 'email', 'phone'], 'required'],
             [['first_name', 'last_name'], 'string', 'min' => 3, 'tooShort' => 'Значення "{attribute}" повинно містити мінімум 3 символa.'],
-            [['phone'],  'match', 'pattern' => '/([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/', 'message' => 'Невірний номер мобільного телефону.'],
+
             ['email', 'email'],
             ['email', 'checkMyUniqunessEmail'],
             /*['phone', 'checkSendPhoneCode'],*/
+            [['phone'],  'match', 'pattern' => '/([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/', 'message' => 'Невірний номер мобільного телефону.'],
             ['phone', 'checkChangedPhoneCode'],
             ['confirm_sms', 'checkSMSCode', 'skipOnEmpty' => true],
             ['confirm_sms', 'checkSMSCodeRequired', 'skipOnEmpty' => false],

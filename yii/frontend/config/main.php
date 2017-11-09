@@ -78,6 +78,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+
+                'кабінет/мої-замовлення' =>'members/customer/list',
                 'блог/<id:\d+>/<slug>'=>'site/publish',
                 'блог'=>'site/publish',
                 'каталог-майстрів'=>'site/category',

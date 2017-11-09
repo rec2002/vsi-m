@@ -3,6 +3,7 @@
 namespace common\modules\members\controllers;
 
 
+use common\components\MemberHelper;
 use common\modules\members\models\CustomerEdit;
 use Yii;
 use common\modules\members\models\CustomerRegistration;
@@ -14,6 +15,7 @@ use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
 use yii\filters\AccessControl;
+use yii\data\SqlDataProvider;
 
 /**
  * Default controller for the `members` module
@@ -89,9 +91,25 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
     }
 
 
-    public function actionPersonalvalidation()
+    public function actionValidation($mode='personal')
     {
-        $model = new CustomerEdit();
+        switch($mode){
+            case 'personal':
+                $model = new CustomerEdit();
+            break;
+            case 'add-order';
+                $model = new Orders(['scenario' => 'add-order']);
+            break;
+            case 'location':
+                $model = Orders::findOne([
+                    'id' => Yii::$app->request->get('id'),
+                    'member'=> Yii::$app->user->identity->getId(),
+                ]);
+            break;
+        }
+
+
+
         if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
         {
             Yii::$app->response->format = 'json';
@@ -125,7 +143,6 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
             return ActiveForm::validate($model);
         }
     }
-
 
     public function actionUploadavatar()
     {
@@ -174,4 +191,152 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
         }
         return false;
     }
+
+    public function actionAddorder()  {
+        $order = new Orders(['scenario' => 'add-order']);
+        return $this->render('create', ['order'=>$order]);
+    }
+
+    public function actionOrderadd()
+    {
+        $model = new Orders();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+
+            $model->member = Yii::$app->user->identity->getId();
+            switch (Yii::$app->request->post('Orders')['when_start']){
+                case '1':
+                    $model->date_from = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_from']));
+                    $model->date_to = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_to']));
+                    break;
+                case '2':
+                    $model->date_from = date("Y-m-d");
+                    break;
+                case '3':
+                    $model->date_from = date("Y-m-d", strtotime("+1 day"));
+                    break;
+            }
+            $model->title = Yii::$app->request->post('Orders')['title'];
+            $model->location = Yii::$app->request->post('Orders')['location'];
+            $model->descriptions = Yii::$app->request->post('Orders')['descriptions'];
+            $model->budget = Yii::$app->request->post('Orders')['budget'];
+            $model->save(false);
+            $order_id = Yii::$app->db->getLastInsertID();
+            $model->image = UploadedFile::getInstances($model, 'image');
+            if ($model->image) {
+                $dir = Yii::getAlias('@type_images').'/members/orders/';
+                foreach ($model->image as $image) {
+                    $ordersImages = new OrderImages();
+                    $ordersImages->order_id = $order_id;
+                    $ordersImages->image = strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
+                    $image->saveAs($dir.$ordersImages->image);
+                    $ordersImages->image = '/uploads/members/orders/'.strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
+                    $ordersImages->save(false);
+                }
+            }
+
+            return $this->redirect(['/members/customer/list']);
+        }
+
+    }
+
+    public function actionList($status='')  {
+
+        $param = [];
+        $param[':member'] = Yii::$app->user->identity->getId();
+
+        $count_total = Yii::$app->db->createCommand('select count(member) as total, sum(case when status = \'1\' then 1 else 0 end) status_1, sum(case when status = \'2\' then 1 else 0 end) status_2, sum(case when status = \'3\' then 1 else 0 end) status_3, sum(case when status = \'4\' then 1 else 0 end) status_4 from `orders` WHERE member=:member group by member', $param)->queryOne();
+
+        if ($status != '')  $param[':status'] = $status;
+
+
+        $filter = array();
+        if (sizeof($param)) foreach($param as $key=>$val){
+            switch($key){
+                case ':member':
+                    $filter[] = ' o.member='.$key;
+                break;
+                case ':status':
+                    $filter[] = ' o.status='.$key;
+                break;
+            }
+        }
+
+
+        $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM orders o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''), $param)->queryScalar();
+        $provider = new SqlDataProvider([
+            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, p.name as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status  FROM `orders` o LEFT JOIN `dict_price_range` p ON p.id = o.budget '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.created_at DESC',
+            'params' => $param,
+            'totalCount' => $count,
+            'pagination' => [
+                'pageSize' => 10,
+            ]
+        ]);
+    //    $provider->models[0]['title'] = 'test test test';
+echo "<pre>";
+        var_dump($provider->models[0]['title']);
+        echo "</pre>";
+/*
+        foreach( $provider->models as $myModel){
+            echo $myModel->title;
+
+
+
+         }
+*/
+
+        return $this->render('list', ['model'=>$provider, 'count_total'=>$count_total]);
+    }
+
+    public function actionOrder($id=0)  {
+
+        $model = Orders::findOne([
+            'id' => Yii::$app->request->get('id'),
+            'member'=> Yii::$app->user->identity->getId(),
+        ]);
+
+        return $this->render('order', ['model'=> $model, 'budget'=>MemberHelper::GetBudgetRange()]);
+    }
+
+    public function actionSaveorder($mode = 'location')
+    {
+
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+
+        $model = Orders::findOne([
+            'id' => Yii::$app->request->get('id'),
+            'member'=> Yii::$app->user->identity->getId(),
+        ]);
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            switch ($mode) {
+                case 'location':
+                    $model->location = Yii::$app->request->post('Order')['location'];
+                break;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            $model->save();
+            return['status'=>1, 'msg'=>'дані збережені'];
+        }
+        return['status'=>0];
+
+    }
+
+
+
 }

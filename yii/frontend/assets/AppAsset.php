@@ -18,6 +18,10 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/jquery-ui.min.js',
         'js/datepicker-uk.js',
+        'js/jquery.timeago.js',
+        'js/jquery.timeago.uk.js',
+        'js/jquery.timeago.uk.js',
+        'js/swiper.jquery.min.js',
         'js/global.js'
     ];
     public $depends = [

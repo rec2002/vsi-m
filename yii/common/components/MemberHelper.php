@@ -3,16 +3,24 @@
 namespace common\components;
 
 use Yii;
+use yii\web\UrlManager;
+
 
 class MemberHelper {
 
     const FORMA = array(1 => 'Приватний майстер', 2 => 'Бригада', 3=>'Компанія');
 
-    const BRYGADA = array(1 => 'до 10 чоловік', 2 => '10-30 чоловік', 3=>'10-30 чоловік');
+    const BRYGADA = array(1 => 'до 10 чоловік', 2 => '10-30 чоловік', 3=>'30-60 чоловік');
 
     const PRICE_TYPE = array(1=>'грн./год.', 2=>'грн./шт.', 3=>'грн./м2', 4=>'грн./м3', 5=>'грн./ м/п', 6=>'грн./місце');
 
     const WHEN_START = array(1=>'В період від ... до ...', 2=>'Сьогодні', 3=>'Завтра');
+
+    const BUSY = array(0=>'Вільний для роботи', 1=>'Зайнятий до');
+
+    const STATUS = array(0=>'На перевірці в модератора', 1=>'Шукають виконавця', 2=>'Прийняті до виконання', 3=>'Виконані', 4=>'Скасовані');
+
+
 
     public static function PhoneCode($phone='') {
         Yii::$app->response->format = 'json';
@@ -68,6 +76,67 @@ class MemberHelper {
         Yii::$app->session->setFlash('success', $template[0]['message']);
 
         return $template[0]['message'];
+    }
+
+
+
+    public static function GetBudgetRange()
+    {
+        $arr =  Yii::$app->db->createCommand("SELECT id, name, budget_to FROM `dict_price_range` ORDER BY id ASC ")->queryAll();
+        $arr_ = array();
+        foreach ($arr as $key=>$val){
+            if ($key==0) {
+                $budget = '0 - '.number_format($val['budget_to'], 0, ',', ' ').' грн. ('.$val['name'].')';
+            } else if ($arr[$key]['id']==sizeof($arr)) {
+                $budget = number_format($arr[$key-1]['budget_to'], 0, ',', ' ').' - '.number_format($val['budget_to'], 0, ',', ' ').' грн. і більше ('.$val['name'].')';
+            } else {
+                $budget = number_format($arr[$key-1]['budget_to'], 0, ',', ' ').' - '.number_format($val['budget_to'], 0, ',', ' ').' грн. ('.$val['name'].')';
+            }
+            $arr_[$val['id']] = array('name'=>$val['name'], 'budget'=>$budget);
+        }
+        return $arr_;
+    }
+
+    public static function isActive($query_str = '', $exactly=false)
+    {
+
+        $item['url'][0] = 'members/customer/list';
+        if (isset($item['url']) && is_array($item['url']) && isset($item['url'][0])) {
+             $route = $item['url'][0];
+            if ($route[0] !== '/' && Yii::$app->controller) {
+           //     $route = Yii::$app->controller->module->getUniqueId() . '/' . $route;
+            }
+
+            echo ltrim($route, '/');
+
+            echo "<br/>";
+            echo Yii::$app->controller->route;
+            echo "<br/>";
+
+            if (ltrim($route, '/') !== Yii::$app->controller->route) {
+                return false;
+            }
+echo "good";
+
+            unset($item['url']['#']);
+            if (count($item['url']) > 1) {
+                $params = $item['url'];
+                unset($params[0]);
+                foreach ($params as $name => $value) {
+                    if ($value !== null && (!isset(Yii::$app->controller->params[$name]) || Yii::$app->controller->params[$name] != $value)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+
+        /*
+        if (strpos(Yii::$app->controller->route.'/?'.Yii::$app->request->getQueryString(), $query_str) !== false) {
+            return 'true';
+        } else return 'false';
+        */
     }
 
 

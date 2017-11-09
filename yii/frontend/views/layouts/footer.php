@@ -7,7 +7,7 @@ use yii\bootstrap\Nav;
 <? if (Yii::$app->controller->id!='registration') { ?>
 
     <!-- POP UP SMALL BEGIN -->
-    <div class="popup-wrapper">
+    <!--<div class="popup-wrapper">
         <div class="bg-layer"></div>
         <div class="popup-content" data-rel="15">
             <div class="layer-close"></div>
@@ -16,7 +16,7 @@ use yii\bootstrap\Nav;
                 <div class="button-close"></div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- POP UP SMALL END -->
 
 

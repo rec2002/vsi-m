@@ -38,6 +38,9 @@ $this->title = 'Крок 3 - Реєстрація майстра';
                         'action' =>['/members/registration/?id=3',
 
                         ]]); ?>
+
+
+
                     <?echo $form->field($model, 'step')->hiddenInput(['value'=> 3])->label(false);?>
                     <div class="row row10">
                             <?

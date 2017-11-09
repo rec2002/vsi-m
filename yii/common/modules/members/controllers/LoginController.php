@@ -44,7 +44,6 @@ class LoginController extends \common\modules\members\controllers\DefaultControl
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->redirect(['/members/login/']);
     }
 

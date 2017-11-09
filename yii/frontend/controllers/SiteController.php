@@ -377,4 +377,10 @@ class SiteController extends Controller
         return $this->render('whywe');
     }
 
+    public function actionSendphonecode()
+    {
+        Yii::$app->response->format = 'json';
+        return \common\components\MemberHelper::PhoneCode(Yii::$app->request->post('phone'));
+    }
+
 }

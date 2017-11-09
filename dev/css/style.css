@@ -451,7 +451,7 @@ span.agree a  { color: #3b5997; text-decoration: none;font-weight: 500; }
 .tabs-block.style-2 > .tab-nav { margin-bottom: 25px; }
 .tabs-block.style-2 > .tab-nav > .tab-menu { font-size: 14px; line-height: 20px; font-weight: 700; color: #2d3642; margin-right: 30px; -webkit-transition: all 300ms ease-in-out; transition: all 300ms ease-in-out; }
 .tabs-block.style-2 > .tab-nav > .tab-menu .count-large { color: #6c7076; -webkit-transition: all 300ms ease-in-out; transition: all 300ms ease-in-out; }
-.tabs-block.style-2 > .tab-nav > .tab-menu.active, .tabs-block.style-2 > .tab-nav > .tab-menu.active span, .tabs-block.style-2 > .tab-nav > .tab-menu:hover, .tabs-block.style-2 > .tab-nav > .tab-menu:hover span { color: #ff8a00; }
+.tabs-block.style-2 > .tab-nav > .tab-menu.active, .tabs-block.style-2 > .tab-nav > .tab-menu.active span, .tabs-block.style-2 > .tab-nav > .tab-menu:hover, .tabs-block.style-2 > .tab-nav > .tab-menu:hover span, .tabs-block.style-2 > .tab-nav > .tab-menu:hover a { color: #ff8a00; }
 .tabs-block.style-2.wth-btn > .tab-nav { padding-right: 30%; }
 .tabs-block.style-2.large > .tab-nav > .tab-menu { font-size: 24px; line-height: 1.4167em; font-weight: 500; }
 /*tabs-block style-3*/
@@ -1613,10 +1613,10 @@ div.tt-pagination ul li.active a { background: #ff8a00; color: #fff; }
 .tt-task-bottom { margin: 0 -30px; border-top: 1px solid #e5e7eb; }
 .tt-task-table { display: table; font-size: 14px; line-height: 20px; }
 .tt-task-table > * { display: table-cell; padding: 18px 30px; vertical-align: middle; }
-.tt-task-location { width: 35%; font-weight: 700; border-right: 1px solid #e5e7eb; text-align: center; }
+.tt-task-location { width: 46%; font-weight: 700; border-right: 1px solid #e5e7eb; text-align: center; }
 .tt-task-location img, .tt-task-price img, .tt-task-date img { display: inline-block; margin-right: 10px; vertical-align: middle; }
-.tt-task-date { width: 15%; text-align: center; }
-.tt-task-price { width: 50%; border-right: 1px solid #e5e7eb; }
+.tt-task-date { width: 14%; text-align: center;white-space: nowrap; }
+.tt-task-price { width: 40%; border-right: 1px solid #e5e7eb; }
 .tt-task-price img { margin-right: 7px; }
 .tt-task-price span { font-weight: 700; }
 .tt-add-task.pos-2 .button { top: 0; }

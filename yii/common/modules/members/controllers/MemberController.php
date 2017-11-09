@@ -6,6 +6,7 @@ namespace common\modules\members\controllers;
 
 
 use common\modules\members\models\MemberPrices;
+use common\modules\members\models\MemberRegions;
 use common\modules\members\models\MemberTypes;
 use Yii;
 use common\modules\members\models\MemberEdit;
@@ -60,32 +61,14 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
 
     public function actionIndex()
     {
-
-
-        $member = new MemberEdit();
-
-    //    $regions = new MemberRegions();
-
-/*
-        $MemberPassword = new MemberPasswordForm();
-        $Member = new CustomerEdit();
-
-SELECT r.id, r.name_short, m.id  FROM `dict_regions` r
-LEFT JOIN `member_regions` m ON r.id=m.region AND m.member=9
-ORDER BY r.id  ASC
-
-
-        return $this->render('edit', ['MemberPassword'=>$MemberPassword, 'Member'=>$Member, 'Notices'=>$notices]);
-*/
-
+        $member = MemberEdit::find()->where(['id' => Yii::$app->user->identity->getId()])->one();
+        $member->regions = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT region FROM member_regions WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'region');
         return $this->render('edit', ['member'=>$member]);
     }
 
 
     public function actionValidation($scenario = 'types')
     {
-
-
         $model = new MemberEdit(['scenario' => $scenario]);
         if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
         {
@@ -101,17 +84,89 @@ ORDER BY r.id  ASC
         Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
         $model = MemberEdit::find()->where(['id' => Yii::$app->user->identity->getId()])->one();
 
-
-
-
-
         if ($model->load(Yii::$app->request->post())) {
 
             switch ($scenario) {
                 case 'first_name':
                     $model->first_name = Yii::$app->request->post('MemberEdit')['first_name'];
                 break;
+                case 'busy_to':
+                    $model->busy_to = (Yii::$app->request->post('MemberEdit')['busy']==0) ? NULL : date('Y-m-d', strtotime(Yii::$app->request->post('MemberEdit')['busy_to']));
+                break;
+                case 'surname':
+                    $model->surname = Yii::$app->request->post('MemberEdit')['surname'];
+                break;
+                case 'last_name':
+                    $model->last_name = Yii::$app->request->post('MemberEdit')['last_name'];
+                break;
+                case 'email':
+                    $model->last_name = Yii::$app->request->post('MemberEdit')['email'];
+                break;
+                case 'place':
+                    $model->last_name = Yii::$app->request->post('MemberEdit')['place'];
+                break;
+                case 'about':
+                    $model->last_name = Yii::$app->request->post('MemberEdit')['about'];
+                break;
+                case 'budget_min':
+                    $model->budget_min = Yii::$app->request->post('MemberEdit')['budget_min'];
+                    break;
+                case 'regions':
+
+
+                    $new = (is_array(Yii::$app->request->post('MemberEdit')['regions'])) ? Yii::$app->request->post('MemberEdit')['regions'] : array() ;
+
+                    $old = ArrayHelper::getColumn(MemberRegions::findBySql('SELECT region FROM member_regions WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'region');
+
+                    if (sizeof($old)) foreach ($old as $val) {
+                        if (!in_array($val, $new)) {
+                            Yii::$app->db->createCommand()->delete('member_regions', ['region' => $val, 'member'=>Yii::$app->user->identity->getId()])->execute();
+                        }
+                    }
+                    if (sizeof($new)) foreach ($new as $val) {
+                        if (!in_array($val, $old)) {
+                            Yii::$app->db->createCommand()->insert('member_regions', ['region' => $val, 'member'=>Yii::$app->user->identity->getId()])->execute();
+                        }
+                    }
+
+
+                break;
+                case 'forma':
+
+                    $model->brygada = Yii::$app->request->post('MemberEdit')['brygada'];
+                    $model->company = Yii::$app->request->post('MemberEdit')['company'];
+                    $model->forma = Yii::$app->request->post('MemberEdit')['forma'];
+
+                    switch ($model->forma){
+                        case '1':
+                            $model->brygada = null;
+                            $model->company = null;
+                            break;
+                        case '2':
+                            $model->company = null;
+                            break;
+                        case '3':
+                            $model->brygada = null;
+                            break;
+                    }
+                break;
+
+
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             $model->save();
             return['status'=>1, 'msg'=>'дані збережені'];
@@ -248,69 +303,6 @@ ORDER BY r.id  ASC
         return['status'=>0];
     }
 
-
-
-    /*
-        public function actionPersonalsave()
-        {
-            $model = new CustomerEdit();
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-                $member = Members::findOne([
-                    'id' => Yii::$app->user->identity->getId(),
-                ]);
-
-                $member->first_name=Yii::$app->request->post('CustomerEdit')['first_name'];
-                $member->last_name=Yii::$app->request->post('CustomerEdit')['last_name'];
-                $member->email=Yii::$app->request->post('CustomerEdit')['email'];
-                $member->phone=Yii::$app->request->post('CustomerEdit')['phone'];
-
-                if ($member->save(false)) {
-                    Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
-                    return['status'=>1, 'msg'=>'Персональні дані збережені.'];
-                }
-            }
-        }
-
-
-        public function actionPersonalvalidation()
-        {
-            $model = new CustomerEdit();
-            if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
-            {
-                Yii::$app->response->format = 'json';
-                return ActiveForm::validate($model);
-            }
-        }
-
-
-
-        public function actionResetpassword()
-        {
-            $model = new MemberPasswordForm();
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $member = Members::findOne([
-                    'id' => Yii::$app->user->identity->getId(),
-                ]);
-                $member->setPassword(Yii::$app->request->post('MemberPasswordForm')['password']);
-                if ($member->save(false)) {
-                    Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
-                    return['status'=>1, 'msg'=>'Новий пароль збережений.'];
-                }
-            }
-        }
-
-        public function actionResetpasswordvalidation()
-        {
-            $model = new MemberPasswordForm();
-            if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
-            {
-                Yii::$app->response->format = 'json';
-                return ActiveForm::validate($model);
-            }
-        }
-    */
-
     public function actionUploadavatar()
     {
 
@@ -337,6 +329,26 @@ ORDER BY r.id  ASC
 
             return json_encode(array('status'=>1, 'avatar_image'=>'/uploads/members/avatars/'.$avatar));
         }
+    }
+
+
+    public function actionProfile()
+    {
+        $member = MemberEdit::find()->where(['id' => Yii::$app->user->identity->getId()])->one();
+        $member->types = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT type FROM member_types WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'type');
+        $member->prices = ArrayHelper::index( MemberPrices::findBySql('SELECT price_id as id, price  FROM member_prices WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'id');
+        $member->regions = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT region FROM member_regions WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'region');
+        return $this->render('profile', ['member'=> $member]);
+    }
+
+    public function actionPriceslist() {
+
+        $member = MemberEdit::find()->where(['id' => Yii::$app->user->identity->getId()])->one();
+        $member->types = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT type FROM member_types WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'type');
+        $member->prices = ArrayHelper::index( MemberPrices::findBySql('SELECT price_id as id, price  FROM member_prices WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'id');
+
+        return $this->renderPartial('prices-list', ['member'=>$member]);
+
     }
 
 

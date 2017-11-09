@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use common\widgets\Alert;
+use kartik\select2\Select2;
+use common\components\MemberHelper;
 
 $this->title = 'Кабінет користувача';
 
@@ -60,35 +62,56 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Робочий статус</div>
                                 </div>
                                 <div class="tt-preson-row-right">
+                                    <?php $form0 = ActiveForm::begin(['id' => 'edit_busy_to', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=busy_to'), 'action' =>['/members/member/savemember/?scenario=busy_to']]); ?>
                                     <div class="tt-editable">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title">Вільний для роботи</div>
+                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=(empty($member->busy_to)) ? 'Вільний для роботи' : 'Зайнятий до '.date('d.m.Y', (strtotime($member->busy_to))); ?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
-                                    <div class="tt-editable-form">
-                                        <form>
-                                            <div class="simple-select tt-select-swither">
-                                                <div class="SumoSelect sumo_title" tabindex="0"><select name="title" class="SumoUnder" tabindex="-1">
-                                                        <option value="Вільний для роботи">Вільний для роботи</option>
-                                                        <option value="Зайнятий до">Зайнятий до</option>
-                                                    </select><p class="CaptionCont SelectBox" title=" Вільний для роботи"><span> Вільний для роботи</span><label><i></i></label></p><div class="optWrapper"><ul class="options"><li class="opt selected"><label>Вільний для роботи</label></li><li class="opt"><label>Зайнятий до</label></li></ul></div></div>
-                                            </div>
-                                            <div class="tt-select-swither-content">
-                                                <div class="tt-select-swither-item" data-rel="Вільний для роботи">
+                                    <div class="tt-editable-form" >
 
-                                                </div>
-                                                <div class="tt-select-swither-item" data-rel="Зайнятий до">
-                                                    <div class="simple-input-icon">
-                                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
-                                                        <input class="simple-input simple-datapicker hasDatepicker" data-min-date="0" placeholder="Виберіть дату" id="dp1509249920388" type="text">
-                                                    </div>
+
+                                        <div class="simple-select tt-select-swither">
+                                            <?
+
+                                                $member->busy = (!empty($member->busy_to)) ? 1 : 0;
+
+
+                                                echo $form0->field($member, 'busy')->widget(Select2::classname(), [
+                                                    'data' => MemberHelper::BUSY,
+                                                    'language' => 'uk',
+                                                    'hideSearch' => true,
+                                                    'size' => Select2::LARGE,
+                                                    'theme' => Select2::THEME_BOOTSTRAP,
+                                                    'pluginOptions' => [
+                                                        'allowClear' => false,
+                                                        'tabindex' => '3'
+                                                    ],
+                                                ])->label(false); ?>
+                                        </div>
+                                        <div class="tt-select-swither-content">
+                                            <div class="tt-select-swither-item" data-rel="Вільний для роботи">
+
+                                            </div>
+                                            <div class="tt-select-swither-item" data-rel="1" <?=(!empty($member->busy_to)) ? ' style="display:block;" ' : '';  ?>>
+                                                <div class="simple-input-icon">
+                                                    <img style="top: 28px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
+                                                    <?= $form0->field($member, 'busy_to')->widget(\yii\widgets\MaskedInput::className(), [
+                                                        'mask' => '99.99.9999',
+                                                        'options' => [
+                                                            'placeholder' => 'Виберіть дату'
+                                                        ]
+
+                                                    ])->textInput(['value'=>(!empty($member->busy_to)) ? date('d.m.Y', (strtotime($member->busy_to))) : '',  'class' => 'simple-input simple-datapicker', 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
                                                 </div>
                                             </div>
-                                            <div class="tt-editable-form-btn">
-                                                <a href="#" class="tt-editable-close button type-1">Відмінити</a>
-                                                <div class="button type-1 color-3">Зберегти<input type="submit"></div>
-                                            </div>
-                                        </form>
+                                        </div>
+                                        <div class="tt-editable-form-btn">
+                                             <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                             <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                                        </div>
+
                                     </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
@@ -99,42 +122,44 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Ім’я</div>
                                 </div>
                                 <div class="tt-preson-row-right">
+                                    <?php $form1 = ActiveForm::begin(['id' => 'edit_first_name', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=first_name'), 'action' =>['/members/member/savemember/?scenario=first_name']]); ?>
                                     <div class="tt-editable">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=Yii::$app->user->identity->first_name?></div>
+                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->first_name?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
-                                    <div class="tt-editable-form">
-                                        <?php $form1 = ActiveForm::begin(['id' => 'edit_first_name', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=first_name'), 'action' =>['/members/member/savemember/?scenario=first_name']]); ?>
-                                            <?=$form1->field($member, 'first_name')->textInput(['value'=>Yii::$app->user->identity->first_name, 'class' => 'simple-input', 'placeholder' => "Ваше ім’я"])->label(false); ?>
-                                            <div class="tt-editable-form-btn">
-                                                <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
-                                                <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
-                                            </div>
-                                        <?php ActiveForm::end(); ?>
+                                    <div class="tt-editable-form" >
+                                        <?=$form1->field($member, 'first_name')->textInput(['value'=>$member->first_name, 'class' => 'simple-input', 'placeholder' => "Ваше ім’я"])->label(false); ?>
+
+
+                                        <div class="tt-editable-form-btn">
+                                             <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                             <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                                        </div>
                                     </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
                         <div class="tt-editable-wrapper slide-anim">
                             <div class="tt-preson-row tt-editable-click">
                                 <div class="tt-preson-row-left">
-                                    <img class="tt-preson-row-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKBAMAAAByAqLJAAAAMFBMVEUAAABXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEDAhUHfAAAAD3RSTlMAbkZd32VUThXqu7CrgiPhPtpNAAAAO0lEQVQI12MAA2EwyfgfTMV/ApHM/xUYdjEw5H9nYPA/wP4/gYGh5a/+Z6AEx/z/ASAF7z+CVTMJAAkAzrkOpzxe/mQAAAAASUVORK5CYII=" alt="">
+                                    <img class="tt-preson-row-icon" <?=(empty($member->surname)) ? ' style="display:none;" ' : ''; ?> src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKBAMAAAByAqLJAAAAMFBMVEUAAABXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEDAhUHfAAAAD3RSTlMAbkZd32VUThXqu7CrgiPhPtpNAAAAO0lEQVQI12MAA2EwyfgfTMV/ApHM/xUYdjEw5H9nYPA/wP4/gYGh5a/+Z6AEx/z/ASAF7z+CVTMJAAkAzrkOpzxe/mQAAAAASUVORK5CYII=" alt="">
                                     <div class="tt-input-label">По батькові</div>
                                 </div>
                                 <div class="tt-preson-row-right">
+                                    <?php $form = ActiveForm::begin(['id' => 'edit_surname',  'options' => ['class'=>'form-edit-ajax'],  'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=surname'), 'action' =>['/members/member/savemember/?scenario=surname']]); ?>
                                     <div class="tt-editable">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=Yii::$app->user->identity->surname?></div>
-                                        <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
+                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->surname?></div>
+                                        <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="" >
                                     </div>
                                     <div class="tt-editable-form">
-                                        <?php $form = ActiveForm::begin(['id' => 'edit_last_name', 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation'), 'action' =>['/members/member']]); ?>
-                                        <?=$form->field($member, 'surname')->textInput(['value'=>Yii::$app->user->identity->surname, 'class' => 'simple-input', 'placeholder' => "По батькові"])->label(false); ?>
-                                            <div class="tt-editable-form-btn">
-                                                <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
-                                                <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
-                                            </div>
-                                        <?php ActiveForm::end(); ?>
+                                        <?=$form->field($member, 'surname')->textInput(['value'=>$member->surname, 'class' => 'simple-input', 'placeholder' => "По батькові"])->label(false); ?>
+                                        <div class="tt-editable-form-btn">
+                                             <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                             <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                                        </div>
                                     </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
@@ -145,19 +170,19 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Прізвище</div>
                                 </div>
                                 <div class="tt-preson-row-right">
+                                    <?php $form3 = ActiveForm::begin(['id' => 'edit_last_name', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=last_name'), 'action' =>['/members/member/savemember/?scenario=last_name']]); ?>
                                     <div class="tt-editable">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=Yii::$app->user->identity->last_name?></div>
+                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->last_name?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
-                                        <?php $form = ActiveForm::begin(['id' => 'edit_last_name', 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=last_name'), 'action' =>['/members/member/savemember/?scenario=last_name']]); ?>
-                                        <?=$form->field($member, 'last_name')->textInput(['value'=>Yii::$app->user->identity->last_name, 'class' => 'simple-input', 'placeholder' => "Прізвище"])->label(false); ?>
-                                            <div class="tt-editable-form-btn">
-                                                <?= Html::resetButton('Відмінити', ['class' => 'button type-1']) ?>
-                                                <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
-                                            </div>
-                                        <?php ActiveForm::end(); ?>
+                                        <?=$form3->field($member, 'last_name')->textInput(['value'=>$member->last_name, 'class' => 'simple-input', 'placeholder' => "Прізвище"])->label(false); ?>
+                                        <div class="tt-editable-form-btn">
+                                             <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                             <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                                        </div>
                                     </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
@@ -168,19 +193,21 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Телефон</div>
                                 </div>
                                 <div class="tt-preson-row-right">
+                                    <?php $form7 = ActiveForm::begin(['id' => 'edit_phone', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=phone'), 'action' =>['/members/member/savemember/?scenario=phone']]); ?>
                                     <div class="tt-editable">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title">+38 (067) 555-4326</div>
+                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->phone?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
                                         <form>
                                             <div class="tt-fadein-top">
                                                 <div class="row">
-                                                    <div class="col-sm-8 col-md-9">
-                                                        <input class="simple-input" name="title" required="" placeholder="+38 (ххх) ххх - хх - хх" value="+38 (067) 555-4326" type="tel">
+                                                    <div class="col-sm-8 col-md-12">
+                                                        <?= $form7->field($member, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>$member->phone, 'data-value'=>$member->phone, 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off',   'placeholder' => "+38 (0хх) ххх - хххх"])->label(false); ?>
                                                     </div>
-                                                    <div class="col-sm-4 col-md-3">
-                                                        <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit" href="#">Підтвердити</a><div class="empty-space marg-xs-b20"></div>
+                                                    <div class="col-sm-4 col-md-3"  style="display: none;">
+                                                        <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit" href="javascript:">Підтвердити</a>
+                                                        <div class="empty-space marg-xs-b20"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -189,20 +216,21 @@ $this->title = 'Кабінет користувача';
                                                 <div class="empty-space marg-lg-b15"></div>
                                                 <div class="row">
                                                     <div class="col-sm-8 col-md-9">
-                                                        <input class="simple-input" required="" placeholder="код отриманий по смс" type="text">
+                                                        <?= $form7->field($member, 'confirm_sms')->textInput(['class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
                                                         <div class="empty-space marg-xs-b20"></div>
                                                     </div>
                                                     <div class="col-sm-4 col-md-3">
-                                                        <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link" href="#">ОК</a>
+                                                        <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link" href="javascript:">ОК</a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="tt-editable-form-btn">
-                                                <a href="#" class="tt-editable-close button type-1">Відмінити</a>
-                                                <div class="button type-1 color-3">Зберегти<input type="submit"></div>
+                                                <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                                <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
                                             </div>
                                         </form>
                                     </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
@@ -213,19 +241,19 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Email</div>
                                 </div>
                                 <div class="tt-preson-row-right">
+                                    <?php $form3 = ActiveForm::begin(['id' => 'edit_email', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=email'), 'action' =>['/members/member/savemember/?scenario=email']]); ?>
                                     <div class="tt-editable">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title">bohdan.red@gmail.com</div>
+                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->email?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
-                                        <form>
-                                            <input class="simple-input" name="title" value="bohdan.red@gmail.com" type="text">
-                                            <div class="tt-editable-form-btn">
-                                                <a href="#" class="tt-editable-close button type-1">Відмінити</a>
-                                                <div class="button type-1 color-3">Зберегти<input type="submit"></div>
-                                            </div>
-                                        </form>
+                                        <?=$form3->field($member, 'email')->textInput(['value'=>$member->email, 'class' => 'simple-input', 'placeholder' => "Email"])->label(false); ?>
+                                        <div class="tt-editable-form-btn">
+                                            <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                            <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                                        </div>
                                     </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
@@ -237,19 +265,19 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Основне місто</div>
                                 </div>
                                 <div class="tt-preson-row-right">
+                                    <?php $form4 = ActiveForm::begin(['id' => 'edit_place', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=place'), 'action' =>['/members/member/savemember/?scenario=place']]); ?>
                                     <div class="tt-editable">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title">Львів, Львівська обл.</div>
+                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->place?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
-                                        <form>
-                                            <input id="tt-google-single-autocomplete" class="simple-input" name="title" value="Львів, Львівська обл." placeholder="Введіть місцезнаходження" autocomplete="off" type="text">
-                                            <div class="tt-editable-form-btn">
-                                                <a href="#" class="tt-editable-close button type-1">Відмінити</a>
-                                                <div class="button type-1 color-3">Зберегти<input type="submit"></div>
-                                            </div>
-                                        </form>
+                                        <?=$form4->field($member, 'place')->textInput(['value'=>$member->place, 'class' => 'simple-input', "id"=>"tt-google-single-autocomplete", 'autocomplete'=>'off', 'placeholder' => "Введіть місце знаходження"])->label(false); ?>
+                                        <div class="tt-editable-form-btn">
+                                            <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                            <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                                        </div>
                                     </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
@@ -260,217 +288,133 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Форма роботи</div>
                                 </div>
                                 <div class="tt-preson-row-right">
+                                    <?php $form6 = ActiveForm::begin(['id' => 'edit_forma', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=forma'), 'action' =>['/members/member/savemember/?scenario=forma']]); ?>
                                     <div class="tt-editable">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title">Приватний майстер</div>
+                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=MemberHelper::FORMA[$member->forma]?><?=($member->forma==2) ? ' / '.MemberHelper::BRYGADA[$member->brygada] : ''?><?=($member->forma==3) ? ' / '.$member->company : ''?>
+                                        </div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
-                                        <form>
                                             <div class="simple-select tt-select-swither">
-                                                <div class="SumoSelect sumo_title" tabindex="0"><select name="title" class="SumoUnder" tabindex="-1">
-                                                        <option value="1" selected="">Приватний майстер</option>
-                                                        <option value="2">Бригада</option>
-                                                        <option value="3">Компанія</option>
-                                                    </select><p class="CaptionCont SelectBox" title=" Приватний майстер"><span> Приватний майстер</span><label><i></i></label></p><div class="optWrapper"><ul class="options"><li class="opt selected"><label>Приватний майстер</label></li><li class="opt"><label>Бригада</label></li><li class="opt"><label>Компанія</label></li></ul></div></div>
+                                            <?
+
+
+                                                echo $form6->field($member, 'forma')->widget(Select2::classname(), [
+                                                    'data' => MemberHelper::FORMA,
+                                                    'language' => 'uk',
+                                                    'hideSearch' => true,
+                                                    'size' => Select2::LARGE,
+                                                    'theme' => Select2::THEME_BOOTSTRAP,
+                                                    'options' => ['placeholder' => 'Вибрати форму роботи'],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => false
+                                                    ],
+                                                ]); ?>
                                             </div>
                                             <div class="tt-select-swither-content">
-                                                <div class="tt-select-swither-item" data-rel="1">
-
-                                                </div>
-                                                <div class="tt-select-swither-item" data-rel="2">
+                                                <div class="tt-select-swither-item" data-rel="1" <?=($member->forma==1) ? 'style="display:block;"' : '' ?> ></div>
+                                                <div class="tt-select-swither-item" data-rel="2" <?=($member->forma==2) ? 'style="display:block;"' : '' ?>>
                                                     <div class="simple-select">
-                                                        <div class="SumoSelect" tabindex="0"><select class="SumoUnder" tabindex="-1">
-                                                                <option value="">до 10 чоловік</option>
-                                                                <option value="">10-30 чоловік</option>
-                                                                <option value="">від 30 чоловік</option>
-                                                            </select><p class="CaptionCont SelectBox" title=" до 10 чоловік"><span> до 10 чоловік</span><label><i></i></label></p><div class="optWrapper"><ul class="options"><li class="opt selected"><label>до 10 чоловік</label></li><li class="opt"><label>10-30 чоловік</label></li><li class="opt"><label>від 30 чоловік</label></li></ul></div></div>
+                                                    <?
+                                                       echo $form6->field($member, 'brygada')->widget(Select2::classname(), [
+                                                            'data' => MemberHelper::BRYGADA,
+                                                            'language' => 'uk',
+                                                            'hideSearch' => true,
+                                                            'size' => Select2::LARGE,
+                                                            'theme' => Select2::THEME_BOOTSTRAP,
+                                                            'pluginOptions' => [
+                                                                'allowClear' => false
+                                                            ],
+                                                        ]); ?>
                                                     </div>
                                                 </div>
-                                                <div class="tt-select-swither-item" data-rel="3">
-                                                    <input class="simple-input" required="" placeholder="Назва компанії" type="text">
+                                                <div class="tt-select-swither-item" data-rel="3" <?=($member->forma==3) ? 'style="display:block;"' : '' ?>>
+                                                    <?= $form6->field($member, 'company')->textInput(['value'=>$member->company, 'class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Назва компанії"])->label(false); ?>
                                                 </div>
                                             </div>
                                             <div class="tt-editable-form-btn">
-                                                <a href="#" class="tt-editable-close button type-1">Відмінити</a>
-                                                <div class="button type-1 color-3">Зберегти<input type="submit"></div>
+                                                <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                                <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
                                             </div>
-                                        </form>
+
                                     </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
+
                         <div class="tt-editable-wrapper slide-anim">
                             <div class="tt-preson-row tt-editable-click">
                                 <div class="tt-preson-row-left">
-                                    <img class="tt-preson-row-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKBAMAAAByAqLJAAAAMFBMVEUAAABscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHYDhmhAAAAAD3RSTlMAbkZd32VUThXqu7CrgiPhPtpNAAAAO0lEQVQI12MAA2EwyfgfTMV/ApHM/xUYdjEw5H9nYPA/wP4/gYGh5a/+Z6AEx/z/ASAF7z+CVTMJAAkAzrkOpzxe/mQAAAAASUVORK5CYII=" alt="">
-                                    <div class="tt-input-label">Назва компанії</div>
-                                </div>
-                                <div class="tt-preson-row-right">
-                                    <div class="tt-editable">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title">Назва не вказана</div>
-                                        <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
-                                    </div>
-                                    <div class="tt-editable-form">
-                                        <form>
-                                            <input class="simple-input" name="title" placeholder="Назва не вказана" type="text">
-                                            <div class="tt-editable-form-btn">
-                                                <a href="#" class="tt-editable-close button type-1">Відмінити</a>
-                                                <div class="button type-1 color-3">Зберегти<input type="submit"></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tt-editable-wrapper slide-anim opened">
-                            <div class="tt-preson-row tt-editable-click">
-                                <div class="tt-preson-row-left">
-                                    <img class="tt-preson-row-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKBAMAAAByAqLJAAAAMFBMVEUAAABscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHYDhmhAAAAAD3RSTlMAbkZd32VUThXqu7CrgiPhPtpNAAAAO0lEQVQI12MAA2EwyfgfTMV/ApHM/xUYdjEw5H9nYPA/wP4/gYGh5a/+Z6AEx/z/ASAF7z+CVTMJAAkAzrkOpzxe/mQAAAAASUVORK5CYII=" alt="">
+                                    <img class="tt-preson-row-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKBAMAAAByAqLJAAAAMFBMVEUAAABscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHYDhmhAAAAAD3RSTlMAbkZd32VUThXqu7CrgiPhPtpNAAAAO0lEQVQI12MAA2EwyfgfTMV/ApHM/xUYdjEw5H9nYPA/wP4/gYGh5a/+Z6AEx/z/ASAF7z+CVTMJAAkAzrkOpzxe/mQAAAAASUVORK5CYII=" <?=(empty($member->about)) ? ' style="display:none;" ' : ''; ?> alt="">
                                     <div class="tt-input-label">Про себе</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <div class="tt-editable" style="display: none;">
-                                        <div class="simple-text size-3 tt-editable-item" data-rel="title">Nam erat libero, mollis vel lectus vitae, gravida dignissim dolor. Donec a ultricies diam, a porta purus. Vivamus porttitor, est at elementum vestibulum, neque ex tincidunt enim, nec volutpat dolor lacus pulvinar est. Nullam suscipit commodo nisl nec blandit. Integer et velit ac massa commodo egestas ec a ultricies diam, a porta purus. Amus porttitor, est at elementum vestibulum, neque ex tincidunt enim, nec volutpat dolor lacus pulvinar est.</div>
+                                    <?php $form4 = ActiveForm::begin(['id' => 'edit_about', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=about'), 'action' =>['/members/member/savemember/?scenario=about']]); ?>
+                                    <div class="tt-editable">
+                                        <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=nl2br($member->about)?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
-                                    <div class="tt-editable-form" style="display: block;">
-                                        <form>
-                                            <div class="simple-input-max">
-                                                <textarea class="simple-input height-2" name="title" maxlength="800">Nam erat libero, mollis vel lectus vitae, gravida dignissim dolor. Donec a ultricies diam, a porta purus. Vivamus porttitor, est at elementum vestibulum, neque ex tincidunt enim, nec volutpat dolor lacus pulvinar est. Nullam suscipit commodo nisl nec blandit. Integer et velit ac massa commodo egestas ec a ultricies diam, a porta purus. Amus porttitor, est at elementum vestibulum, neque ex tincidunt enim, nec volutpat dolor lacus pulvinar est.</textarea>
-                                                <div class="simple-text size-2 simple-input-max-count">Залишилося 354 символів</div>
-                                            </div>
-                                            <div class="tt-editable-form-btn">
-                                                <a href="#" class="tt-editable-close button type-1">Відмінити</a>
-                                                <div class="button type-1 color-3">Зберегти<input type="submit"></div>
-                                            </div>
-                                        </form>
+                                    <div class="tt-editable-form">
+                                        <div class="simple-input-max">
+                                            <?= $form4->field($member, 'about')->textarea(['value'=>$member->about, 'class' => 'simple-input height-2', 'maxlength'=>'800', 'placeholder' => "Про себе", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
+                                            <div class="simple-text size-2 simple-input-max-count">Залишилося 800 символів</div>
+                                        </div>
+                                        <div class="tt-editable-form-btn">
+                                            <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                            <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                                        </div>
                                     </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="tt-editable-wrapper slide-anim opened">
+
+                        <div class="tt-editable-wrapper slide-anim">
                             <div class="tt-preson-row tt-editable-click">
                                 <div class="tt-preson-row-left">
                                     <img class="tt-preson-row-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKBAMAAAByAqLJAAAAMFBMVEUAAABXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEBXzEDAhUHfAAAAD3RSTlMAbkZd32VUThXqu7CrgiPhPtpNAAAAO0lEQVQI12MAA2EwyfgfTMV/ApHM/xUYdjEw5H9nYPA/wP4/gYGh5a/+Z6AEx/z/ASAF7z+CVTMJAAkAzrkOpzxe/mQAAAAASUVORK5CYII=" alt="">
                                     <div class="tt-input-label">Виїзд на об`єкти</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <div class="tt-editable" style="display: none;">
+                                    <?php $form5 = ActiveForm::begin(['id' => 'edit_regions', 'options' => ['class'=>'form-edit-ajax'],
+                                        'enableAjaxValidation' => false,
+                                        'enableClientValidation' => true,
+                                        'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=regions'), 'action' =>['/members/member/savemember/?scenario=regions']]); ?>
+
+                                    <div class="tt-editable">
                                         <div class="simple-text size-3 bold-style-2 tt-editable-item" data-rel="title">
-                                            <p><b>Волинська</b></p>
-                                            <p><b>Львівська</b></p>
-                                            <p><b>Івано-Франківська</b></p>
-                                            <p><b>Закарпатська</b></p>
+<?  $regions = Yii::$app->db->createCommand("SELECT id, name_short  FROM `dict_regions` ORDER BY `id` ASC")->queryAll();?>
+<? foreach ($regions as $val) if (in_array($val['id'], $member->regions)) { ?><p><b><?=$val['name_short']?></b></p><? } ?>
                                         </div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
-                                    <div class="tt-editable-form has-checkbox" style="display: block;">
-                                        <form>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Вінницька</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Волинська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Дніпропетровська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Донецька</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Житомирська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Закарпатська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Запорізька</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Івано-Франківська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Київська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Кіровоградська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Луганська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Львівська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Миколаївська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Одеська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Полтавська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Рівненська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Сумська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Тернопільська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Харківська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Херсонська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Хмельницька</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Черкаська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Чернівецька</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
-                                            <label class="checkbox-entry nowrap">
-                                                <input type="checkbox"><span><b>Чернігівська</b></span>
-                                            </label>
-                                            <div class="empty-space marg-lg-b15"></div>
+                                    <div class="tt-editable-form has-checkbox">
+<?
+
+    $regions_arr=array();
+    if (sizeof($regions)) { foreach ($regions as $val) { $regions_arr[$val['id']] = $val['name_short']; }}
+
+
+echo  $form5->field($member, 'regions')->checkboxList($regions_arr, [
+    'item' => function($index, $label, $name, $checked, $value) {
+        if ($checked==1) $checked = 'checked';
+        return "<label class=\"checkbox-entry nowrap\"><input type=\"checkbox\" class=\"checklist\"  {$checked} name=\"{$name}\" value=\"{$value}\"><span><b>{$label}</b></span></label><div class=\"empty-space marg-lg-b15\"></div>";
+
+    }
+])->label(false);
+?>
+
                                             <div class="tt-editable-form-btn">
-                                                <a href="#" class="tt-editable-close button type-1">Відмінити</a>
-                                                <div class="button type-1 color-3">Зберегти<input type="submit"></div>
+                                                <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                                <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
                                             </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -478,3 +422,42 @@ $this->title = 'Кабінет користувача';
         </div>
         <div class="tt-devider"></div>
     </div>
+
+
+<?
+
+$gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
+echo $this->registerJsFile($gpJsLink);
+
+$options = '{"types":["(cities)"],"componentRestrictions":{"country":"ua"}}';
+echo $this->registerJs("(function(){
+        var input = document.getElementById('tt-google-single-autocomplete');
+        var options = $options;        
+        searchbox = new google.maps.places.Autocomplete(input, options);
+        
+        
+        
+        $('body').on('keyup','input.simple-input[type=\"tel\"]', function(event) {
+        var number = $(this);
+        
+        
+        if (number.val()!=number.data('value')) {
+        
+        
+            number.parent().parent().removeClass('col-md-12').addClass('col-md-9');
+            number.parent().parent().next().show();
+
+        } else {
+            number.parent().parent().removeClass('col-md-9').addClass('col-md-12');
+            number.parent().parent().next().hide();
+        }
+
+		
+    });
+
+        
+        
+})();" , \yii\web\View::POS_END );
+
+?>
+

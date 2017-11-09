@@ -147,10 +147,10 @@ $(function() {
 			initIterator++;
 		});
 		$('.swiper-container.swiper-control-top').each(function(){
-			swipers['swiper-'+$(this).attr('id')].params.control = swipers['swiper-'+$(this).closest('.tt-two-slider').find('.swiper-control-bottom').attr('id')];
+	//		swipers['swiper-'+$(this).attr('id')].params.control = swipers['swiper-'+$(this).closest('.tt-two-slider').find('.swiper-control-bottom').attr('id')];
 		});
 		$('.swiper-container.swiper-control-bottom').each(function(){
-			swipers['swiper-'+$(this).attr('id')].params.control = swipers['swiper-'+$(this).closest('.tt-two-slider').find('.swiper-control-top').attr('id')];
+	//		swipers['swiper-'+$(this).attr('id')].params.control = swipers['swiper-'+$(this).closest('.tt-two-slider').find('.swiper-control-top').attr('id')];
 		});
 		$('.custom-arrows-prev').on('click', function(){
 			swipers['swiper-'+$(this).siblings('.swiper-container').attr('id')].slidePrev();
@@ -301,6 +301,17 @@ $(function() {
         $(this).addClass('active');
     });
 
+/*
+    $('.tab-menu').on('click', function() {
+
+    	if ($(this).hasClass('tab-fadeout')) {
+	        $(this).closest('.tab-nav').next().filter(':visible').fadeOut(function(){
+    		    return true;
+            });
+		}
+
+	});
+*/
 	//tabs from hash
 	var hash = location.hash.replace('#', '');
 	if(hash){
@@ -502,6 +513,7 @@ $(function() {
 	};
 
 	/*tt-dropdown*/
+/*
 	$('.tt-dropdown-link').on('click', function(e){
 		$(this).closest('.tt-dropdown').toggleClass('active').find('.tt-dropdown-entry').slideToggle();
 		e.preventDefault();
@@ -509,7 +521,7 @@ $(function() {
 	$('.tt-dropdown-close,.tt-dropdown-overlay').on('click', function(e){
 		$(this).closest('.tt-dropdown-entry').slideUp().closest('.tt-dropdown').removeClass('active');
 	});
-
+*/
 	/*tt-editable slide animation*/
 	$('.tt-editable-wrapper.slide-anim .tt-editable-click').on('click', function(e){
 		if(!$(this).closest('.tt-editable-wrapper').hasClass('opened')){
@@ -717,7 +729,7 @@ $(function() {
 		var number = obj.closest('.tt-fadein-top').find('.simple-input').val();
 		var RegX = /([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/;
         if (RegX.test(number)) {
-            $.post( "/members/registration/sendphonecode", {'phone' : number},  function( data ) {
+            $.post( "/site/sendphonecode", {'phone' : number},  function( data ) {
                 var data = JSON.parse(data);
                 if (data.status==1){
                     obj.closest('.tt-fadein-top').siblings('.tt-fadein-bottom').find('.simple-text').text(number);
@@ -1282,9 +1294,13 @@ $(function() {
 
     });
 
+
+
+
     $('div#progress-wrp').on("click", function(e) {
         $(this).css("visibility", "hidden");
 	});
+
 
 
     $(document).on("submit", "form.form-ajax", function(e) {
@@ -1302,6 +1318,17 @@ $(function() {
             async: false,
             success: function (data) {
                 if (data.status==1){
+
+					// when edit prices on profile
+                    if ($('#price_list').length) {
+                        $.get( "/members/member/priceslist", function( data ) {
+                            $('#price_list').html(data);
+                            form.parent().closest('.tt-editable-form').fadeOut(300,function(){
+                                $(this).siblings('.tt-editable').fadeIn();
+                            });
+                        });
+                    	return false;
+                    }
 
                    	if (form.hasClass('reset-form')) { form.get(0).reset(); }
                    	if (form.attr('id')=='types') { $('div#prices_table').empty().html(data.prices); }
@@ -1345,6 +1372,8 @@ $(function() {
 
 
 
+
+
     $(document).on("submit", "form.form-edit-ajax", function(e) {
         e.preventDefault();
         var form = $(this);
@@ -1353,6 +1382,10 @@ $(function() {
         var data_post = form.serializeArray();
 
         console.log(data_post[1]['name']);
+
+
+
+
         jQuery.ajax({
             url: form.attr('action'),
             type: form.attr('method'),
@@ -1367,17 +1400,123 @@ $(function() {
                 if (data.status==1){
 
                     switch(data_post[1]['name']){
-						case 'MemberEdit[first_name]':
-                            form.closest('.tt-editable-form').prev('.tt-editable').find('.tt-editable-item').html(data_post[1]['value']);
-                    	break;
+                        case 'MemberEdit[busy]':
+
+                            if ($("span.tt-heading-state").length) {
+
+                                if (data_post[1]['value']==0) {
+                                    $('span.tt-heading-state').removeClass('red').html('вільний для роботи');
+                                } else {
+                                    $("span.tt-heading-state").addClass('red').html('Зайнятий до ' + data_post[2]['value']);
+                                }
+
+                                $('.popup-wrapper, .popup-content').removeClass('active');
+                                $('.tt-vote-selected').removeClass('tt-vote-selected');
+                            	return false;
+							}
 
 
+
+							if (data_post[1]['value']==0)
+                                form.find('.tt-editable-item').html('Вільний до роботи');
+							else
+                                form.find('.tt-editable-item').html('Зайнятий до '+data_post[2]['value']);
+                        break;
+                        case 'MemberEdit[surname]':
+                            form.find('.tt-editable-item').html(data_post[1]['value']);
+                            form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').show();
+                        break;
+                        case 'MemberEdit[first_name]':
+                        case 'MemberEdit[last_name]':
+                        case 'MemberEdit[email]':
+                        case 'MemberEdit[place]':
+
+                            // when edit plece in profile
+                            if ($("div#profile-place").length) {
+                                $("div#profile-place").html(data_post[1]['value']);
+                                $('.popup-wrapper, .popup-content').removeClass('active');
+                                $('.tt-vote-selected').removeClass('tt-vote-selected');
+                                return false;
+                            }
+
+                            form.find('.tt-editable-item').html(data_post[1]['value']);
+                        break;
+                        case 'MemberEdit[budget_min]':
+                            // when edit min_price on profile
+                            $('#budget_min').html(data_post[1]['value']+ ' грн.');
+                            $('.popup-wrapper, .popup-content').removeClass('active');
+                            $('.tt-vote-selected').removeClass('tt-vote-selected');
+                            return false;
+
+                        break;
+                        case 'MemberEdit[about]':
+                            form.find('.tt-editable-item').html(data_post[1]['value'].replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, "<br>"));
+
+                            if (data_post[1]['value']!='')
+                                form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').show();
+                            else
+                                form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').hide();
+                                form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').hide();
+
+							if ($('#edit_about').hasClass('profile')) {
+
+                                form.closest('.tt-editable-form').fadeOut(300,function(){
+                                    $(this).siblings('.tt-editable').html(data_post[1]['value'].replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, "<br>"));
+                                    $(this).siblings('.tt-editable').fadeIn();
+                                });
+
+
+							}
+
+                            break;
+                        case 'MemberEdit[regions]':
+                            var region_list = '';
+
+                            // when edit regions on profile
+							if ($("ul.simple-list.size-2.profile").length) {
+                                $("input.checklist").each( function () {
+                                    if($(this).is(':checked')){
+                                        region_list +=  '<li><a href="javascript:">'+ $(this).next().html() + '</a></li>';
+                                    }
+                                });
+                                $("ul.simple-list.size-2.profile").html(region_list);
+                                $('.popup-wrapper, .popup-content').removeClass('active');
+                                $('.tt-vote-selected').removeClass('tt-vote-selected');
+								return false;
+							}
+
+                            $("input.checklist").each( function () {
+                                if($(this).is(':checked')){
+                                    region_list +=  '<p>'+ $(this).next().html() + '</p>';
+	                            }
+                            });
+
+                            form.find('.tt-editable-item').html(region_list);
+						break;
+                        case 'MemberEdit[forma]':
+
+                            var forma = $("#memberedit-forma").find(":selected").text();
+                            if (data_post[1]['value']==2) forma += ' / '+$("#memberedit-brygada").find(":selected").text();
+                            if (data_post[1]['value']==3) forma += ' / '+$("#memberedit-company").val();
+                            // when edit forma on profile
+                            if ($("span#profile_forma").length) {
+                                if (data_post[1]['value']==3) forma = ' Юридична особа ';
+
+                                $("span#profile_forma").html(forma);
+                                $('.popup-wrapper, .popup-content').removeClass('active');
+                                $('.tt-vote-selected').removeClass('tt-vote-selected');
+                                return false;
+							}
+
+
+                            form.find('.tt-editable-item').html(forma);
+
+                        break;
 					}
 
-                    form.closest('.tt-editable-form').slideUp(300).siblings('.tt-editable').slideDown(300, function(){
+                    form.find('.tt-editable-form').slideUp(300).siblings('.tt-editable').slideDown(300, function(){
                         $(this).closest('.tt-editable-wrapper').removeClass('opened');
                     });
-
                 }
             }
         });
@@ -1385,10 +1524,12 @@ $(function() {
     });
 
     $(document).on("click", "button.tt-editable-close", function(e) {
-        $(this).closest('.tt-editable-form').slideUp(300).siblings('.tt-editable').slideDown(300, function(){
+       $(this).closest('.tt-editable-form').slideUp(300).siblings('.tt-editable').slideDown(300, function(){
             $(this).closest('.tt-editable-wrapper').removeClass('opened');
-        });
-
+       });
 	});
+
+
+
 
 });
