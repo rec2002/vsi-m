@@ -13,7 +13,10 @@ $this->title = 'Додати замовлення';
                 <div class="empty-space marg-sm-b40 marg-lg-b80"></div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <?php $form = ActiveForm::begin(['id' => 'reg-customer',
+                        <?php
+
+                        $model->setScenario('add-order');
+                        $form = ActiveForm::begin(['id' => 'reg-customer',
                             'enableAjaxValidation'=>true,
                             'validationUrl'=>Url::toRoute('/members/customregistration/validation/?scenario=add-order'),
                             'action' =>['/members/customregistration/?scenario=add-order'],
@@ -32,7 +35,7 @@ $this->title = 'Додати замовлення';
                             </div>
                             <?= $form->field($model, 'descriptions')->textarea(['value'=>@Yii::$app->session['newCustomerSession']['descriptions'], 'class' => 'simple-input', 'tabindex' => '2', 'maxlength'=>'800', 'autocomplete'=>'off', 'placeholder' => "Опишіть завдання як омога детальніше, все що може бути корисно для майстрів (розміри, об’єм робіт, типи робіт, матеріали ... )", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
 
-                            <div class="tt-project-new-img">
+                            <div class="tt-project-new-img ">
                                 <div class="button-upload tt-icon-hover tt-img-upload">
                                         <span class="tt-icon-entry">
                                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAARCAMAAAAIRmf1AAAAclBMVEUAAAA7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZc7WZeykJCtAAAAJXRSTlMAKNBtnGHm1enbRBn3r6qhcx0T4ZllUj0zLse3k4AHlpJnWFUK0CMq7AAAAKdJREFUGNNNzVcShCAQBNAGFRF1zTlsnPtfcQlK0T9UveoeEGTkRSFqhOlpn6aDqoBiUsgBRe+AlnYVmcKT31TRwmib+xQf6YkxKoFRIunuIWvoAeRyx1pePy6W2ozjIOZasx3mmiL6XkNmWo3gqCkx9KLJUitS3YoMDaTAS3NLk2tBVsBsb3mCexs9rGmAS7dBtzp/y2SkWEUFP82PPoksRHz+0sHLH6CfC0vDb7GcAAAAAElFTkSuQmCC" alt="">
@@ -70,10 +73,10 @@ $this->title = 'Додати замовлення';
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="tt-input-wrapper style-2">
-                                                    <div class="tt-input-label">Від</div>
+                                                    <div class="tt-input-label" >Від</div>
                                                     <div class="tt-input-entry">
                                                         <div class="simple-input-icon">
-                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
+                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" style="top: 28px;" alt="">
 
                                                             <?= $form->field($model, 'date_from')->textInput(['class' => 'simple-input simple-datapicker', 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
 
@@ -86,7 +89,7 @@ $this->title = 'Додати замовлення';
                                                     <div class="tt-input-label">До</div>
                                                     <div class="tt-input-entry">
                                                         <div class="simple-input-icon">
-                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
+                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg=="  style="top: 28px;" alt="">
                                                             <?= $form->field($model, 'date_to')->textInput(['class' => 'simple-input simple-datapicker', 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
                                                         </div>
                                                     </div>
@@ -108,7 +111,8 @@ $this->title = 'Додати замовлення';
                                 <div class="row row10">
                                     <div class="col-sm-9">
 
-                                        <?= $form->field($model, 'location')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['location'], 'class' => 'simple-input size-1', 'tabindex' => '4', 'autocomplete'=>'off', 'placeholder' => "Почніть вводити адресу", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+                                        <?=$form->field($model, 'location')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['location'], 'class' => 'simple-input size-1', "id"=>"tt-google-single-autocomplete-only", 'tabindex' => '4', 'autocomplete'=>'off', 'placeholder' => "Почніть вводити адресу", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+                                        <?=$form->field($model, 'region')->hiddenInput(['value'=>@Yii::$app->session['newCustomerSession']['region'], 'id'=>'tt-google-single-autocomplete-region'])->label(false); ?>
                                         <div class="empty-space marg-xs-b20"></div>
                                     </div>
                                     <div class="col-sm-3">
@@ -153,11 +157,11 @@ $this->title = 'Додати замовлення';
                                         <div class="empty-space marg-lg-b15"></div>
                                         <div class="row">
                                             <div class="col-sm-8 col-md-9">
-                                                <?= $form->field($model, 'confirm_sms')->textInput(['class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
+                                                <?= $form->field($model, 'confirm_sms')->textInput(['class' => 'simple-input', "id"=>"confirm_sms", 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
                                                 <div class="empty-space marg-xs-b20"></div>
                                             </div>
                                             <div class="col-sm-4 col-md-3">
-                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link  tt-phone-code-submit disabled" href="javascript:">ОК</a>
+                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link  tt-phone-code-submit " href="javascript:">ОК</a>
                                             </div>
                                         </div>
                                     </div>

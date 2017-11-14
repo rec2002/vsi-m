@@ -34,7 +34,7 @@ $this->title = 'Кабінет користувача';
                     <img class="img-responsive" src="<?=!empty(Yii::$app->user->identity->avatar_image) ? Yii::$app->user->identity->avatar_image : '/img/person/person.png';?>" alt="">
                 </div>
                 <div class="tt-heading-user-content">
-                    <div class="tt-heading-status">зараз на сайті</div>
+                    <!--<div class="tt-heading-status">зараз на сайті</div>-->
                     <div class="tt-dropdown style-2">
                         <a class="tt-dropdown-link open-popup" data-rel="21" href="javascript:"><span class="tt-heading-state <?=(!empty($member->busy_to) ? 'red' : ''); ?>"><?=(empty($member->busy_to)) ? 'Вільний для роботи' : 'Зайнятий до '.date('d.m.Y', (strtotime($member->busy_to))); ?></span><span class="tt-dropdown-icon"><i></i></span></a>
                         <!--<div class="tt-dropdown-entry">
@@ -47,10 +47,10 @@ $this->title = 'Кабінет користувача';
                         </div>-->
                     </div>
 
-                    <h3 class="tt-heading-title h3 light">24/7 Electrical Company <a class="open-popup tt-icon-hover tt-icon-entry" data-rel="15" href="#">
+                    <h3 class="tt-heading-title h3 light"><?=(!empty(Yii::$app->user->identity->company)) ? Yii::$app->user->identity->company : Yii::$app->user->identity->first_name.' '.Yii::$app->user->identity->last_name ?> <!--<a class="open-popup tt-icon-hover tt-icon-entry" data-rel="15" href="#">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAAY1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+aRQ2gAAAAIXRSTlMAJG4QC5yml4RdCHdPHgX5YlhRSsjDubCPeWtkRUQ1LhVEw5mLAAAAXElEQVQI103KVw6AIBAA0V0UpSiC2Pv9T6kmwDJ/LxmgjgeypOBIurRU5J1b5hsRxBozajZhUA8LOm2SaizrIp6/qiDpc7XdKUjg7nUjGa7UMH+KLxe2hESJClIvbhADi7p4sv0AAAAASUVORK5CYII=" alt="">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAATlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAP+0nkAAAAGnRSTlMABmCnjjSZQMMWzrevK8ef/OHXyIVwW1YdSoUZvnoAAABYSURBVAjXTclXDoAgEADRpa0gvYr3v6iJgQ3z9zJAmfbCEdrACaw79GQWQxRS2iUhZ3aijC2jObp5SOnr1L2Ep2CkZn+t2Z0gga/e57IFT6o2KiAiV4z0AW2MA6Ezq1d1AAAAAElFTkSuQmCC" alt="">
-                        </a>
+                        </a>-->
                     </h3>
                     <div class="tt-heading-desc simple-text size-2">
                         <p><span id="profile_forma"><?=($member->forma!=3) ? MemberHelper::FORMA[$member->forma] : ''?><?=($member->forma==2) ? ' / '.MemberHelper::BRYGADA[$member->brygada] : ''?><?=($member->forma==3) ? ' Юридична особа ' : ''?></span> <a class="open-popup tt-icon-hover tt-icon-entry" data-rel="16" href="#">
@@ -97,7 +97,7 @@ $this->title = 'Кабінет користувача';
                         <div class="tt-underheading-phone">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAUCAMAAACK2/weAAAARVBMVEUAAACqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7ZxyU2/AAAAF3RSTlMA6heZq1Xvig313LqimoF60W5p42ssBC1PkxoAAAB6SURBVBjTrY9JDsMwDAPJKJa8xU6c5f9P7cEKCvTcuQ1EQiBiUzLveya1RRxqIXSRHoLpgUoA13leAFhhOt7rUENL325qEN6Lc1OwMcKJ3CBcXl0o/9SfR5bK6pRkrrW6znDvHq58AJQC4GGd88MYYc6PTUnmTFJb/AA54QVJiz4xVAAAAABJRU5ErkJggg==" alt="">
                             <div class="tt-underheading-item">
-                                <a href="tel:0675552363">(067) 555-23-63</a>
+                                <a href="tel:<?=preg_replace('/\D/', '', $member->phone)?>"><?=$member->phone?></a>
                                 <a class="open-popup tt-icon-hover tt-icon-entry" data-rel="17" href="#">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAAUVBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////8IN+deAAAAG3RSTlMADSRuBpyml4Rdd08e+cZiWFFKRDG5sI95ZBUTkji5AAAAXElEQVQI103OSw6AIAxFUSxFKCgg4Hf/CxUTsLzZSe7gCV5+xDAyCljFErJvFWRypkk69Fbu0LSJE6LFXxomPfXy09xEadSyZsMSsVyShQrRH1W9VSZUdRIgX30BLq0C2VB3RkwAAAAASUVORK5CYII=" alt="">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAATlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAP+0nkAAAAGnRSTlMABmCnjjSZQMMWzrevK8ef/OHXyIVwW1YdSoUZvnoAAABYSURBVAjXTclXDoAgEADRpa0gvYr3v6iJgQ3z9zJAmfbCEdrACaw79GQWQxRS2iUhZ3aijC2jObp5SOnr1L2Ep2CkZn+t2Z0gga/e57IFT6o2KiAiV4z0AW2MA6Ezq1d1AAAAAElFTkSuQmCC" alt="">
@@ -122,7 +122,7 @@ $this->title = 'Кабінет користувача';
                         <div class="tab-nav">
                             <div class="tab-menu active"><span>Інформація</span></div>
                             <div class="tab-menu"><span>Виконані проекти</span></div>
-                            <div class="tab-menu"><span>Відгуки <span>(20)</span></span></div>
+                            <div class="tab-menu"><span>Відгуки <span>(0)</span></span></div>
                         </div>
 
                         <div class="tab-entry" style="display: block;">
@@ -186,8 +186,12 @@ $this->title = 'Кабінет користувача';
                         </div>
                         <div class="tab-entry">
                             <div class="empty-space marg-lg-b30"></div>
+
+                            UNDER CONSTRUCTION
+
+
                             <!-- TT-PROJECT-EDIT -->
-                            <div class="tt-project-edit-wrapper">
+                            <!--<div class="tt-project-edit-wrapper">
                                 <div class="tt-project-list">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -314,8 +318,11 @@ $this->title = 'Кабінет користувача';
                                     </div>
                                 </div>
                             </div>
+                            -->
                         </div>
                         <div class="tab-entry">
+                            UNDER CONSTRUCTION
+                            <!--
                             <div class="tabs-block style-2">
                                 <div class="tab-nav">
                                     <div class="tab-menu active">Всі</div>
@@ -324,7 +331,7 @@ $this->title = 'Кабінет користувача';
                                 </div>
 
                                 <div class="tab-entry" style="display: block;">
-                                    <!-- TT-REVIEW -->
+
                                     <div class="tt-review editable">
                                         <div class="tt-dropdown style-2 dark">
                                             <a class="tt-dropdown-link" href="#"><span class="tt-dropdown-icon"><i></i></span></a>
@@ -694,6 +701,7 @@ $this->title = 'Кабінет користувача';
                                 <div class="tab-entry">
                                 </div>
                             </div>
+                            -->
                         </div>
                     </div>
                     <div class="empty-space marg-sm-b40"></div>
@@ -1152,17 +1160,21 @@ $this->title = 'Кабінет користувача';
             <div class="layer-close"></div>
             <div class="popup-container">
                 <div class="popup-align">
+                    <?php
+
+                    $member->setScenario('phone');
+                    $form7 = ActiveForm::begin(['id' => 'edit_phone', 'options' => ['class'=>'form-edit-ajax profile'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=phone'), 'action' =>['/members/member/savemember/?scenario=phone']]); ?>
                     <h4 class="h4 text-center">Номер телефону</h4>
                     <div class="empty-space marg-lg-b30"></div>
 
                     <div class="tt-fadein-top">
                         <div class="row">
                             <div class="col-sm-8 col-md-9">
-                                <input class="simple-input" required="" placeholder="+38 (ххх) ххх - хх - хх" value="+38 (067) 555-4326" type="tel">
+                                <?= $form7->field($member, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>'', 'data-value'=>$member->phone, 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off',   'placeholder' => "+38 (0хх) ххх - хххх"])->label(false); ?>
                                 <div class="empty-space marg-xs-b20"></div>
                             </div>
                             <div class="col-sm-4 col-md-3">
-                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit" href="#">Підтвердити</a>
+                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit" href="javascript:">Підтвердити</a>
                             </div>
                         </div>
                     </div>
@@ -1170,24 +1182,22 @@ $this->title = 'Кабінет користувача';
                         <div class="simple-text size-3"></div>
                         <div class="empty-space marg-lg-b15"></div>
                         <div class="row">
-                            <div class="col-sm-8 col-md-9">
-                                <input class="simple-input" required="" placeholder="код отриманий по смс" type="text">
+                            <div class="col-sm-12 col-md-12">
+                                <?= $form7->field($member, 'confirm_sms')->textInput(['class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
                                 <div class="empty-space marg-xs-b20"></div>
                             </div>
-                            <div class="col-sm-4 col-md-3">
-                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link" href="#">ОК</a>
-                            </div>
+                            <!--<div class="col-sm-4 col-md-3">
+                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link" href="javascript:">ОК</a>
+                            </div>-->
                         </div>
                     </div>
 
                     <div class="empty-space marg-lg-b20"></div>
                     <div class="tt-buttons-block text-right">
-                        <div class="button type-1 size-3 color-3">
-                            <span>Зберегти</span>
-                            <input type="submit">
-                        </div>
-                        <a class="button type-1 size-3 popup-close"><span>Відмінити</span></a>
+                        <?= Html::resetButton('Відмінити', ['class' => 'popup-close-phone button type-1']) ?>
+                        <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
                     </div>
+                    <?php ActiveForm::end(); ?>
                 </div>
                 <div class="button-close"></div>
             </div>
@@ -1197,10 +1207,13 @@ $this->title = 'Кабінет користувача';
             <div class="popup-container size-8">
                 <div class="popup-align">
 
-                    <?php $form4 = ActiveForm::begin(['id' => 'edit_place', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=place'), 'action' =>['/members/member/savemember/?scenario=place']]); ?>
+                    <?php
+                    $member->setScenario('place');
+                    $form4 = ActiveForm::begin(['id' => 'edit_place', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>false, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=place'), 'action' =>['/members/member/savemember/?scenario=place']]); ?>
                     <h4 class="h4 text-center">Розташуваня</h4>
                     <div class="empty-space marg-lg-b30"></div>
-                    <?=$form4->field($member, 'place')->textInput(['value'=>$member->place, 'class' => 'simple-input', "id"=>"tt-google-single-autocomplete", 'autocomplete'=>'off', 'placeholder' => "Введіть місце знаходження"])->label(false); ?>
+                    <?=$form4->field($member, 'place')->textInput(['value'=>$member->place, 'class' => 'simple-input', "id"=>"tt-google-single-autocomplete-only", 'autocomplete'=>'off', 'placeholder' => "Введіть місце знаходження"])->label(false); ?>
+                    <?=$form4->field($member, 'region')->hiddenInput(['id'=>'tt-google-single-autocomplete-region'])->label(false); ?>
                     <div class="empty-space marg-lg-b20"></div>
                     <div class="tt-buttons-block text-right">
                         <?= Html::resetButton('Відмінити', ['class' => 'popup-close button type-1']) ?>
@@ -1217,7 +1230,11 @@ $this->title = 'Кабінет користувача';
             <div class="popup-container size-7">
                 <div class="popup-align">
 
-                    <?php $form5 = ActiveForm::begin(['id' => 'edit_regions', 'options' => ['class'=>'form-edit-ajax'],
+                    <?php
+
+
+                    $member->setScenario('regions');
+                    $form5 = ActiveForm::begin(['id' => 'edit_regions', 'options' => ['class'=>'form-edit-ajax'],
                         'enableAjaxValidation' => false,
                         'enableClientValidation' => true,
                         'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=regions'), 'action' =>['/members/member/savemember/?scenario=regions']]); ?>
@@ -1243,9 +1260,12 @@ $this->title = 'Кабінет користувача';
 
 
                                 if ($checked==1) $checked = 'checked';
-                                return (($index==0) ? "<div class=\"col-xs-6\">" : "").(($index==13) ? "</div><div class=\"col-xs-6\">" : "")."<label class=\"checkbox-entry nowrap\"><input type=\"checkbox\" class=\"checklist\" {$checked} name='{$name}' value='{$value}'><span><b>{$label}</b></span></label><div class=\"empty-space marg-lg-b15\"></div>".(($index==24) ? "</div>" : "");
+                                return (($index==0) ? "<div class=\"col-xs-6\">" : "").(($index==13) ? "</div><div class=\"col-xs-6\">" : "")."<label class=\"checkbox-entry nowrap\"><input type=\"checkbox\" class=\"checklist\" {$checked} name='{$name}' value='{$value}'><span><b>{$label}</b></span></label><div class=\"empty-space marg-lg-b15\"></div>".(($index==24) ? "</div><div style=\"clear:both;\">" : "");
                             }
                         ])->label(false);
+
+                        echo "</div>";
+
                         ?>
                     </div>
                     <div class="empty-space marg-lg-b20"></div>
@@ -1266,7 +1286,9 @@ $this->title = 'Кабінет користувача';
             <div class="layer-close"></div>
             <div class="popup-container">
                 <div class="popup-align">
-                    <?php $form8 = ActiveForm::begin(['id' => 'edit_budget_min', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=budget_min'), 'action' =>['/members/member/savemember/?scenario=budget_min']]); ?>
+                    <?php
+                    $member->setScenario('budget_min');
+                    $form8 = ActiveForm::begin(['id' => 'edit_budget_min', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=budget_min'), 'action' =>['/members/member/savemember/?scenario=budget_min']]); ?>
                     <h4 class="h4 text-center">Мінімальна вартість замовлення</h4>
                     <div class="empty-space marg-lg-b30"></div>
 
@@ -1299,7 +1321,10 @@ $this->title = 'Кабінет користувача';
                     <div class="empty-space marg-lg-b30"></div>
 
 
-                    <?php $form0 = ActiveForm::begin(['id' => 'edit_busy_to', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=busy_to'), 'action' =>['/members/member/savemember/?scenario=busy_to']]); ?>
+                    <?php
+
+                    $member->setScenario('busy_to');
+                    $form0 = ActiveForm::begin(['id' => 'edit_busy_to', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>false, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=busy_to'), 'action' =>['/members/member/savemember/?scenario=busy_to']]); ?>
                     <div class="tt-editable-form" style="display: block;">
 
 
@@ -1333,6 +1358,7 @@ $this->title = 'Кабінет користувача';
                                         'options' => [
                                             'placeholder' => 'Виберіть дату'
                                         ]
+
 
                                     ])->textInput(['value'=>(!empty($member->busy_to)) ? date('d.m.Y', (strtotime($member->busy_to))) : '',  'class' => 'simple-input simple-datapicker', 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
                                 </div>
@@ -1377,23 +1403,27 @@ $this->title = 'Кабінет користувача';
 $gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
 
-$options = '{"types":["(cities)"],"componentRestrictions":{"country":"ua"}}';
+
 echo $this->registerJs("(function(){
 
 
-
-        var input = document.getElementById('tt-google-single-autocomplete');
-        var options = $options;        
-        searchbox = new google.maps.places.Autocomplete(input, options);
-
 $(\"time.timeago\").html($.timeago($(\"time.timeago\")));
 
+$('.popup-close-phone').click(function(){
 
+	$(this).closest('#edit_phone').find('.tt-fadein-top').show();
+	$(this).closest('#edit_phone').find('.tt-fadein-bottom').hide();
+	
+	$('input#memberedit-phone').val('');		
+	$('input#memberedit-confirm_sms').val('');
 
-
+    $('.popup-wrapper, .popup-content').removeClass('active');
+	return false;
+});
 
         
 })();" , \yii\web\View::POS_END );
+echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 
 ?>
 

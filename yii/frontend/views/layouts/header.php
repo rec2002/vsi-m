@@ -12,7 +12,7 @@ use yii\helpers\Url;
 
 
         <header class="tt-header user">
-            <div class="top-inner-container">
+            <div class="top-inner-container majster">
                 <a class="logo" href="/"><img src="/img/header/logo_icon.png" alt=""><img src="/img/header/logo_text.png" alt=""></a>
                 <div class="cmn-toggle-switch"><span></span></div>
             </div>
@@ -21,7 +21,7 @@ use yii\helpers\Url;
                     <div class="nav-left">
                         <nav class="main-nav">
                             <ul>
-                                <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Замовлення</a></li>
+                                <li><a href="<?=Url::to(['/members/member/list'])?>">Замовлення</a></li>
                                 <li><a href="<?=Url::to(['/members/member/profile'])?>">Моя сторінка</a></li>
                                 <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Каталог майстрів</a></li>
                             </ul>
@@ -66,7 +66,7 @@ use yii\helpers\Url;
     <?  if (\Yii::$app->user->can('zamovnyk')) {  ?>
 
     <header class="tt-header user">
-        <div class="top-inner-container">
+        <div class="top-inner-container zamovnyk">
             <a class="logo" href="/"><img src="/img/header/logo_icon.png" alt=""><img src="/img/header/logo_text.png" alt=""></a>
             <div class="cmn-toggle-switch"><span></span></div>
         </div>

@@ -13,8 +13,10 @@ $this->title = 'Додати замовлення';
                 <div class="empty-space marg-sm-b40 marg-lg-b80"></div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <?php $form = ActiveForm::begin(['id' => 'add-order',
-                            'enableAjaxValidation'=>true,
+                        <?php
+                        $order->setScenario('add-order');
+                        $form = ActiveForm::begin(['id' => 'add-order',
+                            'enableAjaxValidation'=>false,
                             'validationUrl'=>Url::toRoute('/members/customer/validation/?mode=add-order'),
                             'action' =>['/members/customer/orderadd/'],
                             'options' => ['enctype'=>'multipart/form-data']
@@ -61,7 +63,9 @@ $this->title = 'Додати замовлення';
                                                 'allowClear' => false,
                                                 'tabindex' => '3'
                                             ],
-                                        ])->label(false); ?>
+                                        ])->label(false);
+
+                                        ?>
 
                                     </div>
                                 </div>
@@ -106,7 +110,8 @@ $this->title = 'Додати замовлення';
                                 <div class="row row10">
                                     <div class="col-sm-9">
 
-                                        <?= $form->field($order, 'location')->textInput(['class' => 'simple-input size-1', 'id'=>"tt-google-autocomplete", 'tabindex' => '4', 'autocomplete'=>'off', 'placeholder' => "Почніть вводити адресу", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+                                        <?= $form->field($order, 'location')->textInput(['class' => 'simple-input size-1', 'id'=>"tt-google-single-autocomplete-only", 'tabindex' => '4', 'autocomplete'=>'off', 'placeholder' => "Почніть вводити адресу", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+                                        <?=$form->field($order, 'region')->hiddenInput(['id'=>'tt-google-single-autocomplete-region'])->label(false); ?>
                                         <div class="empty-space marg-xs-b20"></div>
                                     </div>
                                     <div class="col-sm-3">

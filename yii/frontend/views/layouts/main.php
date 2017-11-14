@@ -18,7 +18,7 @@ AppAsset::register($this);
     <meta name="format-detection" content="telephone=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-
+    <link rel="shortcut icon" href="/img/favicon.ico">
     <!-- LOADER -->
     <style>
         #loader-wrapper{position:fixed;top:0;left:0;height:100%;width:100%;background:#fff;z-index:300;}

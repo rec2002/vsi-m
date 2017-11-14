@@ -62,7 +62,10 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Робочий статус</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form0 = ActiveForm::begin(['id' => 'edit_busy_to', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=busy_to'), 'action' =>['/members/member/savemember/?scenario=busy_to']]); ?>
+                                    <?php
+
+                                    $member->setScenario('busy_to');
+                                    $form0 = ActiveForm::begin(['id' => 'edit_busy_to', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>false, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=busy_to'), 'action' =>['/members/member/savemember/?scenario=busy_to']]); ?>
                                     <div class="tt-editable">
                                         <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=(empty($member->busy_to)) ? 'Вільний для роботи' : 'Зайнятий до '.date('d.m.Y', (strtotime($member->busy_to))); ?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
@@ -122,7 +125,10 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Ім’я</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form1 = ActiveForm::begin(['id' => 'edit_first_name', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=first_name'), 'action' =>['/members/member/savemember/?scenario=first_name']]); ?>
+                                    <?php
+
+                                    $member->setScenario('first_name');
+                                    $form1 = ActiveForm::begin(['id' => 'edit_first_name', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=first_name'), 'action' =>['/members/member/savemember/?scenario=first_name']]); ?>
                                     <div class="tt-editable">
                                         <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->first_name?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
@@ -147,7 +153,10 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">По батькові</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form = ActiveForm::begin(['id' => 'edit_surname',  'options' => ['class'=>'form-edit-ajax'],  'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=surname'), 'action' =>['/members/member/savemember/?scenario=surname']]); ?>
+                                    <?php
+
+                                    $member->setScenario('surname');
+                                    $form = ActiveForm::begin(['id' => 'edit_surname',  'options' => ['class'=>'form-edit-ajax'],  'enableAjaxValidation'=>true, 'validateOnSubmit' => true, 'validateOnType' => true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=surname'), 'action' =>['/members/member/savemember/?scenario=surname']]); ?>
                                     <div class="tt-editable">
                                         <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->surname?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="" >
@@ -170,13 +179,16 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Прізвище</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form3 = ActiveForm::begin(['id' => 'edit_last_name', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=last_name'), 'action' =>['/members/member/savemember/?scenario=last_name']]); ?>
+                                    <?php
+
+                                    $member->setScenario('last_name');
+                                    $form3 = ActiveForm::begin(['id' => 'edit_last_name', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=last_name'), 'action' =>['/members/member/savemember/?scenario=last_name']]); ?>
                                     <div class="tt-editable">
                                         <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->last_name?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
-                                        <?=$form3->field($member, 'last_name')->textInput(['value'=>$member->last_name, 'class' => 'simple-input', 'placeholder' => "Прізвище"])->label(false); ?>
+                                        <?=$form3->field($member, 'last_name')->textInput(['value'=>$member->last_name, 'validateOnSubmit' => true, 'class' => 'simple-input', 'placeholder' => "Прізвище"])->label(false); ?>
                                         <div class="tt-editable-form-btn">
                                              <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
                                              <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
@@ -193,17 +205,20 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Телефон</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form7 = ActiveForm::begin(['id' => 'edit_phone', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=phone'), 'action' =>['/members/member/savemember/?scenario=phone']]); ?>
+                                    <?php
+
+                                    $member->setScenario('phone');
+                                    $form7 = ActiveForm::begin(['id' => 'edit_phone', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=phone'), 'action' =>['/members/member/savemember/?scenario=phone']]); ?>
                                     <div class="tt-editable">
                                         <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->phone?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
-                                        <form>
+
                                             <div class="tt-fadein-top">
                                                 <div class="row">
                                                     <div class="col-sm-8 col-md-12">
-                                                        <?= $form7->field($member, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>$member->phone, 'data-value'=>$member->phone, 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off',   'placeholder' => "+38 (0хх) ххх - хххх"])->label(false); ?>
+                                                        <?= $form7->field($member, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>'', 'data-value'=>$member->phone, 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off',   'placeholder' => "+38 (0хх) ххх - хххх"])->label(false); ?>
                                                     </div>
                                                     <div class="col-sm-4 col-md-3"  style="display: none;">
                                                         <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit" href="javascript:">Підтвердити</a>
@@ -215,20 +230,20 @@ $this->title = 'Кабінет користувача';
                                                 <div class="simple-text size-3"></div>
                                                 <div class="empty-space marg-lg-b15"></div>
                                                 <div class="row">
-                                                    <div class="col-sm-8 col-md-9">
+                                                    <div class="col-sm-12 col-md-12">
                                                         <?= $form7->field($member, 'confirm_sms')->textInput(['class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
                                                         <div class="empty-space marg-xs-b20"></div>
                                                     </div>
-                                                    <div class="col-sm-4 col-md-3">
+                                                    <!--<div class="col-sm-4 col-md-3">
                                                         <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link" href="javascript:">ОК</a>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <div class="tt-editable-form-btn">
-                                                <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                                <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close popup-close-phone button type-1']) ?>
                                                 <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
                                             </div>
-                                        </form>
+
                                     </div>
                                     <?php ActiveForm::end(); ?>
                                 </div>
@@ -241,7 +256,10 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Email</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form3 = ActiveForm::begin(['id' => 'edit_email', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=email'), 'action' =>['/members/member/savemember/?scenario=email']]); ?>
+                                    <?php
+
+                                    $member->setScenario('email');
+                                    $form3 = ActiveForm::begin(['id' => 'edit_email', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=email'), 'action' =>['/members/member/savemember/?scenario=email']]); ?>
                                     <div class="tt-editable">
                                         <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->email?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
@@ -265,13 +283,17 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Основне місто</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form4 = ActiveForm::begin(['id' => 'edit_place', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=place'), 'action' =>['/members/member/savemember/?scenario=place']]); ?>
+                                    <?php
+
+                                    $member->setScenario('place');
+                                    $form4 = ActiveForm::begin(['id' => 'edit_place', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>false, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=place'), 'action' =>['/members/member/savemember/?scenario=place']]); ?>
                                     <div class="tt-editable">
                                         <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->place?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
-                                        <?=$form4->field($member, 'place')->textInput(['value'=>$member->place, 'class' => 'simple-input', "id"=>"tt-google-single-autocomplete", 'autocomplete'=>'off', 'placeholder' => "Введіть місце знаходження"])->label(false); ?>
+                                        <?=$form4->field($member, 'place')->textInput(['class' => 'simple-input', "id"=>"tt-google-single-autocomplete-only", 'autocomplete'=>'off', 'placeholder' => "Введіть місце знаходження"])->label(false); ?>
+                                        <?=$form4->field($member, 'region')->hiddenInput(['id'=>'tt-google-single-autocomplete-region'])->label(false); ?>
                                         <div class="tt-editable-form-btn">
                                             <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
                                             <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
@@ -288,7 +310,10 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Форма роботи</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form6 = ActiveForm::begin(['id' => 'edit_forma', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=forma'), 'action' =>['/members/member/savemember/?scenario=forma']]); ?>
+                                    <?php
+
+                                    $member->setScenario('forma');
+                                    $form6 = ActiveForm::begin(['id' => 'edit_forma', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=forma'), 'action' =>['/members/member/savemember/?scenario=forma']]); ?>
                                     <div class="tt-editable">
                                         <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=MemberHelper::FORMA[$member->forma]?><?=($member->forma==2) ? ' / '.MemberHelper::BRYGADA[$member->brygada] : ''?><?=($member->forma==3) ? ' / '.$member->company : ''?>
                                         </div>
@@ -350,7 +375,9 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Про себе</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form4 = ActiveForm::begin(['id' => 'edit_about', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=about'), 'action' =>['/members/member/savemember/?scenario=about']]); ?>
+                                    <?php
+                                    $member->setScenario('about');
+                                    $form4 = ActiveForm::begin(['id' => 'edit_about', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=about'), 'action' =>['/members/member/savemember/?scenario=about']]); ?>
                                     <div class="tt-editable">
                                         <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=nl2br($member->about)?></div>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
@@ -377,7 +404,11 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-input-label">Виїзд на об`єкти</div>
                                 </div>
                                 <div class="tt-preson-row-right">
-                                    <?php $form5 = ActiveForm::begin(['id' => 'edit_regions', 'options' => ['class'=>'form-edit-ajax'],
+                                    <?php
+
+
+                                    $member->setScenario('regions');
+                                    $form5 = ActiveForm::begin(['id' => 'edit_regions', 'options' => ['class'=>'form-edit-ajax'],
                                         'enableAjaxValidation' => false,
                                         'enableClientValidation' => true,
                                         'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=regions'), 'action' =>['/members/member/savemember/?scenario=regions']]); ?>
@@ -429,21 +460,11 @@ echo  $form5->field($member, 'regions')->checkboxList($regions_arr, [
 $gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
 
-$options = '{"types":["(cities)"],"componentRestrictions":{"country":"ua"}}';
 echo $this->registerJs("(function(){
-        var input = document.getElementById('tt-google-single-autocomplete');
-        var options = $options;        
-        searchbox = new google.maps.places.Autocomplete(input, options);
-        
-        
-        
         $('body').on('keyup','input.simple-input[type=\"tel\"]', function(event) {
         var number = $(this);
         
-        
         if (number.val()!=number.data('value')) {
-        
-        
             number.parent().parent().removeClass('col-md-12').addClass('col-md-9');
             number.parent().parent().next().show();
 
@@ -455,9 +476,23 @@ echo $this->registerJs("(function(){
 		
     });
 
+    $('.popup-close-phone').click(function(){
+
+        $(this).closest('#edit_phone').find('.tt-fadein-top').show();
+        $(this).closest('#edit_phone').find('.tt-fadein-bottom').hide();
+        
+        $('input#memberedit-phone').val($('input#memberedit-phone').data('value'));		
+        $('input#memberedit-confirm_sms').val('');
+    
+        $('.popup-wrapper, .popup-content').removeClass('active');
+        return false;
+    });
+        
         
         
 })();" , \yii\web\View::POS_END );
+
+echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 
 ?>
 

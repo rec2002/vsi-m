@@ -53,7 +53,7 @@ class MemberEdit extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-      /*      [['email', 'auth_key', 'password', 'password_reset_token', 'first_name', 'last_name', 'surname', 'phone', 'place', 'forma', 'brygada', 'company', 'about'], 'required'],*/
+
             [['forma', 'brygada'], 'integer'],
             [['about'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
@@ -67,21 +67,27 @@ class MemberEdit extends \yii\db\ActiveRecord
             [['last_name'], 'string', 'min' => 3, 'tooShort' => 'Значення "{attribute}" повинно містити мінімум 3 символa.', 'on' => 'last_name'],
             [['surname'], 'string', 'min' => 3, 'tooShort' => 'Значення "{attribute}" повинно містити мінімум 3 символa.', 'on' => 'surname'],
             [['surname'], 'required', 'on' =>'surname'],
-            [['busy_to'], 'required', 'whenClient' => "function (attribute, value) { if ($('#memberedit-busy').val() == '1') { alert(1); return true; } else { return false; }}", 'message' => 'Прошу вказати дату до якої будете зайняті', 'on' => 'busy_to'],
+        //
+
+            ['phone', 'checkChangedPhoneCode', 'message'=>'Підтвердіть контактний телефон через SMS.', 'on' => 'phone'],
+            [['phone'], 'required', 'on' =>'phone'],
+            ['confirm_sms', 'required', 'whenClient' => "function (attribute, value) { if ($('input#memberedit-phone').val() != $('input#memberedit-phone').data('value')) return true; else return false;}", 'message'=>'Введіть код отриманий з SMS.', 'on' => 'phone'],
+            ['confirm_sms', 'checkSMSCode',  'on' => 'phone'],
+          //  ['confirm_sms', 'checkSMSCodeRequired',  'on' => 'phone'],
+
+            [['busy_to'], 'required', 'whenClient' => "function (attribute, value) {  return $('#memberedit-busy').val() == 1 }", 'message' => 'Прошу вказати дату до якої будете зайняті', 'on' => 'busy_to'],
+
             ['email', 'email', 'skipOnEmpty' => false, 'on' => 'email'],
             ['email', 'checkMyUniqunessEmail', 'on' => 'email'],
             [['place'], 'required', 'on' =>'place'],
+            [['region'], 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Адресу не визначено. Прошу вибрати адресу зі списку', 'on' => 'place'],
             [['about'], 'string', 'max' => 801, 'on' =>'about'],
             [['regions'], 'required', 'message' => 'Прошу вказати області, де виїзд на об`єкти для Вас можливий ', 'skipOnEmpty' => false, 'on' => 'regions'],
             [['forma'], 'required', 'on' => 'forma'],
             [['brygada'], 'filter', 'filter' => 'trim', 'skipOnArray' => true, 'on' => 'forma'],
+            [['company'], 'required', 'when' => function ($model) { return ($model->forma==3); }, 'whenClient' => "function (attribute, value) { return ($('#memberedit-forma').val() == '3'); }", 'on' => 'forma'],
             [['budget_min'], 'integer', 'on' => 'budget_min'],
 
-            [['company'], 'required', 'when' => function ($model) { if ($model->forma==3) return true; else return false;}, 'whenClient' => "function (attribute, value) { if ($('#masterregistration-forma').val() == '3') return true; else return false; }", 'on' => 'forma'],
-           /*[['phone'],  'match', 'pattern' => '/([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/', 'message' => 'Невірний номер мобільного телефону.'],
-            ['phone', 'checkChangedPhoneCode'],
-            ['confirm_sms', 'checkSMSCode', 'skipOnEmpty' => true],
-            ['confirm_sms', 'checkSMSCodeRequired', 'skipOnEmpty' => false]*/
 
         ];
     }
@@ -152,12 +158,13 @@ class MemberEdit extends \yii\db\ActiveRecord
 
     public function checkChangedPhoneCode($attribute, $params) {
 
-        if($this->phone!=Yii::$app->user->identity->phone && empty($this->confirm_sms)) {
+        $item = Yii::$app->db->createCommand("SELECT phone FROM  `members` WHERE id = '".Yii::$app->user->identity->getId()."' LIMIT 1")->queryOne();
+        if($this->phone!=$item['phone'] && empty($this->confirm_sms)) {
             $this->addError($attribute, 'Підтвердіть контактний телефон через SMS.');
             return false;
         } else return true;
     }
-
+/*
     public function checkSendPhoneCode($attribute, $params) {
         $count = Yii::$app->db->createCommand("SELECT COUNT(*) FROM  `phone_check` WHERE phone = '".$this->phone."'  ORDER BY id DESC LIMIT 1 ")->queryScalar();
         if($this->phone!=Yii::$app->user->identity->phone && $count==0) {
@@ -165,16 +172,16 @@ class MemberEdit extends \yii\db\ActiveRecord
             return false;
         } return true;
     }
-
+*/
     public function checkSMSCode($attribute, $params) {
 
         $count = Yii::$app->db->createCommand("SELECT COUNT(*) FROM `phone_check` WHERE code = '".trim($this->confirm_sms)."' AND phone = '".$this->phone."' ORDER BY id DESC LIMIT 1 ")->queryScalar();
-        if($count==0 && !empty($this->confirm_sms)) {
+        if($count==0) {
             $this->addError($attribute, 'Код з SMS невірний.');
             return false;
         } else return true;
     }
-
+/*
     public function checkSMSCodeRequired($attribute, $params) {
 
         if(empty($this->confirm_sms) && $this->phone!=Yii::$app->user->identity->phone) {
@@ -182,5 +189,5 @@ class MemberEdit extends \yii\db\ActiveRecord
             return false;
         } else return true;
     }
-
+*/
 }

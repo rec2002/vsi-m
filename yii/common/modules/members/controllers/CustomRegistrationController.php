@@ -11,6 +11,7 @@ use common\modules\members\models\OrderImages;
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
+use Imagine\Image\ImageInterface;
 use yii\rbac\Permission;
 use yii\rbac\Role;
 
@@ -84,8 +85,8 @@ class CustomregistrationController extends \common\modules\members\controllers\D
                             $orders->title = Yii::$app->request->post('CustomerRegistration')['title'];
                             $orders->descriptions = Yii::$app->request->post('CustomerRegistration')['descriptions'];
                             $orders->location = Yii::$app->request->post('CustomerRegistration')['location'];
-                            $orders->location = Yii::$app->request->post('CustomerRegistration')['location'];
                             $orders->budget = Yii::$app->request->post('CustomerRegistration')['budget'];
+                            $orders->region = Yii::$app->request->post('CustomerRegistration')['region'];
 
                             switch (Yii::$app->request->post('CustomerRegistration')['when_start']){
                                 case '1':
@@ -108,9 +109,16 @@ class CustomregistrationController extends \common\modules\members\controllers\D
                                 foreach ($model->image as $image) {
                                     $ordersImages = new OrderImages();
                                     $ordersImages->order_id = $order_id;
-                                    $ordersImages->image = strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
-                                    $image->saveAs($dir.$ordersImages->image);
-                                    $ordersImages->image = '/uploads/members/orders/'.strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
+
+                                    $filename = strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
+                                    $ordersImages->image = $filename;
+
+
+                                    $image->saveAs($dir.$filename);
+                                    Image::thumbnail($dir.$filename, 208, 156)->save($dir.'thmb/'.$filename, ['quality' => 90]);
+                                    Image::thumbnail($dir.$filename, 945, 600, ImageInterface::THUMBNAIL_INSET)->save($dir.$filename, ['quality' => 90]);
+                                    //$image->saveAs($dir.$ordersImages->image);
+                                    //$ordersImages->image = '/uploads/members/orders/'.strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
                                     $ordersImages->save(false);
                                 }
                             }

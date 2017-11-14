@@ -5,7 +5,7 @@ use common\components\MemberHelper;
 use yii\helpers\Url;
 use yii\bootstrap\Nav;
 
-$this->title = 'Список замовлень';
+$this->title = 'Список завдань';
 
 ?>
 
@@ -46,7 +46,7 @@ $this->title = 'Список замовлень';
                             echo \yii\widgets\ListView::widget([
                                 'dataProvider' => $model,
                                 'itemView' => function ($model, $key, $index, $widget) {
-                                    return $this->render('@common/modules/members/views/list-item', ['model' => $model]);
+                                    return $this->render('@common/modules/members/views/list-item', ['model' => $model, 'url'=>'/members/customer/order']);
                                 },
                                 'layout' => "\n{items}\n",
                             ]);

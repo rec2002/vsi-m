@@ -352,6 +352,20 @@ $(function() {
 		return false;
 	});
 
+    $(document).on('click', '.popup-wrapper_ .button-close', function(){
+        $('.popup-wrapper_, div.popup-wrapper_ div.popup-content').removeClass('active');
+        return false;
+    });
+
+
+    function GetMessage(title, subtitle){
+        if (title!='') title = '<div class="empty-space marg-lg-b35"></div><h4 class="h4 text-center">'+title+'</h4><div class="empty-space marg-lg-b5"></div>';
+        if (subtitle!='') subtitle = '<p class="text-center h5">'+subtitle+'</p><div class=" empty-space marg-lg-b35"></div>';
+        $('div.popup-wrapper_ div.popup-content div.popup-container.size-2 div.popup-align').html(title + subtitle);
+        $('div.popup-wrapper_, div.popup-wrapper_ div.popup-content').addClass('active');
+    }
+
+
 	$('.simple-toggle-title').on('click', function(e){
 		$(this).siblings('.simple-toggle-content').slideToggle();
 		e.preventDefault();
@@ -589,19 +603,128 @@ $(function() {
 	/*project new upload image*/
 	$('.tt-img-upload input').on('change', function(e){
 		var $t = $(this);
+
+
+
 		if (this.files && this.files[0]) {
+			var image = this.files[0];
 	        var reader = new FileReader();
 	        reader.onload = function (e) {
-                var clone = $t.clone();
-                clone.css({'visibility': 'hidden'}).attr('name', $t.data('name')+'[image][]');
-	        	$t.closest('.tt-project-new-img').append('<div class="tt-project-pic-loaded" id="image_'+($(".tt-project-pic-loaded").length+1)+'"><span style="background-image:url('+e.target.result+');"></span><div class="button-close small"></div></div>');
-                clone.appendTo("#image_"+$('.tt-project-pic-loaded').length);
-	        };
-	        reader.readAsDataURL(this.files[0]);
-	    }		
+
+
+
+                var Upload = function (file) { this.file = file;};
+                //var obj= $(this);
+                Upload.prototype.getType = function() {return this.file.type;};
+                Upload.prototype.getSize = function() {return this.file.size;};
+                Upload.prototype.getName = function() {return this.file.name;};
+
+
+
+                Upload.prototype.doUpload = function () {
+                    var that = this;
+                    var formData = new FormData();
+                    formData.append("file", this.file, this.getName());
+                    formData.append("upload_file", true);
+                    $.ajax({
+                        type: "POST",
+                        url: $t.data('source'),
+                        xhr: function () {
+                            var myXhr = $.ajaxSettings.xhr();
+                            if (myXhr.upload) {
+                                $('#progress-wrp').fadeIn(500, function(){
+                                    $(this).css({'visibility':'visible'});
+                                    $("#progress-wrp .progress-bar").css("width", "0%");
+                                });
+                                myXhr.upload.addEventListener('progress', that.progressHandling, false);
+                            }
+                            return myXhr;
+                        },
+                        success: function (data) {
+                            var data = JSON.parse(data);
+                            if (data.status==1){
+                                $('div#image_'+index_image).data('id', data.id);
+
+                                setTimeout(function(){
+									$('#progress-wrp').fadeOut(300, function(){
+										$(this).remove();
+									});
+								}, 1500);
+                            }
+                            // your callback here
+                        },
+                        error: function (error) {
+                            console.log('Error uploading file');
+                            // handle error
+                        },
+                        async: true, data: formData, cache: false, contentType: false, processData: false, dataType: 'json', timeout: 60000
+                    });
+
+                };
+
+                Upload.prototype.progressHandling = function (event) {
+                    var percent = 0;
+                    var position = event.loaded || event.position;
+                    var total = event.total;
+                    var progress_bar_id = "#progress-wrp";
+                    if (event.lengthComputable) {
+                        percent = Math.ceil(position / total * 100);
+                    }
+                    // update progressbars classes so it fits your code
+                    $(progress_bar_id + " .progress-bar").css("width", +percent + "%");
+
+                };
+
+
+	            var upload = new Upload(image);
+
+				if ((upload.getSize()/1024)/1024 > 3) {
+                    GetMessage('Завеликий розмір зображення', 'для завантаження не більше 3 Мб');
+				} else{
+
+                    var clone = $t.clone();
+
+                    var index_image = $(".tt-project-pic-loaded").length+1;
+                    clone.css({'visibility': 'hidden'}).attr('name', $t.data('name')+'[image][]');
+                    $t.closest('.tt-project-new-img').append('<div class="tt-project-pic-loaded" data-id="0" id="image_'+index_image+'">'+'<span style="background-image:url('+e.target.result+');"></span><div class="button-close small"></div>'+
+                        '<div id="progress-wrp" style="width: 186px;position: absolute;top: 70px;height: 15px;box-shadow: none;margin-left: 10px;"><div class="progress-bar"></div></div></div>');
+                    clone.appendTo("#image_"+$('.tt-project-pic-loaded').length);
+
+                    if ($(".tt-task-gal-edit").length){
+						upload.doUpload();
+					}
+
+				}
+
+
+            };
+	        reader.readAsDataURL(image);
+        }
 	});
+
+
+
 	$(document).on('click', '.tt-project-pic-loaded .button-close', function(){
-		$(this).closest('.tt-project-pic-loaded').remove();
+		var obj = $(this).closest('.tt-project-pic-loaded');
+
+		if (obj.data('id')==0) {
+            $(this).closest('.tt-project-pic-loaded').remove();
+
+
+		} else {
+
+
+            $.post( ($("div.majster").length) ? "/members/member/imagedelete?id="+obj.data('id') : "/members/customer/imagedelete?id="+obj.data('id'), function( data ) {
+                var data = JSON.parse(data);
+                if (data.status==1) {
+                    obj.fadeOut(500, function(){
+                        $(this).remove();
+                    });
+                }
+            });
+		}
+        return true;
+
 	});
 
 	/*tt-file-upload*/
@@ -610,6 +733,7 @@ $(function() {
 	});
 
 	/*tt-project-new*/
+
 	$('.tt-project-add,.tt-project-img-edit').on('click', function(e){
 		$(this).closest('.tt-project-edit-wrapper').children('.tt-project-list').fadeOut(300, function(){
 			$(this).siblings('.tt-project-new').fadeIn(300);
@@ -763,15 +887,14 @@ $(function() {
     $('.tt-phone-code-submit').on("click", function(){
 
         var obj= $(this);
-        if (obj.closest('.tt-fadein-bottom').prev().find('.form-group').hasClass('has-success')){
-
-
+        if (typeof $('input#confirm_sms').attr('aria-invalid')==="undefined" || $('input#confirm_sms').attr('aria-invalid')=='true' ||  $('input#confirm_sms').val()=='') {
+	         $('input#confirm_sms').blur();
+		} else {
             obj.closest('.tt-fadein-bottom').fadeOut(300, function(){
                 $(this).siblings('.tt-fadein-top').fadeIn(300);
+                $('input#confirm_sms').val('');
             });
-
 		}
-
         return false;
     })
 
@@ -1330,14 +1453,12 @@ $(function() {
                     	return false;
                     }
 
-                   	if (form.hasClass('reset-form')) { form.get(0).reset(); }
+                   	if (form.hasClass('reset-form')) { form.get(0).reset();  }
                    	if (form.attr('id')=='types') { $('div#prices_table').empty().html(data.prices); }
 
 
+                    GetMessage(data.msg, '');
 
-                    $('.popup-align').html('<div class="empty-space marg-lg-b35"></div><h4 class="h4 text-center">'+data.msg+'</h4><div class="empty-space marg-lg-b35"></div>');
-                    $('.popup-content').removeClass('active');
-                    $('.popup-wrapper, .popup-content').addClass('active');
                 }
             }
         });
@@ -1352,18 +1473,15 @@ $(function() {
         var status = (checkbox.is(':checked')) ? 1 : 0;
         jQuery.ajax({
             url: ($(this).data('type')) ? '/members/member/notices' : '/members/customer/notices',
-            type: 'GET',
-            data: 'name='+checkbox.data('name')+'&id='+checkbox.data('id')+'&status='+status,
-            contentType: false,
+            type: 'POST',
+            data: {name : checkbox.data('name'), id:checkbox.data('id'), 'status':status},
             cache: false,
             async: false,
-            processData: false,
-            dataType: 'json',
             success: function (data) {
                 if (data.status==1){
-                    $('.popup-align').html('<div class="empty-space marg-lg-b35"></div><h4 class="h4 text-center">'+data.msg+'</h4><div class="empty-space marg-lg-b35"></div>');
-                    $('.popup-content').removeClass('active');
-                    $('.popup-wrapper, .popup-content').addClass('active');
+
+                    GetMessage(data.msg, '');
+
                 }
             }
         });
@@ -1371,10 +1489,7 @@ $(function() {
 	});
 
 
-
-
-
-    $(document).on("submit", "form.form-edit-ajax", function(e) {
+    $(document).on("beforeSubmit", "form.form-edit-ajax", function(e) {
         e.preventDefault();
         var form = $(this);
 
@@ -1383,8 +1498,7 @@ $(function() {
 
         console.log(data_post[1]['name']);
 
-
-
+		if ($('div.popup-wrapper_').hasClass('active')) return false;
 
         jQuery.ajax({
             url: form.attr('action'),
@@ -1431,6 +1545,9 @@ $(function() {
                         case 'MemberEdit[email]':
                         case 'MemberEdit[place]':
 
+
+
+
                             // when edit plece in profile
                             if ($("div#profile-place").length) {
                                 $("div#profile-place").html(data_post[1]['value']);
@@ -1443,7 +1560,9 @@ $(function() {
                         break;
                         case 'MemberEdit[budget_min]':
                             // when edit min_price on profile
-                            $('#budget_min').html(data_post[1]['value']+ ' грн.');
+
+							if (data_post[1]['value']=='') $('#budget_min').html('(не вказано)');
+                            else $('#budget_min').html(data_post[1]['value']+ ' грн.');
                             $('.popup-wrapper, .popup-content').removeClass('active');
                             $('.tt-vote-selected').removeClass('tt-vote-selected');
                             return false;
@@ -1512,7 +1631,33 @@ $(function() {
                             form.find('.tt-editable-item').html(forma);
 
                         break;
+                        case 'MemberEdit[phone]':
+
+                            $('input#memberedit-phone').data('value', data_post[1]['value']);
+                            $('input#memberedit-phone').val('');
+                            $('input#memberedit-confirm_sms').val('');
+                            $('#edit_phone').find('.tt-fadein-top').show();
+                            $('#edit_phone').find('.tt-fadein-bottom').hide();
+
+							if (form.hasClass('profile')) {
+
+
+
+
+                                $('div.tt-underheading-phone div.tt-underheading-item a:first').html(data_post[1]['value']);
+                                $('div.tt-underheading-phone div.tt-underheading-item a:first').attr('href', 'tel:' + data_post[1]['value'].replace(/[^0-9]/g, ''));
+                                $('.popup-wrapper, .popup-content').removeClass('active');
+
+                                return false;
+                            }
+
+
+                            form.find('.tt-editable-item').html(data_post[1]['value']);
+
+                        break;
 					}
+
+
 
                     form.find('.tt-editable-form').slideUp(300).siblings('.tt-editable').slideDown(300, function(){
                         $(this).closest('.tt-editable-wrapper').removeClass('opened');

@@ -14,6 +14,8 @@ use common\modules\members\models\MemberPasswordForm;
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Point;
 use yii\filters\AccessControl;
 use yii\data\SqlDataProvider;
 
@@ -101,6 +103,10 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
                 $model = new Orders(['scenario' => 'add-order']);
             break;
             case 'location':
+            case 'descriptions':
+            case 'budget':
+            case 'when_start':
+
                 $model = Orders::findOne([
                     'id' => Yii::$app->request->get('id'),
                     'member'=> Yii::$app->user->identity->getId(),
@@ -110,7 +116,7 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
 
 
 
-        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())&& $model->validate())
         {
             Yii::$app->response->format = 'json';
             return ActiveForm::validate($model);
@@ -175,14 +181,14 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
     public function actionNotices()
     {
 
-        if (!empty(Yii::$app->request->get()['name']) && !empty(Yii::$app->request->get()['id'])) {
+        if (!empty(Yii::$app->request->post('name')) && !empty(Yii::$app->request->post('id'))) {
 
-            $notices = Yii::$app->db->createCommand("SELECT id, notice_id, member, email, sms FROM `notices_members` WHERE `member` = '".Yii::$app->user->identity->getId()."' AND notice_id= '".Yii::$app->request->get()['id']."' LIMIT 1")->queryAll();
+            $notices = Yii::$app->db->createCommand("SELECT id, notice_id, member, email, sms FROM `notices_members` WHERE `member` = '".Yii::$app->user->identity->getId()."' AND notice_id= '".Yii::$app->request->post('id')."' LIMIT 1")->queryAll();
 
             if (sizeof($notices)) {
-                Yii::$app->db->createCommand()->update('notices_members', [((Yii::$app->request->get()['name']=='email') ? 'email' : 'sms')=>Yii::$app->request->get()['status']], ' id="'.$notices[0]['id'].'"')->execute();
+                Yii::$app->db->createCommand()->update('notices_members', [((Yii::$app->request->post('name')=='email') ? 'email' : 'sms')=>Yii::$app->request->post('status')], ' id="'.$notices[0]['id'].'"')->execute();
             } else {
-                Yii::$app->db->createCommand()->insert('notices_members', ['notice_id' => Yii::$app->request->get()['id'], 'member' => Yii::$app->user->identity->getId(), 'email'=>(Yii::$app->request->get()['name']=='email') ? '1' : '0', 'sms'=>(Yii::$app->request->get()['name']=='sms') ? '1' : '0'])->execute();
+                Yii::$app->db->createCommand()->insert('notices_members', ['notice_id' => Yii::$app->request->post('id'), 'member' => Yii::$app->user->identity->getId(), 'email'=>(Yii::$app->request->post('name')=='email') ? '1' : '0', 'sms'=>(Yii::$app->request->post('name')=='sms') ? '1' : '0'])->execute();
             }
 
             Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
@@ -211,15 +217,24 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
                     break;
                 case '2':
                     $model->date_from = date("Y-m-d");
+                    $model->date_to = '';
                     break;
                 case '3':
                     $model->date_from = date("Y-m-d", strtotime("+1 day"));
+                    $model->date_to = '';
+                    break;
+                case '4':
+                    $model->date_from = '';
+                    $model->date_to = '';
                     break;
             }
             $model->title = Yii::$app->request->post('Orders')['title'];
             $model->location = Yii::$app->request->post('Orders')['location'];
             $model->descriptions = Yii::$app->request->post('Orders')['descriptions'];
             $model->budget = Yii::$app->request->post('Orders')['budget'];
+            $model->region = Yii::$app->request->post('Orders')['region'];
+            $model->when_start = Yii::$app->request->post('Orders')['when_start'];
+
             $model->save(false);
             $order_id = Yii::$app->db->getLastInsertID();
             $model->image = UploadedFile::getInstances($model, 'image');
@@ -228,9 +243,13 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
                 foreach ($model->image as $image) {
                     $ordersImages = new OrderImages();
                     $ordersImages->order_id = $order_id;
-                    $ordersImages->image = strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
-                    $image->saveAs($dir.$ordersImages->image);
-                    $ordersImages->image = '/uploads/members/orders/'.strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
+                    $filename = strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
+                    $image->saveAs($dir.$filename);
+                    Image::thumbnail($dir.$filename, 208, 156)->save($dir.'thmb/'.$filename, ['quality' => 90]);
+                    Image::thumbnail($dir.$filename, 945, 600, ImageInterface::THUMBNAIL_INSET)->save($dir.$filename, ['quality' => 90]);
+                    $ordersImages->image = $filename;
+                //    $image->saveAs($dir.$ordersImages->image);
+                //    $ordersImages->image = '/uploads/members/orders/'.strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
                     $ordersImages->save(false);
                 }
             }
@@ -265,37 +284,37 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
 
         $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM orders o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''), $param)->queryScalar();
         $provider = new SqlDataProvider([
-            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, p.name as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status  FROM `orders` o LEFT JOIN `dict_price_range` p ON p.id = o.budget '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.created_at DESC',
+            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status  FROM `orders` o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
             'params' => $param,
             'totalCount' => $count,
             'pagination' => [
                 'pageSize' => 10,
             ]
         ]);
-    //    $provider->models[0]['title'] = 'test test test';
-echo "<pre>";
-        var_dump($provider->models[0]['title']);
-        echo "</pre>";
-/*
-        foreach( $provider->models as $myModel){
-            echo $myModel->title;
 
-
-
-         }
-*/
+        $status = MemberHelper::GetBudgetRange();
+        // Setter
+        $arr = array();
+        foreach( $provider->models as $key => $val){
+            $arr[$key] = $provider->models[$key];
+            $arr[$key]['budget_name'] = $status[$val['budget_name']]['budget'];
+        }
+        $provider->models =  $arr;
 
         return $this->render('list', ['model'=>$provider, 'count_total'=>$count_total]);
     }
 
     public function actionOrder($id=0)  {
-
         $model = Orders::findOne([
             'id' => Yii::$app->request->get('id'),
             'member'=> Yii::$app->user->identity->getId(),
         ]);
 
-        return $this->render('order', ['model'=> $model, 'budget'=>MemberHelper::GetBudgetRange()]);
+        if ($model->date_from=='0000-00-00') $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
+        if ($model->date_to=='0000-00-00') $model->date_to = ''; else $model->date_to = date("d.m.Y", strtotime($model->date_to));
+
+        $images = OrderImages::findAll(['order_id' => $model->id]);
+        return $this->render('order', ['model'=> $model, 'budget'=>MemberHelper::GetBudgetRange(), 'images'=>$images]);
     }
 
     public function actionSaveorder($mode = 'location')
@@ -308,34 +327,87 @@ echo "<pre>";
             'member'=> Yii::$app->user->identity->getId(),
         ]);
 
+
+
         if ($model->load(Yii::$app->request->post())) {
 
             switch ($mode) {
                 case 'location':
-                    $model->location = Yii::$app->request->post('Order')['location'];
+                    $model->location = Yii::$app->request->post('Orders')['location'];
+                    $model->region = Yii::$app->request->post('Orders')['region'];
+                break;
+                case 'budget':
+                    $model->budget = Yii::$app->request->post('Orders')['budget'];
+                break;
+                case 'when_start':
+                    switch (Yii::$app->request->post('Orders')['when_start']){
+                        case '1':
+                            $model->date_from = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_from']));
+                            $model->date_to = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_to']));
+                            break;
+                        case '2':
+                            $model->date_from = date("Y-m-d");
+                            $model->date_to = '';
+                            break;
+                        case '3':
+                            $model->date_from = date("Y-m-d", strtotime("+1 day"));
+                            $model->date_to = '';
+                        break;
+                        case '4':
+                            $model->date_from = '';
+                            $model->date_to = '';
+                        break;
+                    }
+                    $model->when_start = Yii::$app->request->post('Orders')['when_start'];
+                break;
+                case 'descriptions':
+                    $model->descriptions = Yii::$app->request->post('Orders')['descriptions'];
                 break;
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             $model->save();
             return['status'=>1, 'msg'=>'дані збережені'];
         }
         return['status'=>0];
 
     }
+
+    public function actionImageorder($id=0)  {
+        if ($file =  UploadedFile::getInstanceByName('file')) {
+            $dir = Yii::getAlias('@type_images').'/members/orders/';
+            $filename = strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$file->extension;
+            $file->saveAs($dir.$filename);
+            Image::thumbnail($dir.$filename, 208, 156)->save($dir.'thmb/'.$filename, ['quality' => 90]);
+            Image::thumbnail($dir.$filename, 945, 600, ImageInterface::THUMBNAIL_INSET)->save($dir.$filename, ['quality' => 90]);
+            Yii::$app->response->format = 'json';
+            $ordersImages = new OrderImages();
+            $ordersImages->order_id = $id;
+            $ordersImages->image = $filename;
+            $ordersImages->save(false);
+            $id = Yii::$app->db->getLastInsertID();
+            return json_encode(array('status'=>1, 'id'=>$id));
+        }
+    }
+
+
+    public function actionImagedelete($id=0)  {
+
+        $model = OrderImages::findOne(['id' => $id]);
+        $dir = Yii::getAlias('@type_images').'/members/orders/';
+
+        if (file_exists($dir.'thmb/'.$model->image)) {
+            @unlink($dir.'thmb/'.$model->image);
+        }
+
+        if (file_exists($dir.$model->image)) {
+            @unlink($dir.$model->image);
+        }
+
+        Yii::$app->db->createCommand("DELETE i FROM order_images i INNER JOIN orders o ON i.order_id = o.id WHERE i.id = '".$id."' AND o.member = '".Yii::$app->user->identity->getId()."' ")->execute();
+
+        Yii::$app->response->format = 'json';
+        return json_encode(array('status'=>1));
+    }
+
 
 
 

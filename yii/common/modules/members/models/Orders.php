@@ -40,11 +40,19 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'descriptions', 'location', 'budget'], 'required', 'on' => 'add-order'],
+            [['title', 'descriptions', 'location', 'budget', 'when_start'], 'required', 'on' => 'add-order'],
             ['agree', 'required', 'requiredValue' => 1, 'message' => 'Прочитати `правила користування`.', 'on' => 'add-order'],
-            [['date_from', 'date_to'], 'required', 'when' => function ($model) { if ($model->when_start==1) return true; else return false;}, 'whenClient' => "function (attribute, value) { if ($('#orders-when_start').val() == '1') return true; else return false; }", 'message' => 'Обов\'язкове для заповнення', 'on' => 'add-order'],
+            [['date_from', 'date_to'], 'required', 'skipOnEmpty' => false, 'when' => function ($model) { if ($model->when_start==1) return true; else return false;}, 'whenClient' => "function (attribute, value) { if ($('#customerregistration-when_start').val() == '1') return true; else return false; }", 'message' => 'Обов\'язкове для заповнення', 'on' => 'add-order'],
             [['image'], 'file', 'on' => 'add-order'],
+            [['region'], 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Адресу не визначено. Прошу вибрати адресу зі списку', 'on' => 'add-order'],
+            ['agree', 'required', 'requiredValue' => 1, 'message' => 'Прочитати `правила користування`.', 'on' => 'add-order'],
             [['location'], 'required', 'on' => 'location'],
+            [['region'], 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Адресу не визначено. Прошу вибрати адресу зі списку', 'on' => 'location'],
+            [['title'], 'required', 'on' => 'title'],
+            [['budget'], 'required', 'on' => 'budget'],
+            [['when_start'], 'required', 'on' => 'when_start'],
+            [['date_from', 'date_to'], 'required', 'skipOnEmpty' => false, 'when' => function ($model) { if ($model->when_start==1) return true; else return false;}, 'whenClient' => "function (attribute, value) { if ($('#orders-when_start').val() == '1') return true; else return false; }", 'message' => 'Обов\'язкове для заповнення', 'on' => 'when_start'],
+            [['descriptions'], 'required', 'on' => 'descriptions'],
 /*
             [['member', 'title', 'descriptions', 'location', 'when_start', 'date_from', 'date_to'], 'required'],
             [['member', 'when_start'], 'integer'],
