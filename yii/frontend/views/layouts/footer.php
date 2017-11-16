@@ -1,7 +1,7 @@
 <?
 
 use yii\bootstrap\Nav;
-
+use yii\helpers\Html;
 ?>
 
 <? if (Yii::$app->controller->id!='registration') { ?>
@@ -20,7 +20,54 @@ use yii\bootstrap\Nav;
         </div>
     </div>
     <!-- POP UP SMALL END -->
-<?// }  ?>
+
+
+
+
+    <!-- POPUP-WRAPPER -->
+    <div class="popup-wrapper-big">
+        <div class="bg-layer"></div>
+        <div class="popup-content" data-rel="14">
+            <div class="layer-close"></div>
+            <div class="popup-container size-5 gallery">
+                <div class="popup-align">
+                </div>
+                <div class="button-close"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-wrapper-confirm">
+    <div class="bg-layer"></div>
+    <div class="popup-content active">
+        <div class="layer-close"></div>
+        <div class="popup-container size-4">
+            <div class="popup-align">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <h3 class="h3 text-center">  </h3>
+                            <div class="empty-space marg-sm-b30 marg-lg-b35"></div>
+
+                            <div class="simple-text size-3 bold-style-2">
+                                <p>  </p>
+                            </div>
+                            <div class="empty-space marg-lg-b30"></div>
+
+                        </div>
+                    </div>
+                    <div class="tt-popup-btn-center">
+                        <?= Html::a('<span>продовжити</span>', '', ['class'=>'button type-1 size-3 color-3 uppercase', 'id'=>'btnYes']) ?>
+                        <?= Html::a('<span>скасувати</span>', '', ['class'=>'button type-1 size-3 uppercase', 'id'=>'btnNo']) ?>
+                    </div>
+            </div>
+            <!--<div class="button-close"></div>-->
+        </div>
+    </div>
+    </div>
+
+
+
+    <?// }  ?>
 
 <!-- TT-FOOTER -->
 <footer class="tt-footer">

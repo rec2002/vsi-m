@@ -14,6 +14,8 @@ use common\modules\members\models\Members;
 use common\modules\members\models\Orders;
 use common\modules\members\models\OrderImages;
 use common\modules\members\models\MemberPasswordForm;
+use common\modules\members\models\Portfolio;
+
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
@@ -373,7 +375,14 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
         $member->types = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT type FROM member_types WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'type');
         $member->prices = ArrayHelper::index( MemberPrices::findBySql('SELECT price_id as id, price  FROM member_prices WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'id');
         $member->regions = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT region FROM member_regions WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'region');
-        return $this->render('profile', ['member'=> $member]);
+
+        $portfolio =  Portfolio::findBySql('SELECT  p.id, p.member,	p.title, p.description,	p.cost,	p.work_date, 
+                                  (SELECT i.image FROM `member_portfolio_images` i WHERE i.portfolio_id = p.id ORDER BY i.created_at ASC, i.id ASC LIMIT 1) as image	 
+                                  FROM `member_porfolio` P 
+                                  WHERE member="'.Yii::$app->user->identity->getId().'"   ORDER BY p.created_at DESC')->asArray()->all();
+
+
+        return $this->render('profile', ['member'=> $member, 'portfolio'=> $portfolio]);
     }
 
     public function actionPriceslist() {
@@ -596,5 +605,8 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
         }
 
     }
+
+
+
 
 }

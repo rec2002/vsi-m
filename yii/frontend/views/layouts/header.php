@@ -48,7 +48,7 @@ use yii\helpers\Url;
                                 <ul>
                                     <li><a href="<?=Url::to(['/members/member'])?>">Особисті дані</a></li>
                                     <li><a href="<?=Url::to(['/members/member/types'])?>">Послуги та ціни</a></li>
-                                    <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Виконанні проекти</a></li>
+                                    <li><a href="<?=Url::to(['/members/portfolio/list'])?>">Виконанні проекти</a></li>
                                     <li><a href="<?=Url::to(['/members/member/resetpwd'])?>">Змінити пароль</a></li>
                                     <li><a href="<?=Url::to(['/members/member/noticesettings'])?>">Сповіщеня</a></li>
                                     <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Доступ до замовлень</a></li>

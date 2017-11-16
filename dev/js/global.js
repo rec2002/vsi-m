@@ -31,6 +31,36 @@ $(function() {
 	/*================*/
 	var swipers = [], winW, winH, winScr, footerTop, _isresponsive, _ismobile = navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i);
 
+
+
+    _functions.Msg = function(title, subtitle){
+         if (title!='') title = '<div class="empty-space marg-lg-b35"></div><h4 class="h4 text-center">'+title+'</h4><div class="empty-space marg-lg-b5"></div>';
+         if (subtitle!='') subtitle = '<p class="text-center h5">'+subtitle+'</p><div class=" empty-space marg-lg-b35"></div>';
+         $('div.popup-wrapper_ div.popup-content div.popup-container.size-2 div.popup-align').html(title + subtitle);
+         $('div.popup-wrapper_, div.popup-wrapper_ div.popup-content').addClass('active');
+    };
+
+
+
+    _functions.dialog = function(title, subtitle,  yesCallback, noCallback) {
+
+        if (title!='') $('div.popup-wrapper-confirm').find('h3').html(title);
+        if (subtitle!='') $('div.popup-wrapper-confirm').find('.simple-text p').html(subtitle);
+
+        $('#btnYes').click(function() {
+            yesCallback();
+            return false;
+        });
+        $('#btnNo').click(function() {
+            noCallback();
+            return false;
+        });
+        return false;
+    }
+
+
+
+
 	/*========================*/
 	/* 02 - page calculations */
 	/*========================*/
@@ -249,7 +279,9 @@ $(function() {
 
 
 	/*simple-datapicker*/
+
 	for(var i = 0; i<$('.simple-datapicker').length; i++){
+
 		var $datepicker = $('.simple-datapicker').eq(i),
 			minDateVal = ($datepicker.is('[data-min-date]'))?parseInt($datepicker.data('min-date'), 10):null;
 		$datepicker.datepicker({
@@ -345,6 +377,25 @@ $(function() {
 		$('.popup-wrapper, .popup-content[data-rel="'+$t.data('rel')+'"]').addClass('active');
 		return false;
 	});
+
+
+    $(document).on('click', '.open-popup-big', function(e){
+        $.post("/members/portfolio/detail/?id="+$(this).data('id'), function( data ) {
+            $(" div.popup-wrapper-big.active div.popup-content.active div.popup-container div.popup-align").html(data);
+            _functions.initSwiper();
+            _functions.pageformCalculate();
+            $('.popup-content').removeClass('active');
+            $('.popup-wrapper-big, .popup-content').addClass('active');
+        });
+        return false;
+    });
+
+
+    $(document).on('click', 'div.popup-container.size-5.gallery div.button-close', function(){
+        $('.popup-wrapper-big, .popup-content').removeClass('active');
+        return false;
+    });
+
 
 	$(document).on('click', '.popup-wrapper .button-close, .popup-wrapper .popup-close, .popup-wrapper .layer-close', function(){
 		$('.popup-wrapper, .popup-content').removeClass('active');
@@ -708,8 +759,11 @@ $(function() {
 		var obj = $(this).closest('.tt-project-pic-loaded');
 
 		if (obj.data('id')==0) {
-            $(this).closest('.tt-project-pic-loaded').remove();
 
+            $(this).closest('.tt-project-pic-loaded').remove();
+            if ($(".tt-project-pic-loaded").length==0){
+                $(".tt-img-upload input[type=file]").val('');
+			}
 
 		} else {
 
@@ -733,7 +787,7 @@ $(function() {
 	});
 
 	/*tt-project-new*/
-
+/*
 	$('.tt-project-add,.tt-project-img-edit').on('click', function(e){
 		$(this).closest('.tt-project-edit-wrapper').children('.tt-project-list').fadeOut(300, function(){
 			$(this).siblings('.tt-project-new').fadeIn(300);
@@ -746,7 +800,7 @@ $(function() {
 		});
 		e.preventDefault();
 	});
-
+*/
 	//slider range
 	var trueValues = [1000, 5000, 10000, 50000, 100000];
     var simValues =  [1, 2, 3, 4, 5];
@@ -1313,7 +1367,7 @@ $(function() {
     });
 
     $(document).on("click", "div.button-close", function() {
-        $('#modal').modal('hide');
+        if ($('#modal').length) $('#modal').modal('hide');
         return false;
 	});
 

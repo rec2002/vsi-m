@@ -3,7 +3,7 @@ use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
-use common\widgets\Alert;
+use frontend\assets\AppAsset;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
 
@@ -120,9 +120,9 @@ $this->title = 'Кабінет користувача';
                 <div class="col-md-9 col-md-push-3">
                     <div class="tabs-block style-1">
                         <div class="tab-nav">
-                            <div class="tab-menu active"><span>Інформація</span></div>
-                            <div class="tab-menu"><span>Виконані проекти</span></div>
-                            <div class="tab-menu"><span>Відгуки <span>(0)</span></span></div>
+                            <div class="tab-menu active" data-tab="info"><span>Інформація</span></div>
+                            <div class="tab-menu" data-tab="projects"><span>Виконані проекти</span></div>
+                            <div class="tab-menu" data-tab="recall"><span>Відгуки <span>(0)</span></span></div>
                         </div>
 
                         <div class="tab-entry" style="display: block;">
@@ -187,13 +187,15 @@ $this->title = 'Кабінет користувача';
                         <div class="tab-entry">
                             <div class="empty-space marg-lg-b30"></div>
 
-                            UNDER CONSTRUCTION
+
 
 
                             <!-- TT-PROJECT-EDIT -->
-                            <!--<div class="tt-project-edit-wrapper">
+                            <div class="tt-project-edit-wrapper">
                                 <div class="tt-project-list">
                                     <div class="row">
+
+
                                         <div class="col-sm-6">
                                             <a class="tt-project-add">
                                                     <span class="tt-project-add-entry">
@@ -203,122 +205,94 @@ $this->title = 'Кабінет користувача';
                                             </a>
                                             <div class="empty-space marg-lg-b30"></div>
                                         </div>
+<? if (sizeof($portfolio)) foreach ($portfolio as $key=>$val) if ($key==0) { ?>
                                         <div class="col-sm-6">
                                             <div class="tt-project">
                                                 <div class="tt-project-img">
-                                                    <a class="custom-hover open-popup" href="#" data-rel="14">
-                                                        <img class="img-responsive" src="/img/project/project_3.jpg" alt="">
+                                                    <a class="custom-hover open-popup-big" href="javascript:" rel="nofollow" name="<?=$val['id']?>" data-id="<?=$val['id']?>">
+                                                        <img class="img-responsive" src="/uploads/members/portfolio/thmb/<?=$val['image']?>" alt="">
                                                     </a>
-                                                    <a class="tt-project-img-edit  tt-icon-hover" href="#">
+                                                    <a class="tt-project-img-edit  tt-icon-hover" href="javascript:" rel="nofollow" data-id="<?=$val['id']?>">
                                                             <span class="tt-icon-entry">
                                                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAATlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAP+0nkAAAAGXRSTlMAB/ZCPHsX3a3Gsw3t5s+OWTQrhnBqTrog08duEwAAAH5JREFUGNOtzEkSwyAMRFEhCGYMQ2wnff+LJniHyNJ/ocUrVZNMd/rTA0ht0YqmDmihp/JPRSeiWHCX+31S7v7yfZvUkuWgfIaeVW1h/C/qSGVHq5KGuV+D0ANd6oiZ66oRtuItlUwaZIVSKb/jvFDi/NGFpUYA6WUizbVBS1+HhQbeVMBQMQAAAABJRU5ErkJggg==" alt="">
                                                             </span>
                                                     </a>
                                                 </div>
-                                                <a class="tt-project-title open-popup" href="#" data-rel="14">Ел.монтажние роботи під ключ.</a>
+                                                <a class="tt-project-title open-popup-big" href="javascript:" rel="nofollow" name="<?=$val['id']?>" data-id="<?=$val['id']?>"><?=$val['title']?></a>
                                                 <div class="simple-text size-2 blue-links">
-                                                    <p>Короткий опис проведених робіт Etiam varius, leo sit amet tristique fermentum, sem sem condimentum nibh, sed consectetur lacus tellus eget ... <a href="#"><b>Дізнатись більше</b></a></p>
+                                                    <p><?= Html::encode( mb_strimwidth($val['description'], 0, 200, '...')); ?> <a href="javascript:" rel="nofollow" name="<?=$val['id']?>" data-id="<?=$val['id']?>"><b>Дізнатись більше</b></a></p>
                                                 </div>
                                                 <div class="tt-project-info">
                                                     <div class="tt-project-table">
                                                         <div class="tt-project-cell">
-                                                            вартість робіт <span>1500грн.</span>
+                                                            вартість робіт <span><?=(empty($val['cost'])) ? '(не вказано)' : $val['cost'] ?></span>
                                                         </div>
                                                         <div class="tt-project-cell">
-                                                            дата проведення <span>02/2016</span>
+                                                            дата проведення <span><?=date('m/Y', strtotime($val['work_date']))?></span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="#" class="button type-1 full open-popup" data-rel="14">Переглянути проект</a>
+                                                <a class="button type-1 full open-popup-big" href="javascript:" rel="nofollow" name="<?=$val['id']?>" data-id="<?=$val['id']?>">Переглянути проект</a>
                                             </div>
                                             <div class="empty-space marg-lg-b30"></div>
                                         </div>
+<? } ?>
                                     </div>
                                     <div class="row">
+<? $i=0; if (sizeof($portfolio)>1) foreach ($portfolio as $key=>$val) if ($key>0) {  ?>
                                         <div class="col-sm-6">
                                             <div class="tt-project">
                                                 <div class="tt-project-img">
-                                                    <a class="custom-hover open-popup" href="#" data-rel="14">
-                                                        <img class="img-responsive" src="/img/project/project_4.jpg" alt="">
+                                                    <a class="custom-hover open-popup-big" href="javascript:" rel="nofollow" name="<?=$val['id']?>" data-id="<?=$val['id']?>">
+                                                        <img class="img-responsive" src="/uploads/members/portfolio/thmb/<?=$val['image']?>" alt="">
                                                     </a>
-                                                    <a class="tt-project-img-edit  tt-icon-hover" href="#">
+                                                    <a class="tt-project-img-edit  tt-icon-hover"  href="javascript:" rel="nofollow" data-id="<?=$val['id']?>">
                                                             <span class="tt-icon-entry">
                                                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAATlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAP+0nkAAAAGXRSTlMAB/ZCPHsX3a3Gsw3t5s+OWTQrhnBqTrog08duEwAAAH5JREFUGNOtzEkSwyAMRFEhCGYMQ2wnff+LJniHyNJ/ocUrVZNMd/rTA0ht0YqmDmihp/JPRSeiWHCX+31S7v7yfZvUkuWgfIaeVW1h/C/qSGVHq5KGuV+D0ANd6oiZ66oRtuItlUwaZIVSKb/jvFDi/NGFpUYA6WUizbVBS1+HhQbeVMBQMQAAAABJRU5ErkJggg==" alt="">
                                                             </span>
                                                     </a>
                                                 </div>
-                                                <a class="tt-project-title open-popup" href="#" data-rel="14">Ел.монтажние роботи під ключ.</a>
+                                                <a class="tt-project-title open-popup-big" href="javascript:" rel="nofollow" name="<?=$val['id']?>" data-id="<?=$val['id']?>"><?=$val['title']?></a>
                                                 <div class="simple-text size-2 blue-links">
-                                                    <p>Короткий опис проведених робіт Etiam varius, leo sit amet tristique fermentum, sem sem condimentum nibh, sed consectetur lacus tellus eget ... <a href="#"><b>Дізнатись більше</b></a></p>
+                                                    <p><?= Html::encode( mb_strimwidth($val['description'], 0, 200, '...')); ?> <a href="javascript:" rel="nofollow" name="<?=$val['id']?>" data-id="<?=$val['id']?>"><b>Дізнатись більше</b></a></p>
                                                 </div>
                                                 <div class="tt-project-info">
                                                     <div class="tt-project-table">
                                                         <div class="tt-project-cell">
-                                                            вартість робіт <span>5000грн.</span>
+                                                            вартість робіт <span><?=(empty($val['cost'])) ? '(не вказано)' : $val['cost'] ?></span>
                                                         </div>
                                                         <div class="tt-project-cell">
-                                                            дата проведення <span>02/2016</span>
+                                                            дата проведення <span><?=date('m/Y', strtotime($val['work_date']))?></span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="#" class="button type-1 full open-popup" data-rel="14">Переглянути проект</a>
+                                                <a class="button type-1 full open-popup-big" href="javascript:" rel="nofollow" name="<?=$val['id']?>" data-id="<?=$val['id']?>">Переглянути проект</a>
                                             </div>
                                             <div class="empty-space marg-lg-b30"></div>
                                         </div>
+<?
+        if ($i%2) echo ' </div><div class="row">';
+        $i++;
+?>
+<? } ?>
+
+
+
                                     </div>
                                 </div>
+
+
+
+
                                 <div class="tt-project-new">
                                     <div class="tab-entry-box">
-                                        <form>
-                                            <h4 class="h4">Новий проект</h4>
-                                            <div class="empty-space marg-lg-b20"></div>
-                                            <div class="tt-project-new-img">
-                                                <div class="tt-project-pic tt-img-upload">
-                                                        <span class="tt-project-pic-entry">
-                                                            <span class="tt-project-pic-icon"></span>
-                                                            <span class="simple-text size-2">Додати фото</span>
-                                                        </span>
-                                                    <input type="file">
-                                                </div>
-                                                <div class="tt-project-pic-loaded">
-                                                    <span style="background-image:url(/img/project/new_1.jpg);"></span>
-                                                    <div class="button-close small"></div>
-                                                </div>
-                                                <div class="tt-project-pic-loaded">
-                                                    <span style="background-image:url(/img/project/new_2.jpg);"></span>
-                                                    <div class="button-close small"></div>
-                                                </div>
-                                            </div>
-                                            <div class="empty-space marg-lg-b10"></div>
-                                            <div class="tt-input-label">Назва робіт</div>
-                                            <input class="simple-input" placeholder="Наприклад, ремонт квартири під ключ" type="text">
-                                            <div class="empty-space marg-lg-b25"></div>
-                                            <div class="tt-input-label">Вартість робіт</div>
-                                            <input class="simple-input" placeholder="Наприклад, 2500грн. за весь ремонт" type="text">
-                                            <div class="empty-space marg-lg-b25"></div>
-                                            <div class="tt-input-label">Коли проводились роботи</div>
-                                            <div class="simple-input-icon">
-                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
-                                                <input class="simple-input simple-datapicker hasDatepicker" placeholder="Коли проводились роботи" id="dp1509732832899" type="text">
-                                            </div>
-                                            <div class="empty-space marg-lg-b25"></div>
-                                            <div class="tt-input-label">Опис виконаний робіт</div>
-                                            <textarea class="simple-input height-4" placeholder="Коли проводились роботи"></textarea>
-                                            <div class="empty-space marg-lg-b40"></div>
-                                            <div class="tt-buttons-block m10 text-right">
-                                                <a class="button type-1 tt-project-new-close"><span>Відмінити</span></a>
-                                                <div class="button type-1 color-3">
-                                                    <span>Залишити</span>
-                                                    <input type="submit">
-                                                </div>
-                                            </div>
-                                        </form>
+
                                     </div>
                                 </div>
                             </div>
-                            -->
+
                         </div>
                         <div class="tab-entry">
                             UNDER CONSTRUCTION
@@ -1007,70 +981,6 @@ $this->title = 'Кабінет користувача';
                 <div class="button-close"></div>
             </div>
         </div>
-        <div class="popup-content" data-rel="14">
-            <div class="layer-close"></div>
-            <div class="popup-container size-5 gallery">
-                <div class="popup-align">
-                    <div class="empty-space marg-xs-b15 marg-lg-b20"></div>
-                    <div class="tt-two-slider tt-project-slider">
-                        <div class="custom-arrows">
-                            <div class="custom-arrows-prev tt-arrow-prev pos-2 style-2 hidden-xs hidden-sm"></div>
-                            <div class="custom-arrows-next tt-arrow-next pos-2 style-2 hidden-xs hidden-sm"></div>
-                            <div class="swiper-container swiper-control-top swiper-swiper-unique-id-0 initialized swiper-container-horizontal" data-lazy="1" data-space-between="30" id="swiper-unique-id-0">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide swiper-slide-visible swiper-slide-active" style="width: 888px; margin-right: 30px;">
-                                        <div class="tt-project-preview swiper-lazy swiper-lazy-loaded" style="background-image: url(&quot;img/project/project_detail.jpg&quot;);">
-
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide swiper-slide-next" style="width: 888px; margin-right: 30px;">
-                                        <div class="tt-project-preview swiper-lazy" data-background="img/project/project_detail_2.jpg">
-                                            <div class="swiper-lazy-preloader"></div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide" style="width: 888px; margin-right: 30px;">
-                                        <div class="tt-project-preview swiper-lazy" data-background="img/project/project_detail_3.jpg">
-                                            <div class="swiper-lazy-preloader"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-pagination relative-pagination hidden swiper-pagination-swiper-unique-id-0 swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
-                            </div>
-                        </div>
-                        <div class="swiper-container swiper-control-bottom swiper-swiper-unique-id-1 initialized swiper-container-horizontal" data-slides-per-view="auto" data-lazy="1" data-space-between="10" data-center="1" data-clicked-slide="1" id="swiper-unique-id-1">
-                            <div class="swiper-wrapper" style="transform: translate3d(410.5px, 0px, 0px); transition-duration: 0ms;">
-                                <div class="swiper-slide swiper-slide-visible swiper-slide-active" style="margin-right: 10px;">
-                                    <div class="tt-project-thumb">
-                                        <img src="/img/project/thumb_1.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide swiper-slide-visible swiper-slide-next" style="margin-right: 10px;">
-                                    <div class="tt-project-thumb">
-                                        <img src="/img/project/thumb_2.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide swiper-slide-visible" style="margin-right: 10px;">
-                                    <div class="tt-project-thumb">
-                                        <img src="/img/project/thumb_3.jpg" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-pagination relative-pagination hidden swiper-pagination-swiper-unique-id-1 swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
-                        </div>
-                    </div>
-                    <h4 class="tt-project-slider-title h4">Ел.монтажние роботи під ключ.</h4>
-                    <div class="tt-project-slider-text simple-text size-3">
-                        <p>Опис проекту і проведених робіт ed mollis, augue at aliquet feugiat, sapien elit dictum felis, vel cursus tortor lorem non nunc. Pellentesque magna magna, iaculis eget nisl at, rutrum consectetur nisl. Duis bibendum leo at urna cursus, at facilisis elit venenatis. Sed fermentum efficitur justo, cursus hendrerit metus dapibus et. Maecenas vel porta ligula.</p>
-                    </div>
-                    <div class="tt-project-slider-info-wrapper">
-                        <div class="tt-project-slider-info">вартість робіт: <span>2500грн.</span></div>
-                        <div class="tt-project-slider-info">дата проведення: <span>03/2016</span></div>
-                    </div>
-
-                </div>
-                <div class="button-close"></div>
-            </div>
-        </div>
         <div class="popup-content" data-rel="15">
             <div class="layer-close"></div>
             <div class="popup-container size-8">
@@ -1368,27 +1278,8 @@ $this->title = 'Кабінет користувача';
                             <?= Html::resetButton('Відмінити', ['class' => 'popup-close button type-1']) ?>
                             <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
                         </div>
-
                     </div>
-
                     <?php ActiveForm::end(); ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
                 <div class="button-close"></div>
             </div>
@@ -1423,9 +1314,13 @@ $('.popup-close-phone').click(function(){
 
         
 })();" , \yii\web\View::POS_END );
-echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 
+    echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
+    $bundle = AppAsset::register(Yii::$app->view);
+    $bundle->js[] = '/js/portfolio.js'; // dynamic file added
 ?>
+
+
 
 <?php $style= ".pac-container {z-index: 2000 !important;}";
  $this->registerCss($style);

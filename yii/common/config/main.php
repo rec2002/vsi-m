@@ -8,6 +8,7 @@ return [
         'image' => [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD',  //GD or Imagick
+         //     'driver' => 'Imagick',  //GD or Imagick
         ],
         'turbosms' => [
             'class' => 'avator\turbosms\Turbosms',
