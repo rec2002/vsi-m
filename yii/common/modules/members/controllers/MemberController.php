@@ -378,8 +378,8 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
 
         $portfolio =  Portfolio::findBySql('SELECT  p.id, p.member,	p.title, p.description,	p.cost,	p.work_date, 
                                   (SELECT i.image FROM `member_portfolio_images` i WHERE i.portfolio_id = p.id ORDER BY i.created_at ASC, i.id ASC LIMIT 1) as image	 
-                                  FROM `member_porfolio` P 
-                                  WHERE member="'.Yii::$app->user->identity->getId().'"   ORDER BY p.created_at DESC')->asArray()->all();
+                                  FROM `member_porfolio` p 
+                                  WHERE p.member="'.Yii::$app->user->identity->getId().'"   ORDER BY p.created_at DESC')->asArray()->all();
 
 
         return $this->render('profile', ['member'=> $member, 'portfolio'=> $portfolio]);

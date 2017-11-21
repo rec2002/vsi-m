@@ -190,6 +190,15 @@ $(function() {
 		});		
 	};
 
+
+	/*==============================*/
+	/* Load Time Left              */
+	/*==============================*/
+
+    if($("time.timeago").length) $.each($("time.timeago"), function (index) {
+        $(this).html($.timeago($(this)));
+    });
+
 	/*==============================*/
 	/* 08 - buttons, clicks, hovers */
 	/*==============================*/
@@ -381,10 +390,13 @@ $(function() {
 
     $(document).on('click', '.open-popup-big', function(e){
         $.post("/members/portfolio/detail/?id="+$(this).data('id'), function( data ) {
-            $(" div.popup-wrapper-big.active div.popup-content.active div.popup-container div.popup-align").html(data);
+		
+		
+
+            $("#popup-wrapper-big-content").html(data);
             _functions.initSwiper();
             _functions.pageformCalculate();
-            $('.popup-content').removeClass('active');
+           // $('.popup-content').removeClass('active');
             $('.popup-wrapper-big, .popup-content').addClass('active');
         });
         return false;
@@ -874,7 +886,8 @@ $(function() {
 
 
 	/*.tt-toggle-list*/
-	$('.tt-toggle-list > li > a').on('click', function(e){
+
+    $(document).on('click', '.tt-toggle-list > li > a', function(e){
 		var $t = $(this);
 		$t.closest('.tt-toggle-list').find('.active ul').slideUp(300, function(){
 			$(this).parent().removeClass('active');
@@ -882,6 +895,22 @@ $(function() {
 		$t.siblings('ul').slideToggle(300).parent().addClass('active');
 		e.preventDefault();
 	});
+
+
+
+    $(document).on('change', 'select#profsearch-region', function(e){
+        var $t = $(this);
+        $.each(region, function( index, value ) {
+        	if (value['id']==$t.val())  {
+				var url = '?region='+value['url_tag']+($t.data('cat')=='' ? '' : '&cat='+$t.data('cat'))
+                $('a#hidden-region-regirect').attr('href', url).click();
+				return;
+			}
+        });
+        e.preventDefault();
+    });
+
+
 
 	/*tt-fadein-link*/
 	/*

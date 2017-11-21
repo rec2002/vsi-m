@@ -21,17 +21,20 @@ $this->title = 'Кабінет користувача';
                         <li><a href="/">Головна</a></li>
                         <li><a href="<?=Url::to(['/members/member'])?>">Особисті дані</a></li>
                     </ul>
+
+
+
                     <div class="empty-space marg-xs-b20"></div>
                 </div>
                 <div class="col-sm-5">
                     <div class="tt-heading-preview">
-                        <a href="professionals-detail-preview.html" class="button type-1 color-2">Як мене бачать замовники</a>
+                        <?= Html::a(Html::encode('Як мене бачать замовники'), Url::toRoute(['/members/professionals/profile', 'id' =>$member->id]), ['class' =>'button type-1 color-2']) ?>
                     </div>
                 </div>
             </div>
             <div class="tt-heading-user clearfix">
                 <div class="tt-heading-img">
-                    <img class="img-responsive" src="<?=!empty(Yii::$app->user->identity->avatar_image) ? Yii::$app->user->identity->avatar_image : '/img/person/person.png';?>" alt="">
+                    <img class="img-responsive" src="<?=!empty($member->avatar_image) ? $member->avatar_image : '/img/person/person.png';?>" alt="">
                 </div>
                 <div class="tt-heading-user-content">
                     <!--<div class="tt-heading-status">зараз на сайті</div>-->
@@ -47,7 +50,7 @@ $this->title = 'Кабінет користувача';
                         </div>-->
                     </div>
 
-                    <h3 class="tt-heading-title h3 light"><?=(!empty(Yii::$app->user->identity->company)) ? Yii::$app->user->identity->company : Yii::$app->user->identity->first_name.' '.Yii::$app->user->identity->last_name ?> <!--<a class="open-popup tt-icon-hover tt-icon-entry" data-rel="15" href="#">
+                    <h3 class="tt-heading-title h3 light"> <?=(!empty($member->company)) ? $member->company : $member->first_name.' '.$member->last_name.' '.$member->surname ?> <!--<a class="open-popup tt-icon-hover tt-icon-entry" data-rel="15" href="#">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAAY1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+aRQ2gAAAAIXRSTlMAJG4QC5yml4RdCHdPHgX5YlhRSsjDubCPeWtkRUQ1LhVEw5mLAAAAXElEQVQI103KVw6AIBAA0V0UpSiC2Pv9T6kmwDJ/LxmgjgeypOBIurRU5J1b5hsRxBozajZhUA8LOm2SaizrIp6/qiDpc7XdKUjg7nUjGa7UMH+KLxe2hESJClIvbhADi7p4sv0AAAAASUVORK5CYII=" alt="">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAATlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAP+0nkAAAAGnRSTlMABmCnjjSZQMMWzrevK8ef/OHXyIVwW1YdSoUZvnoAAABYSURBVAjXTclXDoAgEADRpa0gvYr3v6iJgQ3z9zJAmfbCEdrACaw79GQWQxRS2iUhZ3aijC2jObp5SOnr1L2Ep2CkZn+t2Z0gga/e57IFT6o2KiAiV4z0AW2MA6Ezq1d1AAAAAElFTkSuQmCC" alt="">
                         </a>-->
@@ -1298,7 +1301,7 @@ echo $this->registerJsFile($gpJsLink);
 echo $this->registerJs("(function(){
 
 
-$(\"time.timeago\").html($.timeago($(\"time.timeago\")));
+
 
 $('.popup-close-phone').click(function(){
 

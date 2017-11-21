@@ -3,7 +3,6 @@ use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
-use common\widgets\Alert;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
 
@@ -30,7 +29,7 @@ $this->title = 'Кабінет користувача';
                             <div class="col-sm-6">
                                 <div class="tt-person-ava">
                                     <div class="tt-person-img">
-                                        <div class="tt-heading-check unchecked tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації наразі не перевірено"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAMAAAApB0NrAAAAPFBMVEUAAABscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHbdgYzgAAAAE3RSTlMA4e+tLSMVCtS+pFNKP/jJb2dex1uRwAAAAFVJREFUGBntwUcOgDAQBMFZZ3Lo//8VxN32FSGq9PuEOalnp6jjAK+2E0ZVJD0m8KoYXdBtAq8aw0VphkFVybAcYFBDdJhjU1NYoWS1LVhWzxL1e7ELQ3wCozk2KIMAAAAASUVORK5CYII=" alt=""></div>
+                                        <!--<div class="tt-heading-check unchecked tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації наразі не перевірено"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAMAAAApB0NrAAAAPFBMVEUAAABscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHbdgYzgAAAAE3RSTlMA4e+tLSMVCtS+pFNKP/jJb2dex1uRwAAAAFVJREFUGBntwUcOgDAQBMFZZ3Lo//8VxN32FSGq9PuEOalnp6jjAK+2E0ZVJD0m8KoYXdBtAq8aw0VphkFVybAcYFBDdJhjU1NYoWS1LVhWzxL1e7ELQ3wCozk2KIMAAAAASUVORK5CYII=" alt=""></div>-->
                                         <img class="tt-person-img img-responsive" style="margin: 0;" src="<?=!empty(Yii::$app->user->identity->avatar_image) ? Yii::$app->user->identity->avatar_image : '/img/person/person.png';?>" alt="">
                                     </div>
 

@@ -22,8 +22,8 @@ use yii\helpers\Url;
                         <nav class="main-nav">
                             <ul>
                                 <li><a href="<?=Url::to(['/members/member/list'])?>">Замовлення</a></li>
-                                <li><a href="<?=Url::to(['/members/member/profile'])?>">Моя сторінка</a></li>
-                                <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Каталог майстрів</a></li>
+                                <li class="<?=in_array($this->context->action->id, array('profile')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/member/profile'])?>">Моя сторінка</a></li>
+                                <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/professionals'])?>">Каталог майстрів</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -77,7 +77,7 @@ use yii\helpers\Url;
                     <nav class="main-nav">
                         <ul>
                             <li class="<?=in_array($this->context->action->id, array('list')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/customer/list'])?>">Мої замовлення</a></li>
-                            <li><a href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;">Каталог майстрів</a></li>
+                            <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/professionals'])?>">Каталог майстрів</a></li>
                         </ul>
                     </nav>
                 </div>

@@ -33,8 +33,8 @@ class PortfolioController extends \common\modules\members\controllers\DefaultCon
 
         $items =  Portfolio::findBySql('SELECT  p.id, p.member,	p.title, p.description,	p.cost,	p.work_date, 
                                   (SELECT i.image FROM `member_portfolio_images` i WHERE i.portfolio_id = p.id ORDER BY i.created_at ASC, i.id ASC LIMIT 1) as image	 
-                                  FROM `member_porfolio` P 
-                                  WHERE member="'.Yii::$app->user->identity->getId().'" 
+                                  FROM `member_porfolio` p 
+                                  WHERE p.member="'.Yii::$app->user->identity->getId().'" 
                                     ORDER BY p.created_at DESC')->asArray()->all();
 
         return $this->render('porfolio-list-edit', ['items'=> $items]);
@@ -66,6 +66,7 @@ class PortfolioController extends \common\modules\members\controllers\DefaultCon
                     $image->saveAs($dir.$filename);
                     Image::thumbnail($dir.$filename, 409, 220)->save($dir.'thmb/'.$filename, ['quality' => 90]);
                     Image::thumbnail($dir.$filename, 150, 150)->save($dir.'thmb150/'.$filename, ['quality' => 90]);
+                    Image::thumbnail($dir.$filename, 208, 156)->save($dir.'thmb200/'.$filename, ['quality' => 90]);
                     Image::thumbnail($dir.$filename, 945, 600, ImageInterface::THUMBNAIL_INSET)->save($dir.$filename, ['quality' => 90]);
                     $portfolioImages->image = $filename;
 
@@ -109,6 +110,7 @@ class PortfolioController extends \common\modules\members\controllers\DefaultCon
                 if (!in_array( $val['id'], $model->images_uploaded)) {
                     if (file_exists($dir.'thmb/'.$val['image']))  @unlink($dir.'thmb/'.$val['image']);
                     if (file_exists($dir.'thmb150/'.$val['image'])) @unlink($dir.'thmb150/'.$val['image']);
+                    if (file_exists($dir.'thmb200/'.$val['image'])) @unlink($dir.'thmb200/'.$val['image']);
                     if (file_exists($dir.$val['image'])) @unlink($dir.$val['image']);
                     Yii::$app->db->createCommand()->delete('member_portfolio_images', ['id' => $val['id']])->execute();
                 }
@@ -123,6 +125,7 @@ class PortfolioController extends \common\modules\members\controllers\DefaultCon
                     $image->saveAs($dir.$filename);
                     Image::thumbnail($dir.$filename, 409, 220)->save($dir.'thmb/'.$filename, ['quality' => 90]);
                     Image::thumbnail($dir.$filename, 150, 150)->save($dir.'thmb150/'.$filename, ['quality' => 90]);
+                    Image::thumbnail($dir.$filename, 208, 156)->save($dir.'thmb200/'.$filename, ['quality' => 90]);
                     Image::thumbnail($dir.$filename, 945, 600, ImageInterface::THUMBNAIL_INSET)->save($dir.$filename, ['quality' => 90]);
                     $portfolioImages->image = $filename;
                     $portfolioImages->save(false);
@@ -175,6 +178,7 @@ class PortfolioController extends \common\modules\members\controllers\DefaultCon
         if (sizeof($images)) foreach ($images as $image) {
             if (file_exists($dir.'thmb/'.$image['image']))  @unlink($dir.'thmb/'.$image['image']);
             if (file_exists($dir.'thmb150/'.$image['image'])) @unlink($dir.'thmb150/'.$image['image']);
+            if (file_exists($dir.'thmb200/'.$image['image'])) @unlink($dir.'thmb200/'.$image['image']);
             if (file_exists($dir.$image['image'])) @unlink($dir.$image['image']);
 
         }

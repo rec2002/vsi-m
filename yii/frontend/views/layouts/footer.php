@@ -27,10 +27,10 @@ use yii\helpers\Html;
     <!-- POPUP-WRAPPER -->
     <div class="popup-wrapper-big">
         <div class="bg-layer"></div>
-        <div class="popup-content" data-rel="14">
+        <div class="popup-content active">
             <div class="layer-close"></div>
             <div class="popup-container size-5 gallery">
-                <div class="popup-align">
+                <div class="popup-align" id="popup-wrapper-big-content">
                 </div>
                 <div class="button-close"></div>
             </div>
