@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use \backend\models\Dictypes;
 use kartik\select2\Select2;
 use yii\helpers\Url;
+use common\components\MemberHelper;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Dictjobs */
@@ -18,9 +19,20 @@ use yii\helpers\Url;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true,  'class' => 'form-control ' ]) ?>
 
+    <?
+            $types = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 WHERE d.active=1 AND d.types=0 ORDER BY d.priority ASC, d1.priority ASC ")->queryAll();
+            if (sizeof($types)) {
+                $data = array();
+                foreach ($types as $key=>$val) {
+                    $data[$val['parent_name']][$val['id']] =  $val['name'];
+                }
+            }
 
+        $model->parent =($model->isNewRecord) ? 0 : $model->parent;
+
+    ?>
     <?=$form->field($model, 'parent')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Dictypes::findBySql('SELECT id, name FROM dict_category WHERE active=1 AND  types=1 ORDER BY name ASC ')->all(), 'id', 'name'),
+        'data' =>  $data,
         'language' => 'uk',
         'hideSearch' => true,
         'options' => ['placeholder' => '-- Вибрати `вид робіт` --'],
@@ -31,7 +43,7 @@ use yii\helpers\Url;
 
 
     <?=$form->field($model, 'job_unit')->widget(Select2::classname(), [
-        'data' => [1=>'грн. / год', 2=>'грн. / шт.', 3=>'грн. / м2', 4=>'грн. / м3', 5=>'грн. / м/п', 6=>'грн. / місце'],
+        'data' => MemberHelper::PRICE_TYPE,
         'language' => 'uk',
         'hideSearch' => true,
         'options' => ['placeholder' => '-- Вибрати тип обрахунку --'],

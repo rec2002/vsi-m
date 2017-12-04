@@ -15,8 +15,10 @@ class AppAsset extends AssetBundle
         'css/swiper.min.css',
         'css/style.css',
         'css/style_custom.css',
+        'css/sumoselect.min.css'
     ];
     public $js = [
+        'js/jquery.sumoselect.min.js',
         'js/jquery-ui.min.js',
         'js/datepicker-uk.js',
         'js/jquery.timeago.js',

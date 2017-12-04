@@ -38,21 +38,9 @@ echo \yii\widgets\LinkPager::widget([
 
 ])
 ?>
-<!--
-            <a href="#" class="button type-1 btn-simple icon-left uppercase tt-pagination-left"><span>попередні</span></a>
-            <ul>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li class="hidden-xs"><a href="#">4</a></li>
-                <li class="hidden-xs"><a href="#">5</a></li>
-                <li class="disabled"><span>...</span></li>
-                <li><a href="#">21</a></li>
-                <li><a href="#">22</a></li>
-                <li><a href="#">23</a></li>
-            </ul>
-            <a href="#" class="button type-1 btn-simple icon-right uppercase tt-pagination-right"><span>наступні</span></a>
-        </div>-->
         <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
     </div>
+
+
+
 </div>

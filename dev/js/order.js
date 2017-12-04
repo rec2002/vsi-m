@@ -77,121 +77,6 @@ $(function() {
                                 });
 
                             break;
-
-
-
- /*                       case 'MemberEdit[busy]':
-
-                            if ($("span.tt-heading-state").length) {
-
-                                if (data_post[1]['value']==0) {
-                                    $('span.tt-heading-state').removeClass('red').html('вільний для роботи');
-                                } else {
-                                    $("span.tt-heading-state").addClass('red').html('Зайнятий до ' + data_post[2]['value']);
-                                }
-
-                                $('.popup-wrapper, .popup-content').removeClass('active');
-                                $('.tt-vote-selected').removeClass('tt-vote-selected');
-                                return false;
-                            }
-
-
-
-                            if (data_post[1]['value']==0)
-                                form.find('.tt-editable-item').html('Вільний до роботи');
-                            else
-                                form.find('.tt-editable-item').html('Зайнятий до '+data_post[2]['value']);
-                            break;
-                        case 'MemberEdit[surname]':
-                            form.find('.tt-editable-item').html(data_post[1]['value']);
-                            form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').show();
-                            break;
-                        case 'MemberEdit[first_name]':
-                        case 'MemberEdit[last_name]':
-                        case 'MemberEdit[email]':
-                        case 'MemberEdit[place]':
-
-                            // when edit plece in profile
-                            if ($("div#profile-place").length) {
-                                $("div#profile-place").html(data_post[1]['value']);
-                                $('.popup-wrapper, .popup-content').removeClass('active');
-                                $('.tt-vote-selected').removeClass('tt-vote-selected');
-                                return false;
-                            }
-
-                            form.find('.tt-editable-item').html(data_post[1]['value']);
-                            break;
-                        case 'MemberEdit[budget_min]':
-                            // when edit min_price on profile
-                            $('#budget_min').html(data_post[1]['value']+ ' грн.');
-                            $('.popup-wrapper, .popup-content').removeClass('active');
-                            $('.tt-vote-selected').removeClass('tt-vote-selected');
-                            return false;
-
-                            break;
-                        case 'MemberEdit[about]':
-                            form.find('.tt-editable-item').html(data_post[1]['value'].replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, "<br>"));
-
-                            if (data_post[1]['value']!='')
-                                form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').show();
-                            else
-                                form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').hide();
-                            form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').hide();
-
-                            if ($('#edit_about').hasClass('profile')) {
-
-                                form.closest('.tt-editable-form').fadeOut(300,function(){
-                                    $(this).siblings('.tt-editable').html(data_post[1]['value'].replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, "<br>"));
-                                    $(this).siblings('.tt-editable').fadeIn();
-                                });
-
-
-                            }
-
-                            break;
-                        case 'MemberEdit[regions]':
-                            var region_list = '';
-
-                            // when edit regions on profile
-                            if ($("ul.simple-list.size-2.profile").length) {
-                                $("input.checklist").each( function () {
-                                    if($(this).is(':checked')){
-                                        region_list +=  '<li><a href="javascript:">'+ $(this).next().html() + '</a></li>';
-                                    }
-                                });
-                                $("ul.simple-list.size-2.profile").html(region_list);
-                                $('.popup-wrapper, .popup-content').removeClass('active');
-                                $('.tt-vote-selected').removeClass('tt-vote-selected');
-                                return false;
-                            }
-
-                            $("input.checklist").each( function () {
-                                if($(this).is(':checked')){
-                                    region_list +=  '<p>'+ $(this).next().html() + '</p>';
-                                }
-                            });
-
-                            form.find('.tt-editable-item').html(region_list);
-                            break;
-                        case 'MemberEdit[forma]':
-
-                            var forma = $("#memberedit-forma").find(":selected").text();
-                            if (data_post[1]['value']==2) forma += ' / '+$("#memberedit-brygada").find(":selected").text();
-                            if (data_post[1]['value']==3) forma += ' / '+$("#memberedit-company").val();
-                            // when edit forma on profile
-                            if ($("span#profile_forma").length) {
-                                if (data_post[1]['value']==3) forma = ' Юридична особа ';
-
-                                $("span#profile_forma").html(forma);
-                                $('.popup-wrapper, .popup-content').removeClass('active');
-                                $('.tt-vote-selected').removeClass('tt-vote-selected');
-                                return false;
-                            }
-
-
-                            form.find('.tt-editable-item').html(forma);
-
-                            break;*/
                     }
 
                     form.find('.tt-editable-form').slideUp(300).siblings('.tt-editable').slideDown(300, function(){
@@ -205,5 +90,155 @@ $(function() {
         return false;
     });
 
+    if ($('.simple-select select').length) {
+       // $('.simple-select:not(.multy) select').SumoSelect();
+        $('.simple-select.multy.region select').SumoSelect({
+            placeholder: 'Виберіть область',
+            selectAll: false,
+            captionFormat: '{0} Вибрано',
+            captionFormatAllSelected: 'Вся Україна',
+            locale: ['OK', 'Відмінити ', 'Вся Україна'],
+        });
+
+
+        var budget = $("select[name='budgets']").SumoSelect({
+            placeholder: 'Виберіть бюджет',
+            selectAll: false,
+            captionFormat: '{0} Вибрано',
+            captionFormatAllSelected: 'Будь який бюджет',
+            locale: ['OK', 'Відмінити ', 'Будь який бюджет'],
+        });
+    }
+
+
+
+    if ($('#items_body').length) {
+
+        InitTypes();
+
+
+        $(document).on("click", "select[name='regions'], select[name='budgets'], input[name='filter-types']", function (e) {
+             $('form#orders-filter').submit();
+        });
+
+
+
+
+
+        $(document).on("submit", "form#orders-filter", function (e) {
+
+
+            var types = [];
+            var budgets =  ($("select[name='budgets']").val()) ? ($("select[name='budgets']").val()).join() : '';
+            var regions =  ($("select[name='regions']").val()) ? ($("select[name='regions']").val()).join() : '';
+
+            $("input[name='types[]']:checked").each( function () {
+              types.push($(this).val());
+            });
+
+
+            $.post('/orders'+'?ajax=true', {'budgets':budgets, 'regions':regions, 'types':(types).join()}).done(function(data ) {
+
+                if (data!= '') {
+                    $('div#items_body').html(data);
+                }   else alert('Bad request');
+
+            });
+
+
+            return false;
+
+        });
+
+
+        /*tt-order-filter*/
+        $('.checkbox-entry.check-all input').on('change', function(){
+            if($(this).is(':checked')){
+                $(this).closest('li').find('.checkbox-entry:not(.check-all) input').prop('checked', true);
+            } else{
+                $(this).closest('li').find('.checkbox-entry:not(.check-all) input').prop('checked', false);
+            }
+            setOrderFilter();
+        });
+        $('.tt-order-filter .checkbox-entry:not(.check-all) input').on('change', function(){
+            setOrderFilter();
+        });
+
+        function setOrderFilter(){
+            var count = $('.tt-order-filter .checkbox-entry:not(.check-all) input:checked').length;
+            $('.tt-order-filter .button i').text(count);
+        }
+
+        $('.tt-order-filter form').on('submit', function(e){
+            InitTypes();
+            setOrderFilter();
+            e.preventDefault();
+            return false;
+        });
+
+        function InitTypes() {
+
+            var count = $('.tt-order-filter .checkbox-entry:not(.check-all) input:checked').length;
+            if(count){
+                $('.tt-order-filter-select').addClass('selected').find('span:first-child').text(count+' видів робіт');
+            }
+            else{
+                $('.tt-order-filter-select').removeClass('selected').find('span:first-child').text('Оберіть типи робіт');
+            }
+            $('.popup-wrapper, .popup-content').removeClass('active');
+
+
+            var count = $('.tt-order-filter .checkbox-entry:not(.check-all) input:checked').length;
+            $('.tt-order-filter .button i').text(count);
+
+            orderFilterMessage();
+
+        }
+
+
+
+        $('a.filter-types-reset').on('click', function(){
+            $("input[name='types[]']:checked").each( function () {
+                $(this).prop('checked', false);
+            });
+            InitTypes();
+
+            $('form#orders-filter').submit();
+        });
+
+        $('.simple-select.multy.region select').on('change', function(){
+            var count = $(this).find('option:selected').length;
+            if(count){
+                $(this).closest('.simple-select').addClass('selected');
+            } else{
+                $(this).closest('.simple-select').removeClass('selected');
+            }
+            orderFilterMessage();
+        });
+        function orderFilterMessage(){
+            var $filterWork = $('.tt-order-filter-select').is('.selected'),
+                $filterPlace = $('.simple-select.multy.region').is('.selected');
+            if($filterWork&&!$filterPlace){
+                $('.tt-order-message-all:visible').fadeOut();
+                $('.tt-order-message-place:visible').fadeOut();
+                $('.tt-order-message-work:hidden').fadeIn();
+            } else if(!$filterWork&&$filterPlace){
+                $('.tt-order-message-all:visible').fadeOut();
+                $('.tt-order-message-work:visible').fadeOut();
+                $('.tt-order-message-place:hidden').fadeIn();
+            } else if($filterWork&&$filterPlace){
+                $('.tt-order-message-place:visible').fadeOut();
+                $('.tt-order-message-work:visible').fadeOut();
+                $('.tt-order-message-all:hidden').fadeIn();
+            } else{
+                $('.tt-order-message-place:visible').fadeOut();
+                $('.tt-order-message-work:visible').fadeOut();
+                $('.tt-order-message-all:visible').fadeOut();
+            }
+        }
+
+
+
+    }
 
 });

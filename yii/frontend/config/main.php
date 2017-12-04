@@ -19,6 +19,12 @@ return [
     'modules' => [
         'members' => [
             'class' => 'common\modules\members\members',
+        ],
+        'professionals' => [
+            'class' => 'common\modules\professionals\professionals',
+        ],
+        'orders' => [
+            'class' => 'common\modules\orders\orders',
         ]
     ],
     'components' => [
@@ -78,10 +84,13 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'каталог-майстрів/<region:\w+>/<cat:\w+>' =>'/members/professionals/',
-                 'каталог-майстрів/' =>'/members/professionals',
+                /*'каталог-майстрів/<region:\w+>/<cat:\w+>' =>'/members/professionals/',
+                 'каталог-майстрів/' =>'/members/professionals',*/
+
+
+
                 'кабінет/виконані-проекти' =>'/members/portfolio/list',
-                'кабінет/мої-замовлення' =>'members/customer/list',
+                /*'кабінет/мої-замовлення' =>'members/customer/list',*/
                 'блог/<id:\d+>/<slug>'=>'site/publish',
                 'блог'=>'site/publish',
                 'всі-категорії-майстрів'=>'site/category',

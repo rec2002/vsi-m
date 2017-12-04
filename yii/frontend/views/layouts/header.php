@@ -21,9 +21,9 @@ use yii\helpers\Url;
                     <div class="nav-left">
                         <nav class="main-nav">
                             <ul>
-                                <li><a href="<?=Url::to(['/members/member/list'])?>">Замовлення</a></li>
+                                <li><a href="<?=Url::to(['/orders'])?>">Замовлення</a></li>
                                 <li class="<?=in_array($this->context->action->id, array('profile')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/member/profile'])?>">Моя сторінка</a></li>
-                                <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/professionals'])?>">Каталог майстрів</a></li>
+                                <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог майстрів</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -73,11 +73,11 @@ use yii\helpers\Url;
         <div class="toggle-block">
             <div class="toggle-block-container">
                 <div class="nav-left">
-                    <a href="<?=Url::to(['/members/customer/addorder'])?>" class="button type-1 button-plus color-3"><span></span>Додати замовлення</a>
+                    <a href="<?=Url::to(['/orders/default/addorder'])?>" class="button type-1 button-plus color-3"><span></span>Додати замовлення</a>
                     <nav class="main-nav">
                         <ul>
-                            <li class="<?=in_array($this->context->action->id, array('list')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/customer/list'])?>">Мої замовлення</a></li>
-                            <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/professionals'])?>">Каталог майстрів</a></li>
+                            <li class="<?=in_array($this->context->action->id, array('list')) ? 'active' : '' ?>"><a href="<?=Url::to(['/orders/default/myorders'])?>">Мої замовлення</a></li>
+                            <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог майстрів</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -142,6 +142,7 @@ use yii\helpers\Url;
                 <a href="<?=Url::to(['/members/customregistration/create'])?>" class="button type-1 button-plus color-3"><span></span>Додати замовлення</a>
                 <?=Nav::widget([
                     'items' => [
+                        ['label' => 'Замовлення', 'url' => ['/orders'], 'class' =>'button type-1 btn-simple'],
                         ['label' => 'Каталог майстрів', 'url' => ['/site/category'], 'class' =>'button type-1 btn-simple'],
                         ['label' => 'Як це працює', 'url' => ['/site/howitwork'], 'class' =>'button type-1 btn-simple'],
 

@@ -26,6 +26,7 @@ class Orders extends \yii\db\ActiveRecord
 
     public $agree = false;
     public $image = array();
+    public $types = array();
     /**
      * @inheritdoc
      */
@@ -79,6 +80,9 @@ class Orders extends \yii\db\ActiveRecord
             'when_start'=>'Коли потрібно починати',
             'date_from'=>'Виберіть дату `з`',
             'date_to'=>'Виберіть дату `до`',
+            'reason_for_refusal'=>'Причина відмови',
+            'types'=>'Види робіт',
+
 
         ];
     }
@@ -98,4 +102,13 @@ class Orders extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Members::className(), ['id' => 'member']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderTypes()
+    {
+        return $this->hasMany(OrderTypes::className(), ['order_id' => 'id']);
+    }
+
 }

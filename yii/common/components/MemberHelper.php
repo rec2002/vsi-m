@@ -18,7 +18,7 @@ class MemberHelper {
 
     const BUSY = array(0=>'Вільний для роботи', 1=>'Зайнятий до');
 
-    const STATUS = array(0=>'На перевірці в модератора', 1=>'Шукають виконавця', 2=>'Прийняті до виконання', 3=>'Виконані', 4=>'Скасовані');
+    const STATUS = array(0=>'На перевірці в модератора', 1=>'Скасовані модератором', 2=>'Шукають виконавця', 3=>'Прийняті до виконання', 4=>'Виконані', 5=>'Скасовані');
 
 
 
@@ -86,13 +86,16 @@ class MemberHelper {
         $arr_ = array();
         foreach ($arr as $key=>$val){
             if ($key==0) {
-                $budget = '0 - '.number_format($val['budget_to'], 0, ',', ' ').' грн. ('.$val['name'].')';
+                $budget = 'до - '.number_format($val['budget_to'], 0, ',', ' ').' грн. ('.$val['name'].')';
+                $budget_short  = 'до - '.number_format($val['budget_to'], 0, ',', ' ').' грн.';
             } else if ($arr[$key]['id']==sizeof($arr)) {
                 $budget = number_format($arr[$key-1]['budget_to'], 0, ',', ' ').' - '.number_format($val['budget_to'], 0, ',', ' ').' грн. і більше ('.$val['name'].')';
+                $budget_short = number_format($arr[$key-1]['budget_to'], 0, ',', ' ').' - '.number_format($val['budget_to'], 0, ',', ' ').' грн. і більше';
             } else {
                 $budget = number_format($arr[$key-1]['budget_to'], 0, ',', ' ').' - '.number_format($val['budget_to'], 0, ',', ' ').' грн. ('.$val['name'].')';
+                $budget_short = number_format($arr[$key-1]['budget_to'], 0, ',', ' ').' - '.number_format($val['budget_to'], 0, ',', ' ').' грн.';
             }
-            $arr_[$val['id']] = array('name'=>$val['name'], 'budget'=>$budget);
+            $arr_[$val['id']] = array('name'=>$val['name'], 'budget'=>$budget, 'budget_short'=>$budget_short);
         }
         return $arr_;
     }

@@ -211,29 +211,35 @@ $(function() {
 
 
 
-/*
-  		//enable autocomplete
-  		if($('#tt-google-single-autocomplete-only').length){
-  		//	var input = (document.getElementById('tt-google-single-autocomplete-only')),
-  				contentstr = $('#tt-google-single-autocomplete-only').val(),
-		//		autocomplete = new google.maps.places.Autocomplete(input);
-                    searchbox.bindTo('bounds', map);
-            searchbox.addListener('place_changed', function() {
-       			var place = searchbox.getPlace();
-       			if (place.geometry.viewport) {
-		            map.fitBounds(place.geometry.viewport);
-		        } else {
-		            map.setCenter(place.geometry.location);
-		            map.setZoom(17);
-		        }
-		      	mark_name = 'autocomplete-marker';
-				for (var marker in markers) {
-				    markers[marker].setMap(null);
-				}			      
-		      	addMarker(place.geometry.location,mark_name,contentstr,mark_default,true);		        
-       		});		
-  		}
-*/
+        if ($('span#address-location').length) {
+
+            var address = $('span#address-location').text();
+            if (address!='') {
+                geocoder = new google.maps.Geocoder();
+
+                geocoder.geocode({
+                    'address': address
+                }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var Lat = results[0].geometry.location.lat(),
+                            Lng = results[0].geometry.location.lng(),
+                            mark_locat = new google.maps.LatLng(Lat, Lng),
+                            mark_name = 'template_marker_'+address;
+                        for (var marker in markers) {
+                            markers[marker].setMap(null);
+                        }
+                        addMarker(mark_locat,mark_name,address,mark_default,true);
+                        map.setCenter(mark_locat);
+                        map.setZoom(12);
+                    } else {
+                        console.log("Something got wrong " + status);
+                    }
+                });
+
+            }
+        }
+
+
   		//enable geolocation
 		if(geoLocationVal){geoLocation();}
 
@@ -341,6 +347,9 @@ $(function() {
 		});
 		e.preventDefault();
 	});
+
+
+
 
 
     function GetMessage_(title, subtitle){

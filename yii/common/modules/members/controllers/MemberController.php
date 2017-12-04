@@ -2,9 +2,6 @@
 
 namespace common\modules\members\controllers;
 
-
-
-
 use common\modules\members\models\MemberPrices;
 use common\modules\members\models\MemberRegions;
 use common\modules\members\models\MemberTypes;
@@ -395,7 +392,7 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
 
     }
 
-
+/*
     public function actionList($status='')  {
 
         $param = [];
@@ -440,7 +437,9 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
 
         return $this->render('list', ['model'=>$provider, 'count_total'=>$count_total]);
     }
+*/
 
+/*
     public function actionOrder($id=0)  {
         $model = Orders::findOne([
             'id' => Yii::$app->request->get('id'),
@@ -606,7 +605,7 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
 
     }
 
-
+*/
 
 
 }

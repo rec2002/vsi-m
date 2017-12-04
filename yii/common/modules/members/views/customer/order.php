@@ -168,12 +168,14 @@ $this->title = 'Замовлення';
                                         <span class="tt-editable-item" data-rel="title">
                                               <?
 
+
+/*
                                                    if($model->when_start==1)
                                                        echo 'В період від '.$model->date_from.' до '.$model->date_to;
                                                   elseif ($model->when_start==2 || $model->when_start==3)
                                                       echo $model->date_from;
                                                   elseif($model->when_start==4)echo 'Будь-коли';
-
+*/
                                               ?>
                                         </span>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">

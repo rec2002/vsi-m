@@ -32,7 +32,7 @@ use yii\helpers\Url;
         <div class="col-sm-3">
             <ul class="simple-list">
                 <? if (sizeof($arr[$key][1])) foreach($arr[$key][1] as $val) { ?>
-                    <li><a href="<?=Url::to(['members/professionals/', 'cat'=>$val['url_tag']])?>"><?=$val['name']?></a></li>
+                    <li><a href="<?=Url::to(['professionals/', 'cat'=>$val['url_tag']])?>"><?=$val['name']?></a></li>
                 <? } ?>
             </ul>
             <div class="empty-space marg-sm-b10"></div>
@@ -40,7 +40,7 @@ use yii\helpers\Url;
         <div class="col-sm-3">
             <ul class="simple-list">
                 <? if (sizeof($arr[$key][2])) foreach($arr[$key][2] as $val) { ?>
-                    <li><a href="<?=Url::to(['members/professionals/', 'cat'=>$val['url_tag']])?>"><?=$val['name']?></a></li>
+                    <li><a href="<?=Url::to(['professionals/', 'cat'=>$val['url_tag']])?>"><?=$val['name']?></a></li>
                 <? } ?>
             </ul>
             <div class="empty-space marg-sm-b10"></div>
@@ -48,7 +48,7 @@ use yii\helpers\Url;
         <div class="col-sm-3">
             <ul class="simple-list">
                 <? if (sizeof($arr[$key][3])) foreach($arr[$key][3] as $val) { ?>
-                    <li><a href="<?=Url::to(['members/professionals/', 'cat'=>$val['url_tag']])?>"><?=$val['name']?></a></li>
+                    <li><a href="<?=Url::to(['professionals/', 'cat'=>$val['url_tag']])?>"><?=$val['name']?></a></li>
                 <? } ?>
             </ul>
             <div class="empty-space marg-sm-b10"></div>
@@ -56,7 +56,7 @@ use yii\helpers\Url;
         <div class="col-sm-3">
             <ul class="simple-list">
                 <? if (sizeof($arr[$key][4])) foreach($arr[$key][4] as $val) { ?>
-                    <li><a href="<?=Url::to(['members/professionals/', 'cat'=>$val['url_tag']])?>"><?=$val['name']?></a></li>
+                    <li><a href="<?=Url::to(['professionals/', 'cat'=>$val['url_tag']])?>"><?=$val['name']?></a></li>
                 <? } ?>
             </ul>
         </div>

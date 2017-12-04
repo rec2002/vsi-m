@@ -68,7 +68,12 @@ class DictjobsController extends Controller
         $model = new Dictjobs();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+
+
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return json_encode(array('status'=> 1));
+
+//            return $this->redirect(['index']);
         } else {
             return $this->renderAjax('_form', [
                 'model' => $model,
@@ -87,7 +92,11 @@ class DictjobsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return json_encode(array('status'=> 1));
+
+            //return $this->redirect(['index']);
         } else {
             return $this->renderAjax('_form', [
                 'model' => $model,

@@ -325,7 +325,7 @@ $(function() {
 
 	/*tabs*/
 	var tabsFinish = 0;
-	$('.tab-menu:not(.redirect)').on('click', function() {
+	$('div.tab-menu:not(.redirect)').on('click', function() {
 		if($(this).hasClass('active') || tabsFinish) return false;
 		tabsFinish = 1;
         var tabsWrapper = $(this).closest('.tabs-block'),
@@ -359,7 +359,7 @@ $(function() {
 		hashTab();
 	}
 	function hashTab(){
-		$('.tab-menu[data-tab="'+hash+'"]').trigger( "click" );
+		$('div.tab-menu[data-tab="'+hash+'"]').trigger( "click" );
 	}
 	$(window).on("hashchange", function() {
 	    if(window.location.hash) {
@@ -389,10 +389,7 @@ $(function() {
 
 
     $(document).on('click', '.open-popup-big', function(e){
-        $.post("/members/portfolio/detail/?id="+$(this).data('id'), function( data ) {
-		
-		
-
+        $.post($('.map-order-view').length ? "/orders/default/gallery/?id="+$(this).data('id') : "/members/portfolio/detail/?id="+$(this).data('id'), function( data ) {
             $("#popup-wrapper-big-content").html(data);
             _functions.initSwiper();
             _functions.pageformCalculate();
@@ -780,7 +777,7 @@ $(function() {
 		} else {
 
 
-            $.post( ($("div.majster").length) ? "/members/member/imagedelete?id="+obj.data('id') : "/members/customer/imagedelete?id="+obj.data('id'), function( data ) {
+            $.post("/orders/default/imagedelete?id="+obj.data('id'), function( data ) {
                 var data = JSON.parse(data);
                 if (data.status==1) {
                     obj.fadeOut(500, function(){
@@ -998,7 +995,9 @@ $(function() {
     	}
     });
 */
-    /*tt-order-filter*/
+	/*tt-order-filter*/
+/*
+
     $('.checkbox-entry.check-all input').on('change', function(){
 		if($(this).is(':checked')){
 			$(this).closest('li').find('.checkbox-entry:not(.check-all) input').prop('checked', true);
@@ -1006,7 +1005,7 @@ $(function() {
 			$(this).closest('li').find('.checkbox-entry:not(.check-all) input').prop('checked', false);
 		}
 		setOrderFilter();
-    }); 
+    });
     $('.tt-order-filter .checkbox-entry:not(.check-all) input').on('change', function(){
     	setOrderFilter();
     });
@@ -1024,7 +1023,7 @@ $(function() {
     	}
     	$('.popup-wrapper, .popup-content').removeClass('active');
     	e.preventDefault();
-    	orderFilterMessage();    	
+    	orderFilterMessage();
     });
 
     $('.simple-select.multy.region select').on('change', function(){
@@ -1040,27 +1039,27 @@ $(function() {
     	var $filterWork = $('.tt-order-filter-select').is('.selected'),
     		$filterPlace = $('.simple-select.multy.region').is('.selected');
     	if($filterWork&&!$filterPlace){
-    		$('.tt-order-message-all:visible').fadeOut();    		
+    		$('.tt-order-message-all:visible').fadeOut();
     		$('.tt-order-message-place:visible').fadeOut();
     		$('.tt-order-message-work:hidden').fadeIn();
     	} else if(!$filterWork&&$filterPlace){
-    		$('.tt-order-message-all:visible').fadeOut();     		
+    		$('.tt-order-message-all:visible').fadeOut();
     		$('.tt-order-message-work:visible').fadeOut();
     		$('.tt-order-message-place:hidden').fadeIn();
     	} else if($filterWork&&$filterPlace){
     		$('.tt-order-message-place:visible').fadeOut();
-    		$('.tt-order-message-work:visible').fadeOut();    			
+    		$('.tt-order-message-work:visible').fadeOut();
     		$('.tt-order-message-all:hidden').fadeIn();
     	} else{
     		$('.tt-order-message-place:visible').fadeOut();
-    		$('.tt-order-message-work:visible').fadeOut();    			
-    		$('.tt-order-message-all:visible').fadeOut();    		
+    		$('.tt-order-message-work:visible').fadeOut();
+    		$('.tt-order-message-all:visible').fadeOut();
     	}
     }
 
 
 
-
+*/
 
 
     /*tt-user-card*/

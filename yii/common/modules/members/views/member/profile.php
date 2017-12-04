@@ -28,7 +28,7 @@ $this->title = 'Кабінет користувача';
                 </div>
                 <div class="col-sm-5">
                     <div class="tt-heading-preview">
-                        <?= Html::a(Html::encode('Як мене бачать замовники'), Url::toRoute(['/members/professionals/profile', 'id' =>$member->id]), ['class' =>'button type-1 color-2']) ?>
+                        <?= Html::a(Html::encode('Як мене бачать замовники'), Url::toRoute(['/professionals/default/profile', 'id' =>$member->id]), ['class' =>'button type-1 color-2']) ?>
                     </div>
                 </div>
             </div>

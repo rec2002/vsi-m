@@ -7,13 +7,19 @@ use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use \backend\models\Dictcategory;
+use common\components\MemberHelper;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\DictjobsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Ціни на роботи';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
+
+
+
 <div class="dictjobs-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -29,6 +35,15 @@ echo "<div id='modalContent'></div>";
 Modal::end();
 
 
+$types = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 WHERE d.active=1 AND d.types=0 ORDER BY d.priority ASC, d1.priority ASC ")->queryAll();
+if (sizeof($types)) {
+    $data = array();
+    foreach ($types as $key=>$val) {
+        $data[$val['parent_name']][$val['id']] =  $val['name'];
+    }
+}
+
+Pjax::begin();
 
 echo GridView::widget([
     'dataProvider' => $dataProvider,
@@ -64,7 +79,7 @@ echo GridView::widget([
             'attribute' => 'parent',
             'value'=>'parenTypes.name',
             'vAlign' => 'middle',
-            'filter'=>Html::activeDropDownList($searchModel, 'parent', ArrayHelper::map(Dictcategory::findBySql('SELECT id, name FROM dict_category WHERE active=1 AND types=1 ORDER BY name ASC ')->all(), 'id', 'name'), ['class'=>'form-control', 'prompt'=>'-- Вибрати `Вид робіт`--']),
+            'filter'=>Html::activeDropDownList($searchModel, 'parent', $data, ['class'=>'form-control', 'prompt'=>'-- Вибрати `Вид робіт`--']),
 
         ],
         [
@@ -72,8 +87,8 @@ echo GridView::widget([
             'vAlign' => 'middle',
             'filter'=>false,
             'value' => function($model){
-                  $types =  array(1=>'грн. / год', 2=>'грн. / шт.', 3=>'грн. / м2', 4=>'грн. / м3', 5=>'грн. / м/п', 6=>'грн. / місце');
-                  return  $types[$model->job_unit];
+
+                  return  MemberHelper::PRICE_TYPE[$model->job_unit];
             },
             'contentOptions' => ['class' => 'text-center'],
             'headerOptions' => ['class' => 'text-center', 'style'=>'width:10%']
@@ -149,9 +164,45 @@ echo GridView::widget([
 ]);
 
 
-
+Pjax::end();
 
 
 ?>
 
 </div>
+<?
+
+
+echo $this->registerJs("(function(){
+
+
+
+
+    $(document).on('submit', 'form.modal-form', function(e) {
+
+        $.post($(this).attr('action'), $(this).serialize()).done(function(data ) {
+             var data = JSON.parse(data);
+             console.log(data);
+            if (data.status == 1) {
+              $('#modal').modal('hide');
+              $.pjax.reload({container:'#kv-grid-adm'});
+            }   else alert('Bad request');
+
+        });
+
+    
+       
+        return false;
+    });
+
+
+
+
+        
+})();" , \yii\web\View::POS_END );
+
+
+
+
+
+?>

@@ -21,6 +21,7 @@ echo $this->context->route;
                             ['label' => 'Вилка бюджету', 'url' => ['/dictpricerange/index'], 'active' => $this->context->route == 'dictpricerange/index',],
                         ]
                     ],
+                    ['label' => 'Замовлення', 'icon' => 'wrench', 'url' => ['/orders'], 'active' => $this->context->route == 'orders',],
                     ['label' => 'Публікації', 'icon' => 'newspaper-o', 'url' => ['/publish/index'], 'active' => $this->context->route == 'publish/index',],
                     ['label' => 'Шаблони листів/SMS', 'icon' => 'at', 'url' => ['/mailtemplate/index'], 'active' => $this->context->route == 'mailtemplate/index',],
                     [

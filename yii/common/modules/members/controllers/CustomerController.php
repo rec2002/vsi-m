@@ -197,7 +197,7 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
         }
         return false;
     }
-
+/*
     public function actionAddorder()  {
         $order = new Orders(['scenario' => 'add-order']);
         return $this->render('create', ['order'=>$order]);
@@ -259,6 +259,8 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
 
     }
 
+*/
+/*
     public function actionList($status='')  {
 
         $param = [];
@@ -409,6 +411,6 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
     }
 
 
-
+*/
 
 }
