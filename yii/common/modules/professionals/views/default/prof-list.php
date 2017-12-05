@@ -201,7 +201,12 @@ $this->registerCss(".nav > li > a {padding:0}
 <? } ?>
                             <div class="tt-masterbox-buttons">
                                 <!--<div class="tt-masterbox-status">зараз на сайті</div>-->
-                                <!--<a class="button type-1 add-to-informer" data-user-id="1" data-img="img/masterbox/master_1_small.jpg">Замовити послугу</a>-->
+
+
+                                <? echo \common\modules\professionals\controllers\DefaultController::ButtonSuggest($val['id']); ?>
+
+                                <?//=\common\widgets\SuggestButton::widget($val['id']) ?>
+                                <!--<a class="button type-1 add-to-informer" data-user-id="<?=$val['id']?>" >Замовити послугу</a>-->
                             </div>
                         </div>
 
@@ -213,23 +218,6 @@ $this->registerCss(".nav > li > a {padding:0}
 <? } ?>
                     </div>
 
-                    <!--<div class="tt-masterbox-load">
-                        <div class="tt-masterbox-load-btn" data-ajax="_ajax.html"></div>
-                        <div class="preloader-spin">
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                            <div class="preloader-spin__petal"></div>
-                        </div>
-                    </div>-->
 
                     <!-- preloader start -->
 

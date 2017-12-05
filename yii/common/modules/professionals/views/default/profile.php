@@ -74,7 +74,7 @@ $this->title = 'Сторінка майстра';
                                 <div class="simple-text size-3">
                                     <p>Мінімальна вартість замовлення <b><?=($member->budget_min>0) ?  number_format($member->budget_min, 0, ',', ' ').' грн.' : ' (не вказано)'?></b></p>
                                 </div>
-                                <a href="#" class="button type-1 size-1 color-7 add-to-informer" data-img="img/masterbox/master_1_small.jpg">Замовити послугу</a>
+                                <? echo \common\modules\professionals\controllers\DefaultController::ButtonSuggest($member->id, 'button type-1 size-1 color-7 add-to-informer'); ?>
                             </div>
                         </div>
 

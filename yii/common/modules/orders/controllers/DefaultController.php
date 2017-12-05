@@ -105,20 +105,20 @@ class DefaultController extends Controller
         if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
         $images = OrderImages::findAll(['order_id' => $model->id]);
 
+        if (!Yii::$app->user->isGuest) {
+            if ($model->member == Yii::$app->user->identity->getId()) {
+                $model = Orders::findOne([
+                    'id' => Yii::$app->request->get('id'),
+                    'member' => Yii::$app->user->identity->getId(),
+                ]);
 
-        if ($model->member==Yii::$app->user->identity->getId()) {
-            $model = Orders::findOne([
-                'id' => Yii::$app->request->get('id'),
-                'member'=> Yii::$app->user->identity->getId(),
-            ]);
+                if ($model->date_from == '0000-00-00') $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
+                if ($model->date_to == '0000-00-00') $model->date_to = ''; else $model->date_to = date("d.m.Y", strtotime($model->date_to));
 
-            if ($model->date_from=='0000-00-00') $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
-            if ($model->date_to=='0000-00-00') $model->date_to = ''; else $model->date_to = date("d.m.Y", strtotime($model->date_to));
-
-            $images = OrderImages::findAll(['order_id' => $model->id]);
-            return $this->render('edit', ['model'=> $model, 'budget'=>MemberHelper::GetBudgetRange(), 'images'=>$images]);
+                $images = OrderImages::findAll(['order_id' => $model->id]);
+                return $this->render('edit', ['model' => $model, 'budget' => MemberHelper::GetBudgetRange(), 'images' => $images]);
+            }
         }
-
 
         return $this->render('order-view', ['model'=>$model, 'images'=>$images]);
     }

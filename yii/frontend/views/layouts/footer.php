@@ -72,6 +72,9 @@ use yii\helpers\Html;
     <? if (Yii::$app->controller->module->id=='orders' && $this->context->action->id=='index') {?>
         <?=\common\widgets\FilterTypes::widget() ?>
     <?  } ?>
+
+    <?=\common\widgets\Infromer::widget() ?>
+
 <!-- TT-FOOTER -->
 <footer class="tt-footer">
     <div class="tt-footer-bottom">

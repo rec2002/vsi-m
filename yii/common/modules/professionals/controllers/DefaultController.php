@@ -108,10 +108,8 @@ class DefaultController extends Controller
                                                                         FROM `member_porfolio` p LEFT JOIN `member_portfolio_images` i1 ON i1.portfolio_id = p.id 
                                                                         WHERE p.member="'.$arr[$key]['id'].'" GROUP BY p.id ORDER BY p.created_at DESC LIMIT 4')->queryAll();
 
-
         }
         $provider->models =  $arr;
-
         $ProfSearch = new ProfSearch();
         return $this->render('prof-list', ['provider'=>$provider->getModels(), 'pagination'=>$provider->pagination, 'ProfSearch'=>$ProfSearch, 'breadcrumb'=>$breadcrumb, 'settings'=>$settings]);
     }
@@ -136,5 +134,51 @@ class DefaultController extends Controller
         return $this->render('profile', ['member'=> $member, 'portfolio'=> $portfolio]);
     }
 
+
+    public function actionSuggest($id)
+    {
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        if (Yii::$app->request->isPost) {
+                $member = Yii::$app->db->createCommand('SELECT m.id, m.avatar_image  FROM `members` m
+                      LEFT JOIN `auth_assignment` a ON a.user_id = m.id
+                      WHERE m.id = "'.$id.'" ')->queryOne();
+                if (sizeof($member)) $_SESSION['suggested'][] = array('id'=>$id, 'avatar'=>(!empty($member['avatar_image'])) ? $member['avatar_image'] : '/img/person/person.png');
+            return json_encode(array('total'=>sizeof($_SESSION['suggested']), 'data'=>array_slice($_SESSION['suggested'], -3, 3, true)));
+        }
+    }
+
+
+    public function actionSuggestremove($id)
+    {
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        if (Yii::$app->request->isPost) {
+            if (sizeof($_SESSION['suggested'])) foreach ($_SESSION['suggested'] as $key=>$val) if ($val['id']==$id) {
+                unset($_SESSION['suggested'][$key]);
+            }
+            return json_encode(array('total'=>sizeof($_SESSION['suggested']), 'data'=>array_slice($_SESSION['suggested'], -3, 3, true)));
+        }
+    }
+
+
+    public function actionSuggestedreset()
+    {
+        if (Yii::$app->request->isPost) {
+            unset($_SESSION['suggested']);
+            return true;
+        }
+        return false;
+    }
+
+    public function ButtonSuggest($id, $class='button type-1 add-to-informer')
+    {
+
+        if (!sizeof(@$_SESSION['suggested']) || !isset($_SESSION['suggested'])) $_SESSION['suggested'] = array();
+        $active = 0;
+        if (sizeof($_SESSION['suggested'])) foreach ($_SESSION['suggested'] as $key=>$val) if ($val['id']==$id) {
+            $active = 1;
+            break;
+        }
+        return '<a class="'.$class.' '.($active==1 ? 'active' : '').'" data-user-id="'.$id.'" >'.($active==1 ? 'Скасувати послугу' : 'Замовити послугу').'</a>';
+    }
 
 }

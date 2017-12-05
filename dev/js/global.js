@@ -534,12 +534,41 @@ $(function() {
     		count =  parseInt($countBlock.text(), 10);    	
     	if($(this).hasClass('active')) {
     		$(this).text('Замовити послугу').removeClass('active');
-    		$('.tt-informer-img img[data-user-id="'+$(this).attr('data-user-id')+'"]').remove();
-    		$countBlock.text(count-1);
+
+            $.post("/professionals/default/suggestremove?id="+$(this).attr('data-user-id'), function( data ) {
+                data = JSON.parse(data);
+                console.log(data);
+
+                if (data.total==0)  $('.tt-informer').removeClass('active');
+                if (data.total>=0) {
+                    $countBlock.text(data.total);
+                    $('.tt-informer-img').html('');
+                    $.each( data.data, function( key, value ) {
+                        $('.tt-informer-img').append('<img data-user-id="'+value['id']+'" src="'+value['avatar']+'" style="height: 60px;" alt="">');
+                    });
+                }
+            });
+
+    		//$('.tt-informer-img img[data-user-id="'+$(this).attr('data-user-id')+'"]').remove();
+    		//$countBlock.text(count-1);
     	} else{
 	    	$(this).text('Скасувати послугу').addClass('active');
-	    	$('.tt-informer-img').append('<img data-user-id="'+$(this).attr('data-user-id')+'" src="'+$(this).attr('data-img')+'" alt="">');
-	    	$countBlock.text(count+1);
+
+            $.post("/professionals/default/suggest?id="+$(this).attr('data-user-id'), function( data ) {
+                data = JSON.parse(data);
+            	console.log(data);
+            	if (data.total>0) {
+                    $countBlock.text(data.total);
+                    $('.tt-informer-img').html('');
+                    $.each( data.data, function( key, value ) {
+                        $('.tt-informer-img').append('<img data-user-id="'+value['id']+'" src="'+value['avatar']+'" style="height: 60px;" alt="">');
+                    });
+				}
+            });
+
+	    	//$('.tt-informer-img').append('<img data-user-id="'+$(this).attr('data-user-id')+'" src="'+$(this).attr('data-img')+'" alt="">');
+	    	//$countBlock.text(count+1);
+
 	    	$('.tt-informer').addClass('active');    		
     	}
     	e.preventDefault();
@@ -549,9 +578,14 @@ $(function() {
     	$informer.removeClass('active');
     	$informer.find('.tt-informer-nubmer').text('0'); 
     	$informer.find('.tt-informer-img').empty();
+        $.post("/professionals/default/suggestedreset", function( data ) {console.log(data);});
+
+
     	$('.add-to-informer.active').text('Замовити послугу').removeClass('active');
     	e.preventDefault();
     });
+
+
 
     /*rating*/
     $('.tt-rating-stars.wth-hover span').on('click', function(){

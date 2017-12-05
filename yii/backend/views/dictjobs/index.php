@@ -19,16 +19,19 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-
+<?   Pjax::begin(); ?>
 <div class="dictjobs-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Створити пункт \'Ціни на роботи\'', ['create'], ['class' => 'btn btn-success modalButton']) ?>
+        <?= Html::a('Створити пункт \'Ціни на роботи\'', ['create', 'parent'=>@Yii::$app->request->get('DictjobsSearch')['parent']], ['class' => 'btn btn-success modalButton']) ?>
     </p>
 <?
+
+
+
 
 Modal::begin(['header' => '<h4>Додати/Редагувати \'Ціни на роботи\' </h4>', 'id'=>'modal', 'size' => 'moda-lg']);
 echo "<div id='modalContent'></div>";
@@ -43,7 +46,7 @@ if (sizeof($types)) {
     }
 }
 
-Pjax::begin();
+
 
 echo GridView::widget([
     'dataProvider' => $dataProvider,
@@ -178,7 +181,11 @@ echo $this->registerJs("(function(){
 
 
 
+
     $(document).on('submit', 'form.modal-form', function(e) {
+
+
+
 
         $.post($(this).attr('action'), $(this).serialize()).done(function(data ) {
              var data = JSON.parse(data);
@@ -190,9 +197,8 @@ echo $this->registerJs("(function(){
 
         });
 
-    
-       
         return false;
+        
     });
 
 

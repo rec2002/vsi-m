@@ -28,7 +28,7 @@ use common\components\MemberHelper;
                 }
             }
 
-        $model->parent =($model->isNewRecord) ? 0 : $model->parent;
+        $model->parent =($model->isNewRecord) ? @Yii::$app->request->get('parent') : $model->parent;
 
     ?>
     <?=$form->field($model, 'parent')->widget(Select2::classname(), [
