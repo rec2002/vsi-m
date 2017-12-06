@@ -13,6 +13,7 @@ use yii\web\UploadedFile;
 use yii\imagine\Image;
 use Imagine\Image\ImageInterface;
 use yii\rbac\Permission;
+use yii\helpers\ArrayHelper;
 use yii\rbac\Role;
 
 /**
@@ -139,6 +140,13 @@ class CustomregistrationController extends \common\modules\members\controllers\D
                             return $this->redirect(['/members/customregistration/success/']);
 
                         }
+
+
+
+
+
+
+
                         return $this->render('create', ['model'=>$model]);
                     break;
                 }
@@ -166,7 +174,17 @@ class CustomregistrationController extends \common\modules\members\controllers\D
 
     public function actionCreate()    {
         $model = new CustomerRegistration(['scenario' => 'add-order']);
-        return $this->render('create', ['model'=>$model]);
+
+        if (!sizeof(@$_SESSION['suggested']) || !isset($_SESSION['suggested'])) $_SESSION['suggested'] = array();
+        $suggested = ArrayHelper::getColumn($_SESSION['suggested'], 'id');
+        $members = array();
+        if (sizeof($suggested)) {
+            $members = Yii::$app->db->createCommand('SELECT m.id, m.avatar_image, IF(m.forma=3,  m.company, CONCAT(m.first_name, \' \', m.last_name, \' \', m.surname)) as name  FROM `members` m
+                      LEFT JOIN `auth_assignment` a ON a.user_id = m.id
+                      WHERE m.id IN ('."'".implode("','", $suggested)."'".') AND a.item_name="majster" ORDER BY FIELD(m.id, '.implode(",", $suggested).')')->queryAll();
+        }
+
+        return $this->render('create', ['model'=>$model, 'suggested'=>array('total'=>sizeof($members), 'members'=>$members)]);
     }
 
 

@@ -141,7 +141,7 @@ class DefaultController extends Controller
         if (Yii::$app->request->isPost) {
                 $member = Yii::$app->db->createCommand('SELECT m.id, m.avatar_image  FROM `members` m
                       LEFT JOIN `auth_assignment` a ON a.user_id = m.id
-                      WHERE m.id = "'.$id.'" ')->queryOne();
+                      WHERE m.id = "'.$id.'" AND a.item_name="majster" ')->queryOne();
                 if (sizeof($member)) $_SESSION['suggested'][] = array('id'=>$id, 'avatar'=>(!empty($member['avatar_image'])) ? $member['avatar_image'] : '/img/person/person.png');
             return json_encode(array('total'=>sizeof($_SESSION['suggested']), 'data'=>array_slice($_SESSION['suggested'], -3, 3, true)));
         }

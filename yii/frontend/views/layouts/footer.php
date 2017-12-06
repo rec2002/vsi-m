@@ -75,6 +75,12 @@ use yii\helpers\Html;
 
     <?=\common\widgets\Infromer::widget() ?>
 
+
+
+
+
+
+
 <!-- TT-FOOTER -->
 <footer class="tt-footer">
     <div class="tt-footer-bottom">

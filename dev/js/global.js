@@ -388,6 +388,8 @@ $(function() {
 	});
 
 
+
+
     $(document).on('click', '.open-popup-big', function(e){
         $.post($('.map-order-view').length ? "/orders/default/gallery/?id="+$(this).data('id') : "/members/portfolio/detail/?id="+$(this).data('id'), function( data ) {
             $("#popup-wrapper-big-content").html(data);
@@ -1097,7 +1099,7 @@ $(function() {
 
 
     /*tt-user-card*/
-    $('.tt-user-card-remove').on('click', function(e){
+ /*   $('.tt-user-card-remove').on('click', function(e){
     	$(this).closest('.tt-user-card').remove();
     	var count = $('.tt-user-card').length,
     		lastDigit = count%10,
@@ -1118,7 +1120,7 @@ $(function() {
     	$('.tt-news-task-count span').text(count+' '+countText);
     	e.preventDefault();
     });
-
+*/
     /*tt-vote*/
     $(document).on('click', '.tt-vote', function(){
     	$(this).closest('.tt-vote-wrapper').addClass('tt-vote-selected');

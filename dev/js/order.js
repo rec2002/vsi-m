@@ -241,4 +241,38 @@ $(function() {
 
     }
 
+// SUGGESTED USERS
+
+    /*tt-user-card*/
+    $('.tt-user-card-remove').on('click', function(e){
+        $(this).closest('.tt-user-card').remove();
+        var count = $('.tt-user-card').length,
+            lastDigit = count%10,
+            countText = '';
+        if(!count){
+            $('.tt-news-task').remove();
+            $('.popup-wrapper .button-close').trigger('click');
+        }
+        if(lastDigit==1&&count!=11){
+            countText = 'майстра';
+        }
+        else if(lastDigit==2||lastDigit==3||lastDigit==4||lastDigit==5){
+            countText = 'майстри';
+        }
+        else{
+            countText = 'майстрів';
+        }
+        $.post("/professionals/default/suggestremove?id="+$(this).attr('data-id'), function( data ) {});
+        $('.tt-news-task-count span').text(count+' '+countText);
+        e.preventDefault();
+    });
+
+    $(document).on('click', '.open-suggest', function(e){
+        var $t = $(this);
+        $('.popup-content').removeClass('active');
+        $('.popup-wrapper, .popup-content[data-rel="'+$t.data('rel')+'"]').addClass('active');
+        return false;
+    });
+
+
 });

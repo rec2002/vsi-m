@@ -12,7 +12,7 @@ class MemberHelper {
 
     const BRYGADA = array(1 => 'до 10 чоловік', 2 => '10-30 чоловік', 3=>'30-60 чоловік');
 
-    const PRICE_TYPE = array(1=>'грн./год.', 2=>'грн./шт.', 3=>'грн./м2', 4=>'грн./м3', 5=>'грн./ м/п', 6=>'грн./місце');
+    const PRICE_TYPE = array(1=>'грн./год.', 2=>'грн./шт.', 3=>'грн./м2', 4=>'грн./м3', 5=>'грн./ м/п', 6=>'грн./місце', 7=>'грн./ось', 8=>'грн./позиція', 9=>'грн./доба', 10=>'грн./квартира', 11=>'грн./робоче місце');
 
     const WHEN_START = array(1=>'В період від ... до ...', 2=>'Сьогодні', 3=>'Завтра', 4=>'Будь-коли');
 
@@ -100,6 +100,14 @@ class MemberHelper {
         return $arr_;
     }
 
+
+    public static function NumberSufix($n, $titles) {
+        $cases = array(2, 0, 1, 1, 1, 2);
+        return $titles[($n % 100 > 4 && $n % 100 < 20) ? 2 : $cases[min($n % 10, 5)]];
+
+        // how to use - echo NumberSufix(631, array('яблоко', 'яблока', 'яблок'));
+    }
+
     public static function isActive($query_str = '', $exactly=false)
     {
 
@@ -141,6 +149,7 @@ echo "good";
         } else return 'false';
         */
     }
+
 
 
 }

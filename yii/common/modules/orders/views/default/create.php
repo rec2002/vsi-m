@@ -26,6 +26,24 @@ $this->title = 'Додати замовлення';
 
                             <h3 class="h3">Додати замовлення</h3>
                             <div class="empty-space marg-lg-b30"></div>
+                        <? if ($suggested['total'] > 0) { ?>
+                            <div class="tt-news-task">
+                                <div class="simple-text size-3">
+                                    <span class="tt-news-task-count">Обрано <span><?= $suggested['total'] ?>
+                                            <?=MemberHelper::NumberSufix($suggested['total'], array('майстра', 'майстри', 'майстрів'))?> </span></span>
+                                    <a class="tt-news-task-masters tt-icon-hover open-suggest" href="javascript:"
+                                       data-rel="5">
+                            <span class="tt-icon-entry">
+                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAAZlBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkKZr9qgAAAAInRSTlMAYKcGQI81zsS3rysXx5+bl/zh18iKhXBWMR0Kv1xaShYBE04zmQAAAGJJREFUCNdNyUUWgDAMANGkWIUKLkXvf0kWkNDZ/TfA1eMJSV5ZvAnZpL2xSHLWiaFQn0Sxtlp0O6neMOiVdElcZM5PYlm9in5IBEczql9ZmLRggemNaTsSzE2vXAnMgEtkPdrDBKj0PuQ6AAAAAElFTkSuQmCC"
+                                      alt="">
+                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAATlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAP+0nkAAAAGnRSTlMABmCnjjSZQMMWzrevK8ef/OHXyIVwW1YdSoUZvnoAAABYSURBVAjXTclXDoAgEADRpa0gvYr3v6iJgQ3z9zJAmfbCEdrACaw79GQWQxRS2iUhZ3aijC2jObp5SOnr1L2Ep2CkZn+t2Z0gga/e57IFT6o2KiAiV4z0AW2MA6Ezq1d1AAAAAElFTkSuQmCC"
+                                      alt="">
+                            </span>Редагувати</a>
+                                    <div class="empty-space marg-lg-b30"></div>
+                                </div>
+                            </div>
+                        <? } ?>
+
 
                             <div class="tt-autocomplete type-2">
                                 <div class="tt-autocomplete-input">
@@ -158,5 +176,29 @@ echo $this->registerJsFile($gpJsLink);
 
 
 echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
+echo $this->registerJsFile('/js/order.js', ['depends' => 'yii\web\JqueryAsset']);
 
 ?>
+<? if ($suggested['total']>0) { ?>
+    <div class="popup-wrapper">
+        <div class="bg-layer"></div>
+        <div class="popup-content" data-rel="5">
+            <div class="layer-close"></div>
+            <div class="popup-container">
+                <div class="popup-align">
+                    <div class="empty-space marg-lg-b15"></div>
+                    <div class="tt-user-card-wrapper">
+                        <? foreach ($suggested['members'] as $val) {?>
+                            <div class="tt-user-card clearfix">
+                                <img class="tt-user-card-img" src="<?=(!empty($val['avatar_image']) ? $val['avatar_image'] : '/img/person/person.png')?>" alt="">
+                                <h5 class="tt-user-card-title h5"><?=$val['name']?></h5>
+                                <div class="tt-user-card-remove" data-id="<?=$val['id']?>"></div>
+                            </div>
+                        <? } ?>
+                    </div>
+                </div>
+                <div class="button-close"></div>
+            </div>
+        </div>
+    </div>
+<? } ?>

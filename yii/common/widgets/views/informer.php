@@ -1,7 +1,7 @@
 <?
 
 use yii\helpers\Url;
-
+use common\components\MemberHelper;
 
 ?>
 <!-- TT-INFORMER -->
@@ -14,7 +14,7 @@ use yii\helpers\Url;
 <? } ?>
             </div>
             <div class="tt-informer-count simple-text size-3">
-                <p><b><span class="tt-informer-nubmer"><?=$total?></span>  виконавц(я)ів обрано.</b></p>
+                <p><b><span class="tt-informer-nubmer"><?=$total?></span>  <?=MemberHelper::NumberSufix($total, array('виконавець', 'виконавця', 'виконавців'))?> обрано.</b></p>
             </div>
             <div class="tt-informer-btn">
 <?  if (Yii::$app->user->isGuest) { ?>
