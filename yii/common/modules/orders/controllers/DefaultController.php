@@ -9,6 +9,7 @@ use yii\helpers\Url;
 
 use common\modules\members\models\Orders;
 use common\modules\members\models\OrderImages;
+use common\modules\orders\models\MemberSuggestion;
 use yii\data\SqlDataProvider;
 use yii\helpers\ArrayHelper;
 use common\components\MemberHelper;
@@ -72,7 +73,7 @@ class DefaultController extends Controller
 
 
         $provider = new SqlDataProvider([
-            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status  FROM `orders` o 
+            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id) as `suggestions`  FROM `orders` o 
                      LEFT JOIN (SELECT order_id, type FROM `order_types`  '.((sizeof($filter_join)) ?  'WHERE '.implode(' AND ', $filter_join) : '').' GROUP BY order_id) ot ON o.id = ot.order_id
                      '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
             'totalCount' => $count,
@@ -104,6 +105,7 @@ class DefaultController extends Controller
         $model = Orders::find()->where(['id'=>$id])->one();
         if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
         $images = OrderImages::findAll(['order_id' => $model->id]);
+        $suggestion = MemberSuggestion::findAll(['order_id' => $model->id]);
 
         if (!Yii::$app->user->isGuest) {
             if ($model->member == Yii::$app->user->identity->getId()) {
@@ -114,13 +116,11 @@ class DefaultController extends Controller
 
                 if ($model->date_from == '0000-00-00') $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
                 if ($model->date_to == '0000-00-00') $model->date_to = ''; else $model->date_to = date("d.m.Y", strtotime($model->date_to));
-
-                $images = OrderImages::findAll(['order_id' => $model->id]);
-                return $this->render('edit', ['model' => $model, 'budget' => MemberHelper::GetBudgetRange(), 'images' => $images]);
+                return $this->render('edit', ['model' => $model, 'budget' => MemberHelper::GetBudgetRange(), 'images' => $images, 'suggestions'=>sizeof($suggestion)]);
             }
         }
 
-        return $this->render('order-view', ['model'=>$model, 'images'=>$images]);
+        return $this->render('order-view', ['model'=>$model, 'images'=>$images, 'suggestions'=>sizeof($suggestion)]);
     }
 
 
@@ -159,7 +159,9 @@ class DefaultController extends Controller
         $param = [];
         $param[':member'] = Yii::$app->user->identity->getId();
 
-        $count_total = Yii::$app->db->createCommand('select count(member) as total, sum(case when status = \'1\' then 1 else 0 end) status_1, sum(case when status = \'2\' then 1 else 0 end) status_2, sum(case when status = \'3\' then 1 else 0 end) status_3, sum(case when status = \'4\' then 1 else 0 end) status_4 from `orders` WHERE member=:member group by member', $param)->queryOne();
+        $count_total = Yii::$app->db->createCommand('select count(member) as total, sum(case when status = \'1\' then 1 else 0 end) status_1, sum(case when status = \'2\' then 1 else 0 end) status_2, sum(case when status = \'3\' then 1 else 0 end) status_3,
+        sum(case when status = \'4\' then 1 else 0 end) status_4, sum(case when status = \'5\' then 1 else 0 end) status_5 from `orders` WHERE member=:member group by member', $param)->queryOne();
+
 
         if ($status != '')  $param[':status'] = $status;
 
@@ -179,7 +181,59 @@ class DefaultController extends Controller
 
         $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM orders o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''), $param)->queryScalar();
         $provider = new SqlDataProvider([
-            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status  FROM `orders` o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
+            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, 
+              (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id) as `suggestions`  FROM `orders` o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
+            'params' => $param,
+            'totalCount' => $count,
+            'pagination' => [
+                'pageSize' => 10,
+            ]
+        ]);
+
+        $status = MemberHelper::GetBudgetRange();
+        // Setter
+        $arr = array();
+        foreach( $provider->models as $key => $val){
+            $arr[$key] = $provider->models[$key];
+            $arr[$key]['budget_name'] = $status[$val['budget_name']]['budget'];
+        }
+        $provider->models =  $arr;
+
+        return $this->render('index', ['model'=>$provider, 'count_total'=>$count_total]);
+    }
+
+
+    public function actionSuggested($status='')  {
+
+        $param = [];
+        $param[':member'] = Yii::$app->user->identity->getId();
+
+        $count_total = Yii::$app->db->createCommand('select count(member_id) as total from `member_suggestion` WHERE member_id=:member group by member_id', $param)->queryOne();
+
+
+        if ($status != '')  $param[':status'] = $status;
+
+
+        $filter = array();
+        if (sizeof($param)) foreach($param as $key=>$val){
+            switch($key){
+                case ':member':
+                    $filter[] = ' s.member_id='.$key;
+                    break;
+                case ':status':
+        //            $filter[] = ' o.status='.$key;
+                    break;
+            }
+        }
+
+
+        $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM member_suggestion s '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''), $param)->queryScalar();
+        $provider = new SqlDataProvider([
+            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, 
+              (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id) as `suggestions`  FROM `member_suggestion` s
+               LEFT JOIN `orders` o ON o.id = s.order_id
+               
+               '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
             'params' => $param,
             'totalCount' => $count,
             'pagination' => [
@@ -247,6 +301,20 @@ class DefaultController extends Controller
             $model->region = Yii::$app->request->post('Orders')['region'];
             $model->when_start = Yii::$app->request->post('Orders')['when_start'];
 
+            if (!sizeof(@$_SESSION['suggested']) || !isset($_SESSION['suggested'])) $_SESSION['suggested'] = array();
+
+            if (sizeof($_SESSION['suggested'])) {
+                $emails = array();
+                foreach ($_SESSION['suggested'] as $key=>$val) {
+                    $member = Yii::$app->db->createCommand('SELECT m.id, m.email, m.avatar_image  FROM `members` m
+                      LEFT JOIN `auth_assignment` a ON a.user_id = m.id
+                      WHERE m.id = "' . $val['id'] . '" AND a.item_name="majster" ')->queryOne();
+                     $emails[] = $member['email'];
+                }
+                $model->suggestions = @implode(',', $emails);
+                unset($_SESSION['suggested']);
+            } else $model->suggestions ='';
+
             $model->save(false);
             $order_id = Yii::$app->db->getLastInsertID();
             $model->image = UploadedFile::getInstances($model, 'image');
@@ -263,6 +331,9 @@ class DefaultController extends Controller
                     $ordersImages->save(false);
                 }
             }
+
+
+
 
             \common\components\MemberHelper::GetMailTemplate(4,  $model->attributes, Yii::$app->user->identity->email);
             return $this->redirect(['/orders/default/myorders']);
@@ -316,6 +387,9 @@ class DefaultController extends Controller
                     break;
             }
             $model->save();
+
+
+
             return['status'=>1, 'msg'=>'дані збережені'];
         }
         return['status'=>0];
@@ -374,6 +448,51 @@ class DefaultController extends Controller
         elseif ($model->when_start == 2 || $model->when_start == 3)
             return date('d.m.Y', strtotime( $model->date_from));
         elseif ($model->when_start == 4) return 'Будь-коли';
+    }
+
+
+    public function actionSuggestionsave($id=0)  {
+
+        $model = new MemberSuggestion();
+
+
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
+        {
+            Yii::$app->response->format = 'json';
+            $model->validate();
+        }
+
+     return 1;
+
+    }
+
+    public function actionTest()  {
+
+        if (!sizeof(@$_SESSION['suggested']) || !isset($_SESSION['suggested'])) $_SESSION['suggested'] = array();
+
+        if (sizeof($_SESSION['suggested'])) {
+            $emails = array();
+            foreach ($_SESSION['suggested'] as $key=>$val) {
+
+                $member = Yii::$app->db->createCommand('SELECT m.id, m.email, m.avatar_image  FROM `members` m
+                      LEFT JOIN `auth_assignment` a ON a.user_id = m.id
+                      WHERE m.id = "' . $val['id'] . '" AND a.item_name="majster" ')->queryOne();
+
+
+                $emails[] = $member['email'];
+
+
+                print_r($member);
+            }
+
+            echo implode(',', $emails);
+        }
+
+
+
+
+        return 1;
+
     }
 
 }

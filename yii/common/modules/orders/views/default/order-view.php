@@ -27,8 +27,8 @@ $this->title = 'Замовлення';
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAP1BMVEUAAAAxMTEyMjIzMzMxMTEtLS0zMzMyMjItLS0xMTExMTExMTExMTExMTEvLy8xMTEyMjIyMjIyMjIyMjIzMzMbMuNVAAAAFHRSTlMARENAPAbELw/lx1VPNA71w5FnGgwCepEAAABeSURBVBjTrY9LDoAwCAXra9Ha1vrj/mcVjBDj2gkbJsOCQCk6ZxBK830fJxEcnEhiRMzMvHSgx6CGtQG0oIpjNZFlVLKd5AFCuoVjRQKGh/QVf52UBimMusn7eJlIF5lqBFlg3cLVAAAAAElFTkSuQmCC" alt="">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAM1BMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAW1g65AAAAEHRSTlMAQ0E8Bg7EL+XHVU80kWcaBaFkNAAAAFRJREFUGNOty8kNwCAMRFFvkABZpv9qg5FiuQD+zU9jMpXopVkbcd/1mACKxFxAJ4CrMBchF/iG2RfW+cEPvnBEepnpgtwC5UgTbH1pg1O9kmkGsQ8IpwNo1189CgAAAABJRU5ErkJggg==" alt="">
                                 </span>
-                            <span class="tt-task-proposed-count">0</span>
-                            <span> майстрів відповіли</span>
+                            <span class="tt-task-proposed-count"><?=$suggestions?></span>
+                            <span> <?=MemberHelper::NumberSufix($suggestions, array('майстер відповів', 'майстрів відповіли', 'майстрів відповіли'))?></span>
                         </a>
                     </div>
                     <div class="tt-task-title"><h5 class="h5"><?=$model->title;?></h5></div>
@@ -103,23 +103,14 @@ $this->title = 'Замовлення';
 <? } ?>
                 </ul>
 <? } ?>
-                <div class="tt-task-request">
-                    <div class="tt-fadein-top">
-                        <a href="#" class="tt-fadein-link button type-1">Надіслати пропозицію</a>
-                        <div class="tt-task-message">
-                            <div class="simple-text size-3">
-                                <p>Необхідно <a href="professionals-profile.html#access_to_orders">поповнити баланс</a></p>
-                            </div>
-                            <div class="tt-info-btn tt-tooltip" data-tooltip="Ваш баланс становить 0 грн">?</div>
-                        </div>
-                    </div>
-                </div>
+                <?=\common\widgets\MemberSuggestions::widget(array('id' => $model->id)) ?>
             </div>
-
-
+            <?=\common\widgets\MemberSuggestionsOne::widget(array('id' => $model->id)) ?>
             <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
         </div>
     </div>
+
+
 
 
 <?

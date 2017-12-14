@@ -70,6 +70,7 @@ class Members extends ActiveRecord implements IdentityInterface
 */
 
 
+            [['approved'], 'safe'],
             [['types'], 'required',  'message' => 'Прошу вибрати хоча б вид робіт.', 'on' => 'types'],
      //       [['types'], 'exist', 'skipOnError' => true, 'targetClass' => MemberTypes::className(), 'targetAttribute' => ['member' => 'id']],
 
@@ -95,6 +96,8 @@ class Members extends ActiveRecord implements IdentityInterface
             'brygada'=> 'Бригада',
             'company'=>'Назва компанії',
             'avatar_image'=>'Ваше фото 262x262px;',
+            'approved'=>'Перевірка документів'
+
         ];
     }
 /*

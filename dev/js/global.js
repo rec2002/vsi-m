@@ -827,10 +827,10 @@ $(function() {
 	});
 
 	/*tt-file-upload*/
-	$('.tt-file-upload input[type="file"]').on('change', function(e){
+/*	$('.tt-file-upload input[type="file"]').on('change', function(e){
 		$(this).closest('.tt-file-upload').siblings('.tt-file-info').text($(this).val().split( '\\' ).pop()); 
 	});
-
+*/
 	/*tt-project-new*/
 /*
 	$('.tt-project-add,.tt-project-img-edit').on('click', function(e){
@@ -1658,6 +1658,8 @@ $(function() {
                             form.find('.tt-editable-item').html(data_post[1]['value']);
                             form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').show();
                         break;
+
+
                         case 'MemberEdit[first_name]':
                         case 'MemberEdit[last_name]':
                         case 'MemberEdit[email]':

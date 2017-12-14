@@ -12,6 +12,7 @@ use common\modules\members\models\Orders;
 use common\modules\members\models\OrderImages;
 use common\modules\members\models\MemberPasswordForm;
 use common\modules\members\models\Portfolio;
+use common\modules\members\models\MemberDocuments;
 
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
@@ -66,6 +67,7 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
     {
         $member = MemberEdit::find()->where(['id' => Yii::$app->user->identity->getId()])->one();
         $member->regions = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT region FROM member_regions WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'region');
+        $member->documents  = ArrayHelper::index(MemberTypes::findBySql('SELECT id, name FROM member_documents WHERE member_id="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'id');
         return $this->render('edit', ['member'=>$member]);
     }
 
@@ -109,6 +111,10 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
     }
 
 
+    public function actionFile($id = '0'){
+        \common\components\MemberHelper::GetMemberDoc(Yii::$app->user->identity->getId(), Yii::$app->request->get('id'));
+    }
+
     public function actionSavemember($scenario = 'types')
     {
 
@@ -118,6 +124,24 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
             switch ($scenario) {
+                case 'documents':
+                    $model->documents = UploadedFile::getInstances($model, 'documents');
+                    if ($model->documents) {
+                        $dir = Yii::getAlias('@user_document');
+                        foreach ($model->documents as $key=>$image) if ($key>0) {
+                            $memberDoc = new MemberDocuments();
+                            $memberDoc->member_id = $model->id;
+                            $filename = strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
+                            $image->saveAs($dir.'/'.$filename);
+                            $memberDoc->name = $image->name;
+                            $memberDoc->file = $filename;
+                            $memberDoc->save(false);
+
+                        }
+                        \common\components\MemberHelper::GetMailTemplate(8,  $model->attributes, '');
+                    }
+                    return $this->redirect(['/members/member']);
+                break;
                 case 'first_name':
                     $model->first_name = Yii::$app->request->post('MemberEdit')['first_name'];
                 break;
@@ -182,30 +206,11 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
                             break;
                     }
                 break;
-
-
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             $model->save(true);
-
             return['status'=>1, 'msg'=>'дані збережені'];
         }
         return['status'=>0];
-
     }
 
 

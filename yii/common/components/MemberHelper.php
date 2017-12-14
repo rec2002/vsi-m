@@ -12,13 +12,18 @@ class MemberHelper {
 
     const BRYGADA = array(1 => 'до 10 чоловік', 2 => '10-30 чоловік', 3=>'30-60 чоловік');
 
-    const PRICE_TYPE = array(1=>'грн./год.', 2=>'грн./шт.', 3=>'грн./м2', 4=>'грн./м3', 5=>'грн./ м/п', 6=>'грн./місце', 7=>'грн./ось', 8=>'грн./позиція', 9=>'грн./доба', 10=>'грн./квартира', 11=>'грн./робоче місце');
+    const PRICE_TYPE = array(1=>'грн./год.', 2=>'грн./шт.', 3=>'грн./м2', 4=>'грн./м3', 5=>'грн./ м/п', 6=>'грн./місце', 7=>'грн./ось', 8=>'грн./позиція', 9=>'грн./доба', 10=>'грн./квартира',
+        11=>'грн./робоче місце',  12=>'грн./точка', 13=>'грн./т', 14=>'грн./послуга', 15=>'грн./секція', 16=>'грн./кг', 17=>'грн./об`ект', 18=>'грн./стик', 19=>'грн/л.', 20=>'грн./стовп',
+        /*21=>'грн./стовп',*/ 22=>'грн./свая', 23=>'грн./см.', 24=>'грн./зона', 25=>'грн./см2', 26=>'грн./ар', 27=>'грн./комплект', 28=>'грн./лист', 29=>'грн./місяць', 30=>'грн./га',
+        31=>'грн./км', 32=>'грн./цикл');
 
     const WHEN_START = array(1=>'В період від ... до ...', 2=>'Сьогодні', 3=>'Завтра', 4=>'Будь-коли');
 
     const BUSY = array(0=>'Вільний для роботи', 1=>'Зайнятий до');
 
     const STATUS = array(0=>'На перевірці в модератора', 1=>'Скасовані модератором', 2=>'Шукають виконавця', 3=>'Прийняті до виконання', 4=>'Виконані', 5=>'Скасовані');
+
+    const DISREGAST_SUGGESTION = array(1=>'Ні, дякую', 2=>'Надто дорого', 3=>'Мені не підходить');
 
 
 
@@ -86,8 +91,8 @@ class MemberHelper {
         $arr_ = array();
         foreach ($arr as $key=>$val){
             if ($key==0) {
-                $budget = 'до - '.number_format($val['budget_to'], 0, ',', ' ').' грн. ('.$val['name'].')';
-                $budget_short  = 'до - '.number_format($val['budget_to'], 0, ',', ' ').' грн.';
+                $budget = 'до '.number_format($val['budget_to'], 0, ',', ' ').' грн. ('.$val['name'].')';
+                $budget_short  = 'до '.number_format($val['budget_to'], 0, ',', ' ').' грн.';
             } else if ($arr[$key]['id']==sizeof($arr)) {
                 $budget = number_format($arr[$key-1]['budget_to'], 0, ',', ' ').' - '.number_format($val['budget_to'], 0, ',', ' ').' грн. і більше ('.$val['name'].')';
                 $budget_short = number_format($arr[$key-1]['budget_to'], 0, ',', ' ').' - '.number_format($val['budget_to'], 0, ',', ' ').' грн. і більше';
@@ -107,6 +112,44 @@ class MemberHelper {
 
         // how to use - echo NumberSufix(631, array('яблоко', 'яблока', 'яблок'));
     }
+
+
+    public static function ListDates($dates='') {
+        if (empty($dates)) return false;
+        $month_name = array (1 => "cічня", 2 => "лютого", 3 => "березня", 4 => "квітня", 5 => "травня", 6 => "червня", 7 => "липня", 8 => "серпня", 9 => "вересня", 10 => "жовтня", 11 => "листопада", 12 => "грудня");
+        $dates =  explode(',', $dates);
+        $dates_arr = array();
+
+        if(sizeof($dates)) foreach ($dates as $val) {
+            $dates_arr[(int)date('m', strtotime($val))][] = array('day'=>date('j', strtotime($val)));
+        }
+        $periods  = array();
+        foreach ($month_name as $key=>$val) {
+             if (@sizeof($dates_arr[$key])) {
+                 $temp = array();
+                 foreach ($dates_arr[$key] as $item) {
+                     $temp[] = $item['day'];
+                 }
+                 $periods[] = implode(',', $temp).' '.$month_name[$key];
+             }
+        }
+        if (sizeof($periods)) return implode('; ', $periods);
+        return false;
+    }
+
+
+    public static function GetMemberDoc($member, $id) {
+
+        $ids = Yii::$app->db->createCommand("SELECT id, name, file FROM member_documents WHERE member_id='".$member."' AND id = '".$id."'")->queryOne();
+        $dir = Yii::getAlias('@user_document');
+        if (!is_file($dir.'/'.$ids['file']) || empty($ids['name']) || empty($ids['file'])) {
+            throw new \yii\web\NotFoundHttpException('The file does not exists.');
+        }
+        return \Yii::$app->response->sendFile($dir.'/'.$ids['file'], $ids['name']);
+    }
+
+
+
 
     public static function isActive($query_str = '', $exactly=false)
     {

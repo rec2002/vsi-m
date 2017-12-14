@@ -39,6 +39,7 @@ class MemberEdit extends \yii\db\ActiveRecord
     public $busy;
     public $regions;
     public $confirm_sms;
+    public $documents = array();
     /**
      * @inheritdoc
      */
@@ -68,7 +69,8 @@ class MemberEdit extends \yii\db\ActiveRecord
             [['surname'], 'string', 'min' => 3, 'tooShort' => 'Значення "{attribute}" повинно містити мінімум 3 символa.', 'on' => 'surname'],
             [['surname'], 'required', 'on' =>'surname'],
         //
-
+            [['documents'], 'required', 'on' =>'documents'],
+        //
             ['phone', 'checkChangedPhoneCode', 'message'=>'Підтвердіть контактний телефон через SMS.', 'on' => 'phone'],
             [['phone'], 'required', 'on' =>'phone'],
             ['confirm_sms', 'required', 'whenClient' => "function (attribute, value) { if ($('input#memberedit-phone').val() != $('input#memberedit-phone').data('value')) return true; else return false;}", 'message'=>'Введіть код отриманий з SMS.', 'on' => 'phone'],

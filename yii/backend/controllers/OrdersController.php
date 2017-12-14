@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use common\modules\members\models\OrderTypes;
+use yii\helpers\Url;
 
 /**
  * OrdersController implements the CRUD actions for Orders model.
@@ -152,10 +153,19 @@ class OrdersController extends Controller
                     Yii::$app->db->createCommand()->insert('order_types', ['type' => $val, 'order_id'=>$model->id])->execute();
                 }
             }
-
+            $url = str_replace('/admin//admin/', '/', Url::home(true).Url::toRoute(['/orders/default/detail', 'id' => $model->id]));
             if (Yii::$app->request->post('Orders')['status']==1) \common\components\MemberHelper::GetMailTemplate(6,  $model->attributes, $model->member0->email);
-            if (Yii::$app->request->post('Orders')['status']==2) \common\components\MemberHelper::GetMailTemplate(7,  $model->attributes, $model->member0->email);
+            if (Yii::$app->request->post('Orders')['status']==2) {
+                \common\components\MemberHelper::GetMailTemplate(7,  array_merge($model->attributes, array('url'=> $url)), $model->member0->email);
+                if (!empty($model->suggestions)) {
 
+                    $emails =  explode(',', $model->suggestions);
+                    if (sizeof($emails)) foreach ($emails as $emil) {
+                        \common\components\MemberHelper::GetMailTemplate(9,  array_merge($model->attributes, array('url'=> $url)), $emil);
+                    }
+                }
+                $model->suggestions ='';
+            }
             $model->save();
             return $this->redirect(['index']);
 

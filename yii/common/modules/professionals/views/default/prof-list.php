@@ -131,7 +131,9 @@ $this->registerCss(".nav > li > a {padding:0}
                         <div class="tt-masterbox">
                             <div class="tt-masterbox-top clearfix">
                                 <div class="tt-masterbox-img">
-                                    <!--<div class="tt-masterbox-check tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації перевірені адміністраціює сайту"></div>-->
+<? if($val['approved']==1) { ?>
+                                    <div class="tt-masterbox-check tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації перевірені адміністраціює сайту"></div>
+<? } ?>
                                     <a class="custom-hover round" href="<?=Url::toRoute(['/professionals/default/profile', 'id' => $val['id']])?>"><img src="<?=($val['avatar_image']) ? $val['avatar_image'] : '/img/person/person.png' ?>" width="136" alt=""></a>
                                 </div>
                                 <div class="tt-masterbox-top-right">

@@ -37,7 +37,7 @@ $this->title = 'Список замовлень';
 
     <div class="tab-nav">
         <a href="<?=Url::to(['/orders'])?>" class="tab-menu <?=in_array($this->context->action->id, array('index')) ? 'active' : '' ?>"><span>Пошук замовлень</span></a>
-        <a class="tab-menu" href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;"><span>Мої замовлення як виконавця</span></a>
+        <a href="<?=Url::to(['/orders/default/suggested'])?>" class="tab-menu <?=in_array($this->context->action->id, array('suggested')) ? 'active' : '' ?>"><span>Мої замовлення як виконавця</span></a>
         <a href="<?=Url::to(['/orders/default/myorders'])?>" class="tab-menu <?=in_array($this->context->action->id, array('myorders')) ? 'active' : '' ?>"><span>Мої замовлення як замовника</span></a>
     </div>
 
@@ -145,16 +145,27 @@ $this->title = 'Список замовлень';
                                 <div class="tabs-block style-2 wth-btn">
                                     <div class="tab-nav">
                                         <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==false) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders'])?>">Всі <span class="count-large">(<?=$count_total['total']?>)</span></a></div>
-                                        <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==1) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders?status=1'])?>">Шукають виконавця <span class="count-large">(<?=$count_total['status_1']?>)</span></a></div>
-                                        <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==2) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders?status=2'])?>"> Прийняті до виконання <span class="count-large">(<?=$count_total['status_2']?>)</span></a></div>
-                                        <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==3) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders?status=3'])?>">Виконані <span class="count-large">(<?=$count_total['status_3']?>)</span></a></div>
-                                        <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==4) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders?status=4'])?>">Скасовані <span class="count-large">(<?=$count_total['status_4']?>)</span></a></div>
+
+<? foreach (MemberHelper::STATUS as $key=>$val) if ($key>1) { ?>
+                                        <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==$key) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders?status='.$key])?>"><?=$val?> <span class="count-large">(<?=$count_total['status_'.$key]?>)</span></a></div>
+<? } ?>
+
+
+
                                     </div>
                                 </div>
                             </div>
 <? } ?>
 
-
+<? if (in_array($this->context->action->id, array('suggested'))) { ?>
+                            <div class="tt-order-filter-wrapper">
+                                <div class="tabs-block style-2 wth-btn">
+                                    <div class="tab-nav">
+                                        <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==false) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders'])?>">Всі <span class="count-large">(<?=$count_total['total']?>)</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+<? } ?>
 
 
 

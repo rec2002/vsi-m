@@ -83,7 +83,7 @@ class DefaultController extends Controller
                       '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').'  ', $param)->queryScalar();
 
         $provider = new SqlDataProvider([
-            'sql' => 'SELECT m.id, m.first_name, m.last_name, m.surname, m.phone, m.avatar_image, m.place, r.name as region, m.forma, m.brygada, m.company, m.about, m.busy_to, m.budget_min, m.created_at 
+            'sql' => 'SELECT m.id, m.first_name, m.last_name, m.surname, m.phone, m.avatar_image, m.place, r.name as region, m.forma, m.brygada, m.company, m.about, m.busy_to, m.budget_min, m.created_at, m.approved  
                       FROM `members` m
                       LEFT JOIN `auth_assignment` a ON a.user_id = m.id
                       LEFT JOIN `dict_regions` r ON r.id = m.region

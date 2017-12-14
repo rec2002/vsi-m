@@ -29,7 +29,9 @@ $this->title = 'Кабінет користувача';
                             <div class="col-sm-6">
                                 <div class="tt-person-ava">
                                     <div class="tt-person-img">
-                                        <!--<div class="tt-heading-check unchecked tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації наразі не перевірено"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAMAAAApB0NrAAAAPFBMVEUAAABscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHbdgYzgAAAAE3RSTlMA4e+tLSMVCtS+pFNKP/jJb2dex1uRwAAAAFVJREFUGBntwUcOgDAQBMFZZ3Lo//8VxN32FSGq9PuEOalnp6jjAK+2E0ZVJD0m8KoYXdBtAq8aw0VphkFVybAcYFBDdJhjU1NYoWS1LVhWzxL1e7ELQ3wCozk2KIMAAAAASUVORK5CYII=" alt=""></div>-->
+<? if ($member->approved==1) {?>
+                                        <div class="tt-heading-check unchecked tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації наразі не перевірено"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAMAAAApB0NrAAAAPFBMVEUAAABscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHZscHbdgYzgAAAAE3RSTlMA4e+tLSMVCtS+pFNKP/jJb2dex1uRwAAAAFVJREFUGBntwUcOgDAQBMFZZ3Lo//8VxN32FSGq9PuEOalnp6jjAK+2E0ZVJD0m8KoYXdBtAq8aw0VphkFVybAcYFBDdJhjU1NYoWS1LVhWzxL1e7ELQ3wCozk2KIMAAAAASUVORK5CYII=" alt=""></div>
+<? } ?>
                                         <img class="tt-person-img img-responsive" style="margin: 0;" src="<?=!empty(Yii::$app->user->identity->avatar_image) ? Yii::$app->user->identity->avatar_image : '/img/person/person.png';?>" alt="">
                                     </div>
 
@@ -45,10 +47,20 @@ $this->title = 'Кабінет користувача';
                             </div>
                             <div class="col-sm-6">
                                 <div class="tt-person-documents">
-                                    <a class="button type-1 color-5 open-popup" data-rel="1" href="#">Підтвердити профіль</a>
+<? if (!sizeof($member->documents)) {?>
+                                    <a class="button type-1 color-5 open-popup" data-rel="1" href="javascript:">Підтвердити профіль</a>
+<? } ?>
                                     <div class="tt-person-documents-entry">
                                         <div class="simple-text size-3 text-center">
+<? if (sizeof($member->documents)) {?>
+<p>
+<? foreach ($member->documents as $item) {?>
+        <a href="<?=Url::toRoute(['/members/member/file', 'id' => $item['id']])?>" target="_blank"><?=$item['name']?></a><br/>
+<? } ?>
+</p>
+<? } else { ?>
                                             <p>Жодного документа наразі не завантажено</p>
+<?} ?>
                                         </div>
                                     </div>
                                 </div>
@@ -486,6 +498,47 @@ echo $this->registerJs("(function(){
         $('.popup-wrapper, .popup-content').removeClass('active');
         return false;
     });
+
+    $(document).on('click', '.remove_added_file', function(){  
+	    $(this).parent().remove();
+	});
+	        
+        
+	$('.tt-file-upload input[name=\"MemberEdit[documents][]\"]').on('change', function(e){
+	
+	     var clone = $(this).clone();
+	  	 var image = this.files[0];
+	     var Upload = function (file) { this.file = file;};
+         var count = $('.added_file').length +1;
+    
+    
+         Upload.prototype.getType = function() {return this.file.type;};
+         Upload.prototype.getSize = function() {return this.file.size;};
+         Upload.prototype.getName = function() {return this.file.name;};
+
+	     var upload = new Upload(image);
+
+         var ext = [\"image/jpeg\", \"image/gif\", \"image/png\"];
+		 if ((upload.getSize()/1024)/1024 > 3) {
+              _functions.Msg('Завеликий розмір зображення', 'для завантаження не більше 3 Мб');
+             return false;
+	  	 }
+         if (ext.indexOf(upload.getType())==-1){
+              _functions.Msg('Вибрати скани документів', '[.jpg, .png, .gif]');
+             return false;
+         }
+    	var item  = '<div class=\"added_file\" id=\"file-'+ count +'\">' + upload.getName()+ '<span class=\"remove_added_file\"> [X] </span></div>';
+        setTimeout(function(){clone.css({\"height\": \"0%\", \"width\": \"0%\"}).appendTo(\"div#file-\"+count+\".added_file\"); }, 100);
+	    $('div.simple-text.tt-file-info.text-center').append(item);
+	});
+
+
+	$('form.member_documents').on('submit', function(e){
+	    if ($('.added_file').length==0) {
+             _functions.Msg('Прошу вибрати файл для перевірки', '');
+             return false;
+	    }
+	});
         
         
         
@@ -495,3 +548,41 @@ echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 
 ?>
 
+<div class="popup-wrapper">
+    <div class="bg-layer"></div>
+
+    <div class="popup-content" data-rel="1">
+        <div class="layer-close"></div>
+        <div class="popup-container size-4">
+            <div class="popup-align">
+                <?php
+
+
+                $member->setScenario('documents');
+                $form_file = ActiveForm::begin(['id' => 'member_documents',  'options' => ['class'=>'member_documents', 'enctype'=>'multipart/form-data'], 'enableAjaxValidation' => false,
+                    'enableClientValidation' => true,
+                    'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=documents'), 'action' =>['/members/member/savemember/?scenario=documents']]); ?>
+                    <div class="text-center">
+                        <h4 class="h4">Підтвердження даних</h4>
+                        <div class="empty-space marg-lg-b15"></div>
+                        <div class="simple-text size-3">
+                            <p>Рекомендуємо пройти добровільну процедуру підтвердження анкетних даних, завантаживши на цій сторінці відскановані копії документів.<br/> Ви отримаєте зелений знак «Дані перевірено». <br/>Це додасть аргумент, на  Вашу користь, при виборі Вашої анкети.</p>
+                        </div>
+                        <div class="empty-space marg-lg-b20"></div>
+                        <div class="button type-1 tt-file-upload">Вибрати скани документів [.jpg, .png, .gif]
+                            <?= $form->field($member, 'documents[]')->fileInput(['multiple' => true, 'accept' => 'image/x-png,image/gif,image/jpeg'])->label(false)->error(false); ?>
+                        </div>
+                        <div class="empty-space marg-lg-b10"></div>
+                        <div class="simple-text tt-file-info text-center">
+
+                        </div>
+                        <div class="empty-space marg-lg-b30"></div>
+                        <?= Html::submitButton('Надіслати на перевірку', ['class' => 'button type-1 size-3 color-3 uppercase', 'name' => 'save']) ?>
+
+                    </div>
+                <?php ActiveForm::end(); ?>
+            </div>
+            <div class="button-close"></div>
+        </div>
+    </div>
+</div>

@@ -27,6 +27,7 @@ class Orders extends \yii\db\ActiveRecord
     public $agree = false;
     public $image = array();
     public $types = array();
+
     /**
      * @inheritdoc
      */
@@ -45,6 +46,7 @@ class Orders extends \yii\db\ActiveRecord
             ['agree', 'required', 'requiredValue' => 1, 'message' => 'Прочитати `правила користування`.', 'on' => 'add-order'],
             [['date_from', 'date_to'], 'required', 'skipOnEmpty' => false, 'when' => function ($model) { if ($model->when_start==1) return true; else return false;}, 'whenClient' => "function (attribute, value) { if ($('#customerregistration-when_start').val() == '1') return true; else return false; }", 'message' => 'Обов\'язкове для заповнення', 'on' => 'add-order'],
             [['image'], 'file', 'on' => 'add-order'],
+            [['suggestions'], 'safe', 'on' => 'add-order'],
             [['region'], 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Адресу не визначено. Прошу вибрати адресу зі списку', 'on' => 'add-order'],
             ['agree', 'required', 'requiredValue' => 1, 'message' => 'Прочитати `правила користування`.', 'on' => 'add-order'],
             [['location'], 'required', 'on' => 'location'],

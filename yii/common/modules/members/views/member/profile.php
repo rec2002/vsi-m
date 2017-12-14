@@ -50,7 +50,11 @@ $this->title = 'Кабінет користувача';
                         </div>-->
                     </div>
 
-                    <h3 class="tt-heading-title h3 light"> <?=(!empty($member->company)) ? $member->company : $member->first_name.' '.$member->last_name.' '.$member->surname ?> <!--<a class="open-popup tt-icon-hover tt-icon-entry" data-rel="15" href="#">
+                    <h3 class="tt-heading-title h3 light">
+<? if ($member->approved ==1) {?>
+                        <span class="tt-heading-check tt-tooltip" data-tooltip="Документи та достовірність внесеної інформації перевірені адміністраціює сайту"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAWlBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////9ZMre9AAAAHXRSTlMA7uMjCr6qpE8/Lhj48d/d1tLJs29nXlZILBEEARTWarUAAABZSURBVBgZ5cHXFYJQFEXB8wIZJCpx99+mLj+BWwEzerC8kmmik+UNqQwfyHS26W+GVGeZK/WTw6iLFy5ICyS6qjw+lpAcuhEaWsew69ZaQx9lKPBRpiLomb6DfQQnMGTh7AAAAABJRU5ErkJggg==" alt=""></span>
+<? } ?>
+                        <?=(!empty($member->company)) ? $member->company : $member->first_name.' '.$member->last_name.' '.$member->surname ?> <!--<a class="open-popup tt-icon-hover tt-icon-entry" data-rel="15" href="#">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAAY1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+aRQ2gAAAAIXRSTlMAJG4QC5yml4RdCHdPHgX5YlhRSsjDubCPeWtkRUQ1LhVEw5mLAAAAXElEQVQI103KVw6AIBAA0V0UpSiC2Pv9T6kmwDJ/LxmgjgeypOBIurRU5J1b5hsRxBozajZhUA8LOm2SaizrIp6/qiDpc7XdKUjg7nUjGa7UMH+KLxe2hESJClIvbhADi7p4sv0AAAAASUVORK5CYII=" alt="">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAATlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAP+0nkAAAAGnRSTlMABmCnjjSZQMMWzrevK8ef/OHXyIVwW1YdSoUZvnoAAABYSURBVAjXTclXDoAgEADRpa0gvYr3v6iJgQ3z9zJAmfbCEdrACaw79GQWQxRS2iUhZ3aijC2jObp5SOnr1L2Ep2CkZn+t2Z0gga/e57IFT6o2KiAiV4z0AW2MA6Ezq1d1AAAAAElFTkSuQmCC" alt="">
                         </a>-->

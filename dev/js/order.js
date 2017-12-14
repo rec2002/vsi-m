@@ -275,4 +275,50 @@ $(function() {
     });
 
 
+    //  member suggestion
+    $('.tt-fadein-link').on('click', function(e){
+        $(this).closest('.tt-fadein-top').fadeOut(300, function(){
+            $(this).siblings('.tt-fadein-bottom').fadeIn(300);
+        });
+        e.preventDefault();
+    });
+
+
+    $('.tt-fadein-close').on('click', function(e){
+        $(this).closest('.tt-fadein-bottom').fadeOut(300, function(){
+            $(this).siblings('.tt-fadein-top').fadeIn(300);
+        });
+        e.preventDefault();
+    });
+
+
+    if ($('.suggestion-list').length) {
+        $('.simple-select:not(.multy) select').SumoSelect();
+
+
+        $(document).on("change", "select[name='disregast']", function (e) {
+             var obj = $(this);
+            $('.popup-wrapper-confirm').addClass('active');
+
+            _functions.dialog('Справді бажаєте видалити?', '',
+                function() {
+                    $('.popup-wrapper-confirm').removeClass('active');
+                    obj.closest('form').submit();
+                },
+                function() {
+                    $('.popup-wrapper-confirm').removeClass('active');
+                }
+            );
+            return false;
+        });
+
+        $(document).on("click", ".restore_suggestion", function (e) {
+            $(this).closest('form').submit();
+            return false;
+        });
+
+
+
+    }
+
 });

@@ -82,11 +82,18 @@
 
 .status0::before {background: red none repeat scroll 0 0 !important;}
 .status0 {color: red;}
-.status1::before {background: #5cca47 none repeat scroll 0 0 !important;}
-.status1 {color: #5cca47;}
-.status2::before {background: lawngreen none repeat scroll 0 0 !important;}
-.status2 {color: lawngreen;}
-.status3::before {background: deepskyblue none repeat scroll 0 0 !important;}
-.status3 {color: deepskyblue;}
-.status4::before {background: black none repeat scroll 0 0 !important;}
-.status4 {color: black;}
+.status1::before {background: darkred none repeat scroll 0 0 !important;}
+.status1 {color: darkred;}
+
+.status2::before {background: #5cca47 none repeat scroll 0 0 !important;}
+.status2 {color: #5cca47;}
+.status3::before {background: lawngreen none repeat scroll 0 0 !important;}
+.status3 {color: lawngreen;}
+.status4::before {background: deepskyblue none repeat scroll 0 0 !important;}
+.status4 {color: deepskyblue;}
+.status5::before {background: black none repeat scroll 0 0 !important;}
+.status5 {color: black;}
+
+.remove_added_file {cursor: pointer;font-weight:bold;color: red;z-index: 1000; }
+div.field-memberedit-documents {margin-bottom: 0px;}
+div.added_file{margin-bottom: 0px;}
