@@ -15,7 +15,7 @@ $this->title = 'Замовлення';
     <div class="tt-bg-grey">
         <div class="container">
             <div class="empty-space marg-sm-b30 marg-lg-b50"></div>
-            <a href="<?=Yii::$app->request->referrer?>" class="button type-1 btn-simple icon-left uppercase"><span>назад</span></a>
+            <a href="<?=Url::toRoute('/orders/default/myorders')?>" class="button type-1 btn-simple icon-left uppercase"><span>назад</span></a>
             <div class="tt-task detail">
                 <div class="tt-task-top clearfix">
                     <div class="tt-task-info">
@@ -280,7 +280,18 @@ $this->title = 'Замовлення';
 <? } ?>
 
 
+
                 </div>
+                <? if ($model->status!=5) {?>
+                    <div class="empty-space  marg-lg-b15" style="clear: both;"></div>
+
+                    <div><? $form_close = ActiveForm::begin(['action' =>['/orders/default/orderclose'] ]); ?>
+                        <?= Html::submitButton('Скасувати замовлення', ['id'=>'close_order', 'class' => 'tt-fadein-link button type-1', 'name' => 'save']) ?>
+                        <?=$form_close->field($model, 'id')->hiddenInput(['value'=>$model->id])->label(false); ?>
+                        <?=$form_close->field($model, 'status')->hiddenInput(['value'=>5])->label(false); ?>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                <? } ?>
             </div>
 
             

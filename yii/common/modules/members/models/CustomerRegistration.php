@@ -42,6 +42,7 @@ class CustomerRegistration extends Model
             ['email', 'email', 'on' => 'add-order'],
             [['region'], 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Адресу не визначено. Прошу вибрати адресу зі списку', 'on' => 'add-order'],
             [['image'], 'file'],
+            [['email'], 'filter', 'filter' => 'trim', 'on' => 'add-order'],
             ['email', 'checkMyUniqunessEmail', 'on' => 'add-order'],
             ['phone', 'checkSendPhoneCode', 'on' => 'add-order'],
 

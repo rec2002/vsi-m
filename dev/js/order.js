@@ -291,6 +291,23 @@ $(function() {
         e.preventDefault();
     });
 
+    $(document).on("click", "button#close_order", function(e) {
+
+        var obj = $(this);
+        $('.popup-wrapper-confirm').addClass('active');
+
+        _functions.dialog('Ви дійсно хочете скасувати замовлення?', 'Скасування замовлення означає, що ви не будете отримувати на нього нові пропозиції. Дія не зворотня.',
+            function() {
+                $('.popup-wrapper-confirm').removeClass('active');
+                obj.closest('form').submit();
+            },
+            function() {
+                $('.popup-wrapper-confirm').removeClass('active');
+            }
+        );
+        return false;
+    });
+
 
     if ($('.suggestion-list').length) {
         $('.simple-select:not(.multy) select').SumoSelect();
@@ -316,6 +333,8 @@ $(function() {
             $(this).closest('form').submit();
             return false;
         });
+
+
 
 
 

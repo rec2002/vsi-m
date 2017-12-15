@@ -44,6 +44,7 @@ class MasterRegistration extends Model
             [['password'], 'string', 'min' => 6, 'tooShort' => 'Значення "{attribute}" повинно містити мінімум 6 символiв.', 'on' => 'step-1'],
             [['password'], 'compare', 'compareAttribute' => 'password_repeat', 'on' => 'step-1'],
             ['email', 'email', 'on' => 'step-1'],
+            [['email'], 'filter', 'filter' => 'trim', 'on' => 'step-1'],
             ['email', 'checkMyUniqunessEmail', 'on' => 'step-1'],
             ['phone', 'checkSendPhoneCode', 'message'=>'Підтвердіть контактний телефон через SMS.', 'on' => 'step-1'],
             ['confirm_sms', 'checkSMSCode', 'on' => 'step-1'],

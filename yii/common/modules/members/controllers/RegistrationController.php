@@ -153,7 +153,7 @@ class RegistrationController extends \common\modules\members\controllers\Default
                     }
                 }
 
-                if (sizeof(@Yii::$app->session['newUserSession']['prices'])) foreach(@Yii::$app->session['newUserSession']['prices'] as $key=>$val){
+                if (@Yii::$app->session->get('newUserSession')['prices']) foreach(@Yii::$app->session['newUserSession']['prices'] as $key=>$val){
                     if (!empty($val)) {
                         $prices = new MemberPrices();
                         $prices->price_id = $key;

@@ -80,6 +80,7 @@ class MemberEdit extends \yii\db\ActiveRecord
             [['busy_to'], 'required', 'whenClient' => "function (attribute, value) {  return $('#memberedit-busy').val() == 1 }", 'message' => 'Прошу вказати дату до якої будете зайняті', 'on' => 'busy_to'],
 
             ['email', 'email', 'skipOnEmpty' => false, 'on' => 'email'],
+            [['email'], 'filter', 'filter' => 'trim', 'on' => 'email'],
             ['email', 'checkMyUniqunessEmail', 'on' => 'email'],
             [['place'], 'required', 'on' =>'place'],
             [['region'], 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Адресу не визначено. Прошу вибрати адресу зі списку', 'on' => 'place'],

@@ -33,7 +33,7 @@ class DefaultController extends Controller
     {
 
         $param = [];
-        $param[':status'] = 0;
+        $param[':status'] = 1;
 
         if (Yii::$app->request->isPost){
             unset($_SESSION['filter']);
@@ -393,6 +393,24 @@ class DefaultController extends Controller
             return['status'=>1, 'msg'=>'дані збережені'];
         }
         return['status'=>0];
+    }
+
+    public function actionOrderclose()
+    {
+        if (Yii::$app->request->isPost) {
+            $model = Orders::findOne([
+                'id' => Yii::$app->request->post('Orders')['id'],
+                'member'=> Yii::$app->user->identity->getId(),
+            ]);
+
+            if ($model->load(Yii::$app->request->post())) {
+
+                $model->status = Yii::$app->request->post('Orders')['status'];
+                $model->save('false');
+            }
+            header('Location: ' . Url::to(['/orders/default/detail', 'id' => Yii::$app->request->post('Orders')['id']]));
+            exit();
+        }
     }
 
 

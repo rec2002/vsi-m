@@ -26,6 +26,7 @@ class LoginForm extends Model
             [['email', 'password'], 'required',  'message' => '"{attribute}" обов\'язкове поле'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
+            [['email'], 'filter', 'filter' => 'trim'],
             ['email', 'email'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
