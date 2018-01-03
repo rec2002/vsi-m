@@ -296,7 +296,7 @@ $(function() {
         var obj = $(this);
         $('.popup-wrapper-confirm').addClass('active');
 
-        _functions.dialog('Ви дійсно хочете скасувати замовлення?', 'Скасування замовлення означає, що ви не будете отримувати на нього нові пропозиції. Дія не зворотня.',
+        _functions.dialog('Ви дійсно хочете скасувати замовлення?', 'Скасування замовлення означає, що тепер Ви не будете отримувати на нього нові пропозиції. Дія не зворотня.',
             function() {
                 $('.popup-wrapper-confirm').removeClass('active');
                 obj.closest('form').submit();
@@ -317,7 +317,7 @@ $(function() {
              var obj = $(this);
             $('.popup-wrapper-confirm').addClass('active');
 
-            _functions.dialog('Справді бажаєте видалити?', '',
+            _functions.dialog('Справді бажаєте перемістити в корзину?', 'Надалі буде можливість відновити пропозицію з корзини. Власник пропозиції буде проінфомований про відмову.',
                 function() {
                     $('.popup-wrapper-confirm').removeClass('active');
                     obj.closest('form').submit();
@@ -334,7 +334,30 @@ $(function() {
             return false;
         });
 
+        $('.phone-number-show').on("click", function (e) {
 
+            var obj = $(this);
+            $('.popup-wrapper-confirm').addClass('active');
+
+            _functions.dialog('Показати телефон', 'Ваш контактний номер телефону буде доступний для вибраного майстра.',
+                function() {
+                    console.log(1);
+                    $.ajax({type: "POST",  url: '/orders/default/approovesuggestion',  data: {id:obj.data('id')},  dataType: 'json',  async :false,
+                        success: function( data ) {
+                            var data = JSON.parse(data);
+                            $('.popup-wrapper-confirm').removeClass('active');
+                            location.reload();
+                        }
+                    });
+
+                },
+                function() {
+                    $('.popup-wrapper-confirm').removeClass('active');
+                }
+            );
+            return false;
+
+        });
 
 
 

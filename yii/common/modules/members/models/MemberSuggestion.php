@@ -95,4 +95,7 @@ class MemberSuggestion extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Orders::className(), ['id' => 'order_id']);
     }
+
+
+
 }

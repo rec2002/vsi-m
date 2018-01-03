@@ -22,6 +22,7 @@ echo $this->context->route;
                         ]
                     ],
                     ['label' => 'Виконавці/Замовники', 'icon' => 'users', 'url' => ['/members'], 'active' => $this->context->route == 'members',],
+                    ['label' => 'Відгуки на виконавців', 'icon' => 'thumbs-o-up', 'url' => ['/response'], 'active' => $this->context->route == 'response',],
                     ['label' => 'Замовлення', 'icon' => 'wrench', 'url' => ['/orders'], 'active' => $this->context->route == 'orders',],
                     ['label' => 'Публікації', 'icon' => 'newspaper-o', 'url' => ['/publish/index'], 'active' => $this->context->route == 'publish/index',],
                     ['label' => 'Шаблони листів/SMS', 'icon' => 'at', 'url' => ['/mailtemplate/index'], 'active' => $this->context->route == 'mailtemplate/index',],

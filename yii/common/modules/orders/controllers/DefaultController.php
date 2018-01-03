@@ -10,6 +10,8 @@ use yii\helpers\Url;
 use common\modules\members\models\Orders;
 use common\modules\members\models\OrderImages;
 use common\modules\orders\models\MemberSuggestion;
+use common\modules\orders\models\MemberSuggestionApproved;
+
 use yii\data\SqlDataProvider;
 use yii\helpers\ArrayHelper;
 use common\components\MemberHelper;
@@ -106,7 +108,7 @@ class DefaultController extends Controller
         if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
         $images = OrderImages::findAll(['order_id' => $model->id]);
         $suggestion = MemberSuggestion::findAll(['order_id' => $model->id]);
-
+/*
         if (!Yii::$app->user->isGuest) {
             if ($model->member == Yii::$app->user->identity->getId()) {
                 $model = Orders::findOne([
@@ -119,8 +121,35 @@ class DefaultController extends Controller
                 return $this->render('edit', ['model' => $model, 'budget' => MemberHelper::GetBudgetRange(), 'images' => $images, 'suggestions'=>sizeof($suggestion)]);
             }
         }
-
+*/
         return $this->render('order-view', ['model'=>$model, 'images'=>$images, 'suggestions'=>sizeof($suggestion)]);
+    }
+
+
+
+
+    public function actionEdit($id)
+    {
+        $model = Orders::find()->where(['id'=>$id])->one();
+        if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
+        $images = OrderImages::findAll(['order_id' => $model->id]);
+        $suggestion = MemberSuggestion::findAll(['order_id' => $model->id]);
+
+        if (!Yii::$app->user->isGuest) {
+            if ($model->member == Yii::$app->user->identity->getId()) {
+                 $model = Orders::findOne([
+                     'id' => Yii::$app->request->get('id'),
+                     'member' => Yii::$app->user->identity->getId(),
+                 ]);
+
+                 if ($model->date_from == '0000-00-00') $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
+                 if ($model->date_to == '0000-00-00') $model->date_to = ''; else $model->date_to = date("d.m.Y", strtotime($model->date_to));
+                 return $this->render('edit', ['model' => $model, 'budget' => MemberHelper::GetBudgetRange(), 'images' => $images, 'suggestions'=>sizeof($suggestion)]);
+            }
+        } else {
+            header('Location: ' . Url::to(['/orders/default/detail', 'id' => $id]));
+            exit();
+        }
     }
 
 
@@ -483,6 +512,25 @@ class DefaultController extends Controller
      return 1;
 
     }
+
+
+    public function actionApproovesuggestion()  {
+
+        if (Yii::$app->request->isPost) {
+            $count_total = Yii::$app->db->createCommand('select count(*) as total from `member_suggestion_approved` WHERE suggestion_id="' . Yii::$app->request->post('id') . '"')->queryOne();
+            $member = Yii::$app->db->createCommand('select o.member from `member_suggestion` s LEFT JOIN `orders` o ON o.id = s.order_id WHERE s.id="' . Yii::$app->request->post('id') . '"')->queryOne();
+            $model = new MemberSuggestionApproved();
+            Yii::$app->response->format = 'json';
+            if ($count_total['total']==0 && $member['member']==Yii::$app->user->identity->getId()) {
+                $model->suggestion_id = Yii::$app->request->post('id');
+                $model->price = 0;
+                $model->save(false);
+                return json_encode(array('status'=>'ok'));
+            }
+        }
+        return json_encode(array('status'=>'error'));
+    }
+
 
     public function actionTest()  {
 

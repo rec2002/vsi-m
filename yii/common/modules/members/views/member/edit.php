@@ -21,7 +21,7 @@ $this->title = 'Кабінет користувача';
                     <a class="tab-menu redirect" href="<?=Url::to(['/members/portfolio/list'])?>"><span>Виконані проекти</span></a>
                     <a class="tab-menu redirect" href="<?=Url::to(['/members/member/resetpwd'])?>"><span>Змінити пароль</span></a>
                     <a class="tab-menu redirect" href="<?=Url::to(['/members/member/noticesettings'])?>"><span>Сповіщення</span></a>
-                    <a class="tab-menu redirect" href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;"><span>Доступ до замовлень</span></a>
+                    <a class="tab-menu redirect" href="<?=Url::to(['/members/member/billing'])?>" ><span>Доступ до замовлень</span></a>
                 </div>
                 <div class="tab-entry" style="display: block;">
                     <div class="tt-person master">
@@ -438,7 +438,7 @@ $this->title = 'Кабінет користувача';
     if (sizeof($regions)) { foreach ($regions as $val) { $regions_arr[$val['id']] = $val['name_short']; }}
 
 
-echo  $form5->field($member, 'regions')->checkboxList($regions_arr, [
+    $form5->field($member, 'regions')->checkboxList($regions_arr, [
     'item' => function($index, $label, $name, $checked, $value) {
         if ($checked==1) $checked = 'checked';
         return "<label class=\"checkbox-entry nowrap\"><input type=\"checkbox\" class=\"checklist\"  {$checked} name=\"{$name}\" value=\"{$value}\"><span><b>{$label}</b></span></label><div class=\"empty-space marg-lg-b15\"></div>";

@@ -37,17 +37,11 @@ $this->title = 'Кабінет користувача';
                     <img class="img-responsive" src="<?=!empty($member->avatar_image) ? $member->avatar_image : '/img/person/person.png';?>" alt="">
                 </div>
                 <div class="tt-heading-user-content">
-                    <!--<div class="tt-heading-status">зараз на сайті</div>-->
+<? if ($member->online==1) {?>
+                        <div class="tt-heading-status">зараз на сайті</div>
+<? } ?>
                     <div class="tt-dropdown style-2">
                         <a class="tt-dropdown-link open-popup" data-rel="21" href="javascript:"><span class="tt-heading-state <?=(!empty($member->busy_to) ? 'red' : ''); ?>"><?=(empty($member->busy_to)) ? 'Вільний для роботи' : 'Зайнятий до '.date('d.m.Y', (strtotime($member->busy_to))); ?></span><span class="tt-dropdown-icon"><i></i></span></a>
-                        <!--<div class="tt-dropdown-entry">
-                            <div class="tt-dropdown-overlay"><span></span></div>
-                            <div class="tt-dropdown-close button-close small"></div>
-                            <ul>
-                                <li><a href="#">Вільний для роботи</a></li>
-                                <li><a class="open-popup" data-rel="21" href="#">Занятий до</a></li>
-                            </ul>
-                        </div>-->
                     </div>
 
                     <h3 class="tt-heading-title h3 light">
@@ -67,20 +61,20 @@ $this->title = 'Кабінет користувача';
                         </p>
                     </div>
                     <div class="tt-heading-reliability">
-                        <div class="tt-heading-rating">
-                            <a class="tt-vote active" href="#">
+                        <div class="tt-heading-rating tt-vote-wrapper">
+                            <a class="tt-vote like <?=($ratings['positive']>0) ? 'active' : '' ?>">
                                     <span class="tt-vote-img">
                                         <i class="tt-icon like grey"></i>
                                         <i class="tt-icon like green"></i>
                                     </span>
-                                <span class="tt-vote-count">0</span>
+                                <span class="tt-vote-count"><?=$ratings['positive']?></span>
                             </a>
-                            <a class="tt-vote dislike" href="#">
+                            <a class="tt-vote dislike <?=($ratings['negative']>0) ? 'active' : '' ?>">
                                     <span class="tt-vote-img">
                                         <i class="tt-icon dislike grey"></i>
                                         <i class="tt-icon dislike red"></i>
                                     </span>
-                                <span class="tt-vote-count">0</span>
+                                <span class="tt-vote-count"><?=$ratings['negative']?></span>
                             </a>
                         </div>
                         <div class="tt-heading-duration simple-text size-2">
@@ -129,7 +123,7 @@ $this->title = 'Кабінет користувача';
                         <div class="tab-nav">
                             <div class="tab-menu active" data-tab="info"><span>Інформація</span></div>
                             <div class="tab-menu" data-tab="projects"><span>Виконані проекти</span></div>
-                            <div class="tab-menu" data-tab="recall"><span>Відгуки <span>(0)</span></span></div>
+                            <div class="tab-menu" data-tab="recall"><span>Відгуки <span>(<?=$ratings['total']?>)</span></span></div>
                         </div>
 
                         <div class="tab-entry" style="display: block;">
@@ -193,10 +187,6 @@ $this->title = 'Кабінет користувача';
                         </div>
                         <div class="tab-entry">
                             <div class="empty-space marg-lg-b30"></div>
-
-
-
-
                             <!-- TT-PROJECT-EDIT -->
                             <div class="tt-project-edit-wrapper">
                                 <div class="tt-project-list">
@@ -301,389 +291,96 @@ $this->title = 'Кабінет користувача';
                             </div>
 
                         </div>
+
                         <div class="tab-entry">
-                            UNDER CONSTRUCTION
-                            <!--
                             <div class="tabs-block style-2">
-                                <div class="tab-nav">
-                                    <div class="tab-menu active">Всі</div>
-                                    <div class="tab-menu">Позитивні <span class="count-large">(2)</span></div>
-                                    <div class="tab-menu">Негативні <span class="count-large">(0)</span></div>
-                                </div>
 
-                                <div class="tab-entry" style="display: block;">
+                                <? if (sizeof($ratings['reviews']))  { ?>
+                                    <div class="tab-nav">
+                                        <div class="tab-menu redirect review_list active" data-value="0">Всі</div>
+                                        <div class="tab-menu redirect review_list" data-value="1">Позитивні <span class="count-large">(<?=$ratings['positive']?>)</span></div>
+                                        <div class="tab-menu redirect review_list" data-value="2">Негативні <span class="count-large">(<?=$ratings['negative']?>)</span></div>
+                                    </div>
 
-                                    <div class="tt-review editable">
-                                        <div class="tt-dropdown style-2 dark">
-                                            <a class="tt-dropdown-link" href="#"><span class="tt-dropdown-icon"><i></i></span></a>
-                                            <ul class="tt-dropdown-entry" style="display: none;">
-                                                <li><a href="#">Нецензурна лексика</a></li>
-                                                <li><a href="#">Спам</a></li>
-                                                <li><a href="#">Порушення правил</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="tt-review-top row">
-                                            <div class="col-sm-6">
-                                                <div class="tt-response good"><i class="tt-icon like white"></i><span>Позитивний відгук</span></div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="tt-review-right">
-                                                    <div class="tt-review-date">
-                                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
-                                                        <span>24.04.2017</span>
+                                    <div class="tab-entry" style="display: block;">
+
+                                        <? foreach ($ratings['reviews'] as $key=>$val) {?>
+                                            <div class="tt-review" data-review="<?=$val['positive_negative']?>">
+                                                <div class="tt-review-top row">
+                                                    <div class="col-sm-6">
+                                                        <? if ($val['positive_negative']==1) { ?>
+                                                            <div class="tt-response good"><i class="tt-icon like white"></i><span>Позитивний відгук</span></div>
+                                                        <? } ?>
+                                                        <? if ($val['positive_negative']==2) { ?>
+                                                            <div class="tt-response bad"><i class="tt-icon dislike white"></i><span>негативний відгук</span></div>
+                                                        <? } ?>
                                                     </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="simple-text size-3 small-space bold-style-2">
-                                            <p><b>Сподобалось</b></p>
-                                            <p>Спокійний, грамотний, відповідальний фахівець і дуже душевна людина. Всі роботи виконані відповідно до вимог і навіть більше (запропонував найкращі варіанти виконання роботи).</p>
-                                            <p><b>Не сподобалось</b></p>
-                                            <p>Все сподобалось!</p>
-                                            <p><b>Загальний висновок</b></p>
-                                            <p>Рекомендую для виконання інженерних робіт, без трудомістких будівельних завдань.</p>
-                                        </div>
-                                        <div class="row vertical-middle">
-                                            <div class="col-sm-6 col-lg-5">
-                                                <div class="tt-rating-block">
-                                                    <ul class="tt-rating">
-                                                        <li>
-                                                            <div class="tt-rating-title">Вічливість</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">На зв'язку</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Пунктуальність</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Дотримання ціни</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Дотримання термінів</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Ціна/Якість</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6 col-lg-7">
-                                                <div class="tt-review-category">Замовлення: <a href="professionals-work-detail.html">Заміна старої проводки</a></div>
-                                                <div class="tt-review-name"><a href="professionals-detail.html">Jordan Crump</a></div>
-                                            </div>
-                                        </div>
-                                        <div class="tt-reply">
-                                            <div class="tt-reply-write">
-                                                <img class="tt-reply-write-img" src="/img/reply/user_3.jpg" alt="">
-                                                <div class="tt-reply-write-info">
-                                                    <textarea class="simple-input height-2" placeholder="Залишити коментар"></textarea>
-                                                    <div class="tt-buttons-block m10 text-right">
-                                                        <div class="empty-space marg-lg-b20"></div>
-                                                        <a class="button type-1 tt-reply-write-close"><span>Відмінити</span></a>
-                                                        <div class="button type-1 color-3">
-                                                            <span>Залишити</span>
-                                                            <input type="submit">
+                                                    <div class="col-sm-6">
+                                                        <div class="tt-review-date">
+                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
+                                                            <span><?=date('d.m.Y', strtotime($val['created_at']))?></span>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="empty-space marg-lg-b30"></div>
-                                    <div class="tt-review editable">
-                                        <div class="tt-dropdown style-2 dark">
-                                            <a class="tt-dropdown-link" href="#"><span class="tt-dropdown-icon"><i></i></span></a>
-                                            <ul class="tt-dropdown-entry" style="display: none;">
-                                                <li><a href="#">Нецензурна лексика</a></li>
-                                                <li><a href="#">Спам</a></li>
-                                                <li><a href="#">Порушення правил</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="tt-review-top row">
-                                            <div class="col-sm-6">
-                                                <div class="tt-response good"><i class="tt-icon like white"></i><span>Позитивний відгук</span></div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="tt-review-right">
-                                                    <div class="tt-review-date">
-                                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
-                                                        <span>24.04.2017</span>
-                                                    </div>
+                                                <div class="simple-text size-3 small-space bold-style-2">
+                                                    <p><b>Сподобалось</b></p>
+                                                    <p><?=nl2br($val['positive_note'])?></p>
+                                                    <p><b>Не сподобалось</b></p>
+                                                    <p><?=nl2br($val['negative_note'])?></p>
+                                                    <p><b>Загальний висновок</b></p>
+                                                    <p><?=nl2br($val['conclusion_note'])?></p>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="simple-text size-3 small-space bold-style-2">
-                                            <p><b>Сподобалось</b></p>
-                                            <p>Зробив мені розведення і монтаж в 3-х кімнатній квартирі 98 м2. Господа, якщо ви хочете швидко і дорого то не звертайтеся будь ласка до цього майстра. Якщо хочете щоб було все РІВНЕ, так так, РІВНЕ, що в наш час практично не буває, то це до Мушеху Мнацаканович. Дуже грамотний, і найголовніше - ненав'язливий підхід. Охайного ставлення і точний витрата матеріалу до міліметра !!!<br>Грамотна, ергономічна і красива комплектація електричного щита.</p>
-                                            <p><b>Не сподобалось</b></p>
-                                            <p>Не вміє робити свою справу тяп-ляп :)</p>
-                                            <p><b>Загальний висновок</b></p>
-                                            <p>Дивлячись на роботу електриків в квартирах у моїх друзів і знайомих, скажу одне, у цих типу "фахівців" дві проблеми: погано з геометрією і ставлення до роботи на "відвалися". Сміливо звертайтеся до Мушеху Мнацаканович, це дуже хороший фахівець і найголовніше відповідальна людина, яка дуже поважає свою працю і в результаті - Вас ...</p>
-                                        </div>
-                                        <div class="row vertical-middle">
-                                            <div class="col-sm-6 col-lg-5">
-                                                <div class="tt-rating-block">
-                                                    <ul class="tt-rating">
-                                                        <li>
-                                                            <div class="tt-rating-title">Вічливість</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">На зв'язку</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Пунктуальність</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Дотримання ціни</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Дотримання термінів</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Ціна/Якість</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6 col-lg-7">
-                                                <div class="tt-review-category">Замовлення: <a href="professionals-work-detail.html">Потрібен електромонтаж в новобудові</a></div>
-                                                <div class="tt-review-name"><a href="professionals-detail.html">Jordan Crump</a></div>
-                                            </div>
-                                        </div>
-                                        <div class="tt-reply">
-                                            <div class="tt-reply-write">
-                                                <img class="tt-reply-write-img" src="/img/reply/user_3.jpg" alt="">
-                                                <div class="tt-reply-write-info">
-                                                    <textarea class="simple-input height-2" placeholder="Залишити коментар"></textarea>
-                                                    <div class="tt-buttons-block m10 text-right">
-                                                        <div class="empty-space marg-lg-b20"></div>
-                                                        <a class="button type-1 tt-reply-write-close"><span>Відмінити</span></a>
-                                                        <div class="button type-1 color-3">
-                                                            <span>Залишити</span>
-                                                            <input type="submit">
+                                                <div class="row vertical-middle">
+                                                    <div class="col-sm-6 col-lg-5">
+                                                        <div class="tt-rating-block">
+                                                            <ul class="tt-rating style-2">
+                                                                <li>
+                                                                    <div class="tt-rating-title">Вічливість</div>
+                                                                    <?=MemberHelper::GetRatingStar($val['devotion'], 'devotion');?>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="tt-rating-title">На зв'язку</div>
+                                                                    <?=MemberHelper::GetRatingStar($val['connected'], 'connected');?>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="tt-rating-title">Пунктуальність</div>
+                                                                    <?=MemberHelper::GetRatingStar($val['punctuality'], 'punctuality');?>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="tt-rating-title">Дотримання ціни</div>
+                                                                    <?=MemberHelper::GetRatingStar($val['price'], 'price');?>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="tt-rating-title">Дотримання термінів</div>
+                                                                    <?=MemberHelper::GetRatingStar($val['terms'], 'terms');?>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="tt-rating-title">Ціна/Якість</div>
+                                                                    <?=MemberHelper::GetRatingStar($val['quality'], 'quality');?>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="empty-space marg-lg-b30"></div>
-                                </div>
-                                <div class="tab-entry">
-                                    <div class="tt-review editable">
-                                        <div class="tt-dropdown style-2 dark">
-                                            <a class="tt-dropdown-link" href="#"><span class="tt-dropdown-icon"><i></i></span></a>
-                                            <ul class="tt-dropdown-entry" style="display: none;">
-                                                <li><a href="#">Нецензурна лексика</a></li>
-                                                <li><a href="#">Спам</a></li>
-                                                <li><a href="#">Порушення правил</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="tt-review-top row">
-                                            <div class="col-sm-6">
-                                                <div class="tt-response good"><i class="tt-icon like white"></i><span>Позитивний відгук</span></div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="tt-review-right">
-                                                    <div class="tt-review-date">
-                                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
-                                                        <span>24.04.2017</span>
+                                                    <div class="col-sm-6 col-lg-7">
+                                                        <div class="tt-review-category">Замовлення: <?= Html::a($val['title'], ['/orders/default/detail', 'id' => $val['order_id']]) ?></div>
+                                                        <div class="tt-review-name"><?= Html::a($val['first_name'], ['/orders/default/detail', 'id' => $val['order_id']]) ?></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="simple-text size-3 small-space bold-style-2">
-                                            <p><b>Сподобалось</b></p>
-                                            <p>Зробив мені розведення і монтаж в 3-х кімнатній квартирі 98 м2. Господа, якщо ви хочете швидко і дорого то не звертайтеся будь ласка до цього майстра. Якщо хочете щоб було все РІВНЕ, так так, РІВНЕ, що в наш час практично не буває, то це до Мушеху Мнацаканович. Дуже грамотний, і найголовніше - ненав'язливий підхід. Охайного ставлення і точний витрата матеріалу до міліметра !!!<br>Грамотна, ергономічна і красива комплектація електричного щита.</p>
-                                            <p><b>Не сподобалось</b></p>
-                                            <p>Не вміє робити свою справу тяп-ляп :)</p>
-                                            <p><b>Загальний висновок</b></p>
-                                            <p>Дивлячись на роботу електриків в квартирах у моїх друзів і знайомих, скажу одне, у цих типу "фахівців" дві проблеми: погано з геометрією і ставлення до роботи на "відвалися". Сміливо звертайтеся до Мушеху Мнацаканович, це дуже хороший фахівець і найголовніше відповідальна людина, яка дуже поважає свою працю і в результаті - Вас ...</p>
-                                        </div>
-                                        <div class="row vertical-middle">
-                                            <div class="col-sm-6 col-lg-5">
-                                                <div class="tt-rating-block">
-                                                    <ul class="tt-rating">
-                                                        <li>
-                                                            <div class="tt-rating-title">Вічливість</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">На зв'язку</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Пунктуальність</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Дотримання ціни</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Дотримання термінів</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tt-rating-title">Ціна/Якість</div>
-                                                            <div class="tt-rating-stars">
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                                <i class="tt-icon star"></i>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6 col-lg-7">
-                                                <div class="tt-review-category">Замовлення: <a href="professionals-work-detail.html">Потрібен електромонтаж в новобудові</a></div>
-                                                <div class="tt-review-name"><a href="professionals-detail.html">Jordan Crump</a></div>
-                                            </div>
-                                        </div>
-                                        <div class="tt-reply">
-                                            <div class="tt-reply-write">
-                                                <img class="tt-reply-write-img" src="/img/reply/user_3.jpg" alt="">
-                                                <div class="tt-reply-write-info">
-                                                    <textarea class="simple-input height-2" placeholder="Залишити коментар"></textarea>
-                                                    <div class="tt-buttons-block m10 text-right">
-                                                        <div class="empty-space marg-lg-b20"></div>
-                                                        <a class="button type-1 tt-reply-write-close"><span>Відмінити</span></a>
-                                                        <div class="button type-1 color-3">
-                                                            <span>Залишити</span>
-                                                            <input type="submit">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div class="empty-space marg-lg-b30"></div>
 
-                                            </div>
-                                        </div>
+                                        <? } ?>
+
+                                        <div class="empty-space marg-sm-b30 marg-lg-b50"></div>
                                     </div>
-                                </div>
-                                <div class="tab-entry">
-                                </div>
+                                <? } else { ?>
+                                    <div class="alert alert-warning fade in alert-dismissable" style="margin-right: 20px;margin-left: 20px;"><strong>Не опубліковано жодної відгуку.</strong> </div>
+                                <? } ?>
+
+
                             </div>
-                            -->
                         </div>
+
                     </div>
                     <div class="empty-space marg-sm-b40"></div>
                 </div>
@@ -708,12 +405,45 @@ $this->title = 'Кабінет користувача';
                         </ul>
                     </div>
                     <div class="empty-space marg-lg-b30"></div>
-                    <div class="tt-widget">
-                        <h5 class="tt-widget-title h5">Оцінки <span>(0)</span></h5>
-                        <div class="simple-text size-2">
+
+                    <? if ($ratings['total']>0) { ?>
+                        <div class="tt-widget">
+                            <h5 class="tt-widget-title h5">Загальні оцінки</h5>
+                            <ul class="tt-rating style-2">
+                                <li>
+                                    <div class="tt-rating-title">Вічливість</div>
+                                    <?=MemberHelper::GetRatingStar($ratings['devotion'], 'devotion');?>
+                                </li>
+                                <li>
+                                    <div class="tt-rating-title">На зв'язку</div>
+                                    <?=MemberHelper::GetRatingStar($ratings['connected'], 'connected');?>
+                                </li>
+                                <li>
+                                    <div class="tt-rating-title">Пунктуальність</div>
+                                    <?=MemberHelper::GetRatingStar($ratings['punctuality'], 'punctuality');?>
+                                </li>
+                                <li>
+                                    <div class="tt-rating-title">Дотримання ціни</div>
+                                    <?=MemberHelper::GetRatingStar($ratings['price'], 'price');?>
+                                </li>
+                                <li>
+                                    <div class="tt-rating-title">Дотримання термінів</div>
+                                    <?=MemberHelper::GetRatingStar($ratings['terms'], 'terms');?>
+                                </li>
+                                <li>
+                                    <div class="tt-rating-title">Ціна/Якість</div>
+                                    <?=MemberHelper::GetRatingStar($ratings['quality'], 'quality');?>
+                                </li>
+                            </ul>
+                            <!--<a href="javascript:" class="button type-1 full">Залишити відгук</a>-->
+                        </div>
+<? } else { ?>
+                        <div class="tt-widget">
+                            <h5 class="tt-widget-title h5">Загальні оцінки</h5>
                             <p>Наразі не має жодної оцінки</p>
                         </div>
-                    </div>
+<? } ?>
+
                 </div>
             </div>
 
@@ -742,252 +472,6 @@ $this->title = 'Кабінет користувача';
     <div class="popup-wrapper">
         <div class="bg-layer"></div>
 
-        <div class="popup-content" data-rel="12">
-            <div class="layer-close"></div>
-            <div class="popup-container size-3">
-                <div class="popup-align">
-                    <form>
-                        <h4 class="h4 text-center">Відгук про співпрацю</h4>
-                        <div class="empty-space marg-lg-b30"></div>
-                        <div class="tt-input-wrapper">
-                            <div class="tt-input-label">Для проекту</div>
-                            <div class="tt-input-entry">
-                                <div class="simple-select">
-                                    <div class="SumoSelect" tabindex="0"><select class="SumoUnder" tabindex="-1">
-                                            <option selected="" disabled="" value="Оберіть проект">Оберіть проект</option>
-                                            <option value="">Послуга №1</option>
-                                            <option value="">Послуга №2</option>
-                                            <option value="">Послуга №3</option>
-                                            <option value="">Послуга №4</option>
-                                        </select><p class="CaptionCont SelectBox" title=" Оберіть проект"><span class="placeholder"> Оберіть проект</span><label><i></i></label></p><div class="optWrapper"><ul class="options"><li class="opt disabled selected"><label>Оберіть проект</label></li><li class="opt"><label>Послуга №1</label></li><li class="opt"><label>Послуга №2</label></li><li class="opt"><label>Послуга №3</label></li><li class="opt"><label>Послуга №4</label></li></ul></div></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="empty-space marg-lg-b30"></div>
-                        <div class="tt-input-wrapper">
-                            <div class="tt-input-label">Тип відгуку</div>
-                            <div class="tt-input-entry">
-                                <div class="checkbox-inline">
-                                    <label class="checkbox-entry radio">
-                                        <input name="3" checked="" type="radio"><span class="tt-response good"><i class="tt-icon like green"></i><span>Позитивний відгук</span></span>
-                                    </label>
-                                    <label class="checkbox-entry radio">
-                                        <input name="3" type="radio"><span class="tt-response bad"><i class="tt-icon dislike red"></i><span>негативний відгук</span></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="empty-space marg-lg-b30"></div>
-                        <textarea class="simple-input size-2 height-2" required="" placeholder="Що сподобалось"></textarea>
-                        <div class="empty-space marg-lg-b10"></div>
-                        <textarea class="simple-input size-2 height-2" required="" placeholder="Що не сподобалось"></textarea>
-                        <div class="empty-space marg-lg-b10"></div>
-                        <textarea class="simple-input size-2 height-2" required="" placeholder="Загальні враження від співпраці"></textarea>
-                        <div class="empty-space marg-lg-b30"></div>
-
-                        <div class="simple-text size-3 darker">
-                            <p><b>Будь ласка оцініть виконавця:</b></p>
-                        </div>
-                        <div class="empty-space marg-lg-b15"></div>
-
-                        <div class="tt-rating-block">
-                            <div class="row row10">
-                                <div class="col-sm-4">
-                                    <ul class="tt-rating style-2">
-                                        <li>
-                                            <div class="tt-rating-stars wth-hover">
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                            </div>
-                                            <div class="tt-rating-title">Вічливість</div>
-                                        </li>
-                                        <li>
-                                            <div class="tt-rating-stars wth-hover">
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                            </div>
-                                            <div class="tt-rating-title">Пунктуальність</div>
-                                        </li>
-                                    </ul>
-                                    <div class="empty-space marg-xs-b15"></div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <ul class="tt-rating style-2">
-                                        <li>
-                                            <div class="tt-rating-stars wth-hover">
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                            </div>
-                                            <div class="tt-rating-title">Дотримання ціни</div>
-                                        </li>
-                                        <li>
-                                            <div class="tt-rating-stars wth-hover">
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                            </div>
-                                            <div class="tt-rating-title">Дотримання термінів</div>
-                                        </li>
-                                    </ul>
-                                    <div class="empty-space marg-xs-b15"></div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <ul class="tt-rating style-2">
-                                        <li>
-                                            <div class="tt-rating-stars wth-hover">
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                                <span>
-                                                    <i class="tt-icon star-empty"></i>
-                                                    <i class="tt-icon star"></i>
-                                                </span>
-                                            </div>
-                                            <div class="tt-rating-title">Ціна/Якість</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="empty-space marg-lg-b40"></div>
-
-                        <div class="tt-popup-response-btn">
-                            <a class="button type-1 size-3 uppercase popup-close"><span>відмінити</span></a>
-                            <div class="button type-1 size-3 color-3 uppercase">
-                                <span>залишити відгук</span>
-                                <input type="submit">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="button-close"></div>
-            </div>
-        </div>
-        <div class="popup-content" data-rel="13">
-            <div class="layer-close"></div>
-            <div class="popup-container size-4">
-                <div class="popup-align">
-                    <form>
-                        <div class="row">
-                            <div class="col-sm-10 col-sm-offset-1">
-                                <h4 class="h4 text-center">Показати телефон</h4>
-                                <div class="empty-space marg-lg-b25"></div>
-
-                                <div class="simple-text size-3 bold-style-2">
-                                    <p><b>Важливо!</b> Зв'язуючись з виконавцем по телефону без додавання замовлення на сайті, ви втрачаєте можливість залишити відгук про роботи.</p>
-                                </div>
-                                <div class="empty-space marg-lg-b30"></div>
-                                <div class="simple-toggle">
-                                    <a class="simple-toggle-title h6" href="#">Детальніше про можливі ризики <span class="simple-toggle-img">
-                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAM1BMVEUAAAAtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkOWchbXAAAAEXRSTlMA/P63pE01JhjElJGDfnJfQVsZ+r8AAAAwSURBVAgdBcGHAYAwEAQg7lOM3f2nFeQGeGLUCVz18lWHowbMNHomsGVv2QBWsuAHHzoAt0s5vpMAAAAASUVORK5CYII=" alt="">
-                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGBAMAAAAFwGKyAAAAKlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igALMZbCAAAADnRSTlMA/bekk4FNNSYYxHJfQbY+m64AAAAtSURBVAjXYxBlAIKNDIkODAysMgy8wgwMjgkMDIUKzOJAcQ4pxQaQ/ERJBgYAXNAEYoEO6FQAAAAASUVORK5CYII=" alt="">
-                                    </span></a>
-                                    <div class="simple-toggle-content">
-                                        <div class="simple-text">
-                                            <p>Інженер-електрик 25 років стажу виконає електротехнічні роботи від заміни та перенесення розеток до електромонтажу "під ключ" квартири, будинки, новобудови, дачі, офіси, підприємства якісно недорого гарантія.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="empty-space marg-lg-b30"></div>
-                                <label class="checkbox-entry">
-                                    <input type="checkbox"><span>Я попереджений/-на про ризики роботи без додавання замовлення</span>
-                                </label>
-                                <div class="empty-space marg-lg-b30"></div>
-                            </div>
-                        </div>
-                        <div class="tt-popup-btn-center">
-                            <a class="button type-1 size-3 color-3 uppercase" href="#"><span>запит на послугу</span></a>
-                            <a class="button type-1 size-3 uppercase tt-underheading-show popup-close" href="#"><span>показати телефон</span></a>
-                        </div>
-                    </form>
-                </div>
-                <div class="button-close"></div>
-            </div>
-        </div>
         <div class="popup-content" data-rel="15">
             <div class="layer-close"></div>
             <div class="popup-container size-8">

@@ -14,7 +14,9 @@ use yii\helpers\Html;
         <div class="popup-content active">
             <div class="layer-close"></div>
             <div class="popup-container size-2">
-                <div class="popup-align"></div>
+                <div class="popup-align">
+<? if (isset($this->blocks['custom_container'])){ echo $this->blocks['custom_container'];  } ?>
+                </div>
                 <div class="button-close"></div>
             </div>
         </div>

@@ -62,7 +62,24 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $pie = array (1=>array('name'=>'Майстри', 'count'=>Yii::$app->db->createCommand("SELECT count(*) as count FROM `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canMajster'")->queryScalar()),
+                      2=>array('name'=>'Замовники', 'count'=>Yii::$app->db->createCommand("SELECT count(*) as count FROM `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canZamovnyk'")->queryScalar()));
+
+        $master = Yii::$app->db->createCommand("select count(*) as count, DATE_FORMAT(m.created_at, \"%d.%m\") as date from `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canMajster' group by DATE_FORMAT(m.created_at, \"%Y-%m-%d\") ORDER BY m.created_at DESC")->queryAll();
+        $zamovnyk = Yii::$app->db->createCommand("select count(*) as count, DATE_FORMAT(m.created_at, \"%d.%m\") as date from `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canZamovnyk' group by DATE_FORMAT(m.created_at, \"%Y-%m-%d\") ORDER BY m.created_at DESC")->queryAll();
+
+
+        $dates_arr = $master_arr = $zamovnyk_arr = array();
+        foreach ($master as $val) { $dates_arr[$val['date']] = $val['date']; $master_arr[$val['date']] = $val['count'];}
+        foreach ($zamovnyk as $val) { $dates_arr[$val['date']] = $val['date']; $zamovnyk_arr[$val['date']] = $val['count'];}
+        foreach ($dates_arr as $key=>$val) {
+            if(!isset($master_arr[$key]))  $master_arr1[] = 0; else  $master_arr1[] =  $master_arr[$key];
+            if(!isset($zamovnyk_arr[$key]))  $zamovnyk_arr1[] = 0; else  $zamovnyk_arr1[] =  $zamovnyk_arr[$key];
+        }
+
+        $chart = array ('time-line'=>implode(',', $dates_arr), 'zamovnyk'=>implode(',', $zamovnyk_arr1), 'master'=>implode(',', $master_arr1));
+        return $this->render('index', ['pie'=>$pie, 'chart'=>$chart]);
     }
 
     /**

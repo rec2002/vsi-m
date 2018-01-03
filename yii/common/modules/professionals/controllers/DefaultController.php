@@ -12,6 +12,7 @@ use common\modules\members\models\MemberEdit;
 use common\modules\members\models\MemberTypes;
 use common\modules\members\models\MemberPrices;
 use common\modules\members\models\Portfolio;
+use common\components\MemberHelper;
 use yii\data\SqlDataProvider;
 use yii\helpers\ArrayHelper;
 
@@ -83,14 +84,16 @@ class DefaultController extends Controller
                       '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').'  ', $param)->queryScalar();
 
         $provider = new SqlDataProvider([
-            'sql' => 'SELECT m.id, m.first_name, m.last_name, m.surname, m.phone, m.avatar_image, m.place, r.name as region, m.forma, m.brygada, m.company, m.about, m.busy_to, m.budget_min, m.created_at, m.approved  
+            'sql' => 'SELECT m.id, m.first_name, m.last_name, m.surname, m.phone, m.avatar_image, m.place, r.name as region, m.forma, m.brygada, m.company, m.about, m.busy_to, m.budget_min, m.created_at, m.approved, m.online,
+                      (SELECT count(res.id) FROM `member_response` res LEFT JOIN `member_suggestion` s ON s.id = res.suggestion_id WHERE res.step = 5 AND res.positive_negative=1 AND s.member_id=m.id ) as positive,
+                      (SELECT count(res.id) FROM `member_response` res LEFT JOIN `member_suggestion` s ON s.id = res.suggestion_id WHERE res.step = 5 AND res.positive_negative=2 AND s.member_id=m.id ) as negative
                       FROM `members` m
                       LEFT JOIN `auth_assignment` a ON a.user_id = m.id
                       LEFT JOIN `dict_regions` r ON r.id = m.region
                       LEFT JOIN `member_regions` rm ON rm.member = m.id
                       LEFT JOIN `member_types` mt ON mt.member = m.id
                       
-                      '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' GROUP BY m.id ORDER BY m.created_at DESC',
+                      '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' GROUP BY m.id ORDER BY m.online DESC, m.created_at DESC',
             'params' => $param,
             'totalCount' => $count,
             'pagination' => ['pageSize' => 10, 'pageParam' => 'стр', 'pageSizeParam' => 'лім'],
@@ -131,8 +134,29 @@ class DefaultController extends Controller
                                   WHERE p.member="'.$id.'"   ORDER BY p.created_at DESC')->asArray()->all();
 
 
-        return $this->render('profile', ['member'=> $member, 'portfolio'=> $portfolio]);
+
+
+        return $this->render('profile', ['member'=> $member, 'portfolio'=> $portfolio, 'ratings'=>$this->GetRetingsReviews($id)]);
     }
+
+
+    public function GetRetingsReviews($id) {
+
+        $ratings = MemberHelper::GetRating($id);
+
+        if ($ratings['total']>0) {
+            $ratings['reviews'] = Yii::$app->db->createCommand('SELECT res.id, res.devotion, res.connected, res.punctuality, res.price, res.terms, res.quality, res.positive_negative, res.positive_note, res.negative_note, res.conclusion_note, res.updated_at as created_at, s.member_id, s.order_id, o.title, m.first_name 
+                                                                    FROM `member_response` res 
+                                                                    LEFT JOIN `member_suggestion` s ON s.id = res.suggestion_id 
+                                                                    LEFT JOIN `orders` o ON o.id = s.order_id 
+                                                                    LEFT JOIN `members` m ON m.id = o.member WHERE res.step = 5 AND s.member_id="'.$id.'"')->queryAll();
+
+        } else $ratings['reviews'] = array();
+
+
+        return $ratings;
+    }
+
 
 
     public function actionSuggest($id)
@@ -179,6 +203,14 @@ class DefaultController extends Controller
             break;
         }
         return '<a class="'.$class.' '.($active==1 ? 'active' : '').'" data-user-id="'.$id.'" >'.($active==1 ? 'Скасувати послугу' : 'Замовити послугу').'</a>';
+    }
+
+
+
+    public function actionResponsegallery($id)
+    {
+        $images = \common\modules\members\models\MemberResponseImages::find()->select(['image', 'response_id'])->where(['response_id'=>$id])->orderBy(['created_at'=>SORT_ASC, 'id'=>SORT_ASC])->all();
+        return $this->renderAjax('response_images', ['images'=> $images]);
     }
 
 }

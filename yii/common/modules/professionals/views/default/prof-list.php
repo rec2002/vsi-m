@@ -147,19 +147,20 @@ $this->registerCss(".nav > li > a {padding:0}
                                         </div>
                                         <div class="tt-masterbox-reliability">
                                             <div class="tt-masterbox-rating tt-vote-wrapper">
-                                                <a class="tt-vote like active" >
+                                                <a class="tt-vote like <?=($val['positive']>0) ? 'active'  : '' ?>" >
                                                         <span class="tt-vote-img">
                                                             <i class="tt-icon like grey"></i>
+
                                                             <i class="tt-icon like green"></i>
                                                         </span>
-                                                    <span class="tt-vote-count">0</span>
+                                                    <span class="tt-vote-count"><?=$val['negative']?></span>
                                                 </a>
-                                                <a class="tt-vote dislike">
+                                                <a class="tt-vote dislike  <?=($val['positive']>0) ? 'active'  : '' ?>">
                                                         <span class="tt-vote-img">
                                                             <i class="tt-icon dislike grey"></i>
                                                             <i class="tt-icon dislike red"></i>
-                                                        </span>
-                                                    <span class="tt-vote-count">0</span>
+                                                    </span>
+                                                    <span class="tt-vote-count"><?=$val['negative']?></span>
                                                 </a>
                                             </div>
                                             <div class="tt-masterbox-duration simple-text size-2">
@@ -202,7 +203,9 @@ $this->registerCss(".nav > li > a {padding:0}
                             </ul>
 <? } ?>
                             <div class="tt-masterbox-buttons">
-                                <!--<div class="tt-masterbox-status">зараз на сайті</div>-->
+<? if($val['online']==1) { ?>
+                                <div class="tt-masterbox-status">зараз на сайті</div>
+<? } ?>
 
 
                                 <? echo \common\modules\professionals\controllers\DefaultController::ButtonSuggest($val['id']); ?>

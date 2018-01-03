@@ -20,7 +20,7 @@ $this->title = 'Відновити пароль - Кабінет користу�
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/portfolio/list'])?>"><span>Виконані проекти</span></a>
                         <a class="tab-menu redirect active" href="<?=Url::to(['/members/member/resetpwd'])?>"><span>Змінити пароль</span></a>
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/member/noticesettings'])?>"><span>Сповіщення</span></a>
-                        <a class="tab-menu redirect" href="javascript:" onclick="alert('UNDER CONSTRUCTION'); return false;"><span>Доступ до замовлень</span></a>
+                        <a class="tab-menu redirect" href="<?=Url::to(['/members/member/billing'])?>" ><span>Доступ до замовлень</span></a>
                     </div>
 
                     <div class="tab-entry" style="display: block;">

@@ -4,7 +4,8 @@ namespace common\components;
 
 use Yii;
 use yii\web\UrlManager;
-
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 class MemberHelper {
 
@@ -24,6 +25,14 @@ class MemberHelper {
     const STATUS = array(0=>'На перевірці в модератора', 1=>'Скасовані модератором', 2=>'Шукають виконавця', 3=>'Прийняті до виконання', 4=>'Виконано', 5=>'Скасовано');
 
     const DISREGAST_SUGGESTION = array(1=>'Ні, дякую', 2=>'Надто дорого', 3=>'Мені не підходить');
+
+    const BILLING = array(1000=>'1 000 грн', 1500=>'1 500 грн', 2000=>'2 000 грн', 2500=>'2 500 грн');
+
+    const PAYMENT = array(1=>'Приват24', 2=>'Банківський переказ', 3=>'Квитанція для оплати в банку');
+
+
+
+
 
 
 
@@ -137,6 +146,11 @@ class MemberHelper {
         return false;
     }
 
+    public static function GetShortDates($dates='') {
+        $month_name = array (1 => "січ.", 2 => "лют.", 3 => "бер.", 4 => "квіт.", 5 => "трав.", 6 => "черв.", 7 => "лип.", 8 => "серп.", 9 => "вер.", 10 => "жовт.", 11 => "лист.", 12 => "груд.");
+        return  date('j', strtotime($dates)).' '.$month_name[(int)date('m', strtotime($dates))];
+    }
+
 
     public static function GetMemberDoc($member, $id) {
 
@@ -146,6 +160,73 @@ class MemberHelper {
             throw new \yii\web\NotFoundHttpException('The file does not exists.');
         }
         return \Yii::$app->response->sendFile($dir.'/'.$ids['file'], $ids['name']);
+    }
+
+
+
+    public static function GetBalance($id = '', $string=false) {
+        $ids = Yii::$app->db->createCommand("SELECT SUM(summa) as summa FROM `member_billing` WHERE member_id = '".$id."' ")->queryOne();
+        if ($string) {
+            return number_format($ids['summa'], 2 , ',' , ' ');
+
+        } else return $ids['summa'];
+    }
+
+
+    public static function GetRatingStar($value = '', $field='') {
+        $options = '';
+        for ($i=1; $i<=5; $i++) {
+            $options .='<span '.(($i==$value)? 'class="active"' : '').'><i class="tt-icon star-empty"></i><i class="tt-icon star"></i></span>';
+        }
+        return '<div class="tt-rating-stars wth-hover '.$field.' '.(($value>0) ? 'selected' : '').'" data-field="'.$field.'">'.$options.'</div>';
+
+    }
+
+    public static function GetResponseButton($id = '') {
+
+         if (empty($id)) return false;
+
+        $member = \common\modules\members\models\MemberSuggestion::findOne([
+            'id' => $id
+        ]);
+
+        $model = \common\modules\members\models\MemberResponse::findOne(['suggestion_id' => $id]);
+        if (!$model)  {
+            return Html::a('Написати відгук', Url::toRoute(['/members/response/create', 'id' => $id]), ['class'=>'button type-1 size-3']);
+        }
+
+        if ($model->step < 4) {
+            return Html::a('Дописати відгук', Url::toRoute(['/members/response/create', 'id' => $id]), ['class'=>'button type-1 size-3 color-3']);
+        }
+
+        if ($model->step == 4) {
+            return Html::a('Відгук на перевірці', Url::toRoute(['/members/response/create', 'id' => $id]), ['class'=>'button type-1 size-3 color-4']);
+        }
+
+        if ($model->step == 5) {
+            return Html::a('Відгук опубліковано', Url::toRoute(['/members/response/create', 'id' => $id]), ['class'=>'button type-1 size-3 color-5']);
+        }
+
+    }
+
+    public static function GetRating($id = '') {
+        $rating = Yii::$app->db->createCommand("SELECT count(res.id) as total, SUM(res.devotion) as devotion, SUM(res.connected) as connected, SUM(res.punctuality) as punctuality, SUM(res.price) as price, SUM(res.terms) as terms, SUM(res.quality) as quality, 
+                                                    (SELECT count(res.id) FROM `member_response` res LEFT JOIN `member_suggestion` s1 ON s1.id = res.suggestion_id WHERE res.step = 5 AND res.positive_negative=1 AND s1.member_id=s.member_id ) as positive, 
+                                                    (SELECT count(res.id) FROM `member_response` res LEFT JOIN `member_suggestion` s1 ON s1.id = res.suggestion_id WHERE res.step = 5 AND res.positive_negative=2 AND s1.member_id=s.member_id ) as negative 
+                                                    FROM `member_response` res LEFT JOIN `member_suggestion` s ON s.id = res.suggestion_id WHERE res.step = 5 AND s.member_id='".$id."' ")->queryOne();
+
+        if ($rating['total']>0) {
+            $rating['devotion'] = round($rating['devotion']/$rating['total']);
+            $rating['connected'] = round($rating['connected']/$rating['total']);
+            $rating['punctuality'] = round($rating['punctuality']/$rating['total']);
+            $rating['price'] = round($rating['price']/$rating['total']);
+            $rating['terms'] = round($rating['terms']/$rating['total']);
+            $rating['quality'] = round($rating['quality']/$rating['total']);
+        }
+
+
+
+        return $rating;
     }
 
 

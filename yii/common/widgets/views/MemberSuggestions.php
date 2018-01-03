@@ -1,20 +1,24 @@
 <?
 use yii\bootstrap\ActiveForm;
 use frontend\assets\AppAsset;
-
+use yii\helpers\Url;
 use yii\helpers\Html;
 
 ?>
+
 <?php $form = ActiveForm::begin(['id' => 'suggestion', 'fieldConfig' => ['options' => ['tag' => false]], 'enableClientValidation'=>true]); ?>
 <div class="tt-task-request">
     <div class="tt-fadein-top">
         <a href="javascript:" class="tt-fadein-link button type-1">Надіслати пропозицію</a>
+
+<? if (@Yii::$app->user->identity->balance==0) {?>
         <div class="tt-task-message">
             <div class="simple-text size-3">
-                <p>Необхідно <a href="#access_to_orders">поповнити баланс</a></p>
+                <p>Необхідно <a href="<?=Url::to(['/members/member/billing'])?>">поповнити баланс</a></p>
             </div>
-            <div class="tt-info-btn tt-tooltip" data-tooltip="Ваш баланс становить 0 грн">?</div>
+            <div class="tt-info-btn tt-tooltip" data-tooltip="Ваш баланс становить <?=number_format(Yii::$app->user->identity->balance, 2 , ',' , ' ')?> грн">?</div>
         </div>
+<? } ?>
     </div>
 
     <div class="tt-fadein-bottom">

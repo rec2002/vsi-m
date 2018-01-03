@@ -9,13 +9,10 @@ use yii\helpers\Url;
     $model->setScenario('home-page');
     $form = ActiveForm::begin(['id' => 'reg-customer-home',
     'enableAjaxValidation'=>false,
-    'validationUrl'=>Url::toRoute('/members/customregistration/validation/?scenario=home-page'),
-    'action' =>['/members/customregistration/?scenario=home-page',
+    'validationUrl'=>Url::toRoute('/members/customregistration/validation/?scenario=home-page' ),
+    'action' =>[(Yii::$app->user->isGuest) ? '/members/customregistration/?scenario=home-page' : '/orders/default/addorder',
     ]]);
 ?>
-
-
-
 
     <h1 class="tt-banner-title h2">Замовте послуги майстрів по ремонту</h1>
     <div class="simple-text size-4 darker">

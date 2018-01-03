@@ -118,6 +118,8 @@ class MemberSuggestion extends \yii\db\ActiveRecord
 
             [['member_id'], 'exist', 'skipOnError' => true, 'targetClass' => \common\modules\members\models\Members::className(), 'targetAttribute' => ['member_id' => 'id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => \common\modules\members\models\Orders::className(), 'targetAttribute' => ['order_id' => 'id']],
+            [['suggestion_id'], 'exist', 'skipOnError' => true, 'targetClass' => \common\modules\orders\models\MemberSuggestionApproved::className(), 'targetAttribute' => ['suggestion_id' => 'id']],
+
         ];
     }
 
@@ -163,4 +165,13 @@ class MemberSuggestion extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\common\modules\members\models\Orders::className(), ['id' => 'order_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getApproved()
+    {
+        return $this->hasOne(\common\modules\orders\models\MemberSuggestionApproved::className(), ['suggestion_id' => 'id']);
+    }
+
 }

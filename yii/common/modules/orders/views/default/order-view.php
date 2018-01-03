@@ -1,7 +1,7 @@
 <?
 use yii\helpers\Url;
 use common\components\MemberHelper;
-
+use yii\helpers\Html;
 $this->title = 'Замовлення';
 
 
@@ -103,10 +103,29 @@ $this->title = 'Замовлення';
 <? } ?>
                 </ul>
 <? } ?>
-                <?=\common\widgets\MemberSuggestions::widget(array('id' => $model->id)) ?>
+
+<? if (!Yii::$app->user->isGuest && $model->member==@Yii::$app->user->identity->getId()) {?>
+
+                <div class="tt-task-request">
+                    <div class="tt-fadein-top">
+                        <?= Html::a(Html::encode('Редагувати замовлення'), Url::toRoute(['/orders/default/edit', 'id' => $model->id]), ['class' =>'tt-fadein-link button type-1']) ?>
+                    </div>
+                </div>
+
+<?  } else echo \common\widgets\MemberSuggestions::widget(array('id' => $model->id)); ?>
+
+
+
             </div>
-            <?=\common\widgets\MemberSuggestionsOne::widget(array('id' => $model->id)) ?>
-            <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
+
+<? if (!Yii::$app->user->isGuest) {?>
+<? if ($model->member==@Yii::$app->user->identity->getId()) {
+        echo \common\widgets\MemberSuggestionsList::widget(array('id' => $model->id));
+    } else  {
+        echo \common\widgets\MemberSuggestionsOne::widget(array('id' => $model->id));
+    } ?>
+    <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
+<? } ?>
         </div>
     </div>
 
@@ -116,8 +135,8 @@ $this->title = 'Замовлення';
 <?
 $gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
-
 echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
+
 //echo $this->registerJsFile('/js/formatDate.js', ['depends' => 'yii\web\JqueryAsset']);
 //echo $this->registerJsFile('/js/order.js', ['depends' => 'yii\web\JqueryAsset']);
 

@@ -19,7 +19,7 @@ $price_types = MemberHelper::PRICE_TYPE;
 
 
     if (sizeof($model->types))
-        $prices = Yii::$app->db->createCommand("SELECT d.id, d.name, d1.name as parent_name, d.parent, d.job_unit, d.job_markup  FROM dict_category d LEFT JOIN dict_category d1 ON d1.id=d.parent AND d1.types=1 WHERE d.active=1 AND d.types=2 AND d.parent IN (".implode(',', $model->types).") ORDER BY d1.priority ASC, d.priority ASC  ")->queryAll();
+        $prices = Yii::$app->db->createCommand("SELECT d.id, d.name, d1.name as parent_name, d.parent, d.job_unit, d.job_markup  FROM dict_category d LEFT JOIN dict_category d1 ON d1.id=d.parent AND d1.types=1 WHERE d.active=1 AND d.types=2 AND d.parent IN (".implode(',', $model->types).") ORDER BY d1.priority ASC, d1.parent ASC,  d.priority ASC  ")->queryAll();
     else $prices = array();
 
 $total = sizeof($prices);

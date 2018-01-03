@@ -15,7 +15,7 @@ $this->title = 'Замовлення';
     <div class="tt-bg-grey">
         <div class="container">
             <div class="empty-space marg-sm-b30 marg-lg-b50"></div>
-            <a href="<?=Url::toRoute('/orders/default/myorders')?>" class="button type-1 btn-simple icon-left uppercase"><span>назад</span></a>
+            <a href="<?=Url::toRoute(['/orders/default/detail', 'id' => $model->id])?>" class="button type-1 btn-simple icon-left uppercase"><span>назад</span></a>
             <div class="tt-task detail">
                 <div class="tt-task-top clearfix">
                     <div class="tt-task-info">
@@ -295,7 +295,7 @@ $this->title = 'Замовлення';
             </div>
 
             
-            <?=\common\widgets\MemberSuggestionsList::widget(array('id' => $model->id)) ?>
+
 
 
 

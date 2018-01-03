@@ -1,7 +1,7 @@
 <?php
 
 namespace frontend\assets;
-
+use Yii;
 use yii\web\AssetBundle;
 
 /**
@@ -17,6 +17,8 @@ class AppAsset extends AssetBundle
         'css/style_custom.css',
         'css/sumoselect.min.css'
     ];
+
+
     public $js = [
         'js/jquery.sumoselect.min.js',
         'js/jquery-ui.min.js',
@@ -27,6 +29,9 @@ class AppAsset extends AssetBundle
         'js/swiper.jquery.min.js',
         'js/global.js'
     ];
+
+
+
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',

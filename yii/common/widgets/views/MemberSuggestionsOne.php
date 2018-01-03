@@ -1,20 +1,36 @@
 <?
-
+    use yii\bootstrap\ActiveForm;
     use common\components\MemberHelper;
     use yii\helpers\Url;
+    use yii\helpers\Html;
 ?>
 <div class="tt-proposition-wrapper1">
     <div class="empty-space marg-lg-b30"></div>
     <div class="tt-proposition-buttons">
+
+
+<? if ($model->deleted==0 ) { ?>
         <div class="tt-proposition-pause">
-            <a href="#" class="button type-1 color-3 icon-pause tt-proposition-pause-btn open-popup" data-rel="16">Заморозити пропозицію</a>
+            <a href="#" class="button type-1 color-3 icon-pause tt-proposition-pause-btn open-popup">Заморозити пропозицію</a>
             <div class="tt-info-btn tt-tooltip" data-tooltip="Свою пропозицію ви можете заморозити або видалити. В обох випадках замовник не зможе обмінятися з вами контактами і кошти не будуть списані з вашого балансу. Ця функція дозволить вам уникнути списання коштів, якщо ви з якоїсь причини не хочете приймати нові замовлення (наприклад, зайняті на об'єкті або йдіть у відпустку). Заморожені пропозиції можна відновити, віддалені - не можна. Після того як пропозиція буде видалено, ви не зможете відповісти на це замовлення ще раз.">?</div>
         </div>
-        <div class="tt-proposition-continue">
+<? } ?>
+<? if ($model->deleted==2) { ?>
+        <div class="tt-proposition-continue" style="display: block;">
             <h5 class="h5">Ви заморозили пропозицію</h5>
             <div class="empty-space marg-lg-b10"></div>
-            <a href="#" class="button type-1 color-5 icon-continue tt-proposition-continue-btn">Відновити пропозицію</a>
+            <?php $form_ = ActiveForm::begin(['id' => 'suggestion_delete',  'fieldConfig' => [ 'options' => ['tag' => false]], 'enableClientValidation'=>false]); ?>
+            <?=$form_->field($model, 'id')->hiddenInput()->label(false); ?>
+            <?= Html::submitButton('Відновити пропозицію', ['class' => 'button type-1 color-5 icon-continue tt-proposition-continue-btn', 'name' => 'restore_btn']) ?>
+            <?php ActiveForm::end(); ?>
         </div>
+<? } ?>
+
+<? if ($model->deleted==1) { ?>
+            <div class="tt-proposition-continue" style="display: block;">
+                <?= Html::submitButton('Пропозицію скасовано', ['class' => 'tt-fadein-link button type-1 disabled']) ?>
+            </div>
+<? } ?>
 
     </div>
 
@@ -75,7 +91,10 @@
                             </div>
                         </div>
                         <div class="simple-text size-3">
-                            <p><?=(!empty($model->deadline)) ? ((date('Y-m-d H:i:s')<=strtotime($model->deadline)) ? 'Пропозиція діє ще <time class="timeago" datetime="'.$model->deadline.'"></time>' : '<span style="color:red;">Час дії пропозиції минув <time class="timeago" datetime="'.$model->deadline.'"></time> тому</span>') : ''?></p>
+<? if ($model->disregast_suggestion>0) { ?>
+                            <p><b>Замовник відхилив пропозицію.</b></p>
+<? } ?>
+                            <p><?=(!empty($model->deadline)) ? ((date('Y-m-d H:i:s')<=date('Y-m-d H:i:s', strtotime($model->deadline))) ? 'Пропозиція діє ще <time class="timeago" datetime="'.$model->deadline.'"></time>' : '<span style="color:red;">Час дії пропозиції минув <time class="timeago" datetime="'.$model->deadline.'"></time> тому</span>') : ''?></p>
                         </div>
                     </div>
                 </div>
@@ -97,3 +116,25 @@
     </div>
 </div>
 <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
+
+<? $this->beginBlock('custom_container'); ?>
+    <?php $form = ActiveForm::begin(['id' => 'suggestion_delete',  'fieldConfig' => [ 'options' => ['tag' => false]], 'enableClientValidation'=>false]); ?>
+    <div class="tt-freeze">
+        <h5 class="tt-freeze-title h5"><span>Заморозити пропозицію</span><span>Відкликати пропозицію</span></h5>
+        <h5 class="tt-freeze-subtitle h5"><span>Пропозицію буде тимчасово відкликано</span><span>Пропозицію буде видалено</span></h5>
+
+        <?  echo $form->field($model, 'deleted')->checkbox([
+        'template' => '<label class="tt-freeze-checkbox checkbox-entry">{input}<span>Видалити без можливості відновлення</span></label><div>{error}</div>'
+        ])?>
+
+        <?=$form->field($model, 'id')->hiddenInput()->label(false); ?>
+        <?= Html::submitButton('Заморозити', ['class' => 'button type-1 color-3 icon-pause tt-freeze-btn-pause', 'name' => 'frozen_btn']) ?>
+        <?= Html::submitButton('<span  class="icon-close"></span>Видалити', ['class' => 'button type-1 color-3 tt-freeze-btn-remove', 'name' => 'delete_btn']) ?>
+    </div>
+    <?php ActiveForm::end(); ?>
+<? $this->endBlock(); ?>
+
+
+
+
+

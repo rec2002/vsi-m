@@ -78,7 +78,7 @@
     display:inline-block;
     color: #000000;
 }
-.red{background: red none repeat scroll 0 0 !important;}
+.red:not(.dislike){background: red none repeat scroll 0 0 !important;}
 
 .status0::before {background: red none repeat scroll 0 0 !important;}
 .status0 {color: red;}
