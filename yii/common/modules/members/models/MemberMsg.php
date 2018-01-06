@@ -25,6 +25,9 @@ class MemberMsg extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
+    public $name;
+
     public static function tableName()
     {
         return '{{%member_msg}}';
@@ -36,13 +39,13 @@ class MemberMsg extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['suggestion_id', 'msg'], 'required'],
-            [['suggestion_id', 'who_id', 'whom_id'], 'integer'],
-            [['msg'], 'string'],
+            [['suggestion_id', 'msg', 'member_id'], 'required'],
+            [['suggestion_id', 'member_id'], 'integer'],
+            [['msg', 'name'], 'string'],
             [['created_at'], 'safe'],
             [['suggestion_id'], 'exist', 'skipOnError' => true, 'targetClass' => MemberSuggestion::className(), 'targetAttribute' => ['suggestion_id' => 'id']],
-            [['who_id'], 'exist', 'skipOnError' => true, 'targetClass' => Members::className(), 'targetAttribute' => ['who_id' => 'id']],
-            [['whom_id'], 'exist', 'skipOnError' => true, 'targetClass' => Members::className(), 'targetAttribute' => ['whom_id' => 'id']],
+//            [['who_id'], 'exist', 'skipOnError' => true, 'targetClass' => Members::className(), 'targetAttribute' => ['who_id' => 'id']],
+//            [['whom_id'], 'exist', 'skipOnError' => true, 'targetClass' => Members::className(), 'targetAttribute' => ['whom_id' => 'id']],
         ];
     }
 
@@ -56,9 +59,9 @@ class MemberMsg extends \yii\db\ActiveRecord
             'suggestion_id' => 'Suggestion ID',
             'who_id' => 'Who ID',
             'whom_id' => 'Whom ID',
-            'msg' => 'Msg',
+            'msg' => 'Повідомлення',
             'system' => 'System',
-            'unread' => 'Unread',
+            'member_id' => 'Користувач',
             'created_at' => 'Created At',
         ];
     }

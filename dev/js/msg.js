@@ -9,6 +9,15 @@ $(function() {
 
 
 
+    $("div.tt-messages-user").each( function () {
+        if ($(this).hasClass('active')) {
+            $(this).find('.notification').hide();
+        }
+    });
+
+
+
+
     $(document).on("beforeSubmit", "form#send_msg", function(e) {
         e.preventDefault();
 

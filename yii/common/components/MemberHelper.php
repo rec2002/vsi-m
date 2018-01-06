@@ -229,50 +229,11 @@ class MemberHelper {
         return $rating;
     }
 
-
-
-
-    public static function isActive($query_str = '', $exactly=false)
+    public static function GetCountMessages($member=0)
     {
-
-        $item['url'][0] = 'members/customer/list';
-        if (isset($item['url']) && is_array($item['url']) && isset($item['url'][0])) {
-             $route = $item['url'][0];
-            if ($route[0] !== '/' && Yii::$app->controller) {
-           //     $route = Yii::$app->controller->module->getUniqueId() . '/' . $route;
-            }
-
-            echo ltrim($route, '/');
-
-            echo "<br/>";
-            echo Yii::$app->controller->route;
-            echo "<br/>";
-
-            if (ltrim($route, '/') !== Yii::$app->controller->route) {
-                return false;
-            }
-echo "good";
-
-            unset($item['url']['#']);
-            if (count($item['url']) > 1) {
-                $params = $item['url'];
-                unset($params[0]);
-                foreach ($params as $name => $value) {
-                    if ($value !== null && (!isset(Yii::$app->controller->params[$name]) || Yii::$app->controller->params[$name] != $value)) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-        return false;
-
-        /*
-        if (strpos(Yii::$app->controller->route.'/?'.Yii::$app->request->getQueryString(), $query_str) !== false) {
-            return 'true';
-        } else return 'false';
-        */
+        return Yii::$app->db->createCommand('SELECT count(*) as count FROM `member_msg_unread` u LEFT JOIN `member_msg` msg ON  msg.id=u.msg_id WHERE u.status=0 AND u.member_id="'.$member.'" AND u.support = 0')->queryOne()['count'];
     }
+
 
 
 

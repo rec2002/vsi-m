@@ -392,7 +392,7 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
                                   WHERE p.member="'.Yii::$app->user->identity->getId().'"   ORDER BY p.created_at DESC')->asArray()->all();
 
 
-
+       print_r(\common\modules\professionals\controllers\DefaultController::GetRetingsReviews(Yii::$app->user->identity->getId()));
 
         return $this->render('profile', ['member'=> $member, 'portfolio'=> $portfolio, 'ratings'=>\common\modules\professionals\controllers\DefaultController::GetRetingsReviews(Yii::$app->user->identity->getId())]);
     }

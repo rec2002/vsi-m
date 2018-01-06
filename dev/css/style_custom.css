@@ -97,3 +97,21 @@
 .remove_added_file {cursor: pointer;font-weight:bold;color: red;z-index: 1000; }
 div.field-memberedit-documents {margin-bottom: 0px;}
 div.added_file{margin-bottom: 0px;}
+
+span.notification {
+    position: absolute;
+    top: 22px;
+    border: 1px solid #FFF;
+    right: 10px;
+    font-size: 9px;
+    background: #ff8a00;
+    color: #FFFFFF;
+    min-width: 20px;
+    padding: 0px 5px;
+    height: 20px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: block;
+}

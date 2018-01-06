@@ -292,4 +292,7 @@ Modal::end();
     ?>
 
 
-<?php Pjax::end(); ?></div>
+<?php Pjax::end(); ?>
+
+
+</div>

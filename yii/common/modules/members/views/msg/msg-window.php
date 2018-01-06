@@ -12,6 +12,7 @@ use common\components\MemberHelper;
 
 <div class="tt-messages-content">
     <div class="tt-messages-entry clearfix">
+<? if (!empty($model['member_id'])) { ?>
         <div class="tt-messages-head">
             <a class="tt-messages-back" href="#">
                 <svg enable-background="new 0 0 512 512" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -31,13 +32,16 @@ use common\components\MemberHelper;
                 </div>
             </div>
         </div>
+<? } ?>
         <div class="tt-message-area">
-            <? $form = ActiveForm::begin(['id' => 'send_msg', 'enableAjaxValidation'=>false, 'action' =>['/members/msg/savemsg', 'id'=>$model['suggestion_id']] ]); ?>
+            <? $form = ActiveForm::begin(['id' => 'send_msg', 'enableAjaxValidation'=>false, 'action' =>['/members/msg/savemsg', 'id'=>$model['suggestion_id'], 'support'=>(empty($model['member_id']) ? 1 : 0)]]); ?>
                 <?=$form->field($message, 'msg')->textarea(['class' => 'simple-input', 'placeholder'=>'Напишіть повідомлення'])->error(false)->label(false); ?>
                 <?= Html::submitButton('Відправити', ['class' => 'button type-1 color-3', 'name' => 'submit']) ?>
             <?php ActiveForm::end(); ?>
         </div>
-        <div class="tt-messages-text">
+        <div class="tt-messages-text" <?=(empty($model['member_id'])) ? 'style="height: 520px;"' : '' ?>>
+
+<? if (!empty($model['member_id'])) { ?>
             <h5 class="h5 text-center">Щодо замовлення №<?=$model['order_id']?> <a href="<?=Url::to(['/orders/default/detail', 'id'=>$model['order_id']])?>"><?=$model['title']?></a></h5>
 
             <div class="tt-messages-item simple-text other">
@@ -64,7 +68,7 @@ use common\components\MemberHelper;
                 </div>
                 <p><?=nl2br($model['descriptions'])?></p>
             </div>
-
+<? } ?>
 <? if (sizeof($messages)) foreach ($messages as $val) {
 
     switch($val['type']) {
