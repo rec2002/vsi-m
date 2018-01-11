@@ -19,9 +19,26 @@ use dosamigos\ckeditor\CKEditor;
     <?= $form->field($model, 'question')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'answer')->widget(CKEditor::className(), [
-        'clientOptions' => ['language' => 'uk'],
         'options' => ['rows' => 6],
-        'preset' => 'basic'
+        'clientOptions' => [
+            /*'plugins' => [
+                "advlist autolink lists link charmap hr preview pagebreak",
+                "searchreplace wordcount textcolor visualblocks visualchars code fullscreen nonbreaking",
+                "save insertdatetime media table contextmenu template paste image responsivefilemanager filemanager",
+            ],
+            */
+            'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | responsivefilemanager link image media",
+            'external_filemanager_path' => '/admin/plugins/responsivefilemanager/filemanager/',
+            'filemanager_title' => 'Responsive Filemanager',
+            'external_plugins' => [
+                // Кнопка загрузки файла в диалоге вставки изображения.
+                'filemanager' => '/admin/plugins/responsivefilemanager/filemanager/plugin.min.js',
+                // Кнопка загрузки файла в тулбаре.
+                'responsivefilemanager' => '/admin/plugins/responsivefilemanager/tinymce/plugins/responsivefilemanager/plugin.min.js',
+            ],
+            'language' => 'uk'
+        ],
+
     ]) ?>
 
 

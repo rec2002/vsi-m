@@ -4,10 +4,11 @@ use common\components\MemberHelper;
 
 ?>
 <?
+
+
 if (sizeof($member->prices)) $data = $member->prices; else $data = array();
+
 $price_types = MemberHelper::PRICE_TYPE;
-
-
 
 if (sizeof($member->types))
     $prices = Yii::$app->db->createCommand("SELECT d.id, d.name, d1.name as parent_name, d.parent, d.job_unit, d.job_markup  FROM dict_category d LEFT JOIN dict_category d1 ON d1.id=d.parent AND d1.types=1 WHERE d.active=1 AND d.types=2 AND d.parent IN (".implode(',', $member->types).") ORDER BY d1.priority ASC, d1.parent ASC, d.priority ASC  ")->queryAll();
@@ -24,11 +25,11 @@ if (sizeof($prices)) foreach ($prices as $key=>$val) if (@$data[$val['id']]['pri
     }
     ?>
 
+        <div class="list-dotted-item">
+            <div class="list-dotted-left"><span><?=($val['job_markup']==1) ? '<b>'.$val['name'].'</b>' : $val['name'] ?></span></div>
+            <div class="list-dotted-right"><span>від <?=@$data[$val['id']]['price']?> <?=$price_types[$val['job_unit']]?></span></div>
+        </div>
 
-    <div class="list-dotted-item">
-        <div class="list-dotted-left"><span><?=($val['job_markup']==1) ? '<b>'.$val['name'].'</b>' : $val['name'] ?></span></div>
-        <div class="list-dotted-right"><span>від <?=@$data[$val['id']]['price']?> <?=$price_types[$val['job_unit']]?></span></div>
-    </div>
     <?
     if (($key+1)==$total) {
         echo '<div class="empty-space marg-lg-b30"></div>';
@@ -39,3 +40,13 @@ if (sizeof($prices)) foreach ($prices as $key=>$val) if (@$data[$val['id']]['pri
     }
     ?>
 <?  } ?>
+
+
+<?
+echo $this->registerJs("(function(){
+
+
+
+
+})();" , \yii\web\View::POS_END );
+?>

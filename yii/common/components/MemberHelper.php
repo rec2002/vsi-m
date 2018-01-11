@@ -42,7 +42,7 @@ class MemberHelper {
         $model->phone=$phone;
         $model->IP = Yii::$app->getRequest()->getUserIP();
 
-        $model->code=strtolower(Yii::$app->getSecurity()->generateRandomString(4));
+        $model->code=strtolower(rand(1000, 9999));
         if ($model->validate()) {
             \common\modules\members\models\PhoneCheck::deleteAll("phone ='" . $model->phone . "'");
             if ($model->save()){
@@ -92,7 +92,26 @@ class MemberHelper {
         return $template[0]['message'];
     }
 
+    public static function GetSMSTemplate($id, $data = array(), $phone='') {
 
+        $template = Yii::$app->db->createCommand("SELECT `subject`, `emails`, `notices`, `sms_content`, `message` FROM `mail_template` WHERE `id`= '".$id."' ")->queryAll();
+
+        if (!sizeof($template) && !sizeof($data) && empty($id) && empty($phone)) {
+            return false;
+        }
+
+        foreach($data as $key=>$val) {
+            $template[0]['sms_content'] = str_replace('{'.strtoupper($key).'}', $val, $template[0]['sms_content']);
+        }
+
+        Yii::$app->turbosms->send($template[0]['sms_content'], $phone);
+
+        return $template[0]['sms_content'];
+    }
+
+    public static function GetAccessNotification($member, $type) {
+        return  Yii::$app->db->createCommand("SELECT `email`, `sms`  FROM `notices_members` WHERE `member` = '".$member."' AND `notice_id`= '".$type."' ")->queryOne();
+    }
 
     public static function GetBudgetRange()
     {
@@ -113,6 +132,8 @@ class MemberHelper {
         }
         return $arr_;
     }
+
+
 
 
     public static function NumberSufix($n, $titles) {
@@ -223,9 +244,6 @@ class MemberHelper {
             $rating['terms'] = round($rating['terms']/$rating['total']);
             $rating['quality'] = round($rating['quality']/$rating['total']);
         }
-
-
-
         return $rating;
     }
 

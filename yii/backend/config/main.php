@@ -15,10 +15,6 @@ return [
     'bootstrap' => ['log', 'gii'],
     'modules' => [
         'gii'=>'yii\gii\Module',
-        'dynagrid'=> [
-            'class'=>'\kartik\dynagrid\Module',
-            // other module settings
-        ],
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
             // enter optional module parameters below - only if you need to

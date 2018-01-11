@@ -302,7 +302,7 @@ class SiteController extends Controller
 
         }   else  {
             $publish = new ActiveDataProvider(['query' => \backend\models\Publish::find()->where(['active' => 1]),
-                'pagination' => ['pageSize' => 6, 'pageParam' => 'стр', 'pageSizeParam' => 'лім'],
+                'pagination' => ['pageSize' => 9, 'pageParam' => 'стр', 'pageSizeParam' => 'лім'],
                 'sort' => [
                     'defaultOrder' => [
                         'date_publish' => SORT_DESC,

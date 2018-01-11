@@ -104,7 +104,7 @@ class DefaultController extends Controller
             $arr[$key] = $provider->models[$key];
             $arr[$key]['prices'] = Yii::$app->db->createCommand('SELECT d.name, d.job_unit, p.price FROM `member_prices` p
                                                                     LEFT JOIN `dict_category` d ON p.price_id = d.id AND d.types = 2
-                                                                    WHERE p.member = "'. $arr[$key]['id'].'" AND d.active=1 LIMIT 3')->queryAll();
+                                                                    WHERE p.member = "'. $arr[$key]['id'].'" AND d.active=1 AND p.top=1 LIMIT 3')->queryAll();
 
 
             $arr[$key]['portfolio'] = Yii::$app->db->createCommand('SELECT p.id, COUNT(i1.id) as counts, (SELECT i.image FROM `member_portfolio_images` i WHERE i.portfolio_id = p.id ORDER BY i.created_at ASC, i.id ASC LIMIT 1) as image 

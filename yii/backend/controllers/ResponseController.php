@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
+use common\components\MemberHelper;
 use Yii;
 use common\modules\members\models\MemberResponse;
 use backend\models\ResponseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 
 /**
  * ResponseController implements the CRUD actions for MemberResponse model.
@@ -131,38 +133,51 @@ class ResponseController extends Controller
 
         if ($model->load(Yii::$app->request->post()) ) {
 
-/*
-            $model->reason_for_refusal = Yii::$app->request->post('Orders')['reason_for_refusal'];
-            $model->status = Yii::$app->request->post('Orders')['status'];
-            $old = ArrayHelper::getColumn(OrderTypes::findBySql('SELECT id, type  FROM order_types WHERE order_id="'.$model->id.'" ')->asArray()->all(), 'type');
-            $new = (is_array(Yii::$app->request->post('Orders')['types'])) ? Yii::$app->request->post('Orders')['types'] : array() ;
-            if (sizeof($old)) foreach ($old as $val) {
-                if (!@in_array($val, $new)) {
-                    Yii::$app->db->createCommand()->delete('order_types', ['type' => $val, 'order_id'=>$model->id])->execute();
-                }
-            }
 
-            if (sizeof($new)) foreach ($new as $val) {
-                if (!in_array($val, $old)) {
-                    Yii::$app->db->createCommand()->insert('order_types', ['type' => $val, 'order_id'=>$model->id])->execute();
-                }
-            }
-            $url = str_replace('/admin//admin/', '/', Url::home(true).Url::toRoute(['/orders/default/detail', 'id' => $model->id]));
-            if (Yii::$app->request->post('Orders')['status']==1) \common\components\MemberHelper::GetMailTemplate(6,  $model->attributes, $model->member0->email);
-            if (Yii::$app->request->post('Orders')['status']==2) {
-                \common\components\MemberHelper::GetMailTemplate(7,  array_merge($model->attributes, array('url'=> $url)), $model->member0->email);
-                if (!empty($model->suggestions)) {
+            $model->message_approve  = Yii::$app->request->post('MemberResponse')['message_approve'];
+            $model->step = Yii::$app->request->post('MemberResponse')['step'];
 
-                    $emails =  explode(',', $model->suggestions);
-                    if (sizeof($emails)) foreach ($emails as $emil) {
-                        \common\components\MemberHelper::GetMailTemplate(9,  array_merge($model->attributes, array('url'=> $url)), $emil);
+
+            if ($model->save('false')) {
+
+                $param[':response'] = $id;
+
+                $members = Yii::$app->db->createCommand('
+                   SELECT m2.id as owner_id, if (m2.company!=\'\', m2.company, CONCAT(m1.first_name, \' \', m1.surname, \' \', m2.last_name)) as owmer_name, m2.email as owner_email,
+                          m1.id as recipient_id, if (m1.company!=\'\', m1.company, CONCAT(m1.first_name, \' \', m1.surname, \' \', m1.last_name)) as recipient_name, m1.email as recipient_email, m1.phone as recipient_phone,  r.suggestion_id
+                   FROM `member_response` r
+                   LEFT JOIN `member_suggestion` s ON s.id =  r.suggestion_id
+                   LEFT JOIN `members` m1 ON m1.id = s.member_id
+                   LEFT JOIN `orders` o ON o.id = s.order_id
+                   LEFT JOIN  `members` m2 ON m2.id = o.member
+                   WHERE r.id =:response ', $param)->queryOne();
+
+
+                $url = str_replace('/admin//admin/', '/', Url::home(true) . Url::toRoute(['/members/response/create', 'id' => $members['suggestion_id']]));
+
+                if (Yii::$app->request->post('MemberResponse')['step'] == 5) {
+
+                    \common\components\MemberHelper::GetMailTemplate(10, array_merge($model->attributes, array('url' => $url, 'name' => $members['owmer_name'])), $members['owner_email']);
+
+                    if (MemberHelper::GetAccessNotification($members['recipient_id'], 7)['email'] == 1) {
+                        $url1 = str_replace('/admin//admin/', '/', Url::home(true) . Url::toRoute(['/professionals/default/profile', 'id' => $members['recipient_id']]));
+                       \common\components\MemberHelper::GetMailTemplate(12, array_merge($model->attributes, array('url' => $url, 'url1' => $url1, 'name' => $members['recipient_name'])), $members['recipient_email']);
                     }
-                }
-                $model->suggestions ='';
-            }
-            $model->save();
-*/
 
+                    if (MemberHelper::GetAccessNotification($members['recipient_id'], 7)['sms'] == 1) {
+                        \common\components\MemberHelper::GetSMSTemplate(12, $model->attributes, $members['recipient_phone']);
+                    }
+
+                    Yii::$app->db->createCommand()->insert('member_msg', ['suggestion_id' => $members['suggestion_id'], 'member_id'=>$members['recipient_id'], 'msg'=>'Додавно відгук про виконавця',  'system'=>1])->execute();
+                    $id_msg = Yii::$app->db->getLastInsertID();
+                    Yii::$app->db->createCommand()->insert('member_msg_unread', ['msg_id' => $id_msg, 'member_id'=>$members['recipient_id'],  'support'=>0])->execute();
+
+                }
+
+                if (Yii::$app->request->post('MemberResponse')['step'] == 3) {
+                    \common\components\MemberHelper::GetMailTemplate(11, array_merge($model->attributes, array('url' => $url, 'name' => $members['owmer_name'], 'message_approve' => (!empty(Yii::$app->request->post('MemberResponse')['message_approve']) ? 'Причина відмови: <b>' . Yii::$app->request->post('MemberResponse')['message_approve'] . '</b>' : ''))), $members['owner_email']);
+                }
+            }
             return $this->redirect(['index']);
 
         } else {

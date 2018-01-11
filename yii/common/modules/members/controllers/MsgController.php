@@ -197,9 +197,6 @@ WHERE msg.ticket_id =s.id AND u.status=0 AND u.member_id=:member AND u.support =
         Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
         $model = new MemberMsg();
 
-
-
-
         if ($model->load(Yii::$app->request->post())) {
 
             $msg = trim(strip_tags(Yii::$app->request->post('MemberMsg')['msg']));

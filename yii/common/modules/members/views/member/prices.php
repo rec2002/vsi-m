@@ -17,7 +17,6 @@ if (sizeof($model->prices)) $data = $model->prices; else $data = array();
 $price_types = MemberHelper::PRICE_TYPE;
 
 
-
     if (sizeof($model->types))
         $prices = Yii::$app->db->createCommand("SELECT d.id, d.name, d1.name as parent_name, d.parent, d.job_unit, d.job_markup  FROM dict_category d LEFT JOIN dict_category d1 ON d1.id=d.parent AND d1.types=1 WHERE d.active=1 AND d.types=2 AND d.parent IN (".implode(',', $model->types).") ORDER BY d1.priority ASC, d1.parent ASC,  d.priority ASC  ")->queryAll();
     else $prices = array();
@@ -25,6 +24,9 @@ $price_types = MemberHelper::PRICE_TYPE;
 $total = sizeof($prices);
 if (sizeof($prices)) foreach ($prices as $key=>$val) {
     ?>
+
+
+
     <?
     if ($key==0) {
         echo '<div class="simple-text size-3 bold-title  bold-style-2"><p><b>'.$val['parent_name'].'</b></p></div><div class="empty-space marg-xs-b15 marg-lg-b5"></div>';
@@ -33,22 +35,27 @@ if (sizeof($prices)) foreach ($prices as $key=>$val) {
     }
     ?>
 
+    <div class="list-dotted-item-ckeckbox">
+        <label class="checkbox-entry">
+            <input type="checkbox" name="MemberEdit[top][<?=$val['id']?>]" value="1" <?=(@$data[$val['id']]['top']==1) ? 'checked' : ''?> ><span></span>
+        </label>
 
-    <div class="list-dotted-item">
-        <div class="list-dotted-left"><span><?=($val['job_markup']==1) ? '<b>'.$val['name'].'</b>' : $val['name'] ?></span></div>
-        <div class="list-dotted-right"><span>від
-                <?
+        <div class="list-dotted-item">
+            <div class="list-dotted-left"><span><?=($val['job_markup']==1) ? '<b>'.$val['name'].'</b>' : $val['name'] ?></span></div>
+            <div class="list-dotted-right"><span>від
+                    <?
 
-                echo \yii\widgets\MaskedInput::widget([
-                    'name' => 'MemberEdit[prices]['.$val['id'].']',
-                    'mask' => '9',
-                    'value' =>@$data[$val['id']]['price'],
-                    'options' =>["class" => "simple-input single", 'tabindex' => ($key+1), 'autocomplete'=>"off"],
-                    'clientOptions' => ['repeat' => 10, 'greedy' => false]
-                ]);
+                    echo \yii\widgets\MaskedInput::widget([
+                        'name' => 'MemberEdit[prices]['.$val['id'].']',
+                        'mask' => '9',
+                        'value' =>@$data[$val['id']]['price'],
+                        'options' =>["class" => "simple-input single", 'tabindex' => ($key+1), 'autocomplete'=>"off"],
+                        'clientOptions' => ['repeat' => 10, 'greedy' => false]
+                    ]);
 
-                ?>
-                <?=$price_types[$val['job_unit']]?></span></div>
+                    ?>
+                    <?=$price_types[$val['job_unit']]?></span></div>
+        </div>
     </div>
     <?
     if (($key+1)==$total) {

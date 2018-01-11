@@ -36,6 +36,8 @@ class MemberEdit extends \yii\db\ActiveRecord
 
     public $types = array();
     public $prices = array();
+    public $top = array();
+
     public $busy;
     public $regions;
     public $confirm_sms;

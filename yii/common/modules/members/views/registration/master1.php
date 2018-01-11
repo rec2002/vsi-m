@@ -18,9 +18,18 @@ $this->title = 'Реєстрація майстра';
                             <div class="tt-register-column left">
                                 <h3 class="tt-register-title h3">Реєстрація нового майстра</h3>
                                 <div class="tt-register-desc simple-text size-3">
-                                    <p>Після реєстрації ви зможете шукати завдання та заробляти на сервісі “ВсіМайстри”</p>
+                                    <p><b>Сайт «Всімайстри.укр»</b> являється засобом для надійного пошуку замовлень по всій території  України.</p>
+
+  <p>                                  <p>Реєстрація на сайті відкриває для виконавців замовлень наступні можливості:</p>
+<ul class="list-item type-3">
+    <li>доступний  широкий вибір категорій послуг для пошуку своєї ніші;</li>
+    <li>відсутність оплати на протязі перших двох років за користування сайтом;</li>
+    <li>робота в зручний для виконавця час, (Ви маєте змогу самостійно планувати свій робочий графік);</li>
+    <li>швидкий контакт з замовником, (можливість вести переговори на рахунок поставленого завдання, термінів його виконання та регулювання цін за надання послуг).</li>
+</ul>
+    </p>  <p>Ви можете використовувати наш сайт для пошуку замовлень, як основне чи додаткове джерело доходу.</p>
                                 </div>
-                                <div class="tt-iconbox-wrapper">
+                                <!--<div class="tt-iconbox-wrapper">
                                     <div class="tt-iconbox clearfix">
                                         <img class="tt-iconbox-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAzCAMAAAAJihAlAAAAkFBMVEUAAAD/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igJ6owLPAAAAL3RSTlMAfgWbDwOmHGxB+BILZuazSCCiecKScxYJ8b88MCvWznBbNibs38ediYNVT7eOOYVtuosAAAIKSURBVEjHzZTJloIwEEVfBwIaRhFxnud2eP//d92AQY0tR3Z9N1mQm6qkikKJ6CxSxfeodNEReGC8JVVkvSdS5HYMjUjI2PVRh+/GZCJuQsqe3l4r9ZiWSsJvfMY3k3yJf5dPSRgDIhwO8Mh69d4YDEOBya/2SIdzvCfmBF3aeMBW7NcYNrsYKYE7YscOahBqBOUgZ1p4csQ2SqQwQIGjwG5xJQ7zs78YoMRTNChL0CX4VfYJ2ZYnHqrwe8dgipyvyoA34ohniRoMAzLjXOAzQ2M0Y62h+b/GMmtoxEyaGWumopHR53aAjwwZFC3rD+nqxuq4z4hnQ7D4sSKuqmAmmZGVd+bR6/GEG3LcNrANA3JBctGsHtdhr2kFxT/uq+aGFA0NEY3qjMOrsTcmve3iEW9iGgFbeDY26fgpT21IFJzowMAieVzfJT0T0+LoKXfSNKaMMjIMqnms9kWIiJGPPkMfJlJF8Nszch6UH+eb8tQlw3hGF69k7Oftfwy5SVZ2/lz+LfqQnOIPPD2+jyQPEldO9Kt0x/iTXShysbXhxc3vrLYS9bS5Bk6Kvb6uQBf1+LQgeH9GMeMV9VgUS555qaoaMqhPbEVLOXJJR2/z5pyt6saUmJGdPP99lVhGMrwELYPFpOrxKF9a7EHjLZ2Qr+gNa5ZuRks+hLY9+xnP05+lfs4WLTQkcH4AfvJDYzpQrMkAAAAASUVORK5CYII=" alt="">
                                         <div class="tt-iconbox-info">
@@ -48,7 +57,7 @@ $this->title = 'Реєстрація майстра';
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         <div class="col-md-6">

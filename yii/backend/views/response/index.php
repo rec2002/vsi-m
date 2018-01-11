@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?
 
-
+    $status = array(1=>'Крок 1', 2=>'Крок 2', 3=>'Крок 3', 4=>'На модерації', 5=>'Опубліковано');
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -399,7 +399,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     [
                                         'format'=>'raw',
                                         'label'=>'Результат',
-                                        'value'=>$meeting[$model->meeting_result],
+                                        'value'=>@$meeting[$model->meeting_result],
                                         'valueColOptions'=>['style'=>'width:30%'],
                                         'displayOnly'=>true
                                     ],
@@ -900,10 +900,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html',
                 'label' => 'Статус',
                 'value' => function($model){
-                    return ($model->step==4 || $model->step==5) ? Html::a( ($model->step==5 ? 'Опубліковано': 'На модерації'), ['approve', 'id' => $model->id], ['class' => 'modalButton']) : 'не завершено';
+                    $status = array(1=>'Крок 1', 2=>'Крок 2', 3=>'Крок 3', 4=>'На модерації', 5=>'Опубліковано');
+
+                    if  ($model->step==4 || $model->step==5)
+                        return Html::a($status[$model->step], ['approve', 'id' => $model->id], ['class' => 'modalButton']);
+                    else
+                        return $status[$model->step];
                 },
                 'vAlign' => 'middle',
-                'filter'=>Html::activeDropDownList($searchModel, 'step', array(4=>'Опубліковано', 5=>'На модерації'), ['class'=>'form-control', 'prompt'=>'-- Вибрати `Статус`--']),
+                'filter'=>Html::activeDropDownList($searchModel, 'step', $status, ['class'=>'form-control', 'prompt'=>'-- Вибрати `Статус`--']),
 
             ],
 
@@ -920,23 +925,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'hAlign' => 'center',
 
                 'template' => '{delete}',
-                /*               'template' => '{update}&nbsp;{delete}',
-                                'buttons' => [
-                                    'active' => function ($url, $model, $key) {
 
-                                        if ($model->active==1)   return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                            'class' =>'btn btn-icon-only  btn-success set_action',
-                                            'data-pjax'=>1
-                                        ]);
-                                        else return Html::a('<i class="fa fa-eye-slash"></i>', $url, [
-                                            'class' =>'btn btn-icon-only  btn-danger set_action',
-                                            'data-pjax'=>1
-                                        ]);
-
-
-                                    },
-                                ],
-                */
                 'updateOptions' => ['label' => '<i class="fa fa-edit"></i>', 'title' => 'Редагувати елемент', 'class' =>'btn btn-icon-only  btn-primary modalButton'],
                 'deleteOptions' => ['label' => '<i class="fa fa-close"></i>', 'title' => 'Видалити елемент', 'class' =>'btn btn-icon-only  bg-red-active',
                     'data' => [

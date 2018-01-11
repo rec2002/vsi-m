@@ -303,7 +303,6 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
                     }
                 }
             }
-
             if (sizeof($new)) foreach ($new as $val) {
                 if (!in_array($val, $old)) {
                     Yii::$app->db->createCommand()->insert('member_types', ['type' => $val, 'member'=>Yii::$app->user->identity->getId()])->execute();
@@ -317,7 +316,7 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
     public function actionPrices() {
         $model = new MemberEdit(['scenario' => 'prices']);
         $model->types = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT type FROM member_types WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'type');
-        $model->prices = ArrayHelper::index( MemberPrices::findBySql('SELECT price_id as id, price  FROM member_prices WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'id');
+        $model->prices = ArrayHelper::index( MemberPrices::findBySql('SELECT price_id as id, price, top   FROM member_prices WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'id');
         return $this->renderPartial('prices', ['model'=>$model]);
     }
 
@@ -328,6 +327,8 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
         if ($model->load(Yii::$app->request->post())) {
 
             $new = Yii::$app->request->post('MemberEdit')['prices'];
+            $top = Yii::$app->request->post('MemberEdit')['top'];
+
             $new_ids = array();
             if (sizeof($new)) foreach ($new as $key=>$val){
                 if (empty($val)) { unset($new[$key]); } else { $new_ids[] = $key; }
@@ -342,7 +343,9 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
             }
             if (sizeof($new_ids)) foreach ($new_ids as $val) {
                 if (!in_array($val, $old)) {
-                    Yii::$app->db->createCommand()->insert('member_prices', ['price_id' => $val, 'price'=>$new[$val], 'member'=>Yii::$app->user->identity->getId()])->execute();
+                    Yii::$app->db->createCommand()->insert('member_prices', ['price_id' => $val, 'price'=>$new[$val], 'top'=>(@$top[$val]==1) ? 1 : 0, 'member'=>Yii::$app->user->identity->getId()])->execute();
+                }else {
+                    Yii::$app->db->createCommand()->update('member_prices', ['price'=>$new[$val], 'top'=>(@$top[$val]==1) ? 1 : 0], ' `member`='.Yii::$app->user->identity->getId().' AND `price_id` = '.$val )->execute();
                 }
             }
             return['status'=>1, 'msg'=>'Вказані ціни збережено.'];
@@ -401,7 +404,7 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
 
         $member = MemberEdit::find()->where(['id' => Yii::$app->user->identity->getId()])->one();
         $member->types = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT type FROM member_types WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'type');
-        $member->prices = ArrayHelper::index( MemberPrices::findBySql('SELECT price_id as id, price  FROM member_prices WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'id');
+        $member->prices = ArrayHelper::index( MemberPrices::findBySql('SELECT price_id as id, price FROM member_prices WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'id');
 
         return $this->renderPartial('prices-list', ['member'=>$member]);
 
