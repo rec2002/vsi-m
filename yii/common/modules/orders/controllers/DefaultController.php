@@ -48,6 +48,7 @@ class DefaultController extends Controller
         if (sizeof(Yii::$app->session['filter']))  $param = array_merge($param, Yii::$app->session['filter']);
 
 
+
         $filter = $filter_join = array();
         if (sizeof($param)) foreach($param as $key=>$val){
             switch($key){
@@ -59,6 +60,7 @@ class DefaultController extends Controller
                     break;
                 case ':budgets':
                     $filter[] = ' o.budget IN ('."'".implode("','", explode(',', $val))."'".')';
+                    break;
                 case ':types':
                     $filter[] = ' ot.type IN ('."'".implode("','", explode(',', $val))."'".')';
                     $filter_join[]= ' type IN ('."'".implode("','", explode(',', $val))."'".')';
@@ -108,20 +110,6 @@ class DefaultController extends Controller
         if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
         $images = OrderImages::findAll(['order_id' => $model->id]);
         $suggestion = MemberSuggestion::findAll(['order_id' => $model->id]);
-/*
-        if (!Yii::$app->user->isGuest) {
-            if ($model->member == Yii::$app->user->identity->getId()) {
-                $model = Orders::findOne([
-                    'id' => Yii::$app->request->get('id'),
-                    'member' => Yii::$app->user->identity->getId(),
-                ]);
-
-                if ($model->date_from == '0000-00-00') $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
-                if ($model->date_to == '0000-00-00') $model->date_to = ''; else $model->date_to = date("d.m.Y", strtotime($model->date_to));
-                return $this->render('edit', ['model' => $model, 'budget' => MemberHelper::GetBudgetRange(), 'images' => $images, 'suggestions'=>sizeof($suggestion)]);
-            }
-        }
-*/
         return $this->render('order-view', ['model'=>$model, 'images'=>$images, 'suggestions'=>sizeof($suggestion)]);
     }
 
@@ -234,35 +222,51 @@ class DefaultController extends Controller
 
     public function actionSuggested($status='')  {
 
-        $param = [];
+     //   $param = [];
         $param[':member'] = Yii::$app->user->identity->getId();
-
-        $count_total = Yii::$app->db->createCommand('select count(member_id) as total from `member_suggestion` WHERE member_id=:member group by member_id', $param)->queryOne();
-
+        $count_total = Yii::$app->db->createCommand('select count(s.id) as status_0, 
+                                                        sum(case when a.id IS NOT NULL then 1 else 0 end) status_1,
+                                                        sum(case when (r.meeting_result=1 AND r.step=2)  then 1  when (r.stage=1 AND r.step=3)  then 1 else 0 end) status_2,
+                                                        sum(case when (r.stage=2 AND r.step=5)  then 1 else 0 end) status_3,
+                                                        sum(case when (o.status=5)  then 1 else 0 end) status_4 from `member_suggestion` s
+                                                        LEFT JOIN `orders` o ON o.id = s.order_id 
+                                                        LEFT JOIN `member_suggestion_approved` a ON a.suggestion_id = s.id
+                                                        LEFT JOIN `member_response` r ON r.suggestion_id = s.id
+                                                        WHERE s.member_id=:member group by s.member_id', $param)->queryOne();
 
         if ($status != '')  $param[':status'] = $status;
-
-
         $filter = array();
-        if (sizeof($param)) foreach($param as $key=>$val){
-            switch($key){
-                case ':member':
-                    $filter[] = ' s.member_id='.$key;
-                    break;
-                case ':status':
-        //            $filter[] = ' o.status='.$key;
-                    break;
-            }
+        $filter[] = ' s.member_id='.Yii::$app->user->identity->getId();
+        switch(Yii::$app->getRequest()->getQueryParam('status')){
+            case '1':
+                $filter[] = ' a.id IS NOT NULL ';
+                break;
+            case '2':
+                $filter[] = ' ((r.meeting_result=1 AND r.step=2) OR (r.stage=1 AND r.step=3)) ';
+                break;
+            case '3':
+                $filter[] = ' (r.stage=2 AND r.step=5) ';
+                break;
+            case '4':
+                $filter[] = ' (o.status=5) ';
+                break;
         }
 
+        $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM member_suggestion s
+                                                    LEFT JOIN `orders` o ON o.id = s.order_id 
+                                                    LEFT JOIN `member_suggestion_approved` a ON a.suggestion_id = s.id
+                                                    LEFT JOIN `member_response` r ON r.suggestion_id = s.id
+                                                    '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''))->queryScalar();
 
-        $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM member_suggestion s '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''), $param)->queryScalar();
+
         $provider = new SqlDataProvider([
             'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, 
               (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id) as `suggestions`  FROM `member_suggestion` s
-               LEFT JOIN `orders` o ON o.id = s.order_id
+                                                    LEFT JOIN `orders` o ON o.id = s.order_id 
+                                                    LEFT JOIN `member_suggestion_approved` a ON a.suggestion_id = s.id
+                                                    LEFT JOIN `member_response` r ON r.suggestion_id = s.id
                
-               '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
+               '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY s.created_at DESC',
             'params' => $param,
             'totalCount' => $count,
             'pagination' => [
@@ -518,13 +522,18 @@ class DefaultController extends Controller
 
         if (Yii::$app->request->isPost) {
             $count_total = Yii::$app->db->createCommand('select count(*) as total from `member_suggestion_approved` WHERE suggestion_id="' . Yii::$app->request->post('id') . '"')->queryOne();
-            $member = Yii::$app->db->createCommand('select o.member from `member_suggestion` s LEFT JOIN `orders` o ON o.id = s.order_id WHERE s.id="' . Yii::$app->request->post('id') . '"')->queryOne();
+            $member = Yii::$app->db->createCommand('select o.member, s.member_id from `member_suggestion` s LEFT JOIN `orders` o ON o.id = s.order_id WHERE s.id="' . Yii::$app->request->post('id') . '"')->queryOne();
             $model = new MemberSuggestionApproved();
             Yii::$app->response->format = 'json';
             if ($count_total['total']==0 && $member['member']==Yii::$app->user->identity->getId()) {
                 $model->suggestion_id = Yii::$app->request->post('id');
                 $model->price = 0;
                 $model->save(false);
+
+                Yii::$app->db->createCommand()->insert('member_msg', ['suggestion_id' => Yii::$app->request->post('id'), 'member_id'=>$member['member_id'], 'msg'=>'Дано дозвіл на відкриття телефону',  'system'=>1])->execute();
+                $id_msg = Yii::$app->db->getLastInsertID();
+                Yii::$app->db->createCommand()->insert('member_msg_unread', ['msg_id' => $id_msg, 'member_id'=>$member['member_id'],  'support'=>0])->execute();
+
                 return json_encode(array('status'=>'ok'));
             }
         }

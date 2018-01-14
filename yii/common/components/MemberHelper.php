@@ -194,13 +194,27 @@ class MemberHelper {
     }
 
 
-    public static function GetRatingStar($value = '', $field='') {
+    public static function GetRatingStar($value = '', $field='', $editable=true) {
         $options = '';
-        for ($i=1; $i<=5; $i++) {
-            $options .='<span '.(($i==$value)? 'class="active"' : '').'><i class="tt-icon star-empty"></i><i class="tt-icon star"></i></span>';
-        }
-        return '<div class="tt-rating-stars wth-hover '.$field.' '.(($value>0) ? 'selected' : '').'" data-field="'.$field.'">'.$options.'</div>';
 
+        if ($editable==true) {
+
+            for ($i = 1; $i <= 5; $i++) {
+                $options .= '<span ' . (($i == $value) ? 'class="active"' : '') . '><i class="tt-icon star-empty"></i><i class="tt-icon star"></i></span>';
+            }
+            $options = '<div class="tt-rating-stars wth-hover ' . $field . ' ' . (($value > 0) ? 'selected' : '') . '" data-field="' . $field . '">' . $options . '</div>';
+
+        } else {
+
+            for ($i = 1; $i <= 5; $i++) {
+                 $options .= '<i class="tt-icon star ' . (($value < $i) ? 'star-empty' : '') . '"></i>';
+            }
+            $options = '<div class="tt-rating-stars">' . $options . '</div>';
+
+        }
+
+
+        return $options;
     }
 
     public static function GetResponseButton($id = '') {

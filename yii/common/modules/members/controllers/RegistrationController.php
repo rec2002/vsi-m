@@ -171,6 +171,11 @@ class RegistrationController extends \common\modules\members\controllers\Default
 
                 \common\modules\members\models\PhoneCheck::deleteAll("phone ='" . @Yii::$app->session['newUserSession']['phone'] . "'");
 
+                //default notices settings
+                Yii::$app->db->createCommand()->insert('notices_members', ['notice_id' => 5, 'member' => $member_id, 'email'=>1, 'sms'=> 0])->execute();
+                Yii::$app->db->createCommand()->insert('notices_members', ['notice_id' => 6, 'member' => $member_id, 'email'=>1, 'sms'=> 0])->execute();
+                Yii::$app->db->createCommand()->insert('notices_members', ['notice_id' => 7, 'member' => $member_id, 'email'=>1, 'sms'=> 0])->execute();
+
                 $session = Yii::$app->session;
                 $session->destroy();
 
@@ -227,13 +232,5 @@ class RegistrationController extends \common\modules\members\controllers\Default
     }
 
 
-    public function actionSendsms()
-    {
-
-        Yii::$app->turbosms->send('Марія Богданівно - Вітаємо Вас з виграшем автомобіля Toyota Land Cruiser 200. Прошу звернутися на сайт toyota.ua щодо підтвердження.', '+38 (097) 638-6934');
-
-        return '111';
-
-    }
 
 }

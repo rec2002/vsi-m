@@ -1,4 +1,4 @@
-<?
+﻿<?
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
@@ -225,7 +225,7 @@ $this->title = 'Додати замовлення';
 
 
 <?
-$gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
+$gpJsLink= '//maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
 
 echo $this->registerJs("(function(){
@@ -238,6 +238,9 @@ echo $this->registerJs("(function(){
     });
 
 
+  $(\"button[type='submit']\").on(\"click\", function () {
+      $(this).attr('disabled','disabled');
+  });
 
 
 })();" , \yii\web\View::POS_END );

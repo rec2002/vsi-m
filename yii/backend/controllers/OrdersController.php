@@ -156,16 +156,51 @@ class OrdersController extends Controller
             $url = str_replace('/admin//admin/', '/', Url::home(true).Url::toRoute(['/orders/default/detail', 'id' => $model->id]));
             if (Yii::$app->request->post('Orders')['status']==1) \common\components\MemberHelper::GetMailTemplate(6,  $model->attributes, $model->member0->email);
             if (Yii::$app->request->post('Orders')['status']==2) {
-                \common\components\MemberHelper::GetMailTemplate(7,  array_merge($model->attributes, array('url'=> $url)), $model->member0->email);
-                if (!empty($model->suggestions)) {
 
+                // send to order owner
+                \common\components\MemberHelper::GetMailTemplate(7,  array_merge($model->attributes, array('url'=> $url)), $model->member0->email);
+
+                // send to suggested users
+                if (!empty($model->suggestions)) {
                     $emails =  explode(',', $model->suggestions);
-                    if (sizeof($emails)) foreach ($emails as $emil) {
-                        \common\components\MemberHelper::GetMailTemplate(9,  array_merge($model->attributes, array('url'=> $url)), $emil);
+                    if (sizeof($emails)) foreach ($emails as $email) {
+                        \common\components\MemberHelper::GetMailTemplate(9,  array_merge($model->attributes, array('url'=> $url)), $email);
                     }
                 }
                 $model->suggestions ='';
+
+
+
+                $types = Yii::$app->db->createCommand('SELECT GROUP_CONCAT(t.type) as types FROM `order_types` t WHERE t.order_id = "'.$model->id.'" GROUP BY t.order_id')->queryOne()['types'];
+
+                if (!empty($types)) {
+
+
+                    $members = Yii::$app->db->createCommand('SELECT m.id, if (m.company!=\'\', m.company, CONCAT(m.first_name, \' \', m.surname, \' \', m.last_name)) as name, m.email, m.phone, n.email as notice_email, n.sms as notice_sms
+                                                                    FROM `member_types` t
+                                                                    LEFT JOIN `members` m ON t.member =  m.id
+                                                                    LEFT JOIN `notices_members` n ON n.member = m.id AND n.notice_id=6
+                                                                    WHERE t.type IN ('."'".implode("','", explode(',', $types))."'".') AND m.id <> "'.$model->member.'" GROUP BY m.id')->queryAll();
+
+                    if (sizeof($members)) foreach ($members as $member) {
+                        if ($member['notice_email']==1){
+                            \common\components\MemberHelper::GetMailTemplate(13,  array('url'=> $url, 'name'=>$member['name']), $member['email']);
+
+                        }
+                        if ($member['notice_sms']==1){
+                            \common\components\MemberHelper::GetSMSTemplate(12, array('url'=> $url, 'name'=>$member['name']), $member['phone']);
+
+                        }
+
+                    }
+
+                }
+
             }
+
+
+
+
             $model->save();
             return $this->redirect(['index']);
 

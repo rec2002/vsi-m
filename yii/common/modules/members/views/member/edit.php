@@ -1,4 +1,4 @@
-<?
+﻿<?
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -438,7 +438,9 @@ $this->title = 'Кабінет користувача';
     if (sizeof($regions)) { foreach ($regions as $val) { $regions_arr[$val['id']] = $val['name_short']; }}
 
 
-    $form5->field($member, 'regions')->checkboxList($regions_arr, [
+
+
+    echo $form5->field($member, 'regions')->checkboxList($regions_arr, [
     'item' => function($index, $label, $name, $checked, $value) {
         if ($checked==1) $checked = 'checked';
         return "<label class=\"checkbox-entry nowrap\"><input type=\"checkbox\" class=\"checklist\"  {$checked} name=\"{$name}\" value=\"{$value}\"><span><b>{$label}</b></span></label><div class=\"empty-space marg-lg-b15\"></div>";
@@ -468,7 +470,7 @@ $this->title = 'Кабінет користувача';
 
 <?
 
-$gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
+$gpJsLink= '//maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
 
 echo $this->registerJs("(function(){

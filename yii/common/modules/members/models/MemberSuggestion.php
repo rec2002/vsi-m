@@ -30,6 +30,9 @@ use Yii;
  */
 class MemberSuggestion extends \yii\db\ActiveRecord
 {
+
+
+
     /**
      * @inheritdoc
      */

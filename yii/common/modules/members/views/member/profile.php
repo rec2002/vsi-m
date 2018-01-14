@@ -1,4 +1,4 @@
-<?
+﻿<?
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -336,27 +336,27 @@ $this->title = 'Кабінет користувача';
                                                             <ul class="tt-rating style-2">
                                                                 <li>
                                                                     <div class="tt-rating-title">Вічливість</div>
-                                                                    <?=MemberHelper::GetRatingStar($val['devotion'], 'devotion');?>
+                                                                    <?=MemberHelper::GetRatingStar($val['devotion'], 'devotion', false);?>
                                                                 </li>
                                                                 <li>
                                                                     <div class="tt-rating-title">На зв'язку</div>
-                                                                    <?=MemberHelper::GetRatingStar($val['connected'], 'connected');?>
+                                                                    <?=MemberHelper::GetRatingStar($val['connected'], 'connected', false);?>
                                                                 </li>
                                                                 <li>
                                                                     <div class="tt-rating-title">Пунктуальність</div>
-                                                                    <?=MemberHelper::GetRatingStar($val['punctuality'], 'punctuality');?>
+                                                                    <?=MemberHelper::GetRatingStar($val['punctuality'], 'punctuality', false);?>
                                                                 </li>
                                                                 <li>
                                                                     <div class="tt-rating-title">Дотримання ціни</div>
-                                                                    <?=MemberHelper::GetRatingStar($val['price'], 'price');?>
+                                                                    <?=MemberHelper::GetRatingStar($val['price'], 'price', false);?>
                                                                 </li>
                                                                 <li>
                                                                     <div class="tt-rating-title">Дотримання термінів</div>
-                                                                    <?=MemberHelper::GetRatingStar($val['terms'], 'terms');?>
+                                                                    <?=MemberHelper::GetRatingStar($val['terms'], 'terms', false);?>
                                                                 </li>
                                                                 <li>
                                                                     <div class="tt-rating-title">Ціна/Якість</div>
-                                                                    <?=MemberHelper::GetRatingStar($val['quality'], 'quality');?>
+                                                                    <?=MemberHelper::GetRatingStar($val['quality'], 'quality', false);?>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -412,27 +412,27 @@ $this->title = 'Кабінет користувача';
                             <ul class="tt-rating style-2">
                                 <li>
                                     <div class="tt-rating-title">Вічливість</div>
-                                    <?=MemberHelper::GetRatingStar($ratings['devotion'], 'devotion');?>
+                                    <?=MemberHelper::GetRatingStar($ratings['devotion'], 'devotion', false);?>
                                 </li>
                                 <li>
                                     <div class="tt-rating-title">На зв'язку</div>
-                                    <?=MemberHelper::GetRatingStar($ratings['connected'], 'connected');?>
+                                    <?=MemberHelper::GetRatingStar($ratings['connected'], 'connected', false);?>
                                 </li>
                                 <li>
                                     <div class="tt-rating-title">Пунктуальність</div>
-                                    <?=MemberHelper::GetRatingStar($ratings['punctuality'], 'punctuality');?>
+                                    <?=MemberHelper::GetRatingStar($ratings['punctuality'], 'punctuality', false);?>
                                 </li>
                                 <li>
                                     <div class="tt-rating-title">Дотримання ціни</div>
-                                    <?=MemberHelper::GetRatingStar($ratings['price'], 'price');?>
+                                    <?=MemberHelper::GetRatingStar($ratings['price'], 'price', false);?>
                                 </li>
                                 <li>
                                     <div class="tt-rating-title">Дотримання термінів</div>
-                                    <?=MemberHelper::GetRatingStar($ratings['terms'], 'terms');?>
+                                    <?=MemberHelper::GetRatingStar($ratings['terms'], 'terms', false);?>
                                 </li>
                                 <li>
                                     <div class="tt-rating-title">Ціна/Якість</div>
-                                    <?=MemberHelper::GetRatingStar($ratings['quality'], 'quality');?>
+                                    <?=MemberHelper::GetRatingStar($ratings['quality'], 'quality', false);?>
                                 </li>
                             </ul>
                             <!--<a href="javascript:" class="button type-1 full">Залишити відгук</a>-->
@@ -782,7 +782,7 @@ $this->title = 'Кабінет користувача';
 
 
 
-$gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
+$gpJsLink= '//maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
 
 

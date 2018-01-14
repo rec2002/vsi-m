@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /* @var $this yii\web\View */
 
@@ -9,7 +9,7 @@ $this->title = 'Як це працює';
 $this->params['breadcrumbs'][] = $this->title;
 
 
-$this->registerJsFile('http://maps.googleapis.com/maps/api/js?key=AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE&amp;sensor=false&amp;language=en', ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile('//maps.googleapis.com/maps/api/js?key=AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE&amp;sensor=false&amp;language=en', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 ?>
 

@@ -118,6 +118,10 @@ $(\"button[name='step-5']\").on('click', function(e){
     return flag;
 });
 
+  $(\"button[type='submit']\").on(\"click\", function () {
+      $(this).attr('disabled','disabled');
+  });
+
 })();" , \yii\web\View::POS_END );
 
 ?>

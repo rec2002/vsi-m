@@ -84,8 +84,8 @@ $(function() {
 	/* 04 - function on page load */
 	/*============================*/
 	$(window).load(function(){
-	//	_functions.initSwiper();
-	//	_functions.pageformCalculate();
+		_functions.initSwiper();
+		_functions.pageformCalculate();
 	});
 
 	/*==============================*/
@@ -420,9 +420,18 @@ $(function() {
 
         $.post(url, function( data ) {
             $("#popup-wrapper-big-content").html(data);
-            _functions.initSwiper();
-            _functions.pageformCalculate();
-            $('.popup-wrapper-big, .popup-content').addClass('active');
+
+
+
+            setTimeout(function(){
+
+            	_functions.initSwiper();
+                _functions.pageformCalculate();
+                $('.popup-wrapper-big, .popup-content').addClass('active');
+            }, 100);
+
+
+
         });
         return false;
     });

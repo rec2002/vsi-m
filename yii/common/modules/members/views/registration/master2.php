@@ -1,4 +1,4 @@
-<?
+﻿<?
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -147,7 +147,7 @@ $this->title = 'Крок 2 - Реєстрація майстра';
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-sm-push-6">
-                            <?= Html::submitButton('<span>продовжити реєстрацію</span>', ['class' => 'button type-1 size-3 color-3 icon-right full uppercase', 'name' => 'step-1']) ?>
+                            <?= Html::submitButton('<span>продовжити реєстрацію</span>', ['class' => 'button type-1 size-3 color-3 icon-right full uppercase ', 'name' => 'step-1']) ?>
                         </div>
                         <div class="col-sm-6 col-sm-pull-6">
                          <a href="<?=Url::to(['/members/registration'])?>" class="button type-1 size-3 btn-simple icon-left uppercase"><span>назад</span></a>
@@ -161,7 +161,7 @@ $this->title = 'Крок 2 - Реєстрація майстра';
 
 <?
 
-$gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array(
+$gpJsLink= '//maps.googleapis.com/maps/api/js?' . http_build_query(array(
         'libraries' => 'places',
         'sensor' => 'false',
         'key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE',
@@ -175,6 +175,11 @@ echo $this->registerJs("(function(){
         var options = $options;        
         searchbox = new google.maps.places.Autocomplete(input, options);
    //     setupListeners();
+   
+
+  
+   
+   
 })();" , \yii\web\View::POS_END );
 
 ?>

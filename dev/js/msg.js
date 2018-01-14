@@ -1,5 +1,5 @@
 $(function() {
-
+/*
     $(".tt-messages-text").animate({ scrollTop: $('.tt-messages-text').prop("scrollHeight")}, 500);
 
     $(document).on("click", 'div.tt-messages-user', function() {
@@ -44,4 +44,6 @@ $(function() {
         return false;
 
     });
+
+  */
 });

@@ -28,18 +28,20 @@ if (sizeof($model->getModels())) {
 
 ?>
 
-<!-- TT-PAGINATION -->
-<div class="tt-pagination clearfix">
-    <?php
-    echo \yii\widgets\LinkPager::widget([
-        'pagination' => $model->pagination,
-        'linkOptions' => [''],
-        'options' => ['class' => ''],
-        'nextPageCssClass' => 'button type-1 btn-simple icon-right uppercase tt-pagination-right',
-        'nextPageLabel' => 'наступні',
-        'prevPageCssClass' => 'button type-1 btn-simple icon-left uppercase tt-pagination-left',
-        'prevPageLabel' => 'попередні'
+<div class="empty-space marg-sm-b0 marg-lg-b25"></div>
 
-    ])
+
+
+<!-- TT-PAGINATION -->
+<nav aria-label="" id="pagination" class="tt-pagination clearfix">
+    <?php echo \yii\widgets\LinkPager::widget([
+        'pagination' => $model->pagination,
+        'linkOptions' => ['class'=>'page-link'],
+        'options' => ['class'=>'pagination'],
+        'nextPageCssClass' => 'next',
+        'nextPageLabel' => 'наступні',
+        'prevPageCssClass' =>'prev',
+        'prevPageLabel' => 'попередні'])
     ?>
-</div>
+</nav>
+<div class="empty-space marg-sm-b40 marg-lg-b90"></div>

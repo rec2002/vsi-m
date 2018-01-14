@@ -228,7 +228,8 @@ WHERE msg.ticket_id =s.id AND u.status=0 AND u.member_id=:member AND u.support =
             if ($model->save(false)) {
                 $id_msg = Yii::$app->db->getLastInsertID();
                 Yii::$app->db->createCommand()->insert('member_msg_unread', ['msg_id' => $id_msg, 'member_id'=>$member_id,  'support'=>0])->execute();
-                return['status'=>1, 'msg'=> nl2br($msg)];
+                $id_unread = Yii::$app->db->getLastInsertID();
+                return['status'=>1, 'msg'=> nl2br($msg), 'id_unread'=>$id_unread];
             }
 
         }

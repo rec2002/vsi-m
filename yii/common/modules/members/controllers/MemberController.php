@@ -394,9 +394,6 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
                                   FROM `member_porfolio` p 
                                   WHERE p.member="'.Yii::$app->user->identity->getId().'"   ORDER BY p.created_at DESC')->asArray()->all();
 
-
-       print_r(\common\modules\professionals\controllers\DefaultController::GetRetingsReviews(Yii::$app->user->identity->getId()));
-
         return $this->render('profile', ['member'=> $member, 'portfolio'=> $portfolio, 'ratings'=>\common\modules\professionals\controllers\DefaultController::GetRetingsReviews(Yii::$app->user->identity->getId())]);
     }
 
@@ -438,12 +435,7 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
     }
 
     public function actionBillingpayment() {
-
-
-
-
-
-        $count = Yii::$app->db->createCommand('SELECT COUNT(*)FROM `member_suggestion_approved` a LEFT JOIN `member_suggestion` s ON s.id = a.suggestion_id LEFT JOIN `orders` o ON o.id = s.order_id WHERE s.member_id = "'.Yii::$app->user->identity->getId().'"')->queryScalar();
+      $count = Yii::$app->db->createCommand('SELECT COUNT(*)FROM `member_suggestion_approved` a LEFT JOIN `member_suggestion` s ON s.id = a.suggestion_id LEFT JOIN `orders` o ON o.id = s.order_id WHERE s.member_id = "'.Yii::$app->user->identity->getId().'"')->queryScalar();
 
         $provider = new SqlDataProvider([
             'sql' => 'SELECT a.id, a.price, a.created_at, s.member_id, s.order_id, o.title FROM `member_suggestion_approved` a LEFT JOIN `member_suggestion` s ON s.id = a.suggestion_id LEFT JOIN `orders` o ON o.id = s.order_id WHERE s.member_id = "'.Yii::$app->user->identity->getId().'" ORDER BY a.created_at DESC ',

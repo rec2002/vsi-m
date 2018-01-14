@@ -65,7 +65,7 @@ $this->title = 'Крок 3 - Реєстрація майстра';
                     <div class="empty-space marg-lg-b30"></div>
                     <div class="row">
                         <div class="col-sm-6 col-sm-push-6">
-                            <?= Html::submitButton('<span>продовжити реєстрацію</span>', ['class' => 'button type-1 size-3 color-3 icon-right full uppercase', 'name' => 'step-3']) ?>
+                            <?= Html::submitButton('<span>продовжити реєстрацію</span>', ['class' => 'button type-1 size-3 color-3 icon-right full uppercase ', 'name' => 'step-3']) ?>
                         </div>
                         <div class="col-sm-6 col-sm-pull-6">
                             <a href="<?=Url::to(['/members/registration/?id=2'])?>" class="button type-1 size-3 btn-simple icon-left uppercase"><span>назад</span></a>

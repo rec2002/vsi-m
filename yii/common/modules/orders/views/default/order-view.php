@@ -1,4 +1,4 @@
-<?
+﻿<?
 use yii\helpers\Url;
 use common\components\MemberHelper;
 use yii\helpers\Html;
@@ -133,7 +133,7 @@ $this->title = 'Замовлення';
 
 
 <?
-$gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
+$gpJsLink= '//maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
 echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 

@@ -38,38 +38,20 @@ if (sizeof($data)) foreach ($data as $model) { ?>
         <div class="empty-space marg-sm-b0 marg-lg-b25"></div>
 
 
+
         <!-- TT-PAGINATION -->
-        <!-- TT-PAGINATION -->
-        <nav aria-label="" class="tt-pagination clearfix">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">попередні</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">...</a></li>
-                <li class="page-item"><a class="page-link" href="#">21</a></li>
-                <li class="page-item"><a class="page-link" href="#">22</a></li>
-                <li class="page-item"><a class="page-link" href="#">23</a></li>
-                <li class="page-item"><a class="page-link" href="#">наступні</a></li>
-            </ul>
+        <nav aria-label="" id="pagination" class="tt-pagination clearfix">
+            <?php echo \yii\widgets\LinkPager::widget([
+            'pagination' => $publish_items->pagination,
+            'linkOptions' => ['class'=>'page-link'],
+            'options' => ['class'=>'pagination'],
+            'nextPageCssClass' => 'next',
+            'nextPageLabel' => 'наступні',
+            'prevPageCssClass' =>'prev',
+            'prevPageLabel' => 'попередні'])
+            ?>
         </nav>
         <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
-
-        <?php
-/*echo \yii\widgets\LinkPager::widget([
-        'pagination' => $publish_items->pagination,
-        'linkOptions' => [''],
-        'options' => ['class'=>''],
-        'nextPageCssClass' => 'button type-1 btn-simple icon-right uppercase tt-pagination-right',
-        'nextPageLabel' => 'наступні',
-        'prevPageCssClass' =>'button type-1 btn-simple icon-left uppercase tt-pagination-left',
-        'prevPageLabel' => 'попередні'
-
-])*/
-?>
-
     </div>
 </div>
 <?

@@ -1,4 +1,4 @@
-<?
+﻿<?
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
@@ -48,7 +48,7 @@ p.help-block.help-block-error{margin-bottom: 5px; margin-top: 10px;}
 
 <?
 
-$gpJsLink= 'http://maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
+$gpJsLink= '//maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));
 echo $this->registerJsFile($gpJsLink);
 
 echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);

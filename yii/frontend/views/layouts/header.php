@@ -41,10 +41,8 @@ use common\components\MemberHelper;
                             <li><a class="tt-icon-entry tt-icon-hover" href="<?=Url::to(['/members/msg'])?>">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAMAAACgaw2xAAAAVFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkJFwZtrAAAAG3RSTlMAEQrpFPKFKGY2Dfff4x+jmNnRxbKwb1I3NAgz8zm9AAAAiElEQVQY03WQWQ7DIAwFXzA4KZA03Rff/54FIURJnPmckQw2DrEkCrTgxoPCekEgo4wJAnrMZufdOYWRZ7/10ykH1NI8Sqil+RrA5P99DaU03wUhX7x0gaPntCxGN3WjOBrgKc7Jq3s8+4R/f77dd5NXF7xH9STHR7yyHXbYNWIJohDyEkYB+AEsQQrnu/RtDgAAAABJRU5ErkJggg==" alt="">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAMAAACgaw2xAAAAV1BMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igDL/BPzAAAAHHRSTlMACBIQ6PIUhShmNA3eCvfj6h+jmDbRxbKwb1I3gtXc3QAAAIdJREFUGNN1kFkOwyAMBV9aqElYErovvv85S5AQcuLM54xksHHIxbDCkvGks8ItIC1RGZMY5j3HnbfXEhzNfuvH+xrQSveYamil+xZAxgvfQi3di8ClVM8iUPBkMuDsKEZRiMCHreWveLx6wP+mQXy3eHXBV1BPcnzEB50UytlzYoXkAAwKwB+yGwxHrDpidQAAAABJRU5ErkJggg==" alt="">
-<? $count = MemberHelper::GetCountMessages(Yii::$app->user->identity->getId());
-                                    if ($count>0) { ?>
-                                        <span><?=$count?></span>
-                                    <? } ?>
+<? $count = MemberHelper::GetCountMessages(Yii::$app->user->identity->getId());?>
+                                    <span id="total_unread" style="display:<?=($count>0) ? 'block': 'none' ?>"><?=$count?></span>
                                 </a>
                             </li>
                         </ul>
@@ -97,10 +95,9 @@ use common\components\MemberHelper;
                         <li><a class="tt-icon-entry tt-icon-hover" href="<?=Url::to(['/members/msg'])?>">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAMAAACgaw2xAAAAVFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkJFwZtrAAAAG3RSTlMAEQrpFPKFKGY2Dfff4x+jmNnRxbKwb1I3NAgz8zm9AAAAiElEQVQY03WQWQ7DIAwFXzA4KZA03Rff/54FIURJnPmckQw2DrEkCrTgxoPCekEgo4wJAnrMZufdOYWRZ7/10ykH1NI8Sqil+RrA5P99DaU03wUhX7x0gaPntCxGN3WjOBrgKc7Jq3s8+4R/f77dd5NXF7xH9STHR7yyHXbYNWIJohDyEkYB+AEsQQrnu/RtDgAAAABJRU5ErkJggg==" alt="">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAMAAACgaw2xAAAAV1BMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igDL/BPzAAAAHHRSTlMACBIQ6PIUhShmNA3eCvfj6h+jmDbRxbKwb1I3gtXc3QAAAIdJREFUGNN1kFkOwyAMBV9aqElYErovvv85S5AQcuLM54xksHHIxbDCkvGks8ItIC1RGZMY5j3HnbfXEhzNfuvH+xrQSveYamil+xZAxgvfQi3di8ClVM8iUPBkMuDsKEZRiMCHreWveLx6wP+mQXy3eHXBV1BPcnzEB50UytlzYoXkAAwKwB+yGwxHrDpidQAAAABJRU5ErkJggg==" alt="">
-<? $count = MemberHelper::GetCountMessages(Yii::$app->user->identity->getId());
-if ($count>0) { ?>
-                                <span><?=$count?></span>
-<? } ?>
+<? $count = MemberHelper::GetCountMessages(Yii::$app->user->identity->getId()); ?>
+                                <span id="total_unread" style="display:<?=($count>0) ? 'block': 'none' ?>"><?=$count?></span>
+
                             </a>
                         </li>
                     </ul>

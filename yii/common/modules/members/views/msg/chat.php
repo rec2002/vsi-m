@@ -41,16 +41,16 @@ $this->title = 'Повідомлення';
     if (!empty($_GET['filter'])) $arrayParams =  array_merge($arrayParams, array('filter'=>$_GET['filter']));
     Yii::$app->urlManager->createUrl(array_merge(["members/msg"], $arrayParams));
 ?>
-                                <div class="tt-messages-user clearfix <?=(@$_GET['support_id']==$val['suggestion_id'] &&  empty($val['member_id'])) ? 'active' : '' ?><?=(@$_GET['id']==$val['suggestion_id'] &&  !empty($val['member_id'])) ? 'active' : '' ?>" data-url="<?=Yii::$app->urlManager->createUrl(array_merge(["members/msg"], $arrayParams))?>">
+                                <div class="tt-messages-user clearfix <?=(@$_GET['support_id']==$val['suggestion_id'] &&  empty($val['member_id'])) ? 'active' : '' ?><?=(@$_GET['id']==$val['suggestion_id'] &&  !empty($val['member_id'])) ? 'active' : '' ?>" data-id="<?=$val['suggestion_id']?>" data-support="<?=(empty($val['member_id']) ? 1 : 0 )?>" data-url="<?=Yii::$app->urlManager->createUrl(array_merge(["members/msg"], $arrayParams))?>">
                                     <img src="<?=!empty($val['avatar_image']) ? $val['avatar_image'] : '/img/person/person.png';?>" style="width:60px;" alt="">
                                     <div class="tt-messages-user-info">
                                         <div class="tt-messages-date simple-text"><?=MemberHelper::GetShortDates($val['created_at'])?></div>
                                         <div class="tt-messages-name h6"><?=(!empty($val['company'])) ? $val['company'] : $val['first_name'].' '.$val['surname'].' '.$val['last_name'] ?> </div>
                                         <div class="simple-text">
                                             <p><?= Html::encode( mb_strimwidth($val['msg'], 0, 300, '...')); ?></p>
-<? if ($val['counts']>0) { ?>
-                                            <span class="notification"><?=$val['counts']?></span>
-<? } ?>
+
+                                            <span class="notification" style="display:<?=($val['counts']>0) ? 'block': 'none' ?>" ><?=$val['counts']?></span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -84,6 +84,9 @@ $this->title = 'Повідомлення';
 
 
                 </div>
+
+
+
                 <? Pjax::end(); ?>
 
                 <div class="empty-space marg-sm-b30 marg-lg-b90"></div>
@@ -91,6 +94,3 @@ $this->title = 'Повідомлення';
         </div>
     </div>
 
-<?
-echo $this->registerJsFile('/js/msg.js', ['depends' => 'yii\web\JqueryAsset']);
-?>

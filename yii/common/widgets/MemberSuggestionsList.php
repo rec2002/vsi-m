@@ -34,8 +34,13 @@ class MemberSuggestionsList extends \yii\bootstrap\Widget
 
         $models = MemberSuggestion::find()->where(['order_id'=>$this->id])->orderBy(['created_at'=>SORT_DESC])->all();
 
+        $ratings = array();
+        foreach($models as $key => $val){
+            $ratings[$val->member_id] = \common\modules\professionals\controllers\DefaultController::GetRetingsReviews($val->member_id)['reviews'];
+        }
+
         if ($models) {
-            return $this->render('MemberSuggestionsList', ['models' => $models]);
+            return $this->render('MemberSuggestionsList', ['models' => $models, 'ratings'=>$ratings]);
         }
     }
 }

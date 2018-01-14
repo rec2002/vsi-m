@@ -36,13 +36,10 @@ class MemberSuggestionsOne extends \yii\bootstrap\Widget
             exit();
         }
 
-
-
         $model = MemberSuggestion::find()->where(['order_id'=>$this->id, 'member_id'=>Yii::$app->user->identity->getId()])->one();
 
-
         if ($model) {
-            return $this->render('MemberSuggestionsOne', ['model' => $model]);
+            return $this->render('MemberSuggestionsOne', ['model' => $model, 'ratings'=>\common\modules\professionals\controllers\DefaultController::GetRetingsReviews($model->member_id)['reviews']]);
         }
     }
 }

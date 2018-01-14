@@ -40,12 +40,11 @@
                 <img class="img-responsive" src="<?=!empty($model->member->avatar_image) ? $model->member->avatar_image : '/img/person/person.png';?>" alt="" style="height: 136px;">
             </a>
             <a class="tt-proposition-title h5" href="<?=Url::toRoute(['/professionals/default/profile', 'id' => $model->member->id])?>"><?=(!empty($model->member->company)) ? $model->member->company : $model->member->first_name.' '.$model->member->last_name.' '.$model->member->surname ?></a>
-            <!--<div class="tt-proposition-reviews simple-text size-2">
-                <p>2 відгука</p>
-            </div>-->
-            <!--<div class="tt-proposition-city simple-text size-2">
-                <p><b>м.Київ</b></p>
-            </div>-->
+<? if (sizeof($ratings)) { ?>
+                <div class="tt-proposition-reviews simple-text size-2">
+                    <p><?=sizeof($ratings)?> <?=MemberHelper::NumberSufix(sizeof($ratings), array('відгук', 'відгуки', 'відгуків'))?></p>
+                </div>
+<? } ?>
             <div class="tt-proposition-team simple-text size-2">
                 <p><?=($model->member->forma!=3) ? MemberHelper::FORMA[$model->member->forma] : ''?><?=($model->member->forma==2) ? ' / '.MemberHelper::BRYGADA[$model->member->brygada] : ''?><?=($model->member->forma==3) ? ' Юридична особа ' : ''?></p>
             </div>
@@ -108,7 +107,82 @@
                 </div>
                 <div class="tab-entry">
                     <div class="tab-entry-box">
-                        Відгуки відсутні.
+                        <? if (sizeof($ratings)) { ?>
+
+                            <? foreach ($ratings as $key=>$val) {?>
+
+                                <div class="tt-review style2">
+                                    <div class="tt-review-top row">
+                                        <div class="col-sm-6">
+                                            <? if ($val['positive_negative']==1) { ?>
+                                                <div class="tt-response good"><i class="tt-icon like white"></i><span>Позитивний відгук</span></div>
+                                            <? } ?>
+                                            <? if ($val['positive_negative']==2) { ?>
+                                                <div class="tt-response bad"><i class="tt-icon dislike white"></i><span>негативний відгук</span></div>
+                                            <? } ?>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="tt-review-date">
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
+                                                <span><?=date('d.m.Y', strtotime($val['created_at']))?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="simple-text size-3 small-space bold-style-2">
+                                        <p><b>Сподобалось</b></p>
+                                        <p><?=nl2br($val['positive_note'])?></p>
+                                        <p><b>Не сподобалось</b></p>
+                                        <p><?=nl2br($val['negative_note'])?></p>
+                                        <p><b>Загальний висновок</b></p>
+                                        <p><?=nl2br($val['conclusion_note'])?></p>
+                                    </div>
+                                    <div class="row vertical-middle">
+                                        <div class="col-sm-6 col-lg-5">
+                                            <div class="tt-rating-block">
+                                                <ul class="tt-rating">
+                                                    <li>
+                                                        <div class="tt-rating-title">Вічливість</div>
+                                                        <?=MemberHelper::GetRatingStar($val['devotion'], 'devotion', false);?>
+                                                    </li>
+                                                    <li>
+                                                        <div class="tt-rating-title">На зв'язку</div>
+                                                        <?=MemberHelper::GetRatingStar($val['connected'], 'connected', false);?>
+                                                    </li>
+                                                    <li>
+                                                        <div class="tt-rating-title">Пунктуальність</div>
+                                                        <?=MemberHelper::GetRatingStar($val['punctuality'], 'punctuality', false);?>
+                                                    </li>
+                                                    <li>
+                                                        <div class="tt-rating-title">Дотримання ціни</div>
+                                                        <?=MemberHelper::GetRatingStar($val['price'], 'price', false);?>
+                                                    </li>
+                                                    <li>
+                                                        <div class="tt-rating-title">Дотримання термінів</div>
+                                                        <?=MemberHelper::GetRatingStar($val['terms'], 'terms', false);?>
+                                                    </li>
+                                                    <li>
+                                                        <div class="tt-rating-title">Ціна/Якість</div>
+                                                        <?=MemberHelper::GetRatingStar($val['quality'], 'quality', false);?>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-lg-7">
+                                            <div class="tt-review-category">Замовлення: <?= Html::a($val['title'], ['/orders/default/detail', 'id' => $val['order_id']]) ?></div>
+                                            <div class="tt-review-name"><?= Html::a($val['first_name'], ['/orders/default/detail', 'id' => $val['order_id']]) ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Review1-END -->
+
+                                <div class="tt-review-devider"></div>
+                            <? } ?>
+                        <? } else { ?>
+
+                            <div class="alert alert-warning fade in alert-dismissable" style="margin-right: 20px;margin-left: 20px;"><strong>Не опубліковано жодної відгуку.</strong> </div>
+
+                        <? } ?>
+
                     </div>
                 </div>
             </div>
