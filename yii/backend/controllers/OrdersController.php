@@ -188,7 +188,7 @@ class OrdersController extends Controller
 
                         }
                         if ($member['notice_sms']==1){
-                            \common\components\MemberHelper::GetSMSTemplate(12, array('url'=> $url, 'name'=>$member['name']), $member['phone']);
+                            \common\components\MemberHelper::GetSMSTemplate(13, array('url'=> $url, 'name'=>$member['name']), $member['phone']);
 
                         }
 

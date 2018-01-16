@@ -1720,24 +1720,20 @@ console.log(upload.width());
 
 
     $('.notices_action').on('change', function(){
-
         var checkbox = $(this);
         var status = (checkbox.is(':checked')) ? 1 : 0;
         jQuery.ajax({
-            url: ($(this).data('type')) ? '/members/member/notices' : '/members/customer/notices',
+            url: ($(this).data('type')==2) ? '/members/member/notices' : '/members/customer/notices',
             type: 'POST',
             data: {name : checkbox.data('name'), id:checkbox.data('id'), 'status':status},
             cache: false,
             async: false,
             success: function (data) {
                 if (data.status==1){
-
                     GetMessage(data.msg, '');
-
                 }
             }
         });
-
 	});
 
 

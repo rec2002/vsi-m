@@ -22,7 +22,7 @@ class MsgSearch extends MemberMsg
     public function rules()
     {
         return [
-            [['id', 'suggestion_id', 'ticket_id', 'member_id', 'who_id', 'whom_id', 'system', 'support'], 'integer'],
+            [['id', 'suggestion_id', 'ticket_id', 'member_id', 'system', 'support'], 'integer'],
             [['msg', 'name', 'created_at'], 'safe'],
         ];
     }

@@ -259,6 +259,16 @@ $this->title = 'Замовлення';
                     </div>
                     <?php ActiveForm::end(); ?>
                 </div>
+
+<? if (sizeof($categories)) { ?>
+                    <div class="simple-text size-3">
+<? foreach ($categories as $val) { ?>
+                            <a class="order_caregories" href="<?=Url::to(['/orders',  'cat'=>$val['id'], 'cat'=>$val['url_tag']])?>" target="_self"><?=$val['name']?></a>
+<? } ?>
+                    </div>
+                    <div class="empty-space marg-lg-b10"></div>
+<? } ?>
+
                 <h6 class="tt-task-subtitle">Фото:</h6>
 
                 <div class="tt-project-new-img tt-task-gal-edit">

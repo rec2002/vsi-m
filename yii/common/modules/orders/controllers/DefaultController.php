@@ -9,6 +9,7 @@ use yii\helpers\Url;
 
 use common\modules\members\models\Orders;
 use common\modules\members\models\OrderImages;
+use common\modules\members\models\OrderTypes;
 use common\modules\orders\models\MemberSuggestion;
 use common\modules\orders\models\MemberSuggestionApproved;
 
@@ -36,6 +37,16 @@ class DefaultController extends Controller
 
         $param = [];
         $param[':status'] = 1;
+
+
+        if (Yii::$app->request->isGet) {
+
+            unset($_SESSION['filter']);
+            if (!empty(Yii::$app->request->get('cat'))) {
+                $_SESSION['filter'][':types'] = Yii::$app->db->createCommand('SELECT id FROM `dict_category` WHERE `url_tag`="'.trim(Yii::$app->request->get('cat')).'" AND active=1  AND types=1 ')->queryScalar();;
+            }
+
+        }
 
         if (Yii::$app->request->isPost){
             unset($_SESSION['filter']);
@@ -109,8 +120,12 @@ class DefaultController extends Controller
         $model = Orders::find()->where(['id'=>$id])->one();
         if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
         $images = OrderImages::findAll(['order_id' => $model->id]);
+
+        $param[':order']=$model->id;
+        $categories = Yii::$app->db->createCommand('SELECT d.id, d.name, d.url_tag FROM `order_types` o LEFT JOIN `dict_category` d ON d.id = o.type AND d.types=1 WHERE d.active=1 AND o.order_id=:order', $param)->queryAll();
+
         $suggestion = MemberSuggestion::findAll(['order_id' => $model->id]);
-        return $this->render('order-view', ['model'=>$model, 'images'=>$images, 'suggestions'=>sizeof($suggestion)]);
+        return $this->render('order-view', ['model'=>$model, 'images'=>$images, 'suggestions'=>sizeof($suggestion), 'categories'=>$categories]);
     }
 
 
@@ -132,7 +147,10 @@ class DefaultController extends Controller
 
                  if ($model->date_from == '0000-00-00') $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
                  if ($model->date_to == '0000-00-00') $model->date_to = ''; else $model->date_to = date("d.m.Y", strtotime($model->date_to));
-                 return $this->render('edit', ['model' => $model, 'budget' => MemberHelper::GetBudgetRange(), 'images' => $images, 'suggestions'=>sizeof($suggestion)]);
+
+                $param[':order']=$model->id;
+                $categories = Yii::$app->db->createCommand('SELECT d.id, d.name, d.url_tag FROM `order_types` o LEFT JOIN `dict_category` d ON d.id = o.type AND d.types=1 WHERE d.active=1 AND o.order_id=:order', $param)->queryAll();
+                return $this->render('edit', ['model' => $model, 'budget' => MemberHelper::GetBudgetRange(), 'images' => $images, 'suggestions'=>sizeof($suggestion), 'categories'=>$categories]);
             }
         } else {
             header('Location: ' . Url::to(['/orders/default/detail', 'id' => $id]));

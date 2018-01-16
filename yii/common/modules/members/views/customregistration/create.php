@@ -237,11 +237,11 @@ echo $this->registerJs("(function(){
 		}
     });
 
-
+/*
   $(\"button[type='submit']\").on(\"click\", function () {
       $(this).attr('disabled','disabled');
   });
-
+*/
 
 })();" , \yii\web\View::POS_END );
 

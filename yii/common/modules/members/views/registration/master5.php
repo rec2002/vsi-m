@@ -117,11 +117,11 @@ $(\"button[name='step-5']\").on('click', function(e){
     if (!flag) $('p.help-block.help-block-error').text('Необхідно заповнити хоча б один пункт.'); else $('p.help-block.help-block-error').text('');
     return flag;
 });
-
+/*
   $(\"button[type='submit']\").on(\"click\", function () {
       $(this).attr('disabled','disabled');
   });
-
+*/
 })();" , \yii\web\View::POS_END );
 
 ?>

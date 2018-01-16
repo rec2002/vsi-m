@@ -136,13 +136,11 @@ $(function() {
               types.push($(this).val());
             });
 
-
             $.post('/orders'+'?ajax=true', {'budgets':budgets, 'regions':regions, 'types':(types).join()}).done(function(data ) {
-
                 if (data!= '') {
+                    window.history.pushState({}, document.title, "/orders" );
                     $('div#items_body').html(data);
                 }   else alert('Bad request');
-
             });
 
 

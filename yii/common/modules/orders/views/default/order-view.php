@@ -89,8 +89,20 @@ $this->title = 'Замовлення';
                         </ul>
                     </div>
                 </div>
+
+
+
                 <h6 class="tt-task-subtitle">Опис замовлення:</h6>
                 <div class="tt-task-txt simple-text size-3"><?=nl2br($model->descriptions)?></div>
+<? if (sizeof($categories)) { ?>
+                <div class="simple-text size-3">
+<? foreach ($categories as $val) { ?>
+                    <a class="order_caregories" href="<?=Url::to(['/orders',  'cat'=>$val['id'], 'cat'=>$val['url_tag']])?>" target="_self"><?=$val['name']?></a>
+<? } ?>
+                </div>
+                <div class="empty-space marg-lg-b10"></div>
+<? } ?>
+
 <? if (sizeof($images))  { ?>
                 <h6 class="tt-task-subtitle">Фото:</h6>
                 <ul class="tt-task-gal clearfix">

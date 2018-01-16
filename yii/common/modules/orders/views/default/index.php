@@ -87,7 +87,7 @@ $this->title = 'Список замовлень';
                                 <div class="row row10">
                                     <div class="col-sm-4">
                                         <a class="button-select tt-order-filter-select open-popup" href="javascript:" data-rel="18">
-                                            <span>Оберіть типи робіт</span>
+                                            <span>Виберіть типи робіт</span>
                                             <span class="button-select-icon"></span>
                                         </a>
                                         <div class="empty-space marg-xs-b10"></div>
