@@ -35,6 +35,8 @@ class CustomerRegistration extends Model
             [['title', 'descriptions', 'location'], 'required', 'on' => 'home-page'],
             [['region'], 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Адресу не визначено. Прошу вибрати адресу зі списку', 'on' => 'home-page'],
             [['confirm_sms'], 'checkSMSCode_', 'skipOnEmpty' => false, 'on' => 'add-order'],
+			[['confirm_sms'], 'required',  'whenClient' => "function (attribute, value) { if ($('input#confirm_sms').val()=='') setTimeout(function(){  $('input.simple-input[type=\"tel\"]').next().html('Підтвердіть контактний телефон через SMS.'); }, 300); } ", 'on' => 'add-order'],
+			[['phone'],  'match', 'pattern' => '/([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/', 'message' => 'Невірний номер мобільного телефону.', 'on' => 'add-order'],
             [['date_from', 'date_to'], 'required', 'skipOnEmpty' => false, 'when' => function ($model) { if ($model->when_start==1) return true; else return false;}, 'whenClient' => "function (attribute, value) { if ($('#customerregistration-when_start').val() == '1') return true; else return false; }", 'message' => 'Обов\'язкове для заповнення', 'on' => 'add-order'],
             [['title', 'descriptions', 'location', 'first_name', 'email', 'phone', 'confirm_sms', 'budget', 'when_start'], 'required', 'on' => 'add-order'],
             [['first_name'], 'string', 'min' => 3, 'tooShort' => 'Значення "{attribute}" повинно містити мінімум 3 символa.', 'on' => 'add-order'],
@@ -45,6 +47,7 @@ class CustomerRegistration extends Model
             [['email'], 'filter', 'filter' => 'trim', 'on' => 'add-order'],
             ['email', 'checkMyUniqunessEmail', 'on' => 'add-order'],
             ['phone', 'checkSendPhoneCode', 'on' => 'add-order'],
+			
 
         ];
     }
@@ -87,7 +90,7 @@ class CustomerRegistration extends Model
 
     public function checkSMSCode_($attribute, $params) {
 
-        $count = Yii::$app->db->createCommand("SELECT COUNT(*) FROM `phone_check` WHERE code = '".trim($this->confirm_sms)."' LIMIT 1")->queryScalar();
+        $count = Yii::$app->db->createCommand("SELECT COUNT(*) FROM `phone_check` WHERE code = '".trim($this->confirm_sms)."' AND  phone = '".$this->phone."' LIMIT 1")->queryScalar();
         if($count==0) {
             $this->addError($attribute, 'Код з SMS невірний.');
             return false;

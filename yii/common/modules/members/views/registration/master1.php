@@ -85,10 +85,10 @@ $this->title = 'Реєстрація майстра';
                                             </div>
                                         </div>
                                         <?= $form->field($model, 'email')->textInput(['value'=>@Yii::$app->session['newUserSession']['email'], 'class' => 'simple-input', 'tabindex' => '3', 'autocomplete'=>'off', 'placeholder' => "Введіть email"])->label(false); ?>
-                                        <div class="tt-fadein-top">
+                                        <div class="tt-fadein-top phone-reg-block">
                                             <div class="row row10">
                                                 <div class="col-sm-8">
-                                                    <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>@Yii::$app->session['newUserSession']['phone'], 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '4',  'placeholder' => "+38 (ххх) ххх - хх - хх"])->label(false); ?>
+                                                    <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>@Yii::$app->session['newUserSession']['phone'], 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '4',  'placeholder' => "+38 (ххх) ххх - хх - хх", 'data-phone'=>''])->label(false); ?>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit disabled" href="javascript:">Підтвердити</a>

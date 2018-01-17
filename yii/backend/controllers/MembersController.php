@@ -107,8 +107,8 @@ class MembersController extends Controller
      */
     public function actionDelete($id)
     {
+	    Yii::$app->db->createCommand()->delete('auth_assignment', ['user_id'=>$id])->execute();
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 

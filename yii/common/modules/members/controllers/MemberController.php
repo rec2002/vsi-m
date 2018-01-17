@@ -457,15 +457,9 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
 
     public function actionAddresponse($id)
     {
-
-
-
         $member = \common\modules\members\models\MemberSuggestion::findOne([
             'id' => $id
         ]);
-
-
-
         $model = new \common\modules\members\models\MemberResponse();
         return $this->render('@common/modules/members/views/response/step1', ['model'=>$model, 'member'=>$member]);
     }

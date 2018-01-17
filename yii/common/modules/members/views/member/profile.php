@@ -400,8 +400,8 @@ $this->title = 'Кабінет користувача';
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAATlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAP+0nkAAAAGnRSTlMABmCnjjSZQMMWzrevK8ef/OHXyIVwW1YdSoUZvnoAAABYSURBVAjXTclXDoAgEADRpa0gvYr3v6iJgQ3z9zJAmfbCEdrACaw79GQWQxRS2iUhZ3aijC2jObp5SOnr1L2Ep2CkZn+t2Z0gga/e57IFT6o2KiAiV4z0AW2MA6Ezq1d1AAAAAElFTkSuQmCC" alt="">
                             </a></h5>
                         <ul class="simple-list size-2 profile">
-<?  $regions = Yii::$app->db->createCommand("SELECT id, name, name_short  FROM `dict_regions` ORDER BY `id` ASC")->queryAll();?>
-<? if (!is_array($member->regions)) $member->regions = array(); foreach ($regions as $val) if (in_array($val['id'], $member->regions)) { ?><li><a href="javascript:"><?=$val['name_short']?></a></li><? } ?>
+<?  $regions = Yii::$app->db->createCommand("SELECT id, name, name_short, url_tag  FROM `dict_regions` ORDER BY `id` ASC")->queryAll();?>
+<? if (!is_array($member->regions)) $member->regions = array(); foreach ($regions as $val) if (in_array($val['id'], $member->regions)) { ?><li><a href="<?=Url::to(['/professionals',  'region'=>$val['url_tag']])?>"><?=$val['name_short']?></a></li><? } ?>
                         </ul>
                     </div>
                     <div class="empty-space marg-lg-b30"></div>
@@ -698,7 +698,7 @@ $this->title = 'Кабінет користувача';
                         'name' => 'MemberEdit[budget_min]',
                         'mask' => '9',
                         'value' =>($member->budget_min>0)? $member->budget_min : '',
-                        'options' =>["class" => "simple-input",  'placeholder' => "вказати в гривнях", 'autocomplete'=>"off"],
+                        'options' =>["class" => "simple-input",  'placeholder' => "Вказати в гривнях", 'autocomplete'=>"off"],
                         'clientOptions' => ['repeat' => 10, 'greedy' => false]
                     ]);
 

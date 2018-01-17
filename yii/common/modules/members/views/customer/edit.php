@@ -30,6 +30,7 @@ $this->title = 'Кабінет користувача';
                             <div class="tt-person">
                                 <div class="tt-person-ava">
                                     <img class="tt-person-img img-responsive" src="<?=!empty(Yii::$app->user->identity->avatar_image) ? Yii::$app->user->identity->avatar_image : '/img/person/person.png';?>" alt="">
+                                    <div class="empty-space marg-sm-b15 marg-lg-b15"></div>
                                     <div class="button type-1 size-2">Змінити фото <input type="file" class="upload_avatar" data-source="/members/customer/uploadavatar/" accept="image/x-png,image/gif,image/jpeg"></div>
 
                                     <div id="progress-wrp" style="margin-top:15px;">

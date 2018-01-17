@@ -152,18 +152,18 @@ $this->title = 'Додати замовлення';
                                     <?= $form->field($model, 'first_name')->textInput(['class' => 'simple-input', 'tabindex' => '5', 'autocomplete'=>'off', 'placeholder' => "Введіть своє ім`я"])->label(false); ?>
 
                                     <div class="tt-input-label">Електронна адреса (не публікується)</div>
-                                    <?=$form->field($model, 'email')->textInput(['class' => 'simple-input', 'tabindex' => '6', 'autocomplete'=>'off', 'placeholder' => "Введіть email"])->label(false); ?>
+                                    <?=$form->field($model, 'email')->textInput(['class' => 'simple-input', 'tabindex' => '6', 'autocomplete'=>'off', 'placeholder' => "Введіть Email"])->label(false); ?>
 
 
                                     <div class="tt-input-label">Телефон (не публікується)</div>
-                                    <div class="tt-fadein-top">
+                                    <div class="tt-fadein-top phone-reg-block" >
                                         <div class="row">
                                             <div class="col-sm-8 col-md-9">
-                                                <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '7',  'placeholder' => "+38 (ххх) ххх - хх - хх"])->label(false); ?>
+                                                <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '7',  'placeholder' => "+38 (ххх) ххх - хх - хх", 'data-phone'=>''])->label(false); ?>
                                                 <div class="empty-space marg-xs-b20"></div>
                                             </div>
                                             <div class="col-sm-4 col-md-3">
-                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit disabled" href="javascript:">Підтвердити</a>
+                                                <a class="button type-1 size-3 full color-3 uppercase tt-phone-submit disabled" href="javascript:">Підтвердити</a>
                                             </div>
                                         </div>
                                     </div>
@@ -176,13 +176,13 @@ $this->title = 'Додати замовлення';
                                                 <div class="empty-space marg-xs-b20"></div>
                                             </div>
                                             <div class="col-sm-4 col-md-3">
-                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link  tt-phone-code-submit " href="javascript:">ОК</a>
+                                                <a class="button type-1 size-3 full color-3 uppercase tt-phone-code-submit " href="javascript:">ОК</a>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="simple-text size-2">
-                                        <p>Ніяких зайвих дзвінків! Жоден виконавець не побачить ваш номер, поки ви самі не передасте його.</p>
+                                        <p>Ніяких зайвих дзвінків! Жоден виконавець не побачить ваш номер, поки ви самі не передасьте його.</p>
                                     </div>
                                     <div class="empty-space marg-lg-b30"></div>
 

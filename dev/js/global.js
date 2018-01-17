@@ -1074,6 +1074,8 @@ console.log(upload.width());
 	$('.tt-phone-submit').on('click', function(e){
 
 		var obj = $(this);
+		if (obj.is(":disabled")) { return false; }
+
 
 		var number = obj.closest('.tt-fadein-top').find('.simple-input').val();
 		var RegX = /([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/;
@@ -1084,6 +1086,9 @@ console.log(upload.width());
                     obj.closest('.tt-fadein-top').siblings('.tt-fadein-bottom').find('.simple-text').text(number);
                     obj.closest('.tt-fadein-top').fadeOut(300, function(){
                         $(this).siblings('.tt-fadein-bottom').fadeIn(300);
+						   $('input#confirm_sms').val('');
+						   $('input.simple-input[type="tel"]').data('phone', number);
+						   
                     });
 				} else {
                 	console.log('Wrong phone number');
@@ -1100,27 +1105,36 @@ console.log(upload.width());
         var number = $(this).val();
         var RegX = /([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/;
         if (RegX.test(number)) {
-            $(".tt-fadein-link.tt-phone-submit").removeClass('disabled');
+            $(".tt-phone-submit").removeClass('disabled');
             $(this).next().html('');
+			if ($('input#confirm_sms').val()=='') $(this).next().html('Підтвердіть контактний телефон через SMS.');
+			
+			if ($(this).data('phone')!='' && $(this).data('phone')!=number) {
+				$('input#confirm_sms').val('');
+				$(this).next().html('Була спроба зміни номеру телефону, прошу ще раз підтвердити через SMS');	
+			}	
 		} else{
-            $(".tt-fadein-link.tt-phone-submit").addClass('disabled');
+            $(".tt-phone-submit").addClass('disabled');
             $(this).next().html('Невірний номер мобільного телефону');
 		}
     });
 
-
+	
     $('.tt-phone-code-submit').on("click", function(){
-
         var obj= $(this);
-        if (typeof $('input#confirm_sms').attr('aria-invalid')==="undefined" || $('input#confirm_sms').attr('aria-invalid')=='true' ||  $('input#confirm_sms').val()=='') {
-	         $('input#confirm_sms').blur();
-		} else {
-            obj.closest('.tt-fadein-bottom').fadeOut(300, function(){
-                $(this).siblings('.tt-fadein-top').fadeIn(300);
-                $('input#confirm_sms').val('');
-            });
-		}
-        return false;
+        $.post( "/site/sendcheckcode", 
+		{'confirm_sms' : $('input#confirm_sms').val(), 'phone': $('input.simple-input[type="tel"]').val()},  
+		function( data ) {
+            var data = JSON.parse(data);
+            if (data.status==1){
+			    $('.tt-phone-code-submit').closest('.tt-fadein-bottom').fadeOut(300, function(){
+                    $('input.simple-input[type="tel"]').next().html('');
+					$(".phone-reg-block").fadeIn(300);
+				});
+			} else {
+				$('input#confirm_sms').next('p').html('Код з SMS невірний.');
+			}
+		});
     })
 
 	/*phone mask*/

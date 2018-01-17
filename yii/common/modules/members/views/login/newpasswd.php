@@ -28,7 +28,7 @@ $this->title = 'Відновити пароль';
                             <h3 class="h3">Відновлення паролю</h3>
                             <div class="empty-space marg-lg-b10"></div>
                             <div class="simple-text size-3">
-                                <p>Веддіть новий пароль.</p>
+                                <p>Введіть новий пароль.</p>
                             </div>
 
                             <div class="empty-space marg-lg-b10"></div>

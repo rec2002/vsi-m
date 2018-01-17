@@ -31,10 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="tt-devider"></div>
     <div class="container">
         <div class="empty-space marg-sm-b40 marg-lg-b75"></div>
-        <h3 class="h3 text-center">Що таке “ВсіМайстри”</h3>
+        <h3 class="h3 text-center">Що таке “Виконроб”</h3>
         <div class="empty-space marg-lg-b20"></div>
         <div class="simple-text size-3">
-            <p>На сайті <b>«Всімайстри.укр»</b> кожен замовник має змогу швидко знайти та замовити в режимі онлайн послуги кваліфікованих майстрів для виконання різних видів робіт. Ви завжди можете знайти професіонала не покидаючи власну домівку.</p>
+            <p>На сайті <b>«Виконроб»</b> кожен замовник має змогу швидко знайти та замовити в режимі онлайн послуги кваліфікованих майстрів для виконання різних видів робіт. Ви завжди можете знайти професіонала не покидаючи власну домівку.</p>
 
             <p>Будь-який замовник має можливість скористатись наступними перевагами нашого сервісу:</p>
 
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="empty-space marg-sm-b40 marg-lg-b75"></div>
 
-        <h3 class="h3 text-center">Що є на сайті “ВсіМайстри”</h3>
+        <h3 class="h3 text-center">Що є на сайті “Виконроб”</h3>
         <div class="empty-space marg-lg-b10"></div>
         <div class="simple-text size-4 text-center">
             <p>Додайте заявку і отримаєте пропозиції з цінами від майстрів</p>
@@ -121,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <a class="tt-service-title h5" href="<?=Url::to(['/professionals'])?>">Отримуйте завдання</a>
                     <div class="simple-text size-3">
-                        <p>Допоможіть іншим замовникам зробити правельний вибір</p>
+                        <p>Допоможіть іншим замовникам зробити правильний вибір</p>
                     </div>
                 </div>
             </div>
@@ -134,7 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="tt-bg-grey">
     <div class="container">
         <div class="empty-space marg-sm-b40 marg-lg-b75"></div>
-        <h3 class="h3 text-center">Часті питання по роботі на “ВсіМайстри”</h3>
+        <h3 class="h3 text-center">Часті питання по роботі на “Виконроб”</h3>
         <div class="empty-space marg-lg-b30"></div>
 
 

@@ -50,7 +50,7 @@ $this->title = 'Сторінка майстра';
                         <? } ?>
                         <?=(!empty($member->company)) ? $member->company : $member->first_name.' '.$member->last_name.' '.$member->surname ?></h3>
                     <div class="tt-heading-desc simple-text size-2">
-                        <p><?=($member->forma!=3) ? MemberHelper::FORMA[$member->forma] : ''?><?=($member->forma==2) ? ' / '.MemberHelper::BRYGADA[$member->brygada] : ''?><?=($member->forma==3) ? ' Юридична особа ' : ''?></span></p>
+                        <p><?=($member->forma!=3) ? @MemberHelper::FORMA[$member->forma] : ''?><?=($member->forma==2) ? ' / '.@MemberHelper::BRYGADA[$member->brygada] : ''?><?=($member->forma==3) ? ' Юридична особа ' : ''?></span></p>
                     </div>
                     <div class="tt-heading-reliability">
                         <div class="tt-heading-rating tt-vote-wrapper">

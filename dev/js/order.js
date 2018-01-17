@@ -181,7 +181,7 @@ $(function() {
                 $('.tt-order-filter-select').addClass('selected').find('span:first-child').text(count+' видів робіт');
             }
             else{
-                $('.tt-order-filter-select').removeClass('selected').find('span:first-child').text('Оберіть типи робіт');
+                $('.tt-order-filter-select').removeClass('selected').find('span:first-child').text('Виберіть типи робіт');
             }
             $('.popup-wrapper, .popup-content').removeClass('active');
 

@@ -58,7 +58,7 @@ $form = ActiveForm::begin(['id' => 'edit_portfolio', 'options' => ['class'=>'for
     </div>
     <div class="empty-space marg-lg-b25"></div>
     <div class="tt-input-label">Опис виконаний робіт</div>
-    <?= $form->field($model, 'description')->textarea(['class' => 'simple-input height-4', 'placeholder' => "Коли проводились роботи", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
+    <?= $form->field($model, 'description')->textarea(['class' => 'simple-input height-4', 'placeholder' => "Додайте загальний опис виконаних робіт", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
 
     <div class="empty-space marg-lg-b40"></div>
     <div class="tt-buttons-block m10 text-right">

@@ -383,4 +383,17 @@ class SiteController extends Controller
         return \common\components\MemberHelper::PhoneCode(Yii::$app->request->post('phone'));
     }
 
+	
+	public function actionSendcheckcode()
+    {
+	    Yii::$app->response->format = 'json';
+	    if (Yii::$app->request->isPost) { 
+			$count = Yii::$app->db->createCommand("SELECT COUNT(*) FROM `phone_check` WHERE code = '".trim(Yii::$app->request->post('confirm_sms'))."' AND  phone = '".trim(Yii::$app->request->post('phone'))."' LIMIT 1")->queryScalar();
+			if($count==1) {
+				return json_encode(array('status'=>1));
+			} 
+		}
+		return json_encode(array('status'=>0));
+    }
+	
 }

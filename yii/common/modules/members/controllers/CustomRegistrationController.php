@@ -168,6 +168,8 @@ class CustomregistrationController extends \common\modules\members\controllers\D
     }
 
 
+	
+	
     public function actionCreate()    {
         $model = new CustomerRegistration(['scenario' => 'add-order']);
 
