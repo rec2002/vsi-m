@@ -323,6 +323,34 @@ $(function() {
 		};	    
     }
 
+
+    if ($("#sdate,#edate").length) {
+        function dateRange() {
+            $(function () {
+                $("#sdate,#edate").datepicker({
+                    dateFormat: "dd.mm.yy",
+                    minDate: 0,
+                    changeMonth: false,
+                    changeYear: false
+                }).change(function () {
+                    var sdate = $('#sdate').datepicker("getDate");
+                    var edate = $('#edate').datepicker("getDate");
+                    if (this.id == 'sdate') {
+                        if (sdate > edate) {
+                            $('#edate').datepicker("setDate", sdate);
+                        }
+                    } else {
+                        if (edate < sdate) {
+                            $('#sdate').datepicker("setDate", edate);
+                        }
+                    }
+                });
+                $("#sdate,#edate").datepicker();
+            });
+        }
+        dateRange();
+	}
+
 	/*tabs*/
 	var tabsFinish = 0;
 	$('div.tab-menu:not(.redirect)').on('click', function() {

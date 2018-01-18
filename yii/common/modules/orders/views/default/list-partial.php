@@ -44,4 +44,4 @@ if (sizeof($model->getModels())) {
         'prevPageLabel' => 'попередні'])
     ?>
 </nav>
-<div class="empty-space marg-sm-b40 marg-lg-b90"></div>
+<div class="empty-space marg-sm-b40 marg-lg-b25"></div>

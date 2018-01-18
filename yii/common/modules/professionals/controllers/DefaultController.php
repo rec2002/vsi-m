@@ -27,7 +27,7 @@ class DefaultController extends Controller
     {
         $settings = array('title'=>'', 'cat'=>'0', 'region'=>0);
         $breadcrumb[] =  ['label' => 'Головна сторінка', 'url' => ['/']];
-        $breadcrumb[] =  ['label' => 'Каталог майстрів', 'url' => ['/members/professionals']];
+        $breadcrumb[] =  ['label' => 'Каталог майстрів', 'url' => ['/professionals']];
 
         $param = [];
         if (!empty(Yii::$app->request->get('region'))) {
@@ -36,7 +36,7 @@ class DefaultController extends Controller
                 $settings['region'] = $region['id'];
                 $settings['title'] = $region['name'];
                 $param[':region'] = $region['id'];
-                $breadcrumb[] =  ['label' => $region['name'], 'url' => Url::to(['/members/professionals/',  'region'=>$region['url_tag']])];
+                $breadcrumb[] =  ['label' => $region['name'], 'url' => Url::to(['professionals/',  'region'=>$region['url_tag']])];
             }
         }
 

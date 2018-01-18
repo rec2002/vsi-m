@@ -89,7 +89,7 @@ return [
 
 
 
-                'кабінет/виконані-проекти' =>'/members/portfolio/list',
+                /*'кабінет/виконані-проекти' =>'/members/portfolio/list',*/
                 /*'кабінет/мої-замовлення' =>'members/customer/list',*/
                 'блог/<id:\d+>/<slug>'=>'site/publish',
                 'блог'=>'site/publish',

@@ -3,7 +3,7 @@ $(document).ready(function(){
 
 
 
-    var socket = io.connect(location.protocol+'//'+location.hostname+':3000');
+    var socket = io.connect('https://'+location.hostname+':9876', {secure: true});
     socket.emit('online', {member: $('header.tt-header.user').data('id'), suggestion_id: $('div.tt-messages-user.clearfix.active').data('id'), support:$('div.tt-messages-user.clearfix.active').data('support')});
 
 

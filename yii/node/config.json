@@ -1,0 +1,10 @@
+{
+    "port": "9876",
+    "secure": true,
+    "secure_key" : "/etc/ssl/certs/vykonrob.com.ua.key",
+    "secure_cert" : "/etc/ssl/certs/vykonrob.com.ua.crt", 
+	"host" : "localhost",
+    "user" : "root",
+    "password" : "QBgh84Ye2x4g#",
+    "database" : "dev"
+}

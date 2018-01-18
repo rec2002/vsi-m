@@ -95,6 +95,8 @@ $(function() {
 
     $(document).on("click", ".delete-portfolio", function(e) {
          $('.popup-wrapper-confirm').addClass('active');
+         $('.popup-wrapper-confirm').find('.popup-content').addClass('active');
+
          var url = $(this).attr('href');
           _functions.dialog('Справді бажаєте видалити?', '',
                function() {

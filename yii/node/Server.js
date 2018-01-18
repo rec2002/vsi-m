@@ -1,20 +1,69 @@
-var express = require('express'),
-    http = require('http');
+var fs = require('fs'),
+	express = require('express'),
+	mysql  =  require("mysql"),
+	str2json = require('string-to-json'),
+	config = require('./config');
+	
+var serverPort = config.port || 8765, // Listen port
+    secure = config.secure || false; // use HTTPS/SSL
+	
+var app = express();
+if (secure)
+{
+    var options = {
+        key: fs.readFileSync(config.secure_key),
+        cert: fs.readFileSync(config.secure_cert)
+    };
+    var server = require('https').createServer(options, app);
+} else
+{
+    var server = require('http').createServer(app);
+}
+
+var users = {};
+
+var pool    =    mysql.createPool({
+    connectionLimit   :   100,
+    host              :   config.host,
+    user              :   config.user,
+    password          :   config.password,
+    database          :   config.database,
+    debug             :   false
+});	
+
+console.log('Node server Init');
+
+
+
+server.listen(serverPort, function() {
+    console.log('listening on *:'+serverPort);
+    mysql_query("UPDATE `members` SET `online` = '0' WHERE `members`.`id` > 0 ",function(res){
+        if(res) console.log('Disconnect all users');
+    });
+
+});
+
+var io = require('socket.io').listen(server, { wsEngine: 'ws' });
+
+app.get('/', function(req, res){
+    res.send('<h1>Server live</h1>');
+    console.log('Server live');
+
+});
+
+/*	
 var app = express();
 var mysql  =  require("mysql");
 var server = http.createServer(app);
 var io = require('socket.io').listen(server, {'pingTimeout':4000, 'pingInterval':2000});
-var users = {};
+
 var str2json = require('string-to-json');
 
-var pool    =    mysql.createPool({
-    connectionLimit   :   100,
-    host              :   'localhost',
-    user              :   'root',
-    password          :   '',
-    database          :   'dev',
-    debug             :   false
-});
+
+
+
+
+
 
 server.listen(3000, function(){
     console.log('listening on *:3000');
@@ -29,6 +78,7 @@ app.get('/', function(req, res){
     console.log('Server live');
 
 });
+*/
 
 
 io.on('connection', function(socket){

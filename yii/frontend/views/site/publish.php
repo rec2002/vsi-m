@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-
+$this->title = 'Блог';
 ?>
 
 <div class="tt-header-margin"></div>
@@ -28,7 +28,7 @@ if (sizeof($data)) foreach ($data as $model) { ?>
                         <div class="simple-text size-2">
                             <p><?= Html::encode($model->short_desc); ?></p>
                         </div>
-                        <?= Html::a(Html::encode('дізнатись більше'), Url::toRoute(['site/publish', 'id' => $model->id, 'slug'=>$model->url_tag]), ['class' =>'button type-1 full']) ?>
+                        <?= Html::a(Html::encode('Дізнатись більше'), Url::toRoute(['site/publish', 'id' => $model->id, 'slug'=>$model->url_tag]), ['class' =>'button type-1 full']) ?>
                     </div>
                     <div class="empty-space marg-lg-b30"></div>
                 </div>

@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
             <?php $form = ActiveForm::begin(['id' => 'faq-form', 'action' =>['site/faqform']]); ?>
             <h4 class="h4 text-center" style="font-weight: 400;">Задати питання</h4>
 
-            <?= $form->field($model, 'name')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Ваше ім’я *"])->label(false); ?>
+            <?= $form->field($model, 'name')->textInput(['class' => 'simple-input', 'placeholder' => "Ваше ім’я *"])->label(false); ?>
 
             <?= $form->field($model, 'email')->textInput(['class' => 'simple-input', 'placeholder' => "Email *"])->label(false); ?>
 

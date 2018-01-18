@@ -15,7 +15,7 @@ $this->title = 'Виконані проекти  - Кабінет користу
                     <div class="tab-nav">
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/member'])?>"><span>Особисті дані</span></a>
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/member/types'])?>"><span>Послуги та ціни</span></a>
-                        <a class="tab-menu redirect active" href="<?=Url::to(['/members/member/portfolio'])?>"><span>Виконані проекти</span></a>
+                        <a class="tab-menu redirect active" href="<?=Url::to(['/members/portfolio/list'])?>"><span>Виконані проекти</span></a>
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/member/resetpwd'])?>"><span>Змінити пароль</span></a>
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/member/noticesettings'])?>"><span>Сповіщення</span></a>
                         <a class="tab-menu redirect" href="<?=Url::to(['/members/member/billing'])?>" ><span>Доступ до замовлень</span></a>
