@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 use yii\helpers\Url;
-$this->title = 'Всі Майстри';
+$this->title = 'Виконроб -  сервіс з пошуку майстрів щодо ремонту квартир.';
 ?>
 
 

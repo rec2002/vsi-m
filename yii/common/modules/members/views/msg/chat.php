@@ -19,7 +19,9 @@ $this->title = 'Повідомлення';
                     <div class="tab-nav">
 
                         <a href="<?=Url::to(['/members/msg'])?>" class="tab-menu <?=(!isset($_GET['filter'])) ? 'active' : '' ?>"><span>Всі</span></a>
+<?  if (\Yii::$app->user->can('majster')) {  ?>
                         <a href="<?=Url::to(['/members/msg?filter=orders'])?>" class="tab-menu <?=((@$_GET['filter']=='orders') ? 'active' : '')?>"><span>Мої замовники</span></a>
+<? } ?>
                         <a href="<?=Url::to(['/members/msg?filter=executors'])?>" class="tab-menu <?=((@$_GET['filter']=='executors') ? 'active' : '' )?>"><span>Мої виконавці</span></a>
                         <a href="<?=Url::to(['/members/msg?filter=support'])?>" class="tab-menu <?=((@$_GET['filter']=='support') ? 'active' : '' )?>"><span>Підтримка</span></a>
 

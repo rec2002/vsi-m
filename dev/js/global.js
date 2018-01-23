@@ -1728,6 +1728,9 @@ console.log(upload.width());
         e.preventDefault();
         var form = $(this);
 
+
+        if ($("input[name='MemberEdit[types][]']").length && $("input[name='MemberEdit[types][]']").is(':checked')==false) return false;
+
         jQuery.ajax({
             url: form.attr('action'),
             type: form.attr('method'),

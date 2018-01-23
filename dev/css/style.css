@@ -326,6 +326,8 @@ textarea.simple-input.height-3, textarea.simple-input.size-2.height-3 { height: 
 textarea.simple-input.height-4, textarea.simple-input.size-2.height-4 { height: 155px; }
 .simple-input-icon { position: relative; }
 .simple-input-icon img { position: absolute; top: 50%; left: 18px; -webkit-transform: translateY(-50%); transform: translateY(-50%); }
+@media (min-width: 992px) and (max-width: 1600px) {.simple-input-icon img {top: 25px!important;}}
+
 .simple-input-icon .simple-input { padding-left: 44px; }
 .simple-input.single { width: 68px; height: 38px; line-height: 36px; }
 /*simple-input light*/
@@ -991,7 +993,7 @@ span.agree a  { color: #3b5997; text-decoration: none;font-weight: 500; }
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 .tt-autocomplete { position: relative; }
 .tt-autocomplete-input { padding-right: 204px; }
-.tt-autocomplete-input .simple-input { padding-left: 26px; padding-right: 26px; border-top-right-radius: 0; border-bottom-right-radius: 0; text-overflow: ellipsis; }
+.tt-autocomplete-input .simple-input { padding-left: 16px; padding-right: 16px; border-top-right-radius: 0; border-bottom-right-radius: 0; text-overflow: ellipsis; }
 .tt-autocomplete-submit { position: absolute; top: 0; right: 0; width: 204px; height: 100%; font-size: 0; text-align: center; background: #ff8a00; border: 1px solid #ff8a00; border-top-right-radius: 3px; border-bottom-right-radius: 3px; -webkit-transition: background .3s ease-in-out; transition: background .3s ease-in-out; }
 .tt-autocomplete-submit span { display: inline-block; font-size: 14px; line-height: 20px; font-weight: 700; color: #fff; text-transform: uppercase; vertical-align: middle; -webkit-transition: color .3s ease-in-out; transition: color .3s ease-in-out; }
 .tt-autocomplete-submit:after { content: ''; display: inline-block; width: 0; height: 100%; vertical-align: middle; }

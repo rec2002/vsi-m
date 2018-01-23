@@ -118,7 +118,7 @@ class DefaultController extends Controller
     public function actionDetail($id)
     {
         $model = Orders::find()->where(['id'=>$id])->one();
-        if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
+
         $images = OrderImages::findAll(['order_id' => $model->id]);
 
         $param[':order']=$model->id;

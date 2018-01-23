@@ -2,8 +2,6 @@
 
 namespace common\modules\professionals\controllers;
 
-
-
 use yii\web\Controller;
 use Yii;
 use yii\helpers\Url;
@@ -15,7 +13,7 @@ use common\modules\members\models\Portfolio;
 use common\components\MemberHelper;
 use yii\data\SqlDataProvider;
 use yii\helpers\ArrayHelper;
-
+use \yii\web\HttpException;
 
 /**
  * Default controller for the `Professionals` module
@@ -124,19 +122,44 @@ class DefaultController extends Controller
 
 
         $member = MemberEdit::find()->where(['id' => $id])->one();
-        $member->types = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT type FROM member_types WHERE member="'.$id.'" ')->asArray()->all(), 'type');
-        $member->prices = ArrayHelper::index( MemberPrices::findBySql('SELECT price_id as id, price  FROM member_prices WHERE member="'.$id.'" ')->asArray()->all(), 'id');
-        $member->regions = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT region FROM member_regions WHERE member="'.$id.'" ')->asArray()->all(), 'region');
 
-        $portfolio =  Portfolio::findBySql('SELECT  p.id, p.member,	p.title, p.description,	p.cost,	p.work_date, 
+        if (!$member) throw new HttpException(404 ,'Профайл користувача не знайдено');
+
+        if (array_keys(Yii::$app->authManager->getRolesByUser($id))[0]=='majster') {
+            $member->types = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT type FROM member_types WHERE member="' . $id . '" ')->asArray()->all(), 'type');
+            $member->prices = ArrayHelper::index(MemberPrices::findBySql('SELECT price_id as id, price  FROM member_prices WHERE member="' . $id . '" ')->asArray()->all(), 'id');
+            $member->regions = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT region FROM member_regions WHERE member="' . $id . '" ')->asArray()->all(), 'region');
+
+            $portfolio = Portfolio::findBySql('SELECT  p.id, p.member,	p.title, p.description,	p.cost,	p.work_date, 
                                   (SELECT i.image FROM `member_portfolio_images` i WHERE i.portfolio_id = p.id ORDER BY i.created_at ASC, i.id ASC LIMIT 1) as image	 
                                   FROM `member_porfolio` p 
-                                  WHERE p.member="'.$id.'"   ORDER BY p.created_at DESC')->asArray()->all();
+                                  WHERE p.member="' . $id . '"   ORDER BY p.created_at DESC')->asArray()->all();
+
+            return $this->render('profile', ['member' => $member, 'portfolio' => $portfolio, 'ratings' => $this->GetRetingsReviews($id)]);
+        } else {
+
+            $filter[] = ' o.member='.$id;
+
+            $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM orders o  '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''))->queryScalar();
 
 
+            $provider = new SqlDataProvider([
+                'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id) as `suggestions`  FROM `orders` o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
+                'totalCount' => $count,
+                'pagination' => ['pageSize' => 10, 'pageParam' => 'стр', 'pageSizeParam' => 'лім']
+            ]);
 
+            $status = MemberHelper::GetBudgetRange();
+            // Setter
+            $arr = array();
+            foreach( $provider->models as $key => $val){
+                $arr[$key] = $provider->models[$key];
+                $arr[$key]['budget_name'] = $status[$val['budget_name']]['budget'];
+            }
+            $provider->models =  $arr;
 
-        return $this->render('profile', ['member'=> $member, 'portfolio'=> $portfolio, 'ratings'=>$this->GetRetingsReviews($id)]);
+            return $this->render('profile-user', ['member' => $member, 'model'=>$provider]);
+        }
     }
 
 

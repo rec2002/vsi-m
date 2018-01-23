@@ -51,7 +51,7 @@ $this->title = 'Реєстрація майстра - Крок 4';
 
 
                                 <?
-                                $types = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 WHERE d.active=1 AND d.types=0 ORDER BY d.priority ASC, d1.priority ASC ")->queryAll();
+                                $types = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 AND d1.active=1 WHERE d.active=1 AND d.types=0 ORDER BY d.priority ASC, d1.priority ASC ")->queryAll();
 
                                 $types_arr=array();
                                 if (sizeof($types)) {
@@ -69,7 +69,7 @@ $this->title = 'Реєстрація майстра - Крок 4';
 
                                     'template' => "\n{input}\n",
                                     'item' => function($index, $label, $name, $checked, $value) {
-                                        $types_ = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 WHERE d.active=1 AND d.types=0 ORDER BY d.priority ASC ")->queryAll();
+                                        $types_ = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 AND d1.active=1 WHERE d.active=1 AND d.types=0 ORDER BY d.priority ASC ")->queryAll();
                                         if ($index==0) {
                                             $header = "<li><div class=\"checkbox-toggle\"><label class=\"checkbox-entry has-child\"><input type=\"checkbox\"><span></span></label><a href=\"javascript:\">".$types_[$index]['parent_name']."</a></div><ul>";
                                         }else if ($types_[$index]['parent']!=$types_[$index-1]['parent']){

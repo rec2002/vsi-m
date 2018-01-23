@@ -117,5 +117,5 @@ span.notification {
 }
 
 a.order_caregories{ border: 1px solid rgba(138,138,123,.6);display: inline-block; margin-bottom: 10px !important; vertical-align: middle; height: 28px; line-height: 26px; font-size: 14px;  width: auto;  padding: 0 10px;  margin-right: 6px; border-radius: 5px;}
-#ui-datepicker-div {z-index:3!important;}
+#ui-datepicker-div {z-index:10000!important;}
 .alert-success.alert.fade.in button.close{font-size: 18px;}
