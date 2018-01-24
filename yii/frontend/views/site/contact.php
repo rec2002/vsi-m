@@ -30,7 +30,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => 'Description 1',],
                     <div class="empty-space marg-lg-b20"></div>
                     <!-- tt-contact -->
                     <div class="tt-contact">
-                        <p>Багатоканальний телефон: <a href="tel:88005552323">8 800 555 23 23</a></p>
+                        <p>Багатоканальний телефон: <a href="tel:88005552323" style="white-space: nowrap;">8 800 555 23 23</a></p>
                         <p>Email: <a href="mailto:Office@vsimajstry.com.ua">Office@vsimajstry.com.ua</a></p>
                         <p>Адреса: <b>м. Київ, пр. Незалежності 5 / 16</b></p>
                     </div>
@@ -40,13 +40,13 @@ $this->registerMetaTag(['name' => 'description', 'content' => 'Description 1',],
                         <div class="tt-footer-social-label">Ми в соцмережах:</div>
                         <ul class="tt-social">
                             <li>
-                                <a href="#">
+                                <a href="https://www.facebook.com/Виконроб-177988659475902/" target="_blank">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAATlBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIyeT03AAAAGXRSTlMA9xWm8OZnTT4h3sCPVRwH6tCak4hvYl5Bt5UDEgAAAF9JREFUOMvtz7sOgCAQRNEFAQERfOv+/48q0X4oLPfUN5kMCfGrslkz94QlfjiCtOUpudAQKu4I035XPIxeE3BariI8cyiuDAz15b5pqCheqEV+X2OhOeTGMEezkhDYDUcUBB78BRSGAAAAAElFTkSuQmCC" alt="">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAQlBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////8IX9KGAAAAFXRSTlMA9xUf56bwkGdNPt7AYFUH0JqIb0Eqn9RgAAAAWklEQVQ4y+3NNxKAMAwFUcvIGTDp3/+qhKGXCpfa+s2ss6yh9YPjVhQw4SnLzjM45UkBCcEpWD0J81q9BBfGWysipA9GEfor/2uxTtidpokQBkNoYYvJWZbcDVfMA36iUqtCAAAAAElFTkSuQmCC" alt="">
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="https://www.youtube.com/channel/UCKuf5iGPRJPfOiFt0mazdjQ" target="_blank">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAMFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkL9SS24AAAAD3RSTlMA8ar2FOsaJ4J2YUbomFmePvt7AAAAWUlEQVQoz2MYBdgAm+J/MBBKQBJ0/Q8FIUiC+jDBT0iC8jDBj0iC9v///+oHCX5GVfmd/T5MJULwNwPLZCyCDI8xBL+z9GCxaCLMIkwnEXI8wpvYA2QUYAEAROhw+W9H9KAAAAAASUVORK5CYII=" alt="">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAKlBMVEUAAAD///////////////////////////////////////////////////+Gu8ovAAAADXRSTlMA8ar2FOsaXieCdkaY2mYu3wAAAFlJREFUKM9jGAXYAJviXTAQSkASdL0LBSFIgrowwUtIgrIwwYtIgrZ3716fCxK8jKryBsdZmEqE4G0GlsVYBBmKMQRvsEzFYtFCmEWYTiLkeIQ3sQfIKMACAMW+YqMi/OZzAAAAAElFTkSuQmCC" alt="">
                                 </a>
@@ -62,7 +62,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => 'Description 1',],
 
                     <div class="tt-contact-form">
                         <?php $form = ActiveForm::begin(['id' => 'contact-form', 'action' =>['site/contact']]); ?>
-                            <?= $form->field($model, 'name')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Ваше ім’я *"])->label(false); ?>
+                            <?= $form->field($model, 'name')->textInput(['class' => 'simple-input', 'placeholder' => "Ваше ім’я *"])->label(false); ?>
                             <div class="row row10">
                                 <div class="col-sm-6">
                                     <?= $form->field($model, 'phone')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Контактний телефон"])->label(false); ?>

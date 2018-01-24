@@ -59,7 +59,7 @@ class Portfolio extends \yii\db\ActiveRecord
             'id' => 'ID',
             'member' => 'Member',
             'title' => 'Назва робіт',
-            'description' => 'Опис виконаний робіт',
+            'description' => 'Опис виконаниx робіт',
             'cost' => 'Вартість робіт',
             'work_date' => 'Коли проводились роботи',
             'created_at' => 'Created At',

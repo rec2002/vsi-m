@@ -1361,7 +1361,8 @@ console.log(upload.width());
 	    }
 	});
 
-	$('.tt-widget-dropdown').on('click', function(){
+
+    $(document).on('click','.tt-widget-dropdown', function(){
 		$(this).next().slideToggle();
 	});
 

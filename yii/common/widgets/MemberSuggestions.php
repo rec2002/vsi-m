@@ -33,7 +33,7 @@ class MemberSuggestions extends \yii\bootstrap\Widget
 
                 $model->order_id = $this->id;
                 $model->member_id = Yii::$app->user->identity->getId();
-                $model->save(false);
+                //$model->save(false);
                 header('Location: ' . Url::to(['/orders/default/detail', 'id' => $this->id]));
                 exit();
             }

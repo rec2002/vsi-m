@@ -34,7 +34,7 @@ class DefaultController extends Controller
                 $settings['region'] = $region['id'];
                 $settings['title'] = $region['name'];
                 $param[':region'] = $region['id'];
-                $breadcrumb[] =  ['label' => $region['name'], 'url' => Url::to(['professionals/',  'region'=>$region['url_tag']])];
+                $breadcrumb[] =  ['label' => $region['name'], 'url' => Url::to(['/professionals/',  'region'=>$region['url_tag']])];
             }
         }
 
@@ -45,7 +45,7 @@ class DefaultController extends Controller
                 $param[':type'] = $cat['id'];
                 $settings['title'] = $cat['name'];
                 $settings['cat'] = $cat['id'];
-                $breadcrumb[] =  ['label' => $cat['name'], 'url' => Url::to(['/members/professionals/',  'cat'=>$cat['url_tag']])];
+                $breadcrumb[] =  ['label' => $cat['name'], 'url' => Url::to(['/professionals/',  'cat'=>$cat['url_tag']])];
             }
         }
 
@@ -53,7 +53,7 @@ class DefaultController extends Controller
 
         if (@$cat['id']>0 && @$region['id']>0) {
             $settings['title'] =  $cat['name'].' - '.$region['name'];
-            $breadcrumb[] =  ['label' => $cat['name'].' - '.$region['name'], 'url' => Url::to(['members/professionals/',  'cat'=>$cat['url_tag'] ,  'region'=>$region['url_tag']])];
+            $breadcrumb[] =  ['label' => $cat['name'].' - '.$region['name'], 'url' => Url::to(['/professionals/',  'cat'=>$cat['url_tag'] ,  'region'=>$region['url_tag']])];
         }
 
 
