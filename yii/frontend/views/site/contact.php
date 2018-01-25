@@ -65,15 +65,15 @@ $this->registerMetaTag(['name' => 'description', 'content' => 'Description 1',],
                             <?= $form->field($model, 'name')->textInput(['class' => 'simple-input', 'placeholder' => "Ваше ім’я *"])->label(false); ?>
                             <div class="row row10">
                                 <div class="col-sm-6">
-                                    <?= $form->field($model, 'phone')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Контактний телефон"])->label(false); ?>
+                                    <?= $form->field($model, 'phone')->textInput(['class' => 'simple-input', 'placeholder' => "Контактний телефон"])->label(false); ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Email *"])->label(false); ?>
+                                    <?= $form->field($model, 'email')->textInput(['class' => 'simple-input', 'placeholder' => "Email *"])->label(false); ?>
                                 </div>
                             </div>
                             <div class="row row10">
                                 <div class="col-sm-12">
-                                    <?= $form->field($model, 'subject')->textInput(['autofocus' => true, 'class' => 'simple-input', 'placeholder' => "Тема повідомлення *"])->label(false); ?>
+                                    <?= $form->field($model, 'subject')->textInput(['class' => 'simple-input', 'placeholder' => "Тема повідомлення *"])->label(false); ?>
                                 </div>
                             </div>
 

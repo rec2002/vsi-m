@@ -61,7 +61,7 @@ class MemberHelper {
     }
 
 
-    public static function GetMailTemplate($id, $data = array(), $client_email='') {
+    public static function GetMailTemplate($id, $data = array(), $client_email='', $setFlash=false) {
 
         $template = Yii::$app->db->createCommand("SELECT `subject`, `emails`, `notices`, `mail_content`, `sms_content`, `message` FROM `mail_template` WHERE `id`= '".$id."' ")->queryAll();
 
@@ -87,7 +87,7 @@ class MemberHelper {
         $template[0]['emails'] = $emails;
 
         Yii::$app->mailer->compose()->setTo($template[0]['emails'])->setFrom(Yii::$app->params['adminEmail'])->setSubject($template[0]['subject'])->setHtmlBody($template[0]['mail_content'])->send();
-        Yii::$app->session->setFlash('success', $template[0]['message']);
+        if($setFlash) Yii::$app->session->setFlash('success', $template[0]['message']);
 
         return $template[0]['message'];
     }

@@ -5,9 +5,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<div class="layer-close"></div>
-<div class="popup-container">
-    <div class="popup-align">
+
         <div class="tt-send-question-form">
             <?php $form = ActiveForm::begin(['id' => 'faq-form', 'action' =>['site/faqform']]); ?>
             <h4 class="h4 text-center" style="font-weight: 400;">Задати питання</h4>
@@ -24,9 +22,6 @@ use yii\widgets\ActiveForm;
             <?php ActiveForm::end(); ?>
 
         </div>
-    </div>
-    <div class="button-close" id="button-close"></div>
-</div>
 
 <style>
     div.form-group.field-faqform-email.required.has-error{margin-bottom: 5px;}

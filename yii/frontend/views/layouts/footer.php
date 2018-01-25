@@ -88,7 +88,7 @@ use yii\helpers\Html;
     <div class="tt-footer-bottom">
         <div class="container">
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-11">
                     <?=Nav::widget([
                         'items' => [
                             ['label' => 'Про нас', 'url' => ['/site/about']],
@@ -103,9 +103,9 @@ use yii\helpers\Html;
                     ?>
 
                 </div>
-                <div class="col-sm-4">
-                    <div class="tt-footer-social">
-                        <div class="tt-footer-social-label">Ми соцмережах:</div>
+                <div class="col-sm-1">
+                    <div class="tt-footer-social" style="white-space: nowrap">
+                        <!--<div class="tt-footer-social-label">Ми соцмережах:</div>-->
                         <ul class="tt-social">
                             <li>
                                 <a href="https://www.facebook.com/Виконроб-177988659475902/" target="_blank">

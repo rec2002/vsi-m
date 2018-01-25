@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-use yii\bootstrap\Modal;
+use frontend\assets\AppAsset;
 
 
 $this->title = 'Питання та відповіді';
@@ -33,20 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2 class="h2 text-center">Не знайшли відповіді?</h2>
         <div class="empty-space marg-lg-b30"></div>
         <div class="text-center">
-            <?= Html::a('Задайте своє питання', ['faqform'], ['class' => 'button type-1 size-4 color-3 uppercase modalButton']) ?>
+
+
+            <a href="javascript:" class="button type-1 size-4 color-3 uppercase tt-faq-btn ">Задайте своє питання</a>
+
         </div>
         <div class="empty-space marg-sm-b40 marg-lg-b80"></div>
     </div>
 </div>
 
-<?php
-    Modal::begin([ 'id'=>'modal', 'size' => 'moda-lg', 'clientOptions' => [],]);
-    echo "<div id='modalContent'></div>";
-    Modal::end();
+<?
+$bundle = AppAsset::register(Yii::$app->view);
+$bundle->js[] = '/js/faq.js';
 ?>
 
-<style>
-    .modal-header {display:none;}
-    .modal-body {padding: 0;}
-    .popup-align {padding: 25px;}
-</style>
+

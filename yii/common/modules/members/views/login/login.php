@@ -43,7 +43,7 @@ $this->title = 'Вхід на сайт';
                                 <div class="empty-space marg-xs-b30"></div>
                             </div>
                             <div class="col-sm-6">
-                                <h5 class="h5">Вперше на ВсіМайстри</h5>
+                                <h5 class="h5">Вперше на "Виконроб"</h5>
                                 <div class="empty-space marg-lg-b30"></div>
                                 <div class="simple-text size-2 blue-links small-space">
                                     <p><a href="<?=Url::to(['/members/customregistration/create'])?>">Додати замовлення</a> - якщо шукаєте виконавця робіт</p>

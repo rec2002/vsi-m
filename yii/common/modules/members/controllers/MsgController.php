@@ -171,6 +171,8 @@ WHERE msg.ticket_id =s.id AND u.status=0 AND u.member_id=:member AND u.support =
                 LEFT JOIN `orders` o ON s.order_id = o.id
                 LEFT JOIN `members` m1 ON o.member = m1.id
                 WHERE a.id IS NOT NULL  ' . ((sizeof($filter)) ? ' AND ' . implode(' AND ', $filter) : '') . ' ', $param)->queryAll();
+
+
                 $messages = Yii::$app->db->createCommand('SELECT *, DATE_FORMAT(created_at, "%d-%m-%Y") as created_at  FROM `member_msg` WHERE  suggestion_id=:suggestion_id ORDER BY `created_at` ASC', $param_)->queryAll();
         }
 

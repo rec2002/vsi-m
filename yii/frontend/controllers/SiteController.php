@@ -85,55 +85,16 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
-        /*
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
-        */
         return $this->redirect(['/members/login']);
     }
 
-    /**
-     * Logs out the current user.
-     *
-     * @return mixed
-     */
- /*
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-*/
-    /**
-     * Displays contact page.
-     *
-     * @return mixed
-     */
     public function actionContact()
     {
 
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-            $this->GetMailTemplate(1, $model->attributes);
-/*
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
-            }
-*/
+            $msg = \common\components\MemberHelper::GetMailTemplate(1, $model->attributes, '', true);
             return $this->refresh();
         } else {
             return $this->render('contact', [
@@ -147,47 +108,15 @@ class SiteController extends Controller
         $model = new Faqform();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-            $msg = $this->GetMailTemplate(2, $model->attributes);
-
             Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+            $msg = \common\components\MemberHelper::GetMailTemplate(2, $model->attributes);
             return['status'=>1, 'msg'=>$msg];
 
-        } else {
+        } else   {
             return $this->renderAjax('faqform', [
                 'model' => $model,
             ]);
         }
-    }
-
-
-    public function GetMailTemplate($id, $data = array()) {
-
-        $template = Yii::$app->db->createCommand("SELECT `subject`, `emails`, `notices`, `mail_content`, `sms_content`, `message` FROM `mail_template` WHERE `id`= '".$id."' ")->queryAll();
-
-        if (!sizeof($template) && !sizeof($data) && empty($id)) {
-            Yii::$app->session->setFlash('error', 'Помилка надсилання пошти.');
-            return false;
-        }
-
-        foreach($data as $key=>$val) {
-            $template[0]['mail_content'] = str_replace('{'.strtoupper($key).'}', $val, $template[0]['mail_content']);
-        }
-
-        $emails = array();
-        $arr = explode(',', $template[0]['emails']);
-        if (sizeof($arr)) {
-            foreach ($arr as $val) {
-                $emails[trim($val)]= '';
-            }
-        } else $emails[$template[0]['emails']] = '';
-
-        $template[0]['emails'] = $emails;
-
-        Yii::$app->mailer->compose()->setTo($template[0]['emails'])->setFrom(Yii::$app->params['adminEmail'])->setSubject($template[0]['subject'])->setHtmlBody($template[0]['mail_content'])->send();
-        Yii::$app->session->setFlash('success', $template[0]['message']);
-
-        return $template[0]['message'];
     }
 
     /**
@@ -200,80 +129,6 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
-    public function actionSignup()
-    {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Requests password reset.
-     *
-     * @return mixed
-     */
-/*
-    public function actionRequestPasswordReset()
-    {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
-            }
-        }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-*/
-    /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
-     */
-
-/*
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
-
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
-    }
-
-*/
     /**
      * Displays Publish.
      *
@@ -324,7 +179,9 @@ class SiteController extends Controller
      */
     public function actionFaq()
     {
-        return $this->render('faq');
+        $model = new Faqform();
+
+        return $this->render('faq', ['model'=>$model]);
     }
 
     /**

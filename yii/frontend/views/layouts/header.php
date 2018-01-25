@@ -136,7 +136,9 @@ use common\components\MemberHelper;
             <div class="toggle-block">
                 <div class="toggle-block-container">
                     <div class="nav-right">
+<? if (@$_GET['id']!=6) { ?>
                         <a href="<?=Url::to(['/members/login'])?>" class="button type-1 icon-left close" style="float:none;opacity: 1;text-shadow:none;"><span>Відмінити реєстрацію</span></a>
+<? } ?>
                     </div>
                 </div>
             </div>

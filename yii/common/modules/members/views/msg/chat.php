@@ -30,12 +30,14 @@ $this->title = 'Повідомлення';
                     <div class="tab-entry" style="display: block;">
 <? if (sizeof($members)) { ?>
 
+
+
                     <!-- TT-MESSAGES -->
                      <div class="tt-messages clearfix">
                             <div class="tt-messages-nav">
 <? foreach ($members as $val) {
 
-    if (!empty($val['last_name']))
+    if (!empty($val['phone']))
         $arrayParams = ['id'=>$val['suggestion_id']];
     else
         $arrayParams = ['support_id'=>$val['suggestion_id']];

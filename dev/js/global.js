@@ -59,8 +59,6 @@ $(function() {
     }
 
 
-
-
 	/*========================*/
 	/* 02 - page calculations */
 	/*========================*/
@@ -325,31 +323,27 @@ $(function() {
 
 
     if ($("#sdate,#edate").length) {
-        function dateRange() {
-            $(function () {
-                $("#sdate,#edate").datepicker({
-                    dateFormat: "dd.mm.yy",
-                    minDate: 0,
-                    changeMonth: false,
-                    changeYear: false
-                }).change(function () {
-                    var sdate = $('#sdate').datepicker("getDate");
-                    var edate = $('#edate').datepicker("getDate");
-                    if (this.id == 'sdate') {
-                        if (sdate > edate) {
-                            $('#edate').datepicker("setDate", sdate);
-                        }
-                    } else {
-                        if (edate < sdate) {
-                            $('#sdate').datepicker("setDate", edate);
-                        }
-                    }
-                });
-                $("#sdate,#edate").datepicker();
-            });
-        }
-        dateRange();
-	}
+
+        $("#sdate,#edate").datepicker({
+            dateFormat: "dd.mm.yy",
+            minDate: 0,
+            changeMonth: false,
+            changeYear: false
+        }).change(function () {
+            var sdate = $('#sdate').datepicker("getDate");
+            var edate = $('#edate').datepicker("getDate");
+            if (this.id == 'sdate') {
+                if (sdate > edate) {
+                    $('#edate').datepicker("setDate", sdate);
+                }
+            } else {
+                if (edate < sdate) {
+                    $('#sdate').datepicker("setDate", edate);
+                }
+            }
+        });
+        $("#sdate,#edate").datepicker();
+    }
 
 	/*tabs*/
 	var tabsFinish = 0;
@@ -1605,7 +1599,7 @@ console.log(upload.width());
 	        }
 	    });
 	}
-
+/*
     $('#modalButton, .modalButton').click(function () {
         $('#modal').modal('show').find('#modalContent').load($(this).attr('href'));
         return false;
@@ -1615,28 +1609,7 @@ console.log(upload.width());
         if ($('#modal').length) $('#modal').modal('hide');
         return false;
 	});
-
-    $(document).on("beforeSubmit", "form#faq-form", function(e) {
-
-        e.preventDefault();
-        var form =jQuery('form#faq-form');
-        jQuery.ajax({
-            url: form.attr('action'),
-            type: form.attr('method'),
-            data: new FormData(form[0]),
-            mimeType: 'multipart/form-data',
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: 'json',
-            success: function (data) {
-            	if (data.status==1){
-                    $('.popup-align').html('<div class="empty-space marg-lg-b35"></div><h4 class="h4 text-center">Ваше питання надіслано</h4><div class="empty-space marg-lg-b15"></div><div class="simple-text size-4 text-center"><p>'+data.msg+'</p></div><div class="empty-space marg-lg-b30"></div>');
-				}
-            }
-        });
-        return false;
-	});
+*/
 
 
     $('.upload_avatar').on("change", function(e) {
@@ -1671,9 +1644,9 @@ console.log(upload.width());
                 success: function (data) {
                     var data = JSON.parse(data);
                     if (data.status==1){
-
                         if ($("img.tt-profile-img").length) {  $("img.tt-profile-img").attr('src', data.avatar_image); }
 						$(".img-responsive").attr('src', data.avatar_image);
+                        setTimeout( function() { $('#progress-wrp').css({'visibility':'hidden'}); } , 700)
 					}
                     // your callback here
                 },
