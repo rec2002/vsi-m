@@ -2318,6 +2318,12 @@ ul.pagination li.next.disabled span:before {left: auto; right: 0; -webkit-transf
 
 ul.pagination li.active a.page-link {background: #ff8a00; color: #fff; border-radius: 3px;}
 
+
+
+
+
+
+
 .spinner-left span {position: relative; display: inline-block; -webkit-transition: all .3s ease-in-out; transition: all .3s ease-in-out;}
 .spinner-left span:after {content: ''; position: absolute; left: 0px; top: 50%; margin: -10px 0 0 -5px; background-image: url(../img/spin.gif); background-size: 20px 20px; width: 20px; height: 20px; opacity: 0; background-repeat: no-repeat;background-position: center center;-webkit-transition: opacity .3s ease-in-out;transition: opacity .3s ease-in-out;}
 .spinner-left.loads.color-3 {background: #fff!important; color: #ff8a00!important;}

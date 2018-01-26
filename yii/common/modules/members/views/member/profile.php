@@ -10,7 +10,7 @@ use common\components\MemberHelper;
 $this->title = 'Кабінет користувача';
 
 ?>
-    <div class="tt-header-margin"></div>
+    <div class="tt-header-margin"  style="height: 55px;"></div>
 
     <!-- TT-HEADING -->
     <div class="tt-heading editable background-block" style="background-image:url(/img/bg/bg_3.jpg);">

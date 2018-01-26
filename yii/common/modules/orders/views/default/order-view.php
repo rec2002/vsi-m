@@ -6,7 +6,7 @@ $this->title = 'Замовлення';
 
 
 ?>
-    <div class="tt-header-margin"></div>
+    <div class="tt-header-margin"   style="height: 55px;"></div>
 
     <div class="tt-bg-grey">
         <div class="container">
@@ -120,7 +120,7 @@ $this->title = 'Замовлення';
 
                 <div class="tt-task-request">
                     <div class="tt-fadein-top">
-                        <?= Html::a(Html::encode('Редагувати замовлення'), Url::toRoute(['/orders/default/edit', 'id' => $model->id]), ['class' =>'tt-fadein-link button type-1']) ?>
+                        <?= Html::a(Html::encode('Редагувати замовлення'), Url::toRoute(['/orders/default/edit', 'id' => $model->id]), ['class' =>'button type-1']) ?>
                     </div>
                 </div>
 

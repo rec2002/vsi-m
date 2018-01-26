@@ -153,9 +153,9 @@ $this->registerCss(".nav > li > a {padding:0}
 
                                                             <i class="tt-icon like green"></i>
                                                         </span>
-                                                    <span class="tt-vote-count"><?=$val['negative']?></span>
+                                                    <span class="tt-vote-count"><?=$val['positive']?></span>
                                                 </a>
-                                                <a class="tt-vote dislike  <?=($val['positive']>0) ? 'active'  : '' ?>">
+                                                <a class="tt-vote dislike  <?=($val['negative']>0) ? 'active'  : '' ?>">
                                                         <span class="tt-vote-img">
                                                             <i class="tt-icon dislike grey"></i>
                                                             <i class="tt-icon dislike red"></i>

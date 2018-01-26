@@ -9,7 +9,7 @@ use common\components\MemberHelper;
 $this->title = 'Кабінет користувача';
 
 ?>
-    <div class="tt-header-margin"></div>
+    <div class="tt-header-margin" style="height: 55px;"></div>
 
     <div class="tt-bg-grey">
         <div class="container">
@@ -35,7 +35,7 @@ $this->title = 'Кабінет користувача';
                                         <img class="tt-person-img img-responsive" style="margin: 0;" src="<?=!empty(Yii::$app->user->identity->avatar_image) ? Yii::$app->user->identity->avatar_image : '/img/person/person.png';?>" alt="">
                                     </div>
                                     <div class="empty-space marg-sm-b15 marg-lg-b15"></div>
-                                    <div class="button type-1 size-2">Змінити фото <input type="file" class="upload_avatar" data-source="/members/member/uploadavatar/" accept="image/x-png,image/gif,image/jpeg"></div>
+                                    <div class="button type-1 size-2">Змінити фото <input type="file" class="upload_avatar" data-source="/members/member/uploadavatar/"  title="" accept="image/x-png,image/gif,image/jpeg"></div>
 
 
                                     <div id="progress-wrp" style="margin-top:15px;">
@@ -115,7 +115,6 @@ $this->title = 'Кабінет користувача';
                                                         'options' => [
                                                             'placeholder' => 'Виберіть дату'
                                                         ]
-
                                                     ])->textInput(['value'=>(!empty($member->busy_to)) ? date('d.m.Y', (strtotime($member->busy_to))) : '',  'class' => 'simple-input simple-datapicker', 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
                                                 </div>
                                             </div>

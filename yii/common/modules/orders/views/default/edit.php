@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 $this->title = 'Замовлення';
 
 ?>
-    <div class="tt-header-margin"></div>
+    <div class="tt-header-margin"   style="height: 55px;"></div>
 
     <div class="tt-bg-grey">
         <div class="container">
@@ -303,9 +303,9 @@ $this->title = 'Замовлення';
                     </div>
                 <? } ?>
             </div>
-
-            
-
+            <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
+        </div>
+    </div>
 
 
 
@@ -317,8 +317,5 @@ echo $this->registerJsFile($gpJsLink);
     echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
     echo $this->registerJsFile('/js/formatDate.js', ['depends' => 'yii\web\JqueryAsset']);
     echo $this->registerJsFile('/js/order.js', ['depends' => 'yii\web\JqueryAsset']);
-
-
-
 
 ?>

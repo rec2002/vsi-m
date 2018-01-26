@@ -3,10 +3,11 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\bootstrap\Button;
 
 use common\components\MemberHelper;
 
-$this->title = 'Реєстрація майстра - Крок 4';
+$this->title = 'Редагування послуг та цін ';
 ?>
 
     <div class="tt-header-margin"></div>
@@ -88,7 +89,7 @@ $this->title = 'Реєстрація майстра - Крок 4';
                                 <div class="empty-space marg-lg-b35"></div>
                                 <div class="tt-buttons-block m10 text-right">
 
-                                    <?= Html::resetButton('Відмінити', ['class' => 'button type-1 tt-project-new-close']) ?>
+                                    <?=Button::widget(['label' => 'Відмінити', 'options' => ['class' => 'button type-1 tt-project-new-close']]); ?>
                                     <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
                                 </div>
 
@@ -161,6 +162,38 @@ $.each( $(\"div#memberedit-types li ul li label.checkbox-entry input\"), functio
         if (!flag) $('p.help-block.help-block-error').text('Необхідно заповнити хоча б один пункт.'); else $('p.help-block.help-block-error').text('');
         return flag;
     });
+
+	$('.tt-project-new-close').on('click', function(e){
+	
+	    $(\"div#memberedit-types li ul li label.checkbox-entry input\").prop('checked', false);
+	
+	    $.post( \"/members/member/getypes\",  function( data ) {
+            $.each(data, function( key, value ) {
+                $('input[name=\"MemberEdit[types][]\"][value=\"' + value + '\"]').prop('checked', true);
+            });
+            
+            $.each( $(\"div#memberedit-types li ul li label.checkbox-entry input\"), function() {
+                if ($(this).is(':checked')) {
+                    $(this).closest('ul').closest('li').find('.checkbox-toggle input').prop('checked', true);
+                }
+            });          
+            $('p.help-block.help-block-error').text('');    
+        }, \"json\");
+	
+	
+		return false;
+	});
+
+
+    $(document).on(\"click\", \"div.tt-editable-close_\", function(e) {
+
+	    $.post( \"/members/member/prices\",  function( data ) {
+            $('div#prices_table').empty().html(data);
+        });
+
+		return false;
+	});
+
 
 
 })();" , \yii\web\View::POS_END );

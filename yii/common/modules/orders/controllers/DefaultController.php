@@ -88,7 +88,8 @@ class DefaultController extends Controller
 
 
         $provider = new SqlDataProvider([
-            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id) as `suggestions`  FROM `orders` o 
+            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, 
+                    (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id AND s.deleted=0) as `suggestions`  FROM `orders` o 
                      LEFT JOIN (SELECT order_id, type FROM `order_types`  '.((sizeof($filter_join)) ?  'WHERE '.implode(' AND ', $filter_join) : '').' GROUP BY order_id) ot ON o.id = ot.order_id
                      '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
             'totalCount' => $count,
@@ -124,7 +125,7 @@ class DefaultController extends Controller
         $param[':order']=$model->id;
         $categories = Yii::$app->db->createCommand('SELECT d.id, d.name, d.url_tag FROM `order_types` o LEFT JOIN `dict_category` d ON d.id = o.type AND d.types=1 WHERE d.active=1 AND o.order_id=:order', $param)->queryAll();
 
-        $suggestion = MemberSuggestion::findAll(['order_id' => $model->id]);
+        $suggestion = MemberSuggestion::findAll(['order_id' => $model->id, 'deleted'=>0]);
         return $this->render('order-view', ['model'=>$model, 'images'=>$images, 'suggestions'=>sizeof($suggestion), 'categories'=>$categories]);
     }
 
@@ -136,7 +137,7 @@ class DefaultController extends Controller
         $model = Orders::find()->where(['id'=>$id])->one();
         if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
         $images = OrderImages::findAll(['order_id' => $model->id]);
-        $suggestion = MemberSuggestion::findAll(['order_id' => $model->id]);
+        $suggestion = MemberSuggestion::findAll(['order_id' => $model->id, 'deleted'=>0]);
 
         if (!Yii::$app->user->isGuest) {
             if ($model->member == Yii::$app->user->identity->getId()) {
@@ -217,7 +218,7 @@ class DefaultController extends Controller
         $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM orders o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''), $param)->queryScalar();
         $provider = new SqlDataProvider([
             'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, 
-              (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id) as `suggestions`  FROM `orders` o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
+              (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id AND s.deleted=0) as `suggestions`  FROM `orders` o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
             'params' => $param,
             'totalCount' => $count,
             'pagination' => [
@@ -382,9 +383,6 @@ class DefaultController extends Controller
                     $ordersImages->save(false);
                 }
             }
-
-
-
 
             \common\components\MemberHelper::GetMailTemplate(4,  $model->attributes, Yii::$app->user->identity->email);
             return $this->redirect(['/orders/default/myorders']);

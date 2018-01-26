@@ -471,6 +471,11 @@ $(function() {
 		return false;
 	});
 
+    $(document).on('click', '.popup-close', function(){
+		$(this).closest('form')[0].reset();
+        return false;
+    });
+
     $(document).on('click', '.popup-wrapper_ .button-close', function(){
         $('.popup-wrapper_, div.popup-wrapper_ div.popup-content').removeClass('active');
         return false;
@@ -970,12 +975,7 @@ console.log(upload.width());
 		});
 		e.preventDefault();
 	});
-	$('.tt-project-new-close').on('click', function(e){
-		$(this).closest('.tt-project-edit-wrapper').children('.tt-project-new').fadeOut(300, function(){
-			$(this).siblings('.tt-project-list').fadeIn(300);
-		});
-		e.preventDefault();
-	});
+
 */
 	//slider range
 	var trueValues = [1000, 5000, 10000, 50000, 100000];
@@ -1699,6 +1699,7 @@ console.log(upload.width());
 
 
     $(document).on("submit", "form.form-ajax", function(e) {
+
         e.preventDefault();
         var form = $(this);
 
@@ -1733,6 +1734,7 @@ console.log(upload.width());
                 }
             }
         });
+
         return false;
     });
 
@@ -1998,6 +2000,12 @@ console.log(upload.width());
         };
         countChecked();
         $('.list-dotted-item-ckeckbox input[type=checkbox]').on('click', countChecked);
+
+        $('.list-dotted-item-ckeckbox input[type=checkbox]').on('click', function(){
+        	if ($('.list-dotted-item-ckeckbox input[type=checkbox]:checked').length>3) {
+                _functions.Msg('Дозволено вибрати не більше 3-х пунктів', '');
+			}
+		});
     }
 
 

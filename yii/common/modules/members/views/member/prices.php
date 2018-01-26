@@ -4,6 +4,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use common\components\MemberHelper;
+use yii\bootstrap\Button;
 
 ?>
 
@@ -75,7 +76,7 @@ if (sizeof($prices)) foreach ($prices as $key=>$val) {
 <div class="empty-space marg-sm-b30 marg-lg-b35"></div>
 
 <div class="tt-editable-form-btn">
-    <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+    <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close_ button type-1']) ?>
     <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save_prices']) ?>
 </div>
 <?php ActiveForm::end(); ?>

@@ -320,6 +320,11 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
         return $this->renderPartial('prices', ['model'=>$model]);
     }
 
+    public function actionGetypes() {
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        return ArrayHelper::getColumn(MemberTypes::findBySql('SELECT type FROM member_types WHERE member="'.Yii::$app->user->identity->getId().'" ')->asArray()->all(), 'type');
+    }
+
     public function actionPricesave()
     {
         Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
