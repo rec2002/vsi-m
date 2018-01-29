@@ -115,6 +115,8 @@ class PortfolioController extends \common\modules\members\controllers\DefaultCon
                     Yii::$app->db->createCommand()->delete('member_portfolio_images', ['id' => $val['id']])->execute();
                 }
             }
+
+
             $model->image = UploadedFile::getInstances($model, 'image');
             if ($model->image) {
                 foreach ($model->image as $image) {

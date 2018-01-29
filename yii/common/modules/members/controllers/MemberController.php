@@ -14,6 +14,7 @@ use common\modules\members\models\MemberPasswordForm;
 use common\modules\members\models\Portfolio;
 use common\modules\members\models\MemberDocuments;
 use common\modules\members\models\MemberBilling;
+use common\modules\members\models\MemberResponse;
 
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
@@ -89,6 +90,8 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
 
     public function actionValidations($mode='personal')
     {
+
+
         switch($mode){
             case 'add-order';
                 $model = new Orders(['scenario' => 'add-order']);
@@ -107,6 +110,10 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
             case 'billing':
                 $model = new MemberBilling();
             break;
+            case 'feedback':
+                $model = new MemberResponse(['scenario' => 'feedback']);
+            break;
+
         }
 
 
@@ -468,6 +475,23 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
         $model = new \common\modules\members\models\MemberResponse();
         return $this->render('@common/modules/members/views/response/step1', ['model'=>$model, 'member'=>$member]);
     }
+
+    public function actionFeedback()   {
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        if (Yii::$app->db->createCommand('SELECT count(*) FROM `member_response` r LEFT JOIN `member_suggestion` s ON s.id = r.suggestion_id WHERE r.id="'.Yii::$app->request->post('MemberResponse')['id'].'" AND s.member_id = "'.Yii::$app->user->identity->getId().'"')->queryScalar()>0){
+
+            $model = MemberResponse::findOne(['id' => Yii::$app->request->post('MemberResponse')['id']]);
+            $model->updated_at = date("Y-m-d H:i:s");
+            $model->feedback_approve = 1;
+            $model->feedback_text = Yii::$app->request->post('MemberResponse')['feedback_text'];
+
+            $model->save(false);
+            return['status'=>1];
+        }
+        return['status'=>0];
+    }
+
+
 
     public function actionValidationsresponse($mode='step1')
     {

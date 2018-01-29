@@ -49,7 +49,7 @@ $this->title = 'Написати відгук';
                         </ul>
                         <div class="empty-space marg-lg-b30"></div>
 
-                        <h4 class="h4">2.Робота</h4>
+                        <h4 class="h4">3.Робота</h4>
                         <div class="empty-space marg-lg-b30"></div>
 
                         <div class="simple-text size-3 space7">
@@ -245,7 +245,17 @@ $this->title = 'Написати відгук';
 
                                         </div>
                                         <div class="empty-space marg-lg-b10"></div>
+<? foreach ($images as $val) { ?>
+                                           <div class="tt-project-pic-loaded" data-id="0">
+                                               <span style="background-image:url(/uploads/members/responses/<?=$val['image']?>);"></span>
+                                               <div class="button-close small"></div>
+                                               <?= $form->field($model, 'images_uploaded[]')->hiddenInput(['value'=>$val['id']])->label(false);?>
+                                           </div>
+<? } ?>
                                     </div>
+
+
+
                                     <div class="empty-space marg-lg-b20"></div>
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -281,9 +291,14 @@ $this->title = 'Написати відгук';
                             </div>
                         </div>
                         <div class="empty-space marg-lg-b30"></div>
-
-                        <?= Html::submitButton((($model->stage==2) ? 'Завершити' : 'Продовжити'), ['class' => 'button type-1 size-3 color-3 uppercase', 'id'=>'submit_response', 'name' => 'step-3', 'value'=>'submit']) ?>
-                       &nbsp; <?= Html::submitButton('Дописати відгук потім', ['class' => 'button type-1 size-3  uppercase', 'id'=>'cancel_response', 'name' => 'step-3', 'value'=>'cancel', 'style'=>(($model->stage==2) ? 'display:none;' : 'display:inline;')]) ?>
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-push-6">
+                                <?= Html::submitButton((($model->stage==2) ? 'Завершити' : 'Продовжити'), ['class' => 'button type-1 size-3 color-3 uppercase  tt-register-next', 'id'=>'submit_response', 'name' => 'step-3', 'value'=>'submit']) ?>
+                            </div>
+                            <div class="col-sm-6 col-sm-pull-6">
+                                <a href="<?=Url::to(['/members/response/create', 'id' => Yii::$app->request->get('id'), 'step'=>2])?>" class="button type-1 size-3 btn-simple icon-left uppercase"><span>назад</span></a>
+                            </div>
+                        </div>
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>

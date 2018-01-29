@@ -168,11 +168,15 @@ class DefaultController extends Controller
         $ratings = MemberHelper::GetRating($id);
 
         if ($ratings['total']>0) {
-            $ratings['reviews'] = Yii::$app->db->createCommand('SELECT res.id, res.devotion, res.connected, res.punctuality, res.price, res.terms, res.quality, res.positive_negative, res.positive_note, res.negative_note, res.conclusion_note, res.updated_at as created_at, s.member_id, s.order_id, o.title, m.first_name 
+            $ratings['reviews'] = Yii::$app->db->createCommand('SELECT res.id, res.devotion, res.connected, res.punctuality, res.price, res.terms, res.quality, res.positive_negative, res.positive_note, res.negative_note, res.conclusion_note, res.feedback_approve, res.feedback_text, res.updated_at as created_at, s.member_id, s.order_id, o.title, m.first_name 
                                                                     FROM `member_response` res 
                                                                     LEFT JOIN `member_suggestion` s ON s.id = res.suggestion_id 
                                                                     LEFT JOIN `orders` o ON o.id = s.order_id 
-                                                                    LEFT JOIN `members` m ON m.id = o.member WHERE res.step = 5 AND s.member_id="'.$id.'"')->queryAll();
+                                                                    LEFT JOIN `members` m ON m.id = o.member WHERE res.step = 5 AND s.member_id="'.$id.'" ORDER BY res.created_at DESC')->queryAll();
+
+            if (sizeof($ratings['reviews'])) foreach ($ratings['reviews'] as $key=>$val) {
+                $ratings['reviews'][$key]['images'] =  Yii::$app->db->createCommand('SELECT id, image, response_id FROM `member_response_images` WHERE `response_id` = "'.$val['id'].'" ORDER BY created_at DESC')->queryAll();
+            }
 
         } else $ratings['reviews'] = array();
 

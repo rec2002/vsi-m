@@ -56,27 +56,27 @@ $this->title = 'Текст відгуку';
                                                 <ul class="tt-rating">
                                                     <li>
                                                         <div class="tt-rating-title">Вічливість  </div>
-                                                        <?=MemberHelper::GetRatingStar($model->devotion, 'devotion');?>
+                                                        <?=MemberHelper::GetRatingStar($model->devotion, 'devotion', false);?>
                                                     </li>
                                                     <li>
                                                         <div class="tt-rating-title">На зв'язку  </div>
-                                                        <?=MemberHelper::GetRatingStar($model->connected, 'connected');?>
+                                                        <?=MemberHelper::GetRatingStar($model->connected, 'connected',false);?>
                                                     </li>
                                                     <li>
                                                         <div class="tt-rating-title">Пунктуальність  </div>
-                                                        <?=MemberHelper::GetRatingStar($model->punctuality, 'punctuality');?>
+                                                        <?=MemberHelper::GetRatingStar($model->punctuality, 'punctuality',false);?>
                                                     </li>
                                                     <li>
                                                         <div class="tt-rating-title">Дотримання ціни  </div>
-                                                        <?=MemberHelper::GetRatingStar($model->punctuality, 'price');?>
+                                                        <?=MemberHelper::GetRatingStar($model->punctuality, 'price',false);?>
                                                     </li>
                                                     <li>
                                                         <div class="tt-rating-title">Дотримання термінів </div>
-                                                        <?=MemberHelper::GetRatingStar($model->terms, 'terms');?>
+                                                        <?=MemberHelper::GetRatingStar($model->terms, 'terms',false);?>
                                                     </li>
                                                     <li>
                                                         <div class="tt-rating-title">Ціна/Якість</div>
-                                                        <?=MemberHelper::GetRatingStar($model->quality, 'quality');?>
+                                                        <?=MemberHelper::GetRatingStar($model->quality, 'quality',false);?>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -174,6 +174,21 @@ $this->title = 'Текст відгуку';
                                         </ul>
                                     <? } ?>
                                     <div class="empty-space marg-lg-b30"></div>
+                                    <? if ($model->feedback_approve==2) { ?>
+                                        <div class="tt-reply">
+                                            <div class="tt-reply-write">
+                                                <img class="tt-reply-write-img tt-profile-img" src="<?=!empty($member->member->avatar_image) ? $member->member->avatar_image : '/img/person/person.png';?>" style="width:54px;" alt="">
+                                                <div class="tt-editable feedback_text" style="margin-left:75px;">
+                                                    <div class="simple-text size-3 small-space bold-style-2"><p><b>Коментар виконавця </b></p></div>
+                                                    <div class="empty-space marg-lg-b20"></div>
+                                                    <div class="tt-editable-item simple-text size-2"><?=nl2br($model->feedback_text)?></div>
+                                                    <div class="empty-space marg-lg-b20"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <? }  ?>
+
+
                                 </div>
                             </div>
                         </div>

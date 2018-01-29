@@ -39,6 +39,7 @@ class MemberResponse extends \yii\db\ActiveRecord
 
 
     public $image = array();
+    public $images_uploaded = array();
 
     /**
      * @inheritdoc
@@ -62,41 +63,15 @@ class MemberResponse extends \yii\db\ActiveRecord
             ['price', 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Прошу поставити оцінку `Дотримання ціни`', 'on' => 'step2'],
             [['meeting_result'], 'required',  'message' => 'Прошу вибрати результат спілкування.', 'on' => 'step2'],
             [['stage'], 'required',  'message' => 'Прошу вказати `На якому етапі Ви знаходитесь?`', 'on' => 'step3'],
-            //[['days'], 'required', 'message'=>'Вказати кількість днів', 'on' => 'step3'],
-            ['days', 'required', 'whenClient' => "function (attribute, value) { /*alert ($('input[name=\"MemberResponse[stage]\"]:checked').val()+\" \"+$('#memberresponse-days').val()); */ 
-            
-            if ($('input[name=\"MemberResponse[stage]\"]:checked').val()==1)
-             
-             if (parseInt($('#memberresponse-days').val()) >= 1) return false; else return true; }", 'message'=>'Вказати кількість днів', 'on' => 'step3'],
-
-
-
+            ['days', 'required', 'whenClient' => "function (attribute, value) { if ($('input[name=\"MemberResponse[stage]\"]:checked').val()==1)
+                    if (parseInt($('#memberresponse-days').val()) >= 1) return false; else return true; }", 'message'=>'Вказати кількість днів', 'on' => 'step3'],
             [['terms'], 'required', 'whenClient' => "function (attribute, value) { return ($('input[name=\"MemberResponse[stage]\"]:checked').val()!=1);}", 'message' => 'Прошу поставити оцінку `Дотримання термінів`',  'on' => 'step3'],
             [['quality'], 'required', 'whenClient' => "function (attribute, value) { return ($('input[name=\"MemberResponse[stage]\"]:checked').val()!=1);}", 'message' => 'Прошу поставити оцінку `Ціна/Якість`',  'on' => 'step3'],
             [['positive_negative'], 'required', 'whenClient' => "function (attribute, value) { return ($('input[name=\"MemberResponse[stage]\"]:checked').val()!=1);}", 'message' => 'Прошу поставити загальне враження',  'on' => 'step3'],
             [['come_personality'], 'required', 'whenClient' => "function (attribute, value) { return ($('input[name=\"MemberResponse[stage]\"]:checked').val()!=1);}", 'message' => 'Прошу вибрати `так` або `ні` ',  'on' => 'step3'],
             [['positive_note', 'negative_note', 'conclusion_note'], 'required', 'whenClient' => "function (attribute, value) { return ($('input[name=\"MemberResponse[stage]\"]:checked').val()!=1);}", 'message' => 'Поле обов\'язкове для заповнення',  'on' => 'step3'],
-
-
- //           ['terms', 'required', 'whenClient' => "function (attribute, value) { return false; }", 'message'=>'Прошу поставити оцінку `Дотримання термінів `', 'on' => 'step3'],
-
-
-
-
-            //       ['punctuality', 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Прошу поставити оцінку `Пунктуальність`', 'on' => 'step2'],
-     //       ['price', 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Прошу поставити оцінку `Дотримання ціни`', 'on' => 'step2'],
-
-
-      //      ['stage', 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Прошу вказати `На якому етапі Ви знаходитесь?`', 'on' => 'step3'],
-
-
-            /*[['suggestion_id', 'step', 'active', 'devotion', 'connected', 'punctuality', 'price', 'terms', 'quality', 'meeting', 'meeting_result', 'meeting_comment', 'stage', 'days', 'positive', 'negative', 'come_personality', 'role', 'positive_note', 'negative_note', 'dogovir'], 'required'],
-            [['suggestion_id', 'step', 'active', 'devotion', 'connected', 'punctuality', 'price', 'terms', 'quality', 'meeting', 'meeting_result', 'stage', 'days', 'positive', 'negative', 'come_personality', 'dogovir'], 'integer'],
-            [['meeting_comment', 'positive_note', 'negative_note'], 'string'],
-            [['created_at'], 'safe'],
-            [['role'], 'string', 'max' => 255],*/
             [['suggestion_id'], 'exist', 'skipOnError' => true, 'targetClass' => MemberSuggestion::className(), 'targetAttribute' => ['suggestion_id' => 'id']],
-          //  [['images'], 'exist', 'skipOnError' => true, 'targetClass' => MemberResponseImages::className(), 'targetAttribute' => ['response_id' => 'id']],
+            [['feedback_text'], 'required',  'message' => 'Прошу додати коментар на відгук. ', 'on' => 'feedback'],
         ];
     }
 
@@ -122,7 +97,9 @@ class MemberResponse extends \yii\db\ActiveRecord
             'stage' => 'Stage',
             'days' => 'Days',
             'positive_negative ' => 'Positive',
-
+            'member_response' => 'Статус модерації коментаря виконавця',
+            'message_approve' => 'Коментар виконавця',
+            'feedback_text_approve'=>'Вказати причину відмови',
             'come_personality' => 'Come Personality',
             'role' => 'Role',
             'positive_note' => 'Positive Note',

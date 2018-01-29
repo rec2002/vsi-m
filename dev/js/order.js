@@ -51,8 +51,8 @@ $(function() {
 
 
 //                            console.log(new Date(Date.parse($("#orders-date_from").val())).format("%d-%m-%Y"));
-                            var forma = $("#orders-when_start").find(":selected").text();
-                            if (data_post[1]['value']==1) forma = 'В період від '+$("#orders-date_from").val()+' до '+ $("#orders-date_to").val();
+                            var forma = $("#sdate").find(":selected").text();
+                            if (data_post[1]['value']==1) forma = 'В період від '+$("#sdate").val()+' до '+ $("#edate").val();
                             if (data_post[1]['value']==2) forma = new Date().format("%d.%m.%Y");
                             if (data_post[1]['value']==3) {
                                 var today = new Date();
@@ -60,8 +60,8 @@ $(function() {
                             }
 
                             if (data_post[1]['value']!=1) {
-                                $("#orders-date_from").val('');
-                                $("#orders-date_to").val('');
+                                $("#sdate").val('');
+                                $("#edate").val('');
                             }
 
                             form.find('.tt-editable-item').html(forma);
@@ -69,10 +69,7 @@ $(function() {
                             break;
                         case 'Orders[descriptions]':
                                 form.find('.tt-editable-item').html(data_post[1]['value'].replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, "<br>"));
-
-
                                 form.closest('.tt-editable-form').fadeOut(300,function(){
-                                    //$(this).siblings('.tt-editable').html(data_post[1]['value'].replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, "<br>"));
                                     $(this).siblings('.tt-editable').fadeIn();
                                 });
 
@@ -303,6 +300,11 @@ $(function() {
                 $('.popup-wrapper-confirm').removeClass('active');
             }
         );
+        return false;
+    });
+
+    $(document).on('click', '.tt-editable-close', function(){
+        $(this).closest('form')[0].reset();
         return false;
     });
 

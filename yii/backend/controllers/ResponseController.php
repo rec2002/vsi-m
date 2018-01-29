@@ -143,7 +143,7 @@ class ResponseController extends Controller
                 $param[':response'] = $id;
 
                 $members = Yii::$app->db->createCommand('
-                   SELECT m2.id as owner_id, if (m2.company!=\'\', m2.company, CONCAT(m1.first_name, \' \', m1.surname, \' \', m2.last_name)) as owmer_name, m2.email as owner_email,
+                   SELECT m2.id as owner_id, if (m2.company!=\'\', m2.company, CONCAT(m2.first_name, \' \', m2.surname, \' \', m2.last_name)) as owmer_name, m2.email as owner_email,
                           m1.id as recipient_id, if (m1.company!=\'\', m1.company, CONCAT(m1.first_name, \' \', m1.surname, \' \', m1.last_name)) as recipient_name, m1.email as recipient_email, m1.phone as recipient_phone,  r.suggestion_id
                    FROM `member_response` r
                    LEFT JOIN `member_suggestion` s ON s.id =  r.suggestion_id
@@ -182,6 +182,67 @@ class ResponseController extends Controller
 
         } else {
             return $this->renderAjax('_form', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionFeedback($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) ) {
+
+
+            $model->feedback_text_approve  = Yii::$app->request->post('MemberResponse')['feedback_text_approve'];
+            $model->feedback_approve  = Yii::$app->request->post('MemberResponse')['feedback_approve'];
+
+
+            if ($model->save('false')) {
+
+                $param[':response'] = $id;
+
+                $members = Yii::$app->db->createCommand('
+                   SELECT m2.id as owner_id, if (m2.company!=\'\', m2.company, CONCAT(m2.first_name, \' \', m2.surname, \' \', m2.last_name)) as owmer_name, m2.email as owner_email, m2.phone as owner_phone,
+                          m1.id as recipient_id, if (m1.company!=\'\', m1.company, CONCAT(m1.first_name, \' \', m1.surname, \' \', m1.last_name)) as recipient_name, m1.email as recipient_email, m1.phone as recipient_phone,  r.suggestion_id
+                   FROM `member_response` r
+                   LEFT JOIN `member_suggestion` s ON s.id =  r.suggestion_id
+                   LEFT JOIN `members` m1 ON m1.id = s.member_id
+                   LEFT JOIN `orders` o ON o.id = s.order_id
+                   LEFT JOIN  `members` m2 ON m2.id = o.member
+                   WHERE r.id =:response ', $param)->queryOne();
+
+
+                $url = str_replace('/admin//admin/', '/', Url::home(true) . Url::toRoute(['/members/response/create', 'id' => $members['suggestion_id']]));
+                $url1 = str_replace('/admin//admin/', '/', Url::home(true) . Url::toRoute(['/professionals/default/profile', 'id' => $members['recipient_id']]));
+
+                if (Yii::$app->request->post('MemberResponse')['feedback_approve'] == 2) {
+
+                    \common\components\MemberHelper::GetMailTemplate(14, array_merge($model->attributes, array('url' => $url, 'url1' => $url1, 'name' => $members['recipient_name'])), $members['recipient_email']);
+
+                    if (MemberHelper::GetAccessNotification($members['owner_id'], 7)['email'] == 1) {
+
+                        \common\components\MemberHelper::GetMailTemplate(16, array_merge($model->attributes, array('url' => $url, 'url1' => $url1, 'name' => $members['owmer_name'])), $members['owner_email']);
+                    }
+
+                    if (MemberHelper::GetAccessNotification($members['owner_id'], 7)['sms'] == 1) {
+                        \common\components\MemberHelper::GetSMSTemplate(16, $model->attributes, $members['owner_phone']);
+                    }
+
+                    Yii::$app->db->createCommand()->insert('member_msg', ['suggestion_id' => $members['suggestion_id'], 'member_id'=>$members['owner_id'], 'msg'=>'Додавно коментар виконавця на відгук замовника',  'system'=>1])->execute();
+                    $id_msg = Yii::$app->db->getLastInsertID();
+                    Yii::$app->db->createCommand()->insert('member_msg_unread', ['msg_id' => $id_msg, 'member_id'=>$members['owner_id'],  'support'=>0])->execute();
+
+                }
+
+                if (Yii::$app->request->post('MemberResponse')['feedback_approve'] == 0) {
+                    \common\components\MemberHelper::GetMailTemplate(15, array_merge($model->attributes, array('url' => $url, 'name' => $members['recipient_name'], 'feedback_text_approve' => (!empty(Yii::$app->request->post('MemberResponse')['feedback_text_approve']) ? 'Причина відмови: <b>' . Yii::$app->request->post('MemberResponse')['feedback_text_approve'] . '</b>' : ''))), $members['recipient_email']);
+                }
+            }
+            return $this->redirect(['index']);
+
+        } else {
+            return $this->renderAjax('_formF', [
                 'model' => $model,
             ]);
         }

@@ -787,8 +787,9 @@ $(function() {
 	/*tt-reply-write*/
 	$('.tt-reply-write-info textarea').on("focus", function(){
 		$(this).closest('.tt-reply-write-info').addClass('active');
-		$(this).siblings('.tt-buttons-block').slideDown(300);
+        $(this).closest('.tt-reply-write-info').siblings('.tt-buttons-block').slideDown(300);
 	});
+
 	$('.tt-reply-write-close').on('click', function(e){
 		$(this).closest('.tt-buttons-block').slideUp(300).closest('.tt-reply-write-info').removeClass('active');
 	});

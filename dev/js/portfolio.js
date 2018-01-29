@@ -118,7 +118,47 @@ $(function() {
         return true;
     });
 
-    
-    
+    /*tt-reply-write*/
+    $('.tt-reply-write-info textarea').on("focus", function(){
+        $(this).closest('.tt-reply-write-info').addClass('active');
+        $(this).closest('.tt-reply-write-info').find('.tt-buttons-block').slideDown(300);
+    });
+
+    $('.tt-reply-write-close').on('click', function(e){
+        $(this).closest('.tt-buttons-block').slideUp(300).closest('.tt-reply-write-info').removeClass('active');
+        $(this).closest('form.response_feedback')[0].reset();
+    });
+
+
+    $(document).on("beforeSubmit", "form.response_feedback", function(e) {
+        $('.popup-wrapper-confirm').addClass('active');
+        $('.popup-wrapper-confirm').find('.popup-content').addClass('active');
+        var form = $(this);
+
+        _functions.dialog('Примітка', 'Після збереження, коментар пройде процес модерації, це займе деякий час перед публікацією.',
+            function() {
+               jQuery.ajax({ url: '/members/member/feedback', type: 'POST',  data: form.serializeArray(),
+                    success: function (data) {
+                        if (data.status==1){
+                            form.find('.tt-reply-write-info').fadeOut(300, function(){
+                                form.find(".tt-editable-item:first").html(form.find('textarea').val().replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, "<br>"));
+                                form.find('.feedback_text').fadeIn(300);
+                            });
+                        }
+                    }
+                });
+               $('.popup-wrapper-confirm').removeClass('active');
+            },
+            function() {
+                $('.popup-wrapper-confirm').removeClass('active');
+                alert(2);
+            }
+        );
+
+        return false;
+    });
+
+
+
 
 });

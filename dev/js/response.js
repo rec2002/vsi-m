@@ -60,6 +60,26 @@ $(function() {
         }
     });
 
+    $('input[name="MemberResponse[meeting]"]').on('change', function(){
+        if ($(this).val()==1) {
+            $('#submit_response').text('ПРОДОВЖИТИ');
+        } else if($(this).val()==2){
+            $('#submit_response').text('ЗАВЕРШИТИ');
+        }
+    });
+
+    $('input[name="MemberResponse[meeting_result]"]').on('change', function(){
+
+        console.log(1);
+        if ($(this).val()==3) {
+            $('#submit_response').text('ЗАВЕРШИТИ');
+        } else {
+            $('#submit_response').text('ПРОДОВЖИТИ');
+        }
+    });
+
+
+
 
     $('input[name="MemberResponse[come_personality]"]').on('change', function(){
         if ($(this).val()==1) {

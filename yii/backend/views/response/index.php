@@ -580,7 +580,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     [
                                         'format'=>'raw',
                                         'label'=>'Результат',
-                                        'value'=>$stage[$model->stage],
+                                        'value'=>@$stage[$model->stage],
                                         'valueColOptions'=>['style'=>'width:30%'],
                                         'displayOnly'=>true
                                     ],
@@ -604,7 +604,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                 ],
                             ]
-
                         ];
 
                     }
@@ -844,6 +843,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                 ],
                             ],
+                            [
+                                'group'=>true,
+                                'label'=>'Коментар виконавця',
+                                'rowOptions'=>['class'=>'info'],
+                            ],
+                            [
+                                'attribute'=>'feedback_text',
+                                'format'=>'raw',
+                                'label'=>'Текст коментаряє '.(($model->feedback_approve>1) ? '<span style="color:green;">(Перевірено)</span>' : '<span style="color:red;">(На перевірці)</span>'),
+                                'value'=>nl2br($model->feedback_text),
+                                'inputContainer' => ['class'=>'col-sm-6'],
+                            ]
                         ];
 
                     }
@@ -911,7 +922,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>Html::activeDropDownList($searchModel, 'step', $status, ['class'=>'form-control', 'prompt'=>'-- Вибрати `Статус`--']),
 
             ],
+            [
+                'attribute' => 'feedback_approve',
+                'format' => 'html',
+                'label' => 'Коментар виконавця',
+                'value' => function($model){
+                    $status = array(0=>'&nbsp;', 1=>'На модерації', 2=>'Опубліковано');
 
+                    if  (!empty($model->feedback_text))
+                        return Html::a($status[$model->feedback_approve], ['feedback', 'id' => $model->id], ['class' => 'modalButton']);
+                    else
+                        return $status[$model->feedback_approve];
+                },
+                'vAlign' => 'middle',
+            ],
             [
                 'attribute' => 'updated_at',
                 'value' => function($model){ return  date('d/m/Y H:i', strtotime($model->updated_at)); },

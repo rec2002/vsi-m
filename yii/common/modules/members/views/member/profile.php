@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use frontend\assets\AppAsset;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
+use common\modules\members\models\MemberResponse;
 
 $this->title = 'Кабінет користувача';
 
@@ -366,6 +367,64 @@ $this->title = 'Кабінет користувача';
                                                         <div class="tt-review-name"><?= Html::a($val['first_name'], ['/orders/default/detail', 'id' => $val['order_id']]) ?></div>
                                                     </div>
                                                 </div>
+<? if (sizeof($val['images']))  { ?>
+                                                    <div class="empty-space marg-lg-b20"></div>
+                                                    <h6 class="tt-task-subtitle gallery-response-view">Фото:</h6>
+                                                    <ul class="tt-task-gal clearfix">
+                                                        <? foreach ($val['images'] as $key=>$item) {?>
+                                                            <li style="width: auto;">
+                                                                <a class="custom-hover open-popup-big" href="javascript:" data-id="<?=$item['response_id']; ?>">
+                                                                    <img class="img-responsive" src="/uploads/members/responses/thmb/<?=$item['image']; ?>" style="width:80px;" alt="">
+                                                                </a>
+                                                            </li>
+                                                        <? } ?>
+                                                    </ul>
+                                                    <div class="empty-space marg-lg-b20"></div>
+<? } ?>
+
+<? if (in_array(@$val['feedback_approve'], array(1,2))) { ?>
+                                                    <div class="tt-reply">
+                                                        <div class="tt-reply-write">
+                                                            <img class="tt-reply-write-img tt-profile-img" src="<?=!empty($member->avatar_image) ? $member->avatar_image : '/img/person/person.png';?>" style="width:54px;" alt="">
+                                                            <div class="tt-editable feedback_text" style="margin-left:75px;">
+                                                                <div class="tt-editable-item simple-text size-2"><?=nl2br($val['feedback_text'])?></div>
+                                                                <div class="empty-space marg-lg-b30"></div>
+<? if ($val['feedback_approve']==1) {?>
+                                                                <div class="tt-editable-item simple-text size-2"><span style="color:red;">Коментар на модерації, закритий для публічного перегляду.</span></div>
+<? } ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+<? } else { ?>
+
+<?
+$responsive_model = MemberResponse::findOne(['id' => $val['id'] ]);
+$responsive_model->setScenario('feedback');
+$form_f = ActiveForm::begin(['options' => ['class'=>'response_feedback'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute(['/members/member/validations', 'mode'=>'feedback']), 'action' =>'']);
+?>
+                                                <div class="tt-reply">
+                                                    <div class="tt-reply-write">
+                                                        <img class="tt-reply-write-img tt-profile-img" src="<?=!empty($member->avatar_image) ? $member->avatar_image : '/img/person/person.png';?>" style="width:54px;" alt="">
+
+                                                        <div class="tt-editable feedback_text" style="display:none;margin-left:75px;">
+                                                            <div class="tt-editable-item simple-text size-2"></div>
+                                                            <div class="empty-space marg-lg-b30"></div>
+                                                            <div class="tt-editable-item simple-text size-2"><span style="color:red;">Коментар на модерації, закритий для публічного перегляду.</span></div>
+                                                        </div>
+
+                                                        <div class="tt-reply-write-info">
+                                                            <?=$form_f->field($responsive_model, 'id')->hiddenInput()->label(false); ?>
+                                                            <?=$form_f->field($responsive_model, 'feedback_text')->textarea(['class' => 'simple-input height-2', 'autocomplete'=>'off', 'placeholder' => "Залишити коментар", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
+                                                            <div class="tt-buttons-block m10 text-right">
+                                                                <div class="empty-space marg-lg-b20"></div>
+                                                                <?= Html::resetButton('Відмінити', ['class' => 'button type-1 tt-reply-write-close']) ?>
+                                                                <?= Html::submitButton('Залишити', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php ActiveForm::end(); ?>
+<? } ?>
                                             </div>
                                             <div class="empty-space marg-lg-b30"></div>
 

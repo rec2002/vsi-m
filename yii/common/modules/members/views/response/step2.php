@@ -133,12 +133,15 @@ $this->title = 'Написати відгук';
                             </div>
                         </div>
                     <div class="empty-space marg-lg-b30"></div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-push-6">
+                            <?= Html::submitButton(($model->meeting_result==3) ? 'Завершити' : 'Продовжити', ['class' => 'button type-1 size-3 color-3 uppercase tt-register-next', 'name' => 'step-2', "id"=>"submit_response", 'value'=>'submit']) ?>
 
-                    <div class="tt-buttons-block ">
-                        <?= Html::submitButton('Продовжити', ['class' => 'button type-1 size-3 color-3 uppercase', 'name' => 'step-2', 'value'=>'submit']) ?>
-                        <?= Html::submitButton('Дописати відгук потім', ['class' => 'button type-1 size-3  uppercase', 'id'=>'cancel_response', 'name' => 'step-2', 'value'=>'cancel']) ?>
+                        </div>
+                        <div class="col-sm-6 col-sm-pull-6">
+                            <a href="<?=Url::to(['/members/response/create', 'id' => Yii::$app->request->get('id'), 'step'=>1])?>" class="button type-1 size-3 btn-simple icon-left uppercase"><span>назад</span></a>
+                        </div>
                     </div>
-
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>

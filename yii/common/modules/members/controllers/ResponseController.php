@@ -13,11 +13,12 @@ use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
 use Imagine\Image\ImageInterface;
+use \yii\web\HttpException;
 
 class ResponseController extends \yii\web\Controller
 {
 
-
+//ALTER TABLE `member_response` ADD `feedback_approve` TINYINT(1) NOT NULL AFTER `message_approve`, ADD `feedback_text` TEXT NOT NULL AFTER `feedback_approve`;
     public function behaviors()
     {
         return [
@@ -46,46 +47,41 @@ class ResponseController extends \yii\web\Controller
             'id' => Yii::$app->request->get('id')
         ]);
 
+        if (!$member) throw new HttpException(404 ,'Сторінка не знайдена.');
+
         $model = MemberResponse::findOne(['suggestion_id' => Yii::$app->request->get('id')]);
-        if (!$model)  $model = new MemberResponse();
+
+
+        $images = array();
+
+        if (!$model)  $model = new MemberResponse(); else {
+            $images = MemberResponseImages::findAll(['response_id' => $model->id]);
+        }
+
+//print_r ($images);
+
 
 
         if (Yii::$app->request->isPost) {
             if(Yii::$app->request->post('step-1')) {
                 $model->suggestion_id =  Yii::$app->request->get('id');
-                $model->step = (Yii::$app->request->post('step-1')=='submit') ? 2 : 1;
-
+                $model->step = (Yii::$app->request->post('MemberResponse')['meeting']==2) ? 1 : 2;
                 $model->devotion =  Yii::$app->request->post('MemberResponse')['devotion'];
                 $model->connected =  Yii::$app->request->post('MemberResponse')['connected'];
                 $model->meeting =  Yii::$app->request->post('MemberResponse')['meeting'];
                 $model->updated_at = date("Y-m-d H:i:s");
                 $model->save(false);
-
-                if (Yii::$app->request->post('step-1')=='cancel') {
-                    header('Location: ' . Url::to(['/orders/default/detail', 'id' => $member->order_id]));
-                } else {
-                    header('Location: ' . Yii::$app->getRequest()->getUrl());
-                }
             }
 
             if(Yii::$app->request->post('step-2')) {
-
-                $model->step = (Yii::$app->request->post('step-2')=='submit') ? 3 : 2;
-
+                $model->step = (Yii::$app->request->post('MemberResponse')['meeting_result']==3 || Yii::$app->request->post('MemberResponse')['meeting_result']==2) ? 2 : 3;
                 $model->punctuality =  Yii::$app->request->post('MemberResponse')['punctuality'];
                 $model->price =  Yii::$app->request->post('MemberResponse')['price'];
                 $model->meeting_result =  Yii::$app->request->post('MemberResponse')['meeting_result'];
                 $model->meeting_comment =  Yii::$app->request->post('MemberResponse')['meeting_comment'];
                 $model->date_continue  = date("Y-m-d", strtotime(Yii::$app->request->post('MemberResponse')['date_continue']));
                 $model->updated_at = date("Y-m-d H:i:s");
-
                 $model->save(false);
-                if (Yii::$app->request->post('step-2')=='cancel') {
-                    header('Location: ' . Url::to(['/orders/default/detail', 'id' => $member->order_id]));
-                } else {
-                    header('Location: ' . Yii::$app->getRequest()->getUrl());
-                }
-
             }
 
 
@@ -114,11 +110,23 @@ class ResponseController extends \yii\web\Controller
 
                     $model->updated_at = date("Y-m-d H:i:s");
                     $model->save(false);
-
                     $reponse_id = $model->id;
+
+                    $model->images_uploaded = array();
+                    if (isset(Yii::$app->request->post('MemberResponse')['images_uploaded']))  $model->images_uploaded = Yii::$app->request->post('MemberResponse')['images_uploaded'];
+
+                    $dir = Yii::getAlias('@type_images').'/members/responses/';
+                    if (sizeof($images)) foreach ($images as $val) {
+                        if (!in_array( $val['id'], $model->images_uploaded)) {
+                            if (file_exists($dir.'thmb/'.$val['image']))  @unlink($dir.'thmb/'.$val['image']);
+                            if (file_exists($dir.$val['image'])) @unlink($dir.$val['image']);
+                            Yii::$app->db->createCommand()->delete('member_response_images', ['id' => $val['id']])->execute();
+                        }
+                    }
+
                     $model->image = UploadedFile::getInstances($model, 'image');
                     if ($model->image) {
-                        $dir = Yii::getAlias('@type_images').'/members/responses/';
+
                         foreach ($model->image as $image) {
                             $ResponseImages = new MemberResponseImages();
                             $ResponseImages->response_id = $reponse_id;
@@ -131,16 +139,15 @@ class ResponseController extends \yii\web\Controller
                         }
                     }
                 }
-
-                if (Yii::$app->request->post('step-3')=='cancel') {
-                    header('Location: ' . Url::to(['/orders/default/detail', 'id' => $member->order_id]));
-                } else {
-                    header('Location: ' . Yii::$app->getRequest()->getUrl());
-                }
             }
-
+            header('Location: ' . Url::to(['/members/response/create', 'id' => Yii::$app->request->get('id'), 'step'=>$model->step]));
             exit();
         }
+
+        if (in_array(Yii::$app->request->get('step'), array(1, 2)) && $model->step < 4) {
+            $model->step = $_GET['step'];
+        }
+
 
         switch ($model->step) {
             case '1':
@@ -163,7 +170,7 @@ class ResponseController extends \yii\web\Controller
         }
 
 
-        return $this->render($template, ['model'=>$model, 'member'=>$member]);
+        return $this->render($template, ['model'=>$model, 'member'=>$member, 'images' => $images]);
 
 
     }
