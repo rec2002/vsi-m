@@ -293,7 +293,7 @@ $this->title = 'Написати відгук';
                         <div class="empty-space marg-lg-b30"></div>
                         <div class="row">
                             <div class="col-sm-6 col-sm-push-6">
-                                <?= Html::submitButton((($model->stage==2) ? 'Завершити' : 'Продовжити'), ['class' => 'button type-1 size-3 color-3 uppercase  tt-register-next', 'id'=>'submit_response', 'name' => 'step-3', 'value'=>'submit']) ?>
+                                <?= Html::submitButton((($model->stage==2) ? 'Завершити' : 'Зберегти'), ['class' => 'button type-1 size-3 color-3 uppercase  tt-register-next', 'id'=>'submit_response', 'name' => 'step-3', 'value'=>'submit']) ?>
                             </div>
                             <div class="col-sm-6 col-sm-pull-6">
                                 <a href="<?=Url::to(['/members/response/create', 'id' => Yii::$app->request->get('id'), 'step'=>2])?>" class="button type-1 size-3 btn-simple icon-left uppercase"><span>назад</span></a>

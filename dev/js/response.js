@@ -50,7 +50,7 @@ $(function() {
         $('.tt-radio-switch-item').siblings('.active').removeClass('active');
         if ($(this).val()==1) {
             $('#cancel_response').show();
-            $('#submit_response').text('ПРОДОВЖИТИ');
+            $('#submit_response').text('ЗБЕРЕГТИ');
             $('.tt-radio-switch-item.in_progress').addClass('active');
         } else if($(this).val()==2){
 
@@ -64,15 +64,15 @@ $(function() {
         if ($(this).val()==1) {
             $('#submit_response').text('ПРОДОВЖИТИ');
         } else if($(this).val()==2){
-            $('#submit_response').text('ЗАВЕРШИТИ');
+            $('#submit_response').text('ЗБЕРЕГТИ');
         }
     });
 
     $('input[name="MemberResponse[meeting_result]"]').on('change', function(){
 
-        console.log(1);
-        if ($(this).val()==3) {
-            $('#submit_response').text('ЗАВЕРШИТИ');
+
+        if ($(this).val()==3 || $(this).val()==2) {
+            $('#submit_response').text('ЗБЕРЕГТИ');
         } else {
             $('#submit_response').text('ПРОДОВЖИТИ');
         }

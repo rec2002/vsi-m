@@ -54,7 +54,9 @@ use common\modules\members\models\OrderTypes;
         'hideSearch' => true,
         'options' => ['placeholder' => '-- Вибрати тип обрахунку --'],
         'pluginOptions' => [
-            'allowClear' => false
+            'allowClear' => false,
+            'width' => '230px'
+
         ],
     ])->label('Дозволити публікацію'); ?>
 
@@ -70,3 +72,8 @@ use common\modules\members\models\OrderTypes;
     <?php ActiveForm::end(); ?>
 
 </div>
+<style>
+    .select2-selection .select2-selection--single {
+        width: auto !important;
+    }
+</style>

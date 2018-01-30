@@ -135,7 +135,7 @@ $this->title = 'Написати відгук';
                     <div class="empty-space marg-lg-b30"></div>
                     <div class="row">
                         <div class="col-sm-6 col-sm-push-6">
-                            <?= Html::submitButton(($model->meeting_result==3) ? 'Завершити' : 'Продовжити', ['class' => 'button type-1 size-3 color-3 uppercase tt-register-next', 'name' => 'step-2', "id"=>"submit_response", 'value'=>'submit']) ?>
+                            <?= Html::submitButton(($model->meeting_result==3 || $model->meeting_result==2) ? 'Зберегти' : 'Продовжити', ['class' => 'button type-1 size-3 color-3 uppercase tt-register-next', 'name' => 'step-2', "id"=>"submit_response", 'value'=>'submit']) ?>
 
                         </div>
                         <div class="col-sm-6 col-sm-pull-6">

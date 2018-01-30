@@ -241,7 +241,6 @@ $this->registerCss(".nav > li > a {padding:0}
                                 'prevPageLabel' => 'попередні'])
                             ?>
                         </nav>
-                        <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
 
                     </div>
                 </div>

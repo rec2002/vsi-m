@@ -54,7 +54,7 @@ $this->title = 'Кабінет користувача';
                                     <div class="tt-person-documents-entry">
                                         <div class="simple-text size-3 text-center">
 <? if (sizeof($member->documents)) {?>
-<p>
+    <p style="width: 500px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
 <? foreach ($member->documents as $item) {?>
         <a href="<?=Url::toRoute(['/members/member/file', 'id' => $item['id']])?>" target="_blank"><?=$item['name']?></a><br/>
 <? } ?>

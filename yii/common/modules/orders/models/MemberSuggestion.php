@@ -55,8 +55,6 @@ class MemberSuggestion extends \yii\db\ActiveRecord
             [['member_id', 'order_id', 'prepayment', 'prepayment_material',  'come_personally', 'offer_is_valid', 'valid_days', 'valid_hours'], 'integer'],
             [['descriptions'], 'string'],
             [['created_at', 'disregast_suggestion'], 'safe'],
-
-/*
             [['valid_days', 'valid_hours'], 'required', 'whenClient' => "function (attribute, value) {
          
                 if (parseInt($('#membersuggestion-proposal:checked').length)==1) {
@@ -86,7 +84,6 @@ class MemberSuggestion extends \yii\db\ActiveRecord
                 
 
             }"],
-
             [['price_from', 'price_to'], 'required', 'whenClient' => "function (attribute, value) {          
                 if ($('input[name=\"MemberSuggestion[price_from]\"]').val()>0 && parseInt($('input[name=\"MemberSuggestion[price_to]\"]').val())>=parseInt($('input[name=\"MemberSuggestion[price_from]\"]').val())) {
                      $('p#price_range').html('');
@@ -105,7 +102,7 @@ class MemberSuggestion extends \yii\db\ActiveRecord
                     return true;
                 }
              }"],
-*/
+
             [['dates'], 'required', 'whenClient' => "function (attribute, value) {
                if($('input[name=\"MemberSuggestion[dates]\"]').val()!='') {
                      $('input[name=\"MemberSuggestion[dates]\"]').next().html('');
@@ -118,6 +115,8 @@ class MemberSuggestion extends \yii\db\ActiveRecord
             [['dates'], 'string', 'max' => 255],
             [['price_to'], 'required', 'message'=>'Ціну роботи вказано не вірно'],
             ['price_to','compare','compareAttribute'=>'price_from','operator'=>'>=','message'=>'Ціну роботи вказано не вірно'],
+            [['start_to'], 'required', 'message'=>'Ціну роботи вказано не вірно'],
+            ['start_to','compare','compareAttribute'=>'start_from','operator'=>'>=','message'=>'Строк виконання вказано не вірно'],
             [['member_id'], 'exist', 'skipOnError' => true, 'targetClass' => \common\modules\members\models\Members::className(), 'targetAttribute' => ['member_id' => 'id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => \common\modules\members\models\Orders::className(), 'targetAttribute' => ['order_id' => 'id']],
             [['suggestion_id'], 'exist', 'skipOnError' => true, 'targetClass' => \common\modules\orders\models\MemberSuggestionApproved::className(), 'targetAttribute' => ['suggestion_id' => 'id']],

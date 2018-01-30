@@ -108,10 +108,12 @@ $this->title = 'Написати відгук';
                         <div class="empty-space marg-lg-b30"></div>
                         <div class="row">
                             <div class="col-sm-6 col-sm-push-6">
-                                <?= Html::submitButton(($model->meeting==2) ? 'Завершити' : 'Продовжити', ['class' => 'button type-1 size-3 color-3 uppercase tt-register-next', 'name' => 'step-1', "id"=>"submit_response", 'value'=>'submit']) ?>
+                                <?= Html::submitButton(($model->meeting==2) ? 'Зберегти' : 'Продовжити', ['class' => 'button type-1 size-3 color-3 uppercase tt-register-next', 'name' => 'step-1', "id"=>"submit_response", 'value'=>'submit']) ?>
 
                             </div>
-                            <div class="col-sm-6 col-sm-pull-6">&nbsp;</div>
+                            <div class="col-sm-6 col-sm-pull-6">
+                                <a href="<?=Url::toRoute(['/orders/default/detail', 'id' => $member->order->id])?>" class="button type-1 size-3 btn-simple icon-left uppercase"><span>назад до замовлення</span></a>
+                            </div>
                         </div>
 
 
