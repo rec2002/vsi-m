@@ -41,8 +41,10 @@ class DefaultController extends Controller
 
         if (Yii::$app->request->isGet) {
 
-            unset($_SESSION['filter']);
+
             if (!empty(Yii::$app->request->get('cat'))) {
+
+                if (sizeof(Yii::$app->session['filter'])) unset($_SESSION['filter']);
                 $_SESSION['filter'][':types'] = Yii::$app->db->createCommand('SELECT id FROM `dict_category` WHERE `url_tag`="'.trim(Yii::$app->request->get('cat')).'" AND active=1  AND types=1 ')->queryScalar();;
             }
 
@@ -93,7 +95,7 @@ class DefaultController extends Controller
                      LEFT JOIN (SELECT order_id, type FROM `order_types`  '.((sizeof($filter_join)) ?  'WHERE '.implode(' AND ', $filter_join) : '').' GROUP BY order_id) ot ON o.id = ot.order_id
                      '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
             'totalCount' => $count,
-            'pagination' => ['pageSize' => 10, 'pageParam' => 'стр', 'pageSizeParam' => 'лім']
+            'pagination' => ['pageSize' => 10, 'pageParam' => 'page', 'pageSizeParam' => 'per-page']
         ]);
 
 
@@ -110,7 +112,7 @@ class DefaultController extends Controller
 
         if ($ajax) {
             return $this->renderAjax('list-partial', ['model'=>$provider]);
-        } else  return $this->render('index', ['model'=>$provider]);
+        } else  return $this->render('index', ['model' => $provider]);
 
 
     }
@@ -166,6 +168,7 @@ class DefaultController extends Controller
             case 'add-order';
                 $model = new Orders(['scenario' => 'add-order']);
                 break;
+            case 'title':
             case 'location':
             case 'descriptions':
             case 'budget':
@@ -433,6 +436,9 @@ class DefaultController extends Controller
                     break;
                 case 'descriptions':
                     $model->descriptions = Yii::$app->request->post('Orders')['descriptions'];
+                    break;
+                case 'title':
+                    $model->title = Yii::$app->request->post('Orders')['title'];
                     break;
             }
             $model->save();

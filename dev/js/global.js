@@ -58,6 +58,29 @@ $(function() {
         return false;
     }
 
+    _functions.QueryStringToHash = function (query) {
+
+    	if (query=="" || typeof query === 'undefined' ) return false;
+        var query_string = {};
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            pair[0] = decodeURIComponent(pair[0]);
+            pair[1] = decodeURIComponent(pair[1]);
+            // If first entry with this name
+            if (typeof query_string[pair[0]] === "undefined") {
+                query_string[pair[0]] = pair[1];
+                // If second entry with this name
+            } else if (typeof query_string[pair[0]] === "string") {
+                var arr = [ query_string[pair[0]], pair[1] ];
+                query_string[pair[0]] = arr;
+                // If third or later entry with this name
+            } else {
+                query_string[pair[0]].push(pair[1]);
+            }
+        }
+        return query_string;
+    }
 
 	/*========================*/
 	/* 02 - page calculations */
@@ -494,67 +517,6 @@ $(function() {
 		$(this).siblings('.simple-toggle-content').slideToggle();
 		e.preventDefault();
 	}); 
-
-
-
-  	/*autocomplete*/
- 	/*
-  	var autocomplete_values = [
-      'Ремонт квартири',
-      'Ремонт кухні',
-      'Ремонт будинку',
-      'Ремонт мебелі',
-      'Відновлення та ремонт антикваріату'
-    ];
- 	var autocomplete_values_city = [
-      'Київ',
-      'Львів',
-      'Харків',
-      'Одеса',
-      'Полтава',
-      'Рівне',
-      'Харків',
-      'Моколаїв',
-      'Черкаси',
-      'Кропивницький',
-      'Луганськ',
-      'Хмельницький',
-      'Івано-Франківськ',
-      'Дніпро',
-      'Вінниця',
-      'Суми',
-      'Тернопіль',
-      'Донецьк',
-      'Херсон',
-      'Житомир',
-      'Луцьк',
-      'Запоріжжя',
-      'Чернігів',
-      'Чернівці',
-      'Ужгород'
-    ];
-    if($(".tt-autocomplete-input").length){
-	    $( ".tt-autocomplete-input:not(.city) input" ).autocomplete({
-		    minLength: 0,
-		    source: autocomplete_values,
-		    focus: function( event, ui ) {
-		        $(this).val(ui.item.value);
-		        return false;
-		    },
-		    select: function(event, ui){
-		    	$(this).siblings('.tt-autocomplete-category').fadeIn(300);
-		    }
-	    });
-	    $( ".tt-autocomplete-input.city input" ).autocomplete({
-		    minLength: 0,
-		    source: autocomplete_values_city,
-		    focus: function( event, ui ) {
-		        $(this).val(ui.item.value);
-		        return false;
-		    }
-	    });    	
-    }
-   */
 
     /*tooltip*/
     $('.tt-tooltip').on({
@@ -1547,7 +1509,7 @@ console.log(upload.width());
 		}
 		e.preventDefault();
 	});
-	$(document).on('click','.tt-messages-back', function(e){
+/*	$(document).on('click','.tt-messages-back', function(e){
 		if(winW<992){
 			$(this).closest('.tt-messages-content').fadeOut(300, function(){
 				$(this).siblings('.tt-messages-nav').fadeIn(300);
@@ -1555,7 +1517,7 @@ console.log(upload.width());
 		}
 		e.preventDefault();
 	});	
-
+*/
 
 	function showMessageProgress() {
 	    if (document.images.length == 0) {

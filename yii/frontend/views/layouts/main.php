@@ -33,7 +33,15 @@ AppAsset::register($this);
     $default_controller = Yii::$app->defaultRoute;
     $isHome = (($controller->id === $default_controller) && ($controller->action->id === $controller->defaultAction)) ? true : false;
 ?>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-113317503-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-113317503-1');
+</script>
 <body>
 
 <!-- LOADER -->

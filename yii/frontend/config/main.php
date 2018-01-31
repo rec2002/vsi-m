@@ -91,6 +91,7 @@ return [
 
                 /*'кабінет/виконані-проекти' =>'/members/portfolio/list',*/
                 /*'кабінет/мої-замовлення' =>'members/customer/list',*/
+                'orders'=>'orders/default/index',
                 'blog/<id:\d+>/<slug>'=>'site/publish',
                 'blog'=>'site/publish',
                 'category'=>'site/category',

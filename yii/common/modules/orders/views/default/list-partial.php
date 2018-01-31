@@ -7,6 +7,8 @@ use frontend\assets\AppAsset;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
 
+
+unset($_GET['ajax']);
 ?>
 
 
@@ -17,6 +19,7 @@ if (sizeof($model->getModels())) {
 
     echo \yii\widgets\ListView::widget([
         'dataProvider' => $model,
+        'options' => ['id'=>'items_body'],
         'itemView' => function ($model, $key, $index, $widget) {
             return $this->render('@common/modules/members/views/list-item', ['model' => $model, 'url' => '/orders/default/detail']);
         },

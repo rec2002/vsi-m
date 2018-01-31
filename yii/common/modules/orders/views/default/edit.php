@@ -41,7 +41,18 @@ $this->title = 'Замовлення';
                             </div>-->
                         </div>
                     </div>
-                    <div class="tt-task-title"><h5 class="h5"><?=$model->title;?></h5></div>
+
+                    <div class="tt-task-title">
+                        <div class="tt-task-feature tt-editable-wrapper open-popup tt-icon-hover tt-icon-entry" data-rel="15" style="padding-left:0px;">
+                            <div class="tt-task-feature-entry tt-editable" style="padding: 0;">
+                                <h5 class="h5" style="margin-top: 0px;"><span><?=$model->title;?></span>
+                                <span style="top: -5px;padding-left:30px;">
+                                    <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
+                                </span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
@@ -307,8 +318,44 @@ $this->title = 'Замовлення';
         </div>
     </div>
 
+<div class="popup-wrapper">
+    <div class="bg-layer"></div>
+
+    <div class="popup-content" data-rel="15">
+        <div class="layer-close"></div>
+        <div class="popup-container size-8">
+            <div class="popup-align">
+                <?
+                $model->setScenario('descriptions');
+                $form_title = ActiveForm::begin([
+                'options' => ['class'=>'form-edit-order-ajax'],
+                'enableClientValidation' => false,
+                'enableAjaxValidation'=>true,
+                'validateOnBlur' => false,
+                'validationUrl'=>Url::toRoute('/orders/default/validation/?mode=title&id='.$model->id),
+                'action' =>['/orders/default/saveorder/?mode=title&id='.$model->id],
+
+                ]); ?>
+                <h4 class="h4 text-center">Заголовок оголошення</h4>
+                <div class="empty-space marg-lg-b30"></div>
+
+                <?= $form_title->field($model, 'title')->textInput(['class' => 'simple-input',  'placeholder' => "Наприклад: ремонт квартири"])->label(false); ?>
+
+                <div class="empty-space marg-lg-b20"></div>
+                <div class="tt-buttons-block text-right">
+
+                    <?= Html::resetButton('Відмінити', ['class' => 'button type-1 size-1 popup-close']) ?>
+                    <?= Html::submitButton('Зберегти', ['class' => 'button type-1 size-1 color-3', 'name' => 'save']) ?>
 
 
+                </div>
+                <?php ActiveForm::end(); ?>
+
+            </div>
+            <div class="button-close"></div>
+        </div>
+    </div>
+</div>
 
 <?
 $gpJsLink= '//maps.googleapis.com/maps/api/js?' . http_build_query(array('libraries' => 'places', 'sensor' => 'false','key'=>'AIzaSyC9CXLB6tTD94qL3Jdxbesrx9Cj6fUUumE','language'=>'uk'));

@@ -136,8 +136,8 @@ $this->title = 'Замовлення';
     } else  {
         echo \common\widgets\MemberSuggestionsOne::widget(array('id' => $model->id));
     } ?>
-    <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
-<? } ?>
+
+<? } ?>    <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
         </div>
     </div>
 
@@ -149,8 +149,6 @@ $gpJsLink= '//maps.googleapis.com/maps/api/js?' . http_build_query(array('librar
 echo $this->registerJsFile($gpJsLink);
 echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 
-//echo $this->registerJsFile('/js/formatDate.js', ['depends' => 'yii\web\JqueryAsset']);
-//echo $this->registerJsFile('/js/order.js', ['depends' => 'yii\web\JqueryAsset']);
 
 
 

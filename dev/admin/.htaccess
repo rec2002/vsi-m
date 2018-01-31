@@ -1,5 +1,7 @@
 RewriteEngine on
 
+
+
 RedirectMatch  404 /\.git
 RedirectMatch  404 /composer\.
 RedirectMatch  404 /.bowerrc

@@ -6,7 +6,7 @@ use kartik\select2\Select2;
 use common\components\MemberHelper;
 $this->title = 'Додати замовлення';
 ?>
-    <div class="tt-header-margin"></div>
+    <div class="tt-header-margin" style="height: 55px;"></div>
     <div class="tt-bg-grey">
         <div class="container">
             <div class="tt-pageform-wrapper padding0" style="height: 469px;">

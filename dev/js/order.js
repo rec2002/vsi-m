@@ -34,15 +34,13 @@ $(function() {
             async: false,
             success: function (data) {
                 if (data.status==1){
-
-
-
                     switch(data_post[1]['name']){
+                        case 'Orders[title]':
+                                $('div.tt-task-feature-entry.tt-editable h5.h5 span:first').html(data_post[1]['value']);
+                                $('.popup-wrapper, .popup-content').removeClass('active');
+                            break;
                         case 'Orders[location]':
-
-
-                            console.log(data_post[1]['value']);
-                        form.find('.tt-editable-item').html(data_post[1]['value']);
+                            form.find('.tt-editable-item').html(data_post[1]['value']);
                         break;
                         case 'Orders[budget]':
                             form.find('.tt-editable-item').html($("#orders-budget").find(":selected").text());
@@ -133,10 +131,24 @@ $(function() {
               types.push($(this).val());
             });
 
-            $.post('/orders'+'?ajax=true', {'budgets':budgets, 'regions':regions, 'types':(types).join()}).done(function(data ) {
+        //    var query = '';
+
+        //    var url_level_1 = window.location.href.split('?')[1];
+
+        //    console.log(url_level_1);
+
+
+            var query = jQuery.param(_functions.QueryStringToHash(window.location.href.split('?')[1]));
+
+            console.log(query);
+
+            $.post('/orders'+'?ajax=true'+((query!='') ? '&'+query : ''), {'budgets':budgets, 'regions':regions, 'types':(types).join()}).done(function(data ) {
                 if (data!= '') {
                     window.history.pushState({}, document.title, "/orders" );
-                    $('div#items_body').html(data);
+                    $('#pagination').prev('.empty-space').remove();
+                    $('#pagination').next('.empty-space').remove();
+                    $('#pagination').remove();
+                    $(document).find('div#items_body').html(data);
                 }   else alert('Bad request');
             });
 
@@ -196,9 +208,8 @@ $(function() {
             $("input[name='types[]']:checked").each( function () {
                 $(this).prop('checked', false);
             });
-            InitTypes();
-
             $('form#orders-filter').submit();
+            InitTypes();
         });
 
         $('.simple-select.multy.region select').on('change', function(){

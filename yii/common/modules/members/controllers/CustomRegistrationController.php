@@ -56,12 +56,9 @@ class CustomregistrationController extends \common\modules\members\controllers\D
 
 
                         $model = new CustomerRegistration(['scenario' => $scenario]);
-                        if ($model->load(Yii::$app->request->post())) {
+                        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
                             $password = Yii::$app->getSecurity()->generateRandomString(6);
-
-
-
 
                             $member = new Members();
                             $member->first_name = Yii::$app->request->post('CustomerRegistration')['first_name'];
@@ -118,8 +115,6 @@ class CustomregistrationController extends \common\modules\members\controllers\D
                                     $image->saveAs($dir.$filename);
                                     Image::thumbnail($dir.$filename, 208, 156)->save($dir.'thmb/'.$filename, ['quality' => 90]);
                                     Image::thumbnail($dir.$filename, 945, 600, ImageInterface::THUMBNAIL_INSET)->save($dir.$filename, ['quality' => 90]);
-                                    //$image->saveAs($dir.$ordersImages->image);
-                                    //$ordersImages->image = '/uploads/members/orders/'.strtotime('now').'_'.Yii::$app->getSecurity()->generateRandomString(6).'.'.$image->extension;
                                     $ordersImages->save(false);
                                 }
                             }

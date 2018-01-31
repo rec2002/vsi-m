@@ -2374,6 +2374,9 @@ ul.pagination li.prev.disabled span, ul.pagination li.next.disabled span {line-h
 @media (max-width:991px) {
 	.city-list .row [class*="col-"]:nth-child(3n + 1) {clear: left;}
 }
+
+
+
 @media (max-width: 767px) {
 	.pagination li.prev .page-link, .pagination li.prev span, .pagination li.next .page-link, .pagination li.next span {font-size: 0px!important; width: 20px!important; padding: 0px!important; min-width: 100%!important;}
 }

@@ -27,7 +27,7 @@ $this->title = 'Повідомлення';
 
                     </div>
 
-                    <div class="tab-entry" style="display: block;">
+                    <div class="tab-entry " style="display: block;">
 <? if (sizeof($members)) { ?>
 
 

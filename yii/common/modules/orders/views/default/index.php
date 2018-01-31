@@ -173,9 +173,9 @@ $this->title = 'Список замовлень';
 
 
 
-                              <div id="items_body">
+
                               <? echo Yii::$app->controller->renderPartial('list-partial', array('model' => $model))?>
-                              </div>
+
                         <? Pjax::end(); ?>
                     </div>
                     <div class="empty-space marg-lg-b30"></div>

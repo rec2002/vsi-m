@@ -6,7 +6,15 @@ use yii\helpers\Html;
 
 ?>
 
-<?php $form = ActiveForm::begin(['id' => 'suggestion', 'fieldConfig' => ['options' => ['tag' => false]]/*, 'enableClientValidation'=>true*/]); ?>
+<?php $form = ActiveForm::begin(['id' => 'suggestion',
+
+    'enableClientValidation' => true,
+    'enableAjaxValidation'=>false,
+    'validateOnBlur' => false,
+    'validateOnChange'=> false,
+    'validateOnType'=> false,
+    'validateOnSubmit'=>true,
+    'fieldConfig' => ['options' => ['tag' => false]]/*, 'enableClientValidation'=>true*/]); ?>
 <div class="tt-task-request">
     <div class="tt-fadein-top">
         <a href="javascript:" class="tt-fadein-link button type-1">Надіслати пропозицію</a>

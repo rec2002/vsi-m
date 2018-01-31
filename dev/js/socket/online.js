@@ -10,7 +10,7 @@ $(document).ready(function(){
     socket.on('msg', function(data) {
 
 
-        if ($('.tt-messages-text').length) {
+        if ($('.tt-messages-text').length && $('div.tt-messages-user.clearfix.active').data('id') == data.suggestion_id) {
             $('.tt-messages-text').append('<div class="tt-messages-item simple-text"><p>' + data.msg + '</p></div>');
             $(".tt-messages-text").animate({scrollTop: $('.tt-messages-text').prop("scrollHeight")}, 500);
         }

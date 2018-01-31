@@ -20,7 +20,7 @@ $this->title = 'Вхід на сайт';
                                     <div class="empty-space marg-lg-b10"></div>
                                     <?= Alert::widget() ?>
                                     <div class="empty-space marg-lg-b10"></div>
-                                    <?= $form->field($model, 'email')->textInput(['class' =>'simple-input', 'placeholder'=>'Введіть email'])->label(false); ?>
+                                    <?= $form->field($model, 'email')->textInput(['class' =>'simple-input', 'placeholder'=>'Введіть Email'])->label(false); ?>
                                     <?= $form->field($model, 'password')->passwordInput(['class' => 'simple-input',   'placeholder' => "Введіть пароль"])->label(false); ?>
                                     <div class="row vertical-middle">
                                         <div class="col-sm-12">

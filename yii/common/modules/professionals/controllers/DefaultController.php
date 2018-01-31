@@ -223,7 +223,7 @@ class DefaultController extends Controller
     public function ButtonSuggest($id, $class='button type-1 add-to-informer')
     {
 
-        if ($id==Yii::$app->user->identity->id) return false;
+        if ($id==@Yii::$app->user->identity->id) return false;
 
         if (!sizeof(@$_SESSION['suggested']) || !isset($_SESSION['suggested'])) $_SESSION['suggested'] = array();
         $active = 0;
