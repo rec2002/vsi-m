@@ -373,7 +373,7 @@ $this->title = 'Кабінет користувача';
                                                     <ul class="tt-task-gal clearfix">
                                                         <? foreach ($val['images'] as $key=>$item) {?>
                                                             <li style="width: auto;">
-                                                                <a class="custom-hover open-popup-big" href="javascript:" data-id="<?=$item['response_id']; ?>">
+                                                                <a class="custom-hover open-popup-big response-image" href="javascript:" data-id="<?=$item['response_id']; ?>">
                                                                     <img class="img-responsive" src="/uploads/members/responses/thmb/<?=$item['image']; ?>" style="width:80px;" alt="">
                                                                 </a>
                                                             </li>
@@ -510,22 +510,6 @@ $form_f = ActiveForm::begin(['options' => ['class'=>'response_feedback'], 'enabl
         </div>
         <div class="tt-devider"></div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <div class="popup-wrapper">

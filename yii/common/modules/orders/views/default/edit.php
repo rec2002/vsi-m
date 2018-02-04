@@ -29,16 +29,6 @@ $this->title = 'Замовлення';
                         </a>
                         <div class="tt-dropdown">
                             <a class="tt-task-status status<?=$model['status']?>" href="javascript:"><span><?=MemberHelper::STATUS[$model['status']]?></span></a>
-                            <!--<a class="tt-task-status tt-dropdown-link" href="#"><span>Шукає виконавця</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAM1BMVEUAAAAtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkMtNkOWchbXAAAAEXRSTlMA/P63pE01JhjElJGDfnJfQVsZ+r8AAAAwSURBVAgdBcGHAYAwEAQg7lOM3f2nFeQBuOOtCzhrMOqAXh/MdFomsKXt2QBWsuAHH3AAtyQEGooAAAAASUVORK5CYII=" alt=""></a>
-                            <div class="tt-dropdown-entry">
-                                <div class="tt-dropdown-overlay"><span></span></div>
-                                <ul>
-                                    <li><a href="#">Прийнято до виконання</a></li>
-                                    <li><a href="#">Виконано</a></li>
-                                    <li><a href="#">Скасованр</a></li>
-                                    <li><a class="open-popup" data-rel="1" href="#">Видалити</a></li>
-                                </ul>
-                            </div>-->
                         </div>
                     </div>
 

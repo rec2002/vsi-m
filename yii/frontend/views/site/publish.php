@@ -45,35 +45,13 @@ if (sizeof($data)) foreach ($data as $model) { ?>
             'pagination' => $publish_items->pagination,
             'linkOptions' => ['class'=>'page-link'],
             'options' => ['class'=>'pagination'],
-            'pageCssClass'=>'page-item',
-            'nextPageCssClass' => 'page-item next',
+            'nextPageCssClass' => 'next',
             'nextPageLabel' => 'наступні',
-            'prevPageCssClass' =>'page-item prev',
+            'prevPageCssClass' =>'prev',
             'prevPageLabel' => 'попередні'])
             ?>
         </nav>
-
-
-
         <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
-
-
-
-        <div class="empty-space marg-sm-b0 marg-lg-b25"></div>
-
-        <!-- TT-PAGINATION -->
-        <nav aria-label="" class="tt-pagination clearfix">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">попередні</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-
-
-                <li class="page-item"><a class="page-link" href="#">наступні</a></li>
-            </ul>
-        </nav>
-        <div class="empty-space marg-sm-b40 marg-lg-b90"></div>
-
     </div>
 </div>
 <?

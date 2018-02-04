@@ -263,7 +263,7 @@ class MemberHelper {
 
     public static function GetCountMessages($member=0)
     {
-        return Yii::$app->db->createCommand('SELECT count(*) as count FROM `member_msg_unread` u LEFT JOIN `member_msg` msg ON  msg.id=u.msg_id WHERE u.status=0 AND u.member_id="'.$member.'" AND u.support = 0')->queryOne()['count'];
+        return Yii::$app->db->createCommand('SELECT count(t.counts) as count FROM (SELECT m.suggestion_id as id, 1 as counts, \'0\' as support FROM `member_msg_unread` u LEFT JOIN `member_msg` m ON m.id = u.msg_id WHERE u.member_id="'.$member.'" AND m.suggestion_id IS NOT NULL GROUP BY m.suggestion_id UNION SELECT m.suggestion_id as id, 1 as counts, \'1\' as support FROM `member_msg_unread` u LEFT JOIN `member_msg` m ON m.id = u.msg_id WHERE u.member_id="'.$member.'" AND m.ticket_id IS NOT NULL GROUP BY m.ticket_id) t')->queryOne()['count'];
     }
 
 

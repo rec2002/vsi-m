@@ -66,8 +66,8 @@ class SiteController extends Controller
         $pie = array (1=>array('name'=>'Майстри', 'count'=>Yii::$app->db->createCommand("SELECT count(*) as count FROM `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canMajster'")->queryScalar()),
                       2=>array('name'=>'Замовники', 'count'=>Yii::$app->db->createCommand("SELECT count(*) as count FROM `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canZamovnyk'")->queryScalar()));
 
-        $master = Yii::$app->db->createCommand("select count(*) as count, DATE_FORMAT(m.created_at, \"%d.%m\") as date from `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canMajster' group by DATE_FORMAT(m.created_at, \"%Y-%m-%d\") ORDER BY m.created_at DESC")->queryAll();
-        $zamovnyk = Yii::$app->db->createCommand("select count(*) as count, DATE_FORMAT(m.created_at, \"%d.%m\") as date from `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canZamovnyk' group by DATE_FORMAT(m.created_at, \"%Y-%m-%d\") ORDER BY m.created_at DESC")->queryAll();
+        $master = Yii::$app->db->createCommand("select count(*) as count, DATE_FORMAT(m.created_at, \"%e.%m\") as date from `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canMajster' group by DATE_FORMAT(m.created_at, \"%Y-%m-%d\") ORDER BY m.created_at DESC")->queryAll();
+        $zamovnyk = Yii::$app->db->createCommand("select count(*) as count, DATE_FORMAT(m.created_at, \"%e.%m\") as date from `members` m LEFT JOIN `auth_assignment` a ON m.id = a.user_id WHERE a.item_name = 'canZamovnyk' group by DATE_FORMAT(m.created_at, \"%Y-%m-%d\") ORDER BY m.created_at DESC")->queryAll();
 
 
         $dates_arr = $master_arr = $zamovnyk_arr = array();

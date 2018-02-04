@@ -17,12 +17,13 @@ $this->title = 'Повідомлення';
                 <? Pjax::begin(); ?>
                 <div class="tabs-block style-2">
                     <div class="tab-nav">
-
-                        <a href="<?=Url::to(['/members/msg'])?>" class="tab-menu <?=(!isset($_GET['filter'])) ? 'active' : '' ?>"><span>Всі</span></a>
 <?  if (\Yii::$app->user->can('majster')) {  ?>
+                        <a href="<?=Url::to(['/members/msg'])?>" class="tab-menu <?=(!isset($_GET['filter'])) ? 'active' : '' ?>"><span>Всі</span></a>
                         <a href="<?=Url::to(['/members/msg?filter=orders'])?>" class="tab-menu <?=((@$_GET['filter']=='orders') ? 'active' : '')?>"><span>Мої замовники</span></a>
-<? } ?>
                         <a href="<?=Url::to(['/members/msg?filter=executors'])?>" class="tab-menu <?=((@$_GET['filter']=='executors') ? 'active' : '' )?>"><span>Мої виконавці</span></a>
+<? } else { ?>						
+                        <a href="<?=Url::to(['/members/msg'])?>" class="tab-menu <?=(!isset($_GET['filter'])) ? 'active' : '' ?>"><span>Всі виконавці</span></a>
+<? } ?>
                         <a href="<?=Url::to(['/members/msg?filter=support'])?>" class="tab-menu <?=((@$_GET['filter']=='support') ? 'active' : '' )?>"><span>Підтримка</span></a>
 
                     </div>
@@ -50,7 +51,7 @@ $this->title = 'Повідомлення';
                                     <div class="tt-messages-user-info">
                                         <div class="tt-messages-date simple-text"><?=MemberHelper::GetShortDates($val['created_at'])?></div>
                                         <div class="tt-messages-name h6"><?=(!empty($val['company'])) ? $val['company'] : $val['first_name'].' '.$val['surname'].' '.$val['last_name'] ?> </div>
-                                        <div class="simple-text">
+                                        <div class="simple-text" style="padding-right: 35px;">
                                             <p><?= Html::encode( mb_strimwidth($val['msg'], 0, 300, '...')); ?></p>
 
                                             <span class="notification" style="display:<?=($val['counts']>0) ? 'block': 'none' ?>" ><?=$val['counts']?></span>

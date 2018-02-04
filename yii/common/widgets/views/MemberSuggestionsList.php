@@ -62,7 +62,7 @@ use yii\helpers\Html;
                         <div class="tab-nav">
                             <div class="tab-menu active"><span>Пропозиція</span></div>
                             <div class="tab-menu"><span>Про майстра</span></div>
-                            <div class="tab-menu"><span>Відгуки</span></div>
+                            <div class="tab-menu"><span>Відгуки (<?=sizeof($ratings[$model->member->id])?>)</span></div>
                         </div>
 
                         <div class="tab-entry" style="display: block;">
@@ -181,7 +181,7 @@ use yii\helpers\Html;
                                                     </li>
                                                     <li>
                                                         <div class="tt-rating-title">Дотримання ціни</div>
-                                                        <?=MemberHelper::GetRatingStar($val['price'], 'price', false);https://vykonrob.com.ua/?>
+                                                        <?=MemberHelper::GetRatingStar($val['price'], 'price', false);?>
                                                     </li>
                                                     <li>
                                                         <div class="tt-rating-title">Дотримання термінів</div>
@@ -199,6 +199,33 @@ use yii\helpers\Html;
                                             <div class="tt-review-name"><?= Html::a($val['first_name'], ['/orders/default/detail', 'id' => $val['order_id']]) ?></div>
                                         </div>
                                     </div>
+<? if (sizeof($val['images']))  { ?>
+													<div class="empty-space marg-lg-b20"></div>
+                                                    <h6 class="tt-task-subtitle gallery-response-view">Фото:</h6>
+                                                    <ul class="tt-task-gal clearfix">
+                                                        <? foreach ($val['images'] as $key=>$item) {?>
+                                                            <li style="width: auto;">
+                                                                <a class="custom-hover open-popup-big response-image" href="javascript:" data-id="<?=$item['response_id']; ?>">
+                                                                    <img class="img-responsive" src="/uploads/members/responses/thmb/<?=$item['image']; ?>" style="width:80px;" alt="">
+                                                                </a>
+                                                            </li>
+                                                        <? } ?>
+                                                    </ul>
+                                                    <div class="empty-space marg-lg-b20"></div>
+<? } ?>
+<? if ($val['feedback_approve']==2) { ?>
+                                            <div class="tt-reply">
+                                                <div class="tt-reply-write">
+                                                    <img class="tt-reply-write-img tt-profile-img" src="<?=!empty($model->member->avatar_image) ? $model->member->avatar_image : '/img/person/person.png';?>" style="width:54px;" alt="">
+                                                    <div class="tt-editable feedback_text" style="margin-left:75px;">
+                                                        <div class="simple-text size-3 small-space bold-style-2"><p><b>Коментар виконавця </b></p></div>
+                                                        <div class="empty-space marg-lg-b20"></div>
+                                                        <div class="tt-editable-item simple-text size-2"><?=nl2br($val['feedback_text'])?></div>
+                                                        <div class="empty-space marg-lg-b20"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+<? } ?>															
                                 </div>
                                 <!-- Review1-END -->
 
@@ -251,7 +278,7 @@ use yii\helpers\Html;
                         <div class="tab-nav">
                             <div class="tab-menu active"><span>Пропозиція</span></div>
                             <div class="tab-menu"><span>Про майстра</span></div>
-                            <div class="tab-menu"><span>Відгуки</span></div>
+                            <div class="tab-menu"><span>Відгуки (<?=sizeof($ratings[$model->member->id])?>)</span></div>
                         </div>
 
                         <div class="tab-entry" style="display: block;">
@@ -388,6 +415,33 @@ use yii\helpers\Html;
                                                     <div class="tt-review-name"><?= Html::a($val['first_name'], ['/orders/default/detail', 'id' => $val['order_id']]) ?></div>
                                                 </div>
                                             </div>
+<? if (sizeof($val['images']))  { ?>
+													<div class="empty-space marg-lg-b20"></div>
+                                                    <h6 class="tt-task-subtitle gallery-response-view">Фото:</h6>
+                                                    <ul class="tt-task-gal clearfix">
+                                                        <? foreach ($val['images'] as $key=>$item) {?>
+                                                            <li style="width: auto;">
+                                                                <a class="custom-hover open-popup-big response-image" href="javascript:" data-id="<?=$item['response_id']; ?>">
+                                                                    <img class="img-responsive" src="/uploads/members/responses/thmb/<?=$item['image']; ?>" style="width:80px;" alt="">
+                                                                </a>
+                                                            </li>
+                                                        <? } ?>
+                                                    </ul>
+                                                    <div class="empty-space marg-lg-b20"></div>
+<? } ?>
+<? if ($val['feedback_approve']==2) { ?>
+                                            <div class="tt-reply">
+                                                <div class="tt-reply-write">
+                                                    <img class="tt-reply-write-img tt-profile-img" src="<?=!empty($model->member->avatar_image) ? $model->member->avatar_image : '/img/person/person.png';?>" style="width:54px;" alt="">
+                                                    <div class="tt-editable feedback_text" style="margin-left:75px;">
+                                                        <div class="simple-text size-3 small-space bold-style-2"><p><b>Коментар виконавця </b></p></div>
+                                                        <div class="empty-space marg-lg-b20"></div>
+                                                        <div class="tt-editable-item simple-text size-2"><?=nl2br($val['feedback_text'])?></div>
+                                                        <div class="empty-space marg-lg-b20"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+<? } ?>												
                                         </div>
                                         <!-- Review1-END -->
 

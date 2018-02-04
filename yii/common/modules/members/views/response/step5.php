@@ -166,7 +166,7 @@ $this->title = 'Текст відгуку';
                                         <ul class="tt-task-gal clearfix">
                                             <? foreach ($images as $key=>$val) {?>
                                                 <li style="width: auto;">
-                                                    <a class="custom-hover open-popup-big" href="javascript:" data-id="<?=$val['response_id']; ?>">
+                                                    <a class="custom-hover open-popup-big response-image" href="javascript:" data-id="<?=$val['response_id']; ?>">
                                                         <img class="img-responsive" src="/uploads/members/responses/thmb/<?=$val['image']; ?>" style="width:80px;" alt="">
                                                     </a>
                                                 </li>

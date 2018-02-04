@@ -144,7 +144,7 @@ class ResponseController extends Controller
 
                 $members = Yii::$app->db->createCommand('
                    SELECT m2.id as owner_id, if (m2.company!=\'\', m2.company, CONCAT(m2.first_name, \' \', m2.surname, \' \', m2.last_name)) as owmer_name, m2.email as owner_email,
-                          m1.id as recipient_id, if (m1.company!=\'\', m1.company, CONCAT(m1.first_name, \' \', m1.surname, \' \', m1.last_name)) as recipient_name, m1.email as recipient_email, m1.phone as recipient_phone,  r.suggestion_id
+                          m1.id as recipient_id, if (m1.company!=\'\', m1.company, CONCAT(m1.first_name, \' \', m1.surname, \' \', m1.last_name)) as recipient_name, m1.email as recipient_email, m1.phone as recipient_phone,  r.suggestion_id, s.order_id
                    FROM `member_response` r
                    LEFT JOIN `member_suggestion` s ON s.id =  r.suggestion_id
                    LEFT JOIN `members` m1 ON m1.id = s.member_id
@@ -168,6 +168,9 @@ class ResponseController extends Controller
                         \common\components\MemberHelper::GetSMSTemplate(12, $model->attributes, $members['recipient_phone']);
                     }
 
+					
+					Yii::$app->db->createCommand()->update('orders', ['status'=>4], ' id="'.$members['order_id'].'"')->execute();	
+					
                     Yii::$app->db->createCommand()->insert('member_msg', ['suggestion_id' => $members['suggestion_id'], 'member_id'=>$members['recipient_id'], 'msg'=>'Додавно відгук про виконавця',  'system'=>1])->execute();
                     $id_msg = Yii::$app->db->getLastInsertID();
                     Yii::$app->db->createCommand()->insert('member_msg_unread', ['msg_id' => $id_msg, 'member_id'=>$members['recipient_id'],  'support'=>0])->execute();
@@ -175,6 +178,7 @@ class ResponseController extends Controller
                 }
 
                 if (Yii::$app->request->post('MemberResponse')['step'] == 3) {
+					Yii::$app->db->createCommand()->update('orders', ['status'=>2], ' id="'.$members['order_id'].'"')->execute();				
                     \common\components\MemberHelper::GetMailTemplate(11, array_merge($model->attributes, array('url' => $url, 'name' => $members['owmer_name'], 'message_approve' => (!empty(Yii::$app->request->post('MemberResponse')['message_approve']) ? 'Причина відмови: <b>' . Yii::$app->request->post('MemberResponse')['message_approve'] . '</b>' : ''))), $members['owner_email']);
                 }
             }

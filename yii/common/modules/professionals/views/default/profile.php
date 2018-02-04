@@ -280,11 +280,11 @@ if (sizeof($prices)) foreach ($prices as $key=>$val) if (@$data[$val['id']]['pri
                                         </div>
 <? if (sizeof($val['images']))  { ?>
                                             <div class="empty-space marg-lg-b20"></div>
-                                            <h6 class="tt-task-subtitle gallery-response-view">Фото:</h6>
+                                            <h6 class="tt-task-subtitle gallery-response-view ">Фото:</h6>
                                             <ul class="tt-task-gal clearfix">
                                                 <? foreach ($val['images'] as $key=>$val) {?>
                                                     <li style="width: auto;">
-                                                        <a class="custom-hover open-popup-big" href="javascript:" data-id="<?=$val['response_id']; ?>">
+                                                        <a class="custom-hover open-popup-big response-image" href="javascript:" data-id="<?=$val['response_id']; ?>">
                                                             <img class="img-responsive" src="/uploads/members/responses/thmb/<?=$val['image']; ?>" style="width:80px;" alt="">
                                                         </a>
                                                     </li>

@@ -194,7 +194,7 @@ body.mobile .fixed-background { background-attachment: scroll; }
 .button.type-1.disabled { cursor: not-allowed; opacity: 0.7; }
 .button.type-1.disabled input { cursor: not-allowed; }
 /*button size*/
-.button.type-1.size-2 { font-size: 11px; line-height: 17px; font-weight: 300; padding: 5px 19px; }
+.button.type-1.size-2 { font-size: 12px; line-height: 17px; font-weight: 300; padding: 5px 19px;font-weight: bold; }
 .button.type-1.size-3 { padding: 17px 32px; }
 .button.type-1.size-4 { padding: 22px 43px; }
 .button.type-1.full { width: 100%; padding-left: 15px; padding-right: 15px; }
@@ -2374,9 +2374,16 @@ ul.pagination li.prev.disabled span, ul.pagination li.next.disabled span {line-h
 @media (max-width:991px) {
 	.city-list .row [class*="col-"]:nth-child(3n + 1) {clear: left;}
 }
-
-
-
 @media (max-width: 767px) {
 	.pagination li.prev .page-link, .pagination li.prev span, .pagination li.next .page-link, .pagination li.next span {font-size: 0px!important; width: 20px!important; padding: 0px!important; min-width: 100%!important;}
+}
+
+@media (max-width: 991px) { .tt-widget-dropdown { position: relative; margin-bottom: 0; cursor: pointer; }
+  .tt-widget-dropdown:before { content: ''; display: block; position: absolute; top: 50%; right: 0; width: 10px; height: 5px; margin-top: -2px;  -webkit-transition: opacity .3s ease-in-out; transition: opacity .3s ease-in-out; border-color: #999 transparent transparent transparent;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    height: 0;
+    position: absolute;
+    top: 50%;
+    width: 0; background: none;}
 }

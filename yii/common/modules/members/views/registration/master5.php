@@ -57,6 +57,8 @@ $this->title = 'Реєстрація майстра - Крок 5';
                         <div class="list-dotted-item">
                         <div class="list-dotted-left"><span><?=($val['job_markup']==1) ? '<b>'.$val['name'].'</b>' : $val['name'] ?></span></div>
                         <div class="list-dotted-right"><span>від
+						
+						<input type="text" class="simple-input single numberic" name="MemberEdit[prices][<?=$val['id']?>]" value="<?=@$data[$val['id']]['price']?>" "tabindex" ="<?=($key+1)?>" "autocomplete"="off">
                         <?
                                     echo \yii\widgets\MaskedInput::widget([
                                         'name' => 'MasterRegistration[prices]['.$val['id'].']',

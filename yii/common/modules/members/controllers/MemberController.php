@@ -339,7 +339,7 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
         if ($model->load(Yii::$app->request->post())) {
 
             $new = Yii::$app->request->post('MemberEdit')['prices'];
-            $top = Yii::$app->request->post('MemberEdit')['top'];
+            $top = (is_array(@Yii::$app->request->post('MemberEdit')['top'])) ? Yii::$app->request->post('MemberEdit')['top'] : array();
 
             $new_ids = array();
             if (sizeof($new)) foreach ($new as $key=>$val){
@@ -364,6 +364,29 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
         }
         return['status'=>0];
     }
+
+
+
+    public function actionRemovefile($id)
+    {
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        $models = MemberDocuments::find()->where(['member_id' => Yii::$app->user->identity->getId(), 'id'=>$id])->One();
+        $dir = Yii::getAlias('@user_document');
+
+        if ($models){
+            if (file_exists($dir.'/'.$models->file)) {
+                @unlink($dir.'/'.$models->file);
+            }
+            $member = Members::find()->where(['id' => Yii::$app->user->identity->getId()])->One();
+            $member->approved = 0;
+            $member->save(false);
+
+            $models->delete();
+            return['status'=>1, 'msg'=>'File removed.'];
+        }
+        return['status'=>0, 'msg'=>'Bad request.'];
+    }
+
 
     public function actionUploadavatar()
     {

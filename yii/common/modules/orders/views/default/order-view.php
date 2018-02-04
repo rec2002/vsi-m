@@ -30,6 +30,9 @@ $this->title = 'Замовлення';
                             <span class="tt-task-proposed-count"><?=$suggestions?></span>
                             <span> <?=MemberHelper::NumberSufix($suggestions, array('майстер відповів', 'майстрів відповіли', 'майстрів відповіли'))?></span>
                         </a>
+                        <div class="tt-dropdown">
+                            <a class="tt-task-status status<?=$model['status']?>" href="javascript:"><span><?=MemberHelper::STATUS[$model['status']]?></span></a>
+                        </div>						
                     </div>
                     <div class="tt-task-title"><h5 class="h5"><?=$model->title;?></h5></div>
                 </div>
@@ -115,6 +118,7 @@ $this->title = 'Замовлення';
 <? } ?>
                 </ul>
 <? } ?>
+<? if ($model->status<4) { ?>
 
 <? if (!Yii::$app->user->isGuest && $model->member==@Yii::$app->user->identity->getId()) {?>
 
@@ -125,10 +129,8 @@ $this->title = 'Замовлення';
                 </div>
 
 <?  } else echo \common\widgets\MemberSuggestions::widget(array('id' => $model->id)); ?>
-
-
-
-            </div>
+<? } ?>
+    </div>
 
 <? if (!Yii::$app->user->isGuest) {?>
 <? if ($model->member==@Yii::$app->user->identity->getId()) {

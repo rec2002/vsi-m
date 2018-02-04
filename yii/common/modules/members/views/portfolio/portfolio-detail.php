@@ -25,7 +25,7 @@ use yii\helpers\Url;
             <div class="swiper-pagination relative-pagination hidden"></div>
         </div>
     </div>
-    <div class="swiper-container swiper-control-bottom" data-slides-per-view="auto" data-lazy="1" data-space-between="10" data-center="1" data-clicked-slide="1">
+    <div class="swiper-container swiper-control-bottom" data-slides-per-view="auto" data-lazy="0" data-space-between="10" data-center="1" data-clicked-slide="1">
         <div class="swiper-wrapper">
 <? if (sizeof($images)>1)  foreach ($images as $val) {?>
             <div class="swiper-slide">

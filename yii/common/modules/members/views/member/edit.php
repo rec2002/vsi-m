@@ -50,13 +50,24 @@ $this->title = 'Кабінет користувача';
                                 <div class="tt-person-documents">
 <? if (!sizeof($member->documents)) {?>
                                     <a class="button type-1 color-5 open-popup" data-rel="1" href="javascript:">Підтвердити профіль</a>
+<? } else { ?>
+                                    <a class="button type-1 color-5 open-popup" data-rel="1" href="javascript:">Додати скани документів</a>
 <? } ?>
                                     <div class="tt-person-documents-entry">
                                         <div class="simple-text size-3 text-center">
+
+
+
 <? if (sizeof($member->documents)) {?>
-    <p style="width: 500px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+    <p style="width: 300px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+
+<? if (sizeof($member->documents) && $member->approved==0) {?>
+            <span style="color:red;"> Вказана інформація надійшла<br/> на перевірку адміністрації порталу, <br/>про що додатково буде повідомлено <br/>на Вашу поштову скриньку. </span><br/><br/>
+<? } ?>
+
+
 <? foreach ($member->documents as $item) {?>
-        <a href="<?=Url::toRoute(['/members/member/file', 'id' => $item['id']])?>" target="_blank"><?=$item['name']?></a><br/>
+        <a href="<?=Url::toRoute(['/members/member/file', 'id' => $item['id']])?>" class="remove_doc" data-id="<?=$item['id']?>" target="_blank"><?=$item['name']?></a><br/>
 <? } ?>
 </p>
 <? } else { ?>
@@ -502,7 +513,25 @@ echo $this->registerJs("(function(){
     });
 
     $(document).on('click', '.remove_added_file', function(){  
-	    $(this).parent().remove();
+        var id = parseInt($(this).data('id'));
+        var obj = $(this);
+        if (isNaN(id)) { 
+        	obj.parent().remove();
+            return false; 
+        }
+        
+        $.post('/members/member/removefile?id='+id, {'id':id}).done(function(data) {
+            if (data.status==1) {
+                $('a.remove_doc[data-id=\"'+id+'\"]').remove();
+                $('div.tt-heading-check').remove();
+                obj.parent().remove();
+                
+                if ($('.added_file').length>0)  {
+                    $('div.simple-text.text-center p span').remove();
+                    $('div.simple-text.text-center p').prepend('<span style=\"color:red;\"> Вказана інформація надійшла<br/> на перевірку адміністрації порталу, <br/>про що додатково буде повідомлено <br/>на Вашу поштову скриньку. </span><br/><br/>');
+                } else $('div.simple-text.text-center p span').remove();
+            }  
+        });
 	});
 	        
         
@@ -558,8 +587,6 @@ echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
         <div class="popup-container size-4">
             <div class="popup-align">
                 <?php
-
-
                 $member->setScenario('documents');
                 $form_file = ActiveForm::begin(['id' => 'member_documents',  'options' => ['class'=>'member_documents', 'enctype'=>'multipart/form-data'], 'enableAjaxValidation' => false,
                     'enableClientValidation' => true,
@@ -575,8 +602,12 @@ echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
                             <?= $form->field($member, 'documents[]')->fileInput(['multiple' => true, 'accept' => 'image/x-png,image/gif,image/jpeg'])->label(false)->error(false); ?>
                         </div>
                         <div class="empty-space marg-lg-b10"></div>
-                        <div class="simple-text tt-file-info text-center">
 
+
+                        <div class="simple-text tt-file-info text-center">
+<? foreach ($member->documents as $item) {?>
+                            <div class="added_file " id="file-1"><?=$item['name']?><span class="remove_added_file" data-id="<?=$item['id']?>"> [X] </span></div>
+<? } ?>
                         </div>
                         <div class="empty-space marg-lg-b30"></div>
                         <?= Html::submitButton('Надіслати на перевірку', ['class' => 'button type-1 size-3 color-3 uppercase', 'name' => 'save']) ?>

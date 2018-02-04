@@ -44,18 +44,8 @@ if (sizeof($prices)) foreach ($prices as $key=>$val) {
         <div class="list-dotted-item">
             <div class="list-dotted-left"><span><?=($val['job_markup']==1) ? '<b>'.$val['name'].'</b>' : $val['name'] ?></span></div>
             <div class="list-dotted-right"><span>від
-                    <?
-
-                    echo \yii\widgets\MaskedInput::widget([
-                        'name' => 'MemberEdit[prices]['.$val['id'].']',
-                        'mask' => '9',
-                        'value' =>@$data[$val['id']]['price'],
-                        'options' =>["class" => "simple-input single", 'tabindex' => ($key+1), 'autocomplete'=>"off"],
-                        'clientOptions' => ['repeat' => 10, 'greedy' => false]
-                    ]);
-
-                    ?>
-                    <?=$price_types[$val['job_unit']]?></span></div>
+			<input type="text" class="simple-input single numberic" name="MemberEdit[prices][<?=$val['id']?>]" value="<?=@$data[$val['id']]['price']?>"  "tabindex" ="<?=($key+1)?>" "autocomplete"="off" >
+            <?=$price_types[$val['job_unit']]?></span></div>
         </div>
     </div>
     <?
@@ -80,3 +70,4 @@ if (sizeof($prices)) foreach ($prices as $key=>$val) {
     <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save_prices']) ?>
 </div>
 <?php ActiveForm::end(); ?>
+

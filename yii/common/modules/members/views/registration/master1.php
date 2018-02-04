@@ -88,6 +88,7 @@ $this->title = 'Реєстрація майстра';
                                         <div class="tt-fadein-top phone-reg-block">
                                             <div class="row row10">
                                                 <div class="col-sm-8">
+												
                                                     <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>@Yii::$app->session['newUserSession']['phone'], 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '4',  'placeholder' => "+38 (ххх) ххх - хх - хх", 'data-phone'=>''])->label(false); ?>
                                                 </div>
                                                 <div class="col-sm-4">

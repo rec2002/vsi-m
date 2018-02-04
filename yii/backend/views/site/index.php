@@ -42,7 +42,7 @@ $this->title = 'Aдміністративна частина "Всі майст�
 </div>
 
 <?php
-$this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js'); ?>
+$this->registerJsFile('//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js'); ?>
 <?
 echo $this->registerJs("(function(){
 

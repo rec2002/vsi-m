@@ -21,8 +21,14 @@ $(document).ready(function(){
 
     socket.on('GetUnreadTotal', function(data) {
 
+		
         if (data.total>0 && parseInt($('span#total_unread').html())!=data.total) {
-            $('span#total_unread').show().html(data.total);
+			var i=0;
+		    $.each(data.counts, function (index, value) {
+				i++;
+			});
+		
+            $('span#total_unread').show().html(i);
             beep();
         } else {
             $('span#total_unread').hide();
@@ -33,13 +39,13 @@ $(document).ready(function(){
             item.find('span.notification').hide().html(0);
             $.each(data.counts, function (index, value) {
                 if (item.data('id')==index && item.data('support')==value.support && !item.hasClass("active")){
-                    item.find('span.notification').show().html(value.counts);      console.log(value);
+                    item.find('span.notification').show().html(value.counts);      
                 }
             });
 
 
         });
-        console.log(data);
+
     });
 
 

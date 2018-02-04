@@ -25,7 +25,7 @@ use common\components\MemberHelper;
                             <ul>
                                 <li><a href="<?=Url::to(['/orders'])?>">Замовлення</a></li>
                                 <li class="<?=in_array($this->context->action->id, array('profile')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/member/profile'])?>">Моя сторінка</a></li>
-                                <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог майстрів</a></li>
+                                <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог виконробів</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -59,7 +59,7 @@ use common\components\MemberHelper;
                                     <li><a href="<?=Url::to(['/members/member/types'])?>">Послуги та ціни</a></li>
                                     <li><a href="<?=Url::to(['/members/portfolio/list'])?>">Виконанні проекти</a></li>
                                     <li><a href="<?=Url::to(['/members/member/resetpwd'])?>">Змінити пароль</a></li>
-                                    <li><a href="<?=Url::to(['/members/member/noticesettings'])?>">Сповіщеня</a></li>
+                                    <li><a href="<?=Url::to(['/members/member/noticesettings'])?>">Сповіщення</a></li>
                                     <li><a href="<?=Url::to(['/members/member/billing'])?>">Доступ до замовлень</a></li>
                                 </ul>
                                 <a href="<?=Url::to(['/members/login/logout'])?>" class="button type-1 size-2 full">Вихід</a>
@@ -86,7 +86,7 @@ use common\components\MemberHelper;
                     <nav class="main-nav">
                         <ul>
                             <li class="<?=in_array($this->context->action->id, array('list')) ? 'active' : '' ?>"><a href="<?=Url::to(['/orders/default/myorders'])?>">Мої замовлення</a></li>
-                            <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог майстрів</a></li>
+                            <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог виконробів</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -111,7 +111,7 @@ use common\components\MemberHelper;
                         <div class="tt-profile-dropdown">
                             <ul>
                                 <li><a href="<?=Url::to(['/members/customer', '#'=>'personal_data'])?>">Особисті дані</a></li>
-                                <li><a href="<?=Url::to(['/members/customer', '#'=>'notification'])?>">Сповіщеня</a></li>
+                                <li><a href="<?=Url::to(['/members/customer', '#'=>'notification'])?>">Сповіщення</a></li>
                                 <li><a href="<?=Url::to(['/members/customer', '#'=>'change_password'])?>">Змінити пароль</a></li>
                             </ul>
                             <a href="<?=Url::to(['/members/login/logout'])?>" class="button type-1 size-2 full">Вихід</a>
@@ -169,7 +169,7 @@ use common\components\MemberHelper;
 
 
             <div class="nav-right">
-                <a href="<?=Url::to(['/members/registration'])?>" class="button type-1">Реєстрація майстра</a>
+                <a href="<?=Url::to(['/members/registration'])?>" class="button type-1">Реєстрація виконроба</a>
                 <div class="nav-more">
                     <a href="<?=Url::to(['/members/login'])?>">Вхід</a>
                 </div>

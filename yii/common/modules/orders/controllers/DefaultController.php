@@ -137,7 +137,14 @@ class DefaultController extends Controller
     public function actionEdit($id)
     {
         $model = Orders::find()->where(['id'=>$id])->one();
+
         if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
+		
+		if ($model->status==4 || $model->status==5) {
+			header('Location: ' . Url::to(['/orders/default/detail', 'id' => $id]));
+			exit();
+		}
+
         $images = OrderImages::findAll(['order_id' => $model->id]);
         $suggestion = MemberSuggestion::findAll(['order_id' => $model->id, 'deleted'=>0]);
 
@@ -201,7 +208,8 @@ class DefaultController extends Controller
         $count_total = Yii::$app->db->createCommand('select count(member) as total, sum(case when status = \'1\' then 1 else 0 end) status_1, sum(case when status = \'2\' then 1 else 0 end) status_2, sum(case when status = \'3\' then 1 else 0 end) status_3,
         sum(case when status = \'4\' then 1 else 0 end) status_4, sum(case when status = \'5\' then 1 else 0 end) status_5 from `orders` WHERE member=:member group by member', $param)->queryOne();
 
-
+		if (!is_array($count_total)) $count_total=array('total'=>0, 'status_1'=>0, 'status_2'=>0, 'status_3'=>0, 'status_4'=>0, 'status_5'=>0); 	
+		
         if ($status != '')  $param[':status'] = $status;
 
 
@@ -216,12 +224,34 @@ class DefaultController extends Controller
                     break;
             }
         }
+		
+		$count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM (SELECT FOUND_ROWS() FROM `orders` o 
+					LEFT JOIN `member_suggestion` s ON s.order_id=o.id and s.deleted=0
+					LEFT JOIN `member_suggestion_approved` a ON a.suggestion_id = s.id
+					WHERE o.member="'.Yii::$app->user->identity->getId().'" AND o.status NOT IN (4,5) AND a.id IS NOT NULL GROUP BY o.id) t ')->queryScalar();			
 
+		$count_total['status_3'] = 	$count;	
 
-        $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM orders o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''), $param)->queryScalar();
+		if ($status==3) { 
+		
+			$sql = 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, 3 as status, 
+					(SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id AND s.deleted=0) as `suggestions` 
+					FROM `orders` o 
+					LEFT JOIN `member_suggestion` s ON s.order_id=o.id and s.deleted=0
+					LEFT JOIN `member_suggestion_approved` a ON a.suggestion_id = s.id
+					WHERE o.member="'.Yii::$app->user->identity->getId().'" AND o.status NOT IN (4,5) AND a.id IS NOT NULL GROUP BY o.id ORDER BY o.status, o.created_at DESC';
+		
+
+		
+		} else {
+			$sql = 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, 
+              (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id AND s.deleted=0) as `suggestions`  FROM `orders` o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC';
+			$count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM orders o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''), $param)->queryScalar();			  
+		}
+			  
+
         $provider = new SqlDataProvider([
-            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, 
-              (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id AND s.deleted=0) as `suggestions`  FROM `orders` o '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
+            'sql' => $sql,
             'params' => $param,
             'totalCount' => $count,
             'pagination' => [
@@ -249,13 +279,15 @@ class DefaultController extends Controller
         $count_total = Yii::$app->db->createCommand('select count(s.id) as status_0, 
                                                         sum(case when a.id IS NOT NULL then 1 else 0 end) status_1,
                                                         sum(case when (r.meeting_result=1 AND r.step=2)  then 1  when (r.stage=1 AND r.step=3)  then 1 else 0 end) status_2,
-                                                        sum(case when (r.stage=2 AND r.step=5)  then 1 else 0 end) status_3,
+                                                        sum(case when (o.status=4 AND r.step=5)  then 1 else 0 end) status_3,
                                                         sum(case when (o.status=5)  then 1 else 0 end) status_4 from `member_suggestion` s
                                                         LEFT JOIN `orders` o ON o.id = s.order_id 
                                                         LEFT JOIN `member_suggestion_approved` a ON a.suggestion_id = s.id
                                                         LEFT JOIN `member_response` r ON r.suggestion_id = s.id
                                                         WHERE s.member_id=:member group by s.member_id', $param)->queryOne();
 
+		if (!is_array($count_total)) $count_total=array('status_0'=>0, 'status_1'=>0, 'status_2'=>0, 'status_3'=>0, 'status_4'=>0);														
+														
         if ($status != '')  $param[':status'] = $status;
         $filter = array();
         $filter[] = ' s.member_id='.Yii::$app->user->identity->getId();
@@ -267,28 +299,35 @@ class DefaultController extends Controller
                 $filter[] = ' ((r.meeting_result=1 AND r.step=2) OR (r.stage=1 AND r.step=3)) ';
                 break;
             case '3':
-                $filter[] = ' (r.stage=2 AND r.step=5) ';
+                $filter[] = ' (o.status=4 AND r.step=5) ';
                 break;
             case '4':
                 $filter[] = ' (o.status=5) ';
                 break;
         }
 
-        $count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM member_suggestion s
+		
+		$count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM member_suggestion s
                                                     LEFT JOIN `orders` o ON o.id = s.order_id 
                                                     LEFT JOIN `member_suggestion_approved` a ON a.suggestion_id = s.id
                                                     LEFT JOIN `member_response` r ON r.suggestion_id = s.id
                                                     '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : ''))->queryScalar();
-
-
-        $provider = new SqlDataProvider([
-            'sql' => 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, 
+													
+						
+		$sql = 'SELECT o.id, o.title, o.descriptions, o.location, o.budget as budget_name, DATE_FORMAT(o.created_at, "%d.%m.%Y") as created_at, o.status, 
               (SELECT count(s.id) FROM `member_suggestion` s WHERE o.id = s.order_id) as `suggestions`  FROM `member_suggestion` s
                                                     LEFT JOIN `orders` o ON o.id = s.order_id 
                                                     LEFT JOIN `member_suggestion_approved` a ON a.suggestion_id = s.id
-                                                    LEFT JOIN `member_response` r ON r.suggestion_id = s.id
-               
-               '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY s.created_at DESC',
+                                                    LEFT JOIN `member_response` r ON r.suggestion_id = s.id               
+               '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY s.created_at DESC';
+		
+
+
+
+
+		
+        $provider = new SqlDataProvider([
+            'sql' => $sql,
             'params' => $param,
             'totalCount' => $count,
             'pagination' => [

@@ -3,9 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-/* @var $this yii\web\View */
-/* @var $model common\modules\members\models\Members */
-/* @var $form yii\widgets\ActiveForm */
+use kartik\switchinput\SwitchInputAsset;
+
 ?>
 
 <div class="members-form">
@@ -26,7 +25,10 @@ use yii\helpers\Url;
     <?= $form->field($model, 'approved')->widget(kartik\switchinput\SwitchInput::classname(), [
         'pluginOptions'=>[
             'onText'=>'TAK',
-            'offText'=>'HI'
+            'offText'=>'HI',
+			'handleWidth'=>'53',
+			'labelWidth'=>'53',
+			'staticWidth'=>'53'
         ]])->label('Виконавець пройшов перевірку');
 
     ?>
@@ -38,3 +40,4 @@ use yii\helpers\Url;
     <?php ActiveForm::end(); ?>
 
 </div>
+<? SwitchInputAsset::register($this); ?>

@@ -14,13 +14,13 @@ use yii\helpers\Url;
     ]]);
 ?>
 
-    <h1 class="tt-banner-title h2">Замовте послуги майстрів по ремонту</h1>
+    <h1 class="tt-banner-title h2">Замовте послуги виконробів по ремонту</h1>
     <div class="simple-text size-4 darker">
-        <p>Добавте замолення, щоб отримати пропозиції від зацікавлених майстрів</p>
+        <p>Добавте замолення, щоб отримати пропозиції від зацікавлених виконробів</p>
     </div>
     <?= $form->field($model, 'title')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['title'], 'class' => 'simple-input light', 'tabindex' => '1', 'autocomplete'=>'off', 'placeholder' => "Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
 
-    <?= $form->field($model, 'descriptions')->textarea(['value'=>@Yii::$app->session['newCustomerSession']['descriptions'], 'class' => 'simple-input height-4 light', 'tabindex' => '2', 'maxlength'=>'800', 'autocomplete'=>'off', 'placeholder' => "Опишіть завдання як омога детальніше, все що може бути корисно для майстрів (розміри, об’єм робіт, типи робіт, матеріали ... )", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
+    <?= $form->field($model, 'descriptions')->textarea(['value'=>@Yii::$app->session['newCustomerSession']['descriptions'], 'class' => 'simple-input height-4 light', 'tabindex' => '2', 'maxlength'=>'800', 'autocomplete'=>'off', 'placeholder' => "Опишіть завдання як омога детальніше, все що може бути корисно для виконробів (розміри, об’єм робіт, типи робіт, матеріали ... )", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
 
     <div class="row row10">
         <div class="col-sm-6 col-lg-7">

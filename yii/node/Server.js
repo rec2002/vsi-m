@@ -185,6 +185,8 @@ var mysql_query = function (sql,callback) {
     pool.getConnection(function(err,connection){
         if (err) { callback(false); return;}
 
+		
+		console.log(sql);
         connection.query(sql,function(err,rows){
             connection.release();
             if(!err) {
@@ -200,7 +202,7 @@ var mysql_query = function (sql,callback) {
 }
 
 function GetUnreadTotal(id, token) {
-    mysql_query("SELECT m.suggestion_id as id, count(m.suggestion_id) as counts, '0' as support FROM `member_msg_unread` u LEFT JOIN `member_msg` m ON m.id = u.msg_id WHERE u.member_id='"+id+"' AND m.suggestion_id IS NOT NULL GROUP BY m.suggestion_id UNION SELECT m.ticket_id as id, count(m.ticket_id) as counts, '1' as support FROM `member_msg_unread` u LEFT JOIN `member_msg` m ON m.id = u.msg_id WHERE u.member_id='"+id+"' AND m.ticket_id IS NOT NULL GROUP BY m.ticket_id ", function (res) {
+	mysql_query("SELECT m.suggestion_id as id, count(m.suggestion_id) as counts, '0' as support FROM `member_msg_unread` u LEFT JOIN `member_msg` m ON m.id = u.msg_id WHERE u.member_id='"+id+"' AND m.suggestion_id IS NOT NULL GROUP BY m.suggestion_id UNION SELECT m.ticket_id as id, count(m.ticket_id) as counts, '1' as support FROM `member_msg_unread` u LEFT JOIN `member_msg` m ON m.id = u.msg_id WHERE u.member_id='"+id+"' AND m.ticket_id IS NOT NULL GROUP BY m.ticket_id ", function (res) {
         if (res) {
             var result = counts = {};
             var total = 0;
