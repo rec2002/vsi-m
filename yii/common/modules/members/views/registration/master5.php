@@ -59,16 +59,7 @@ $this->title = 'Реєстрація майстра - Крок 5';
                         <div class="list-dotted-right"><span>від
 						
 						<input type="text" class="simple-input single numberic" name="MemberEdit[prices][<?=$val['id']?>]" value="<?=@$data[$val['id']]['price']?>" "tabindex" ="<?=($key+1)?>" "autocomplete"="off">
-                        <?
-                                    echo \yii\widgets\MaskedInput::widget([
-                                        'name' => 'MasterRegistration[prices]['.$val['id'].']',
-                                        'mask' => '9',
-                                        'value' =>@$data[$val['id']],
-                                        'options' =>["class" => "simple-input single", 'tabindex' => ($key+1), 'autocomplete'=>"off"],
-                                        'clientOptions' => ['repeat' => 10, 'greedy' => false]
-                                    ]);
 
-                        ?>
                                     <?=$price_types[$val['job_unit']]?></span></div>
                         </div>
 <?

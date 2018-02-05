@@ -1112,12 +1112,12 @@ console.log(upload.width());
             $.post( "/site/sendphonecode", {'phone' : number},  function( data ) {
                 var data = JSON.parse(data);
                 if (data.status==1){
-                    obj.closest('.tt-fadein-top').siblings('.tt-fadein-bottom').find('.simple-text').text(number);
+                    obj.closest('.tt-fadein-top').siblings('.tt-fadein-bottom').find('.simple-text span:first').text(number);
                     obj.closest('.tt-fadein-top').fadeOut(300, function(){
                         $(this).siblings('.tt-fadein-bottom').fadeIn(300);
-						   $('input#confirm_sms').val('');
-						   $('input.simple-input[type="tel"]').data('phone', number);
-						   
+						$('input#confirm_sms').val('');
+						$('input.simple-input[type="tel"]').data('phone', number);
+
                     });
 				} else {
                 	console.log('Wrong phone number');
@@ -1159,12 +1159,30 @@ console.log(upload.width());
 			    $('.tt-phone-code-submit').closest('.tt-fadein-bottom').fadeOut(300, function(){
                     $('input.simple-input[type="tel"]').next().html('');
 					$(".phone-reg-block").fadeIn(300);
+
+                    $('input.simple-input[type="tel"]').addClass('disabled').css({'background-color':'#e3e6e8'});
+
+                    if ($('input.simple-input[type="tel"]').parent().parent().hasClass("col-sm-8"))
+                    	$('input.simple-input[type="tel"]').parent().parent().removeClass('col-sm-8').removeClass('col-md-9').addClass('col-md-12').next('div').remove();
+                    else
+                        $('input.simple-input[type="tel"]').parent().parent().removeClass('col-sm-7').removeClass('col-md-8').addClass('col-md-12').next('div').remove();
+
+
+                    $('input.simple-input[type="tel"]').closest('.phone-reg-block').prev('.tt-input-label').text('Телефон підтверджено').css({'color':'#5cca47'});
 				});
 			} else {
 				$('input#confirm_sms').next('p').html('Код з SMS невірний.');
 			}
 		});
     })
+
+    $('span.remove_added_file.remove').on("click", function(){
+        $(this).closest('.tt-fadein-bottom').fadeOut(300, function() {
+        	$("#confirm_sms").val('');
+            $(".phone-reg-block").fadeIn(300);
+        });
+	});
+
 
 	/*phone mask*/
 /*

@@ -168,7 +168,7 @@ $this->title = 'Додати замовлення';
                                         </div>
                                     </div>
                                     <div class="tt-fadein-bottom">
-                                        <div class="simple-text size-3"></div>
+                                        <div class="simple-text size-3"><span></span><span class="remove_added_file remove"> [X] </span></div>
                                         <div class="empty-space marg-lg-b15"></div>
                                         <div class="row">
                                             <div class="col-sm-8 col-md-9">

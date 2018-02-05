@@ -34,7 +34,10 @@ class RegistrationController extends \common\modules\members\controllers\Default
     public function actionIndex($id=1)
     {
 
-
+        if (Yii::$app->request->post('registration-reset')==1) {
+            unset($_SESSION['newUserSession']);
+            return $this->redirect(['/members/registration/']);
+        }
 
         switch ($id) {
             case 1:

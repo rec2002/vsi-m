@@ -13,7 +13,7 @@ $this->registerJsFile('//maps.googleapis.com/maps/api/js?key=AIzaSyC9CXLB6tTD94q
 $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 ?>
 
-<div class="tt-header-margin"></div>
+<div class="tt-header-margin"   style="height: 55px;"></div>
 <!-- TT-BANNER TYPE-6 -->
 <div class="tt-banner type-6 wth-swicher background-block" style="background-image:url(/img/imgblock/banner_18.jpg);">
     <div class="container">

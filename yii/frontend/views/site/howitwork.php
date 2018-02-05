@@ -9,7 +9,7 @@ $this->title = 'Як це працює';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="tt-header-margin"></div>
+<div class="tt-header-margin"   style="height: 55px;"></div>
 <!-- TT-BANNER TYPE-6 -->
 <div class="tt-banner type-6 wth-swicher background-block" style="background-image:url(/img/imgblock/banner_19.jpg);">
     <div class="container">

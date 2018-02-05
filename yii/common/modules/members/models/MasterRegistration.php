@@ -48,6 +48,7 @@ class MasterRegistration extends Model
             ['email', 'checkMyUniqunessEmail', 'on' => 'step-1'],
             ['phone', 'checkSendPhoneCode', 'message'=>'Підтвердіть контактний телефон через SMS.', 'on' => 'step-1'],
             ['confirm_sms', 'checkSMSCode', 'on' => 'step-1'],
+     //       [['confirm_sms'], 'required',  'whenClient' => "function (attribute, value) { if ($('input#confirm_sms').val()=='') setTimeout(function(){  $('input.simple-input[type=\"tel\"]').next().html('Підтвердіть контактний телефон через SMS.'); }, 300); } ", 'on' => 'step-1'],
             [['place', 'forma'], 'required', 'on' => 'step-2'],
             [['about', 'brygada'], 'filter', 'filter' => 'trim', 'skipOnArray' => true, 'on' => 'step-2'],
             [['company'], 'required', 'when' => function ($model) { if ($model->forma==3) return true; else return false;}, 'whenClient' => "function (attribute, value) { if ($('#masterregistration-forma').val() == '3') return true; else return false; }", 'on' => 'step-2'],

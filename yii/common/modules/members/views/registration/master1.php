@@ -85,26 +85,47 @@ $this->title = 'Реєстрація майстра';
                                             </div>
                                         </div>
                                         <?= $form->field($model, 'email')->textInput(['value'=>@Yii::$app->session['newUserSession']['email'], 'class' => 'simple-input', 'tabindex' => '3', 'autocomplete'=>'off', 'placeholder' => "Введіть email"])->label(false); ?>
-                                        <div class="tt-fadein-top phone-reg-block">
-                                            <div class="row row10">
-                                                <div class="col-sm-8">
-												
-                                                    <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>@Yii::$app->session['newUserSession']['phone'], 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '4',  'placeholder' => "+38 (ххх) ххх - хх - хх", 'data-phone'=>''])->label(false); ?>
+
+
+
+
+<? if (@Yii::$app->session['newUserSession']['phone']=='') {?>
+                                        <div class="tt-input-label"></div>
+<? }else { ?>
+                                        <div class="tt-input-label" style="color: rgb(92, 202, 71);">Телефон підтверджено</div>
+<? } ?>
+                                        <div class="tt-fadein-top phone-reg-block" >
+                                            <div class="row">
+<? if (@Yii::$app->session['newUserSession']['phone']=='') {?>
+                                                <div class="col-sm-7 col-md-8">
+<? }else { ?>
+                                                <div class="col-md-12">
+<? } ?>
+                                                    <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>@Yii::$app->session['newUserSession']['phone'], 'type' => 'tel', 'class' => 'simple-input '.((@Yii::$app->session['newUserSession']['phone']!='')? 'disabled' : ''), 'style'=>((@Yii::$app->session['newUserSession']['phone']!='')? 'background-color: rgb(227, 230, 232);' : ''),  'autocomplete'=>'off', 'tabindex' => '4',  'placeholder' => "+38 (ххх) ххх - хх - хх", 'data-phone'=>''])->label(false); ?>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit disabled" href="javascript:">Підтвердити</a>
+<? if (@Yii::$app->session['newUserSession']['phone']=='') {?>
+                                                <div class="col-sm-5 col-md-4">
+                                                    <a class="button type-1 size-3 full color-3 uppercase tt-phone-submit disabled" href="javascript:">Підтвердити</a>
                                                 </div>
+<? } ?>
+                                                <div class="empty-space marg-xs-b20"></div>
                                             </div>
                                         </div>
                                         <div class="tt-fadein-bottom">
-                                            <div class="simple-text size-3"></div>
-                                            <div class="row row10">
-                                                <div class="col-sm-12">
-                                                    <?= $form->field($model, 'confirm_sms')->textInput(['value'=>@Yii::$app->session['newUserSession']['confirm_sms'], 'class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
+                                            <div class="simple-text size-3"><span></span><span class="remove_added_file remove"> [X] </span></div>
+                                            <div class="empty-space marg-lg-b15"></div>
+                                            <div class="row">
+                                                <div class="col-sm-8 col-md-9">
+                                                    <?= $form->field($model, 'confirm_sms')->textInput(['value'=>@Yii::$app->session['newUserSession']['confirm_sms'], 'class' => 'simple-input', "id"=>"confirm_sms", 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
+                                                    <div class="empty-space marg-xs-b20"></div>
+                                                </div>
+                                                <div class="col-sm-4 col-md-3">
+                                                    <a class="button type-1 size-3 full color-3 uppercase tt-phone-code-submit " href="javascript:">ОК</a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="empty-space marg-xs-b10"></div>
+
+
                                        <div class="row row10">
                                             <div class="col-sm-6">
                                                 <?= $form->field($model, 'password')->passwordInput(['value'=>@Yii::$app->session['newUserSession']['password'], 'class' => 'simple-input', 'tabindex' => '5', 'autocomplete'=>'off',  'placeholder' => "Введіть пароль"])->label(false); ?>
@@ -122,6 +143,13 @@ $this->title = 'Реєстрація майстра';
 
                                     <div class="tt-register-btn">
                                         <?= Html::submitButton('<span>продовжити реєстрацію</span>', ['class' => 'button type-1 size-3 color-3 icon-right full uppercase', 'name' => 'step-1']) ?>
+<? if (@Yii::$app->session['newUserSession']['phone']!='') {?>
+                                        <div class="empty-space marg-lg-b20"></div>
+                                        <?= Html::submitButton('Відмінити реєстрацію', ['id'=>'reset_regisrtartion', 'class' => 'button type-1 size-3 full uppercase', 'name' => 'registration-reset', 'value'=>1]) ?>
+<style>
+    #reset_regisrtartion:hover{background:#e5e7eb;color:#000;border-color:#000}
+<style>
+<? } ?>
                                     </div>
                                 <?php ActiveForm::end(); ?>
                             </div>
