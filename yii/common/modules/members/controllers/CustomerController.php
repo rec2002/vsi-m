@@ -5,6 +5,7 @@ namespace common\modules\members\controllers;
 
 use common\components\MemberHelper;
 use common\modules\members\models\CustomerEdit;
+use common\modules\members\models\MemberEdit;
 use Yii;
 use common\modules\members\models\CustomerRegistration;
 use common\modules\members\models\Members;
@@ -60,9 +61,7 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
     public function actionIndex()
     {
         $MemberPassword = new MemberPasswordForm();
-        $member = Members::findOne([
-            'id' => Yii::$app->user->identity->getId(),
-        ]);
+        $member = MemberEdit::find()->where(['id' => Yii::$app->user->identity->getId()])->one();
 
 
         $notices = Yii::$app->db->createCommand("SELECT n.id as notice_id, n.name, n.email as show_email, n.sms as show_sms, m.id, m.email, m.sms, n.type FROM `notices_settings` n LEFT JOIN `notices_members` m ON n.id=m.notice_id AND m.member = '".Yii::$app->user->identity->getId()."' WHERE n.active=1 AND n.type=1 ORDER BY n.prior ASC ")->queryAll();
@@ -73,60 +72,46 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
     }
 
 
-    public function actionPersonalsave()
+    public function actionSavemember($scenario = 'first_name')
     {
-        $model = new CustomerEdit();
+
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        $model = MemberEdit::find()->where(['id' => Yii::$app->user->identity->getId()])->one();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-            $member = Members::findOne([
-                'id' => Yii::$app->user->identity->getId(),
-            ]);
+            switch ($scenario) {
+                case 'first_name':
+                    $model->first_name = Yii::$app->request->post('MemberEdit')['first_name'];
+                    break;
 
-            $member->first_name=Yii::$app->request->post('CustomerEdit')['first_name'];
-            $member->last_name=Yii::$app->request->post('CustomerEdit')['last_name'];
-            $member->email=Yii::$app->request->post('CustomerEdit')['email'];
-            $member->phone=Yii::$app->request->post('CustomerEdit')['phone'];
+                case 'last_name':
+                    $model->last_name = Yii::$app->request->post('MemberEdit')['last_name'];
+                    break;
+                case 'email':
+                    $model->email = Yii::$app->request->post('MemberEdit')['email'];
+                    break;
 
-            if ($member->save(false)) {
-                \common\modules\members\models\PhoneCheck::deleteAll("phone ='" . Yii::$app->request->post('CustomerEdit')['phone'] . "'");
-                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
-                return['status'=>1, 'msg'=>'Персональні дані збережені.'];
+
+
             }
+            $model->save(true);
+            return['status'=>1, 'msg'=>'дані збережені'];
         }
+        return['status'=>0];
     }
 
-
-    public function actionValidation($mode='personal')
+    public function actionValidation($scenario = 'types')
     {
-        switch($mode){
-            case 'personal':
-                $model = new CustomerEdit();
-            break;
-            case 'add-order';
-                $model = new Orders(['scenario' => 'add-order']);
-            break;
-            case 'location':
-            case 'descriptions':
-            case 'budget':
-            case 'when_start':
-
-                $model = Orders::findOne([
-                    'id' => Yii::$app->request->get('id'),
-                    'member'=> Yii::$app->user->identity->getId(),
-                ]);
-            break;
-        }
+        $model = new MemberEdit(['scenario' => $scenario]);
 
 
-
-        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())&& $model->validate())
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())  )
         {
             Yii::$app->response->format = 'json';
             return ActiveForm::validate($model);
         }
     }
-
-
 
     public function actionResetpassword()
     {

@@ -1847,10 +1847,20 @@ console.log(upload.width());
                             form.find('.tt-editable-item').html(data_post[1]['value']);
                             form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').show();
                         break;
-
-
-                        case 'MemberEdit[first_name]':
                         case 'MemberEdit[last_name]':
+
+                            // when edit plece in profile
+                            if ($("div#profile-place").length) {
+                                $("div#profile-place").html(data_post[1]['value']);
+                                $('.popup-wrapper, .popup-content').removeClass('active');
+                                $('.tt-vote-selected').removeClass('tt-vote-selected');
+                                return false;
+                            }
+
+                            form.find('.tt-editable-item').html(data_post[1]['value']);
+                            form.closest('.tt-editable-wrapper').find('.tt-preson-row-icon').show();
+                            break;
+                        case 'MemberEdit[first_name]':
                         case 'MemberEdit[email]':
                         case 'MemberEdit[place]':
 

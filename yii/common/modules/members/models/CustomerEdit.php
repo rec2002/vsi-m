@@ -9,7 +9,7 @@ use yii\base\Model;
 /**
  * ContactForm is the model behind the contact form.
  */
-class CustomerEdit extends Model
+class CustomerEdit extends \yii\db\ActiveRecord
 {
 
     public $last_name;
@@ -18,9 +18,11 @@ class CustomerEdit extends Model
     public $phone;
     public $confirm_sms;
 
-    /**
-     * @inheritdoc
-     */
+    public static function tableName()
+    {
+        return '{{%members}}';
+    }
+
     public function rules()
     {
         return [
@@ -45,6 +47,8 @@ class CustomerEdit extends Model
     //        [['confirm_sms'], 'required',  'whenClient' => "function (attribute, value) { if ($('input#confirm_sms').val()=='') setTimeout(function(){  $('input.simple-input[type=\"tel\"]').next().html('Підтвердіть контактний телефон через SMS.'); }, 300); } ", 'on' => 'add-order'],
     //        [['phone'],  'match', 'pattern' => '/([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/', 'message' => 'Невірний номер мобільного телефону.', 'on' => 'add-order'],
             [['first_name'], 'string', 'min' => 3, 'tooShort' => 'Значення "{attribute}" повинно містити мінімум 3 символa.', 'on' => 'first_name'],
+            [['first_name'], 'required', 'on' => 'first_name'],
+
     //        ['email', 'email', 'on' => 'add-order'],
     //        [['email'], 'filter', 'filter' => 'trim', 'on' => 'add-order'],
      //       ['email', 'checkMyUniqunessEmail', 'on' => 'add-order'],
