@@ -60,12 +60,15 @@ class CustomerController extends \common\modules\members\controllers\DefaultCont
     public function actionIndex()
     {
         $MemberPassword = new MemberPasswordForm();
-        $Member = new CustomerEdit();
+        $member = Members::findOne([
+            'id' => Yii::$app->user->identity->getId(),
+        ]);
+
 
         $notices = Yii::$app->db->createCommand("SELECT n.id as notice_id, n.name, n.email as show_email, n.sms as show_sms, m.id, m.email, m.sms, n.type FROM `notices_settings` n LEFT JOIN `notices_members` m ON n.id=m.notice_id AND m.member = '".Yii::$app->user->identity->getId()."' WHERE n.active=1 AND n.type=1 ORDER BY n.prior ASC ")->queryAll();
 
 
-        return $this->render('edit', ['MemberPassword'=>$MemberPassword, 'Member'=>$Member, 'Notices'=>$notices]);
+        return $this->render('edit', ['MemberPassword'=>$MemberPassword, 'member'=>$member, 'Notices'=>$notices]);
 
     }
 

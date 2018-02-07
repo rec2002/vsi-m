@@ -604,42 +604,46 @@ $form_f = ActiveForm::begin(['options' => ['class'=>'response_feedback'], 'enabl
             <div class="layer-close"></div>
             <div class="popup-container">
                 <div class="popup-align">
+                    <h4 class="h4 text-center">Номер телефону</h4>
+
                     <?php
 
                     $member->setScenario('phone');
                     $form7 = ActiveForm::begin(['id' => 'edit_phone', 'options' => ['class'=>'form-edit-ajax profile'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=phone'), 'action' =>['/members/member/savemember/?scenario=phone']]); ?>
-                    <h4 class="h4 text-center">Номер телефону</h4>
-                    <div class="empty-space marg-lg-b30"></div>
+                    <div class="tt-editable-form1" style="display:block;">
 
-                    <div class="tt-fadein-top">
-                        <div class="row">
-                            <div class="col-sm-8 col-md-9">
-                                <?= $form7->field($member, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>'', 'data-value'=>$member->phone, 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off',   'placeholder' => "+38 (0хх) ххх - хххх"])->label(false); ?>
+                        <div class="tt-input-label"></div>
+                        <div class="tt-fadein-top phone-reg-block" >
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <?= $form7->field($member, 'phone')->textInput(['value'=>$member->phone, 'data-value'=>$member->phone, 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off',   'placeholder' => "+38 (0хх) ххх - хххх", "id"=>"memberedit-phone", 'data-phone'=>$member->phone])->label(false); ?>
+
+
+                                </div>
+                                <div class="col-sm-4 col-md-3" style="display:none;">
+                                    <a class="button type-1 size-3 full color-3 uppercase tt-phone-submit disabled" href="javascript:">Підтвердити</a>
+                                </div>
                                 <div class="empty-space marg-xs-b20"></div>
                             </div>
-                            <div class="col-sm-4 col-md-3">
-                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit" href="javascript:">Підтвердити</a>
-                            </div>
                         </div>
-                    </div>
-                    <div class="tt-fadein-bottom">
-                        <div class="simple-text size-3"></div>
-                        <div class="empty-space marg-lg-b15"></div>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12">
-                                <?= $form7->field($member, 'confirm_sms')->textInput(['class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
+                        <div class="tt-fadein-bottom">
+                            <div class="simple-text size-3"><span></span><span class="remove_added_file remove"> [X] </span></div>
+                            <div class="empty-space marg-lg-b15"></div>
+                            <div class="row">
+                                <div class="col-sm-8 col-md-9">
+                                    <?= $form7->field($member, 'confirm_sms')->textInput(['class' => 'simple-input', "id"=>"confirm_sms", 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
+                                    <div class="empty-space marg-xs-b20"></div>
+                                </div>
+                                <div class="col-sm-4 col-md-3">
+                                    <a class="button type-1 size-3 full color-3 uppercase tt-phone-code-submit " href="javascript:">ОК</a>
+                                </div>
                                 <div class="empty-space marg-xs-b20"></div>
                             </div>
-                            <!--<div class="col-sm-4 col-md-3">
-                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link" href="javascript:">ОК</a>
-                            </div>-->
                         </div>
-                    </div>
-
-                    <div class="empty-space marg-lg-b20"></div>
-                    <div class="tt-buttons-block text-right">
-                        <?= Html::resetButton('Відмінити', ['class' => 'popup-close-phone button type-1']) ?>
-                        <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                        <div class="tt-editable-form-btn">
+                            <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close popup-close-phone button type-1']) ?>
+                            <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3 save_phone', 'name' => 'save']) ?>
+                        </div>
                     </div>
                     <?php ActiveForm::end(); ?>
                 </div>
@@ -833,19 +837,44 @@ echo $this->registerJs("(function(){
 
 
 
+    $('body').on('keyup','input.simple-input[type=\"tel\"]', function(event) {
+        var number = $(this);
+        
+        if (number.val()!=number.data('phone')) {
+            number.parent().parent().removeClass('col-md-12').addClass('col-md-9').addClass('col-sm-8').next('div').show();
+        } else {
+            number.parent().parent().removeClass('col-sm-8').removeClass('col-md-9').addClass('col-md-12').next('div').hide();
+        }
 
-$('.popup-close-phone').click(function(){
+		
+    });
 
-	$(this).closest('#edit_phone').find('.tt-fadein-top').show();
-	$(this).closest('#edit_phone').find('.tt-fadein-bottom').hide();
-	
-	$('input#memberedit-phone').val('');		
-	$('input#memberedit-confirm_sms').val('');
+    $('.popup-close-phone').click(function(){
 
-    $('.popup-wrapper, .popup-content').removeClass('active');
-	return false;
-});
+        $(this).closest('#edit_phone').find('.tt-fadein-top').show();
+        $(this).closest('#edit_phone').find('.tt-fadein-bottom').hide();
+        $('input.simple-input[type=\"tel\"]').parent().parent().removeClass('col-sm-8').removeClass('col-md-9').addClass('col-md-12').next('div').hide();
+        $('input.simple-input[type=\"tel\"]').val($('input.simple-input[type=\"tel\"]').data('value'));
+        $('input.simple-input[type=\"tel\"]').next('p').html('');
+        $(\"#confirm_sms\").val('');
+        $('input.simple-input[type=\"tel\"]').closest('.phone-reg-block').prev('.tt-input-label').text('').css({'color':'#5cca47'});
+        $('.popup-wrapper, .popup-content').removeClass('active');
+        
+        return false;
+    });
 
+    $(document).on(\"click\", \".save_phone\", function(e) {
+    
+        if ($('input.simple-input[type=\"tel\"]').parent().parent().hasClass('col-md-12') && $(\"#confirm_sms\").val()=='') {
+
+            $('input.simple-input[type=\"tel\"]').next('p').html('');
+            $('input.simple-input[type=\"tel\"]').parent().parent().removeClass('col-sm-8').removeClass('col-md-9').addClass('col-md-12').next('div').hide();
+            $('input.simple-input[type=\"tel\"]').val($('input.simple-input[type=\"tel\"]').data('value'));
+            $('input.simple-input[type=\"tel\"]').data('phone', $('input.simple-input[type=\"tel\"]').data('value'));
+            $('.popup-wrapper, .popup-content').removeClass('active');            
+        }
+        $('input.simple-input[type=\"tel\"]').closest('.phone-reg-block').prev('.tt-input-label').text('').css({'color':'#5cca47'});
+    });
         
 })();" , \yii\web\View::POS_END );
 

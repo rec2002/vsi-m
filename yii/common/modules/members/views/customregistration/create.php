@@ -4,6 +4,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
+use frontend\assets\AppAsset;
 $this->title = 'Додати замовлення';
 ?>
     <div class="tt-header-margin" style="height: 55px;"></div>
@@ -159,7 +160,7 @@ $this->title = 'Додати замовлення';
                                     <div class="tt-fadein-top phone-reg-block" >
                                         <div class="row">
                                             <div class="col-sm-8 col-md-9">
-                                                <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '7',  'placeholder' => "+38 (ххх) ххх - хх - хх", 'data-phone'=>''])->label(false); ?>
+                                                <?= $form->field($model, 'phone')->textInput(['type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '7',  'placeholder' => "+38 (ххх) ххх - хх - хх", 'data-phone'=>''])->label(false); ?>
                                                 <div class="empty-space marg-xs-b20"></div>
                                             </div>
                                             <div class="col-sm-4 col-md-3">
@@ -237,16 +238,13 @@ echo $this->registerJs("(function(){
 		}
     });
 
-/*
-  $(\"button[type='submit']\").on(\"click\", function () {
-      $(this).attr('disabled','disabled');
-  });
-*/
-
 })();" , \yii\web\View::POS_END );
 
 echo $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 echo $this->registerJsFile('/js/order.js', ['depends' => 'yii\web\JqueryAsset']);
+
+
+
 ?>
 
 <? if ($suggested['total']>0) { ?>

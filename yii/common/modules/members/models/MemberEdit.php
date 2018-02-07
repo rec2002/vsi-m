@@ -75,7 +75,7 @@ class MemberEdit extends \yii\db\ActiveRecord
         //
             ['phone', 'checkChangedPhoneCode', 'message'=>'Підтвердіть контактний телефон через SMS.', 'on' => 'phone'],
             [['phone'], 'required', 'on' =>'phone'],
-            ['confirm_sms', 'required', 'whenClient' => "function (attribute, value) { if ($('input#memberedit-phone').val() != $('input#memberedit-phone').data('value')) return true; else return false;}", 'message'=>'Введіть код отриманий з SMS.', 'on' => 'phone'],
+            ['confirm_sms', 'required', 'whenClient' => "function (attribute, value) { if ($('input#memberedit-phone').val() != $('input#memberedit-phone').data('phone')) return true; else return false;}", 'message'=>'Введіть та підтвердіть код отриманий з SMS.', 'on' => 'phone'],
             ['confirm_sms', 'checkSMSCode',  'on' => 'phone'],
           //  ['confirm_sms', 'checkSMSCodeRequired',  'on' => 'phone'],
 

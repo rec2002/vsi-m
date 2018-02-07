@@ -15,7 +15,7 @@ use common\components\MemberHelper;
 <?  if (\Yii::$app->user->can('majster')) {  ?>
         <header class="tt-header user" data-id="<?=Yii::$app->user->identity->getId();?>">
             <div class="top-inner-container majster">
-                <a class="logo" href="/"><img src="/img/header/logo_icon.png" alt=""><img src="/img/header/logo_text.png" alt=""></a>
+                <a class="logo" href="/"><img src="/img/logo.svg" width="206" height="51" alt=""></a>
                 <div class="cmn-toggle-switch"><span></span></div>
             </div>
             <div class="toggle-block">
@@ -76,7 +76,7 @@ use common\components\MemberHelper;
 
     <header class="tt-header user"  data-id="<?=Yii::$app->user->identity->getId();?>">
         <div class="top-inner-container zamovnyk">
-            <a class="logo" href="/"><img src="/img/header/logo_icon.png" alt=""><img src="/img/header/logo_text.png" alt=""></a>
+            <a class="logo" href="/"><img src="/img/logo.svg" width="206" height="51" alt=""></a>
             <div class="cmn-toggle-switch"><span></span></div>
         </div>
         <div class="toggle-block">
@@ -130,7 +130,7 @@ use common\components\MemberHelper;
     <header class="tt-header register">
         <div class="container tt-header-entry">
             <div class="top-inner-container">
-                <a class="logo" href="/"><img src="/img/header/logo_icon.png" alt=""><img src="/img/header/logo_text.png" alt=""></a>
+                <a class="logo" href="/"><img src="/img/logo.svg" width="206" height="51" alt=""></a>
                 <div class="cmn-toggle-switch"><span></span></div>
             </div>
             <div class="toggle-block">
@@ -148,7 +148,7 @@ use common\components\MemberHelper;
 <? } else { ?>
 <header class="tt-header <?=($isHome)? 'home' : ''?>">
     <div class="top-inner-container">
-        <a class="logo" href="/"><img src="/img/header/logo_icon.png" alt=""><img src="/img/header/logo_text.png" alt=""></a>
+        <a class="logo" href="/"><img src="/img/logo.svg" width="206" height="51" alt=""></a>
         <div class="cmn-toggle-switch"><span></span></div>
     </div>
     <div class="toggle-block">

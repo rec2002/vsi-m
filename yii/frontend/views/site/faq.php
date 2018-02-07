@@ -45,6 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <?
 $bundle = AppAsset::register(Yii::$app->view);
 $bundle->js[] = '/js/faq.js';
+
+
 ?>
 
 

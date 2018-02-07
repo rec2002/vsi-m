@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use kartik\checkbox\CheckboxX;
+use frontend\assets\AppAsset;
 $this->title = 'Реєстрація майстра';
 ?>
 
@@ -101,7 +102,7 @@ $this->title = 'Реєстрація майстра';
 <? }else { ?>
                                                 <div class="col-md-12">
 <? } ?>
-                                                    <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>@Yii::$app->session['newUserSession']['phone'], 'type' => 'tel', 'class' => 'simple-input '.((@Yii::$app->session['newUserSession']['phone']!='')? 'disabled' : ''), 'style'=>((@Yii::$app->session['newUserSession']['phone']!='')? 'background-color: rgb(227, 230, 232);' : ''),  'autocomplete'=>'off', 'tabindex' => '4',  'placeholder' => "+38 (ххх) ххх - хх - хх", 'data-phone'=>''])->label(false); ?>
+                                                    <?= $form->field($model, 'phone')->textInput(['value'=>@Yii::$app->session['newUserSession']['phone'], 'type' => 'tel', 'class' => 'simple-input '.((@Yii::$app->session['newUserSession']['phone']!='')? 'disabled' : ''), 'style'=>((@Yii::$app->session['newUserSession']['phone']!='')? 'background-color: rgb(227, 230, 232);' : ''),  'autocomplete'=>'off', 'tabindex' => '4',  'placeholder' => "+38 (ххх) ххх - хх - хх", 'data-phone'=>''])->label(false); ?>
                                                 </div>
 <? if (@Yii::$app->session['newUserSession']['phone']=='') {?>
                                                 <div class="col-sm-5 col-md-4">

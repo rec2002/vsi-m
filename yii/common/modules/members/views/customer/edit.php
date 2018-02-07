@@ -39,65 +39,81 @@ $this->title = 'Кабінет користувача';
                                     </div>
                                 </div>
                                 <div class="tt-person-form">
-                                    <?php $form = ActiveForm::begin(['id' => 'save-customer-form',  'enableAjaxValidation'=>true, 'options' => ['class'=>'form-ajax'], 'validationUrl'=>Url::toRoute('/members/customer/validation/?mode=personal'), 'action' =>['/members/customer/personalsave', '#'=>'personal_data']]); ?>
+                                    <div class="tt-editable-wrapper slide-anim">
+                                        <div class="tt-preson-row tt-editable-click">
+                                            <div class="tt-preson-row-left">
+                                                <div class="tt-input-label">Ім’я</div>
+                                            </div>
+                                            <div class="tt-preson-row-right">
+                                                <?php
+
+                                                $member->setScenario('first_name');
+                                                $form1 = ActiveForm::begin(['id' => 'edit_first_name', 'options' => ['class'=>'form-edit-ajax'], 'enableAjaxValidation'=>true, 'validationUrl'=>Url::toRoute('/members/member/validation/?scenario=first_name'), 'action' =>['/members/member/savemember/?scenario=first_name']]); ?>
+                                                <div class="tt-editable">
+                                                    <div class="simple-text size-3 tt-editable-item" data-rel="title"><?=$member->first_name?></div>
+                                                    <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
+                                                </div>
+                                                <div class="tt-editable-form" >
+                                                    <?=$form1->field($member, 'first_name')->textInput(['value'=>$member->first_name, 'class' => 'simple-input', 'placeholder' => "Ваше ім’я"])->label(false); ?>
+
+
+                                                    <div class="tt-editable-form-btn">
+                                                        <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
+                                                        <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>
+                                                    </div>
+                                                </div>
+                                                <?php ActiveForm::end(); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                         <div class="tt-person-inputs">
                                             <div class="tt-input-wrapper">
                                                 <div class="tt-input-label">Ім’я</div>
                                                 <div class="tt-input-entry">
-                                                    <?= $form->field($Member, 'first_name')->textInput(['value'=>Yii::$app->user->identity->first_name, 'class' => 'simple-input', 'tabindex' => '1', 'autocomplete'=>'off'])->label(false); ?>
+
+
+
+
                                                 </div>
                                             </div>
                                             <div class="empty-space marg-xs-b5"></div>
                                             <div class="tt-input-wrapper">
                                                 <div class="tt-input-label">Прізвище</div>
                                                 <div class="tt-input-entry">
-                                                    <?= $form->field($Member, 'last_name')->textInput(['value'=>Yii::$app->user->identity->last_name, 'class' => 'simple-input', 'tabindex' => '2', 'autocomplete'=>'off'])->label(false); ?>
+                                                    Прізвище
                                                 </div>
                                             </div>
                                             <div class="empty-space marg-xs-b5"></div>
                                             <div class="tt-input-wrapper">
                                                 <div class="tt-input-label">Email</div>
                                                 <div class="tt-input-entry">
-                                                    <?= $form->field($Member, 'email')->textInput(['value'=>Yii::$app->user->identity->email, 'class' => 'simple-input', 'tabindex' => '3', 'autocomplete'=>'off'])->label(false); ?>
+                                                    Email
                                                 </div>
                                             </div>
                                             <div class="empty-space marg-xs-b5"></div>
                                             <div class="tt-input-wrapper">
                                                 <div class="tt-input-label">Телефон</div>
                                                 <div class="tt-input-entry">
-                                                    <div class="tt-fadein-top">
-                                                        <div class="row row10">
-                                                            <div class="col-md-12">
-                                                                <?= $form->field($Member, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+38 (099) 999-9999'])->textInput(['value'=>Yii::$app->user->identity->phone, 'data-value'=>Yii::$app->user->identity->phone, 'type' => 'tel', 'class' => 'simple-input', 'autocomplete'=>'off', 'tabindex' => '3',  'placeholder' => "+38 (0хх) ххх - хххх"])->label(false); ?>
-                                                                <div class="empty-space marg-sm-b10"></div>
-                                                            </div>
-                                                            <div class="col-md-5" style="display: none;">
-                                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link tt-phone-submit" href="javascript:">Підтвердити</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tt-fadein-bottom">
-                                                        <div class="simple-text size-3"></div>
-                                                        <div class="empty-space marg-lg-b10"></div>
-                                                        <div class="row row10">
-                                                            <div class="col-md-8">
-                                                                <?= $form->field($Member, 'confirm_sms')->textInput(['class' => 'simple-input', 'autocomplete'=>'off', 'placeholder' => "Код отриманий по смс"])->label(false); ?>
 
-                                                                <div class="empty-space marg-sm-b10"></div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <a class="button type-1 size-3 full color-3 uppercase tt-fadein-link" href="javascript:">ОК</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tt-person-btn">
-                                            <?= Html::resetButton('Відмінити', ['class' => 'button type-1 uppercase']) ?>
-                                            <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3 uppercase', 'name' => 'save']) ?>
-                                        </div>
-                                    <?php ActiveForm::end(); ?>
+
                                 </div>
                             </div>
                             <div class="empty-space marg-lg-b15"></div>

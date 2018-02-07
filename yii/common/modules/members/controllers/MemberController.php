@@ -170,7 +170,7 @@ class MemberController extends \common\modules\members\controllers\DefaultContro
                     $model->last_name = Yii::$app->request->post('MemberEdit')['last_name'];
                 break;
                 case 'email':
-                    $model->last_name = Yii::$app->request->post('MemberEdit')['email'];
+                    $model->email = Yii::$app->request->post('MemberEdit')['email'];
                 break;
                 case 'place':
                     $model->place = Yii::$app->request->post('MemberEdit')['place'];

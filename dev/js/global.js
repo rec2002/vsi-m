@@ -1100,7 +1100,18 @@ console.log(upload.width());
 		e.preventDefault();
 	});
     */
-	$('.tt-phone-submit').on('click', function(e){
+
+    $('input.simple-input[type="tel"]').mask('+38 (000) 000-0000');
+
+    $('input.simple-input[type="tel"]').click(function( event ) {
+        if ($(this).val()=='') { $(this).val('+38 (0');	}
+    }).focusin(function() {
+        if ($(this).val()=='') {
+            $(this).val('+38 (0').focus().val('+38 (0');
+        }
+    });
+
+    $('.tt-phone-submit').on('click', function(e){
 
 		var obj = $(this);
 		if (obj.is(":disabled")) { return false; }
@@ -1136,11 +1147,11 @@ console.log(upload.width());
         if (RegX.test(number)) {
             $(".tt-phone-submit").removeClass('disabled');
             $(this).next().html('');
-			if ($('input#confirm_sms').val()=='') $(this).next().html('Підтвердіть контактний телефон через SMS.');
+			if ($('input#confirm_sms').val()=='' && $(this).data('phone')!=number) $(this).next().html('Підтвердіть контактний телефон через SMS.');
 			
 			if ($(this).data('phone')!='' && $(this).data('phone')!=number) {
 				$('input#confirm_sms').val('');
-				$(this).next().html('Була спроба зміни номеру телефону, прошу ще раз підтвердити через SMS');	
+				$(this).next().html('Була спроба зміни номеру телефону, прошу підтвердити через SMS');
 			}	
 		} else{
             $(".tt-phone-submit").addClass('disabled');
@@ -1160,15 +1171,17 @@ console.log(upload.width());
                     $('input.simple-input[type="tel"]').next().html('');
 					$(".phone-reg-block").fadeIn(300);
 
-                    $('input.simple-input[type="tel"]').addClass('disabled').css({'background-color':'#e3e6e8'});
+
 
                     if ($('input.simple-input[type="tel"]').parent().parent().hasClass("col-sm-8"))
-                    	$('input.simple-input[type="tel"]').parent().parent().removeClass('col-sm-8').removeClass('col-md-9').addClass('col-md-12').next('div').remove();
+                    	$('input.simple-input[type="tel"]').parent().parent().removeClass('col-sm-8').removeClass('col-md-9').addClass('col-md-12').next('div').hide();
                     else
-                        $('input.simple-input[type="tel"]').parent().parent().removeClass('col-sm-7').removeClass('col-md-8').addClass('col-md-12').next('div').remove();
-
+                        $('input.simple-input[type="tel"]').parent().parent().removeClass('col-sm-7').removeClass('col-md-8').addClass('col-md-12').next('div').hide();
 
                     $('input.simple-input[type="tel"]').closest('.phone-reg-block').prev('.tt-input-label').text('Телефон підтверджено').css({'color':'#5cca47'});
+                    if (!$("form#edit_phone").length) {
+                        $('input.simple-input[type="tel"]').addClass('disabled').css({'background-color':'#e3e6e8'}).attr('readonly', true);
+					}
 				});
 			} else {
 				$('input#confirm_sms').next('p').html('Код з SMS невірний.');
@@ -1841,9 +1854,6 @@ console.log(upload.width());
                         case 'MemberEdit[email]':
                         case 'MemberEdit[place]':
 
-
-
-
                             // when edit plece in profile
                             if ($("div#profile-place").length) {
                                 $("div#profile-place").html(data_post[1]['value']);
@@ -1929,11 +1939,15 @@ console.log(upload.width());
                         break;
                         case 'MemberEdit[phone]':
 
+                            $('input#memberedit-phone').data('phone', data_post[1]['value']);
                             $('input#memberedit-phone').data('value', data_post[1]['value']);
-                            $('input#memberedit-phone').val('');
-                            $('input#memberedit-confirm_sms').val('');
+                            $('input#memberedit-phone').val(data_post[1]['value']);
+                            $("#confirm_sms").val('');
+
                             $('#edit_phone').find('.tt-fadein-top').show();
                             $('#edit_phone').find('.tt-fadein-bottom').hide();
+                            $('input.simple-input[type="tel"]').parent().parent().removeClass('col-sm-8').removeClass('col-md-9').addClass('col-md-12').next('div').hide();
+                            $('input.simple-input[type="tel"]').closest('.phone-reg-block').prev('.tt-input-label').text('').css({'color':'#5cca47'});
 
 							if (form.hasClass('profile')) {
 

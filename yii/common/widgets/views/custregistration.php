@@ -14,7 +14,7 @@ use yii\helpers\Url;
     ]]);
 ?>
 
-    <h1 class="tt-banner-title h2">Замовте послуги виконробів по ремонту</h1>
+    <h1 class="tt-banner-title h2">Замовте послуги майстрів по ремонту</h1>
     <div class="simple-text size-4 darker">
         <p>Добавте замолення, щоб отримати пропозиції від зацікавлених виконробів</p>
     </div>

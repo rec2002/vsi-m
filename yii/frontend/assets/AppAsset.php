@@ -27,6 +27,7 @@ class AppAsset extends AssetBundle
         'js/jquery.timeago.uk.js',
         'js/jquery.timeago.uk.js',
         'js/swiper.jquery.min.js',
+        'js/jquery.mask.min.js',
         'js/global.js'
     ];
 
