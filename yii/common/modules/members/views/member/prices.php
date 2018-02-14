@@ -38,7 +38,7 @@ if (sizeof($prices)) foreach ($prices as $key=>$val) {
 
     <div class="list-dotted-item-ckeckbox">
         <label class="checkbox-entry">
-            <input type="checkbox" name="MemberEdit[top][<?=$val['id']?>]" value="1" <?=(@$data[$val['id']]['top']==1) ? 'checked' : ''?> ><span></span>
+            <input type="checkbox" name="MemberEdit[top][<?=$val['id']?>]" value="1" <?=(@$data[$val['id']]['top']==1) ? 'checked' : ''?> class="tt-info-btn tt-tooltip"  data-tooltip="Свою пропозицію ви можете заморозити або видалити."><span  class="tt-tooltip"  data-tooltip="Вибір основної ціни, для виводу в загальному списку майстрів."></span>
         </label>
 
         <div class="list-dotted-item">

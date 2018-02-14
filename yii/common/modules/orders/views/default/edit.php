@@ -9,13 +9,14 @@ use yii\helpers\ArrayHelper;
 
 $this->title = 'Замовлення';
 
+
 ?>
     <div class="tt-header-margin"   style="height: 55px;"></div>
 
     <div class="tt-bg-grey">
         <div class="container">
             <div class="empty-space marg-sm-b30 marg-lg-b50"></div>
-            <a href="<?=Url::toRoute(['/orders/default/detail', 'id' => $model->id])?>" class="button type-1 btn-simple icon-left uppercase"><span>назад</span></a>
+            <a href="<?=Url::previous('orders')?>" class="button type-1 btn-simple icon-left uppercase"><span>назад</span></a>
             <div class="tt-task detail">
                 <div class="tt-task-top clearfix">
                     <div class="tt-task-info">
@@ -247,10 +248,10 @@ $this->title = 'Замовлення';
                         </div>
                     </div>
                     <div class="tt-editable-form">
-
-                        <?= $form1->field($model, 'descriptions')->textarea(['class' => 'simple-input height-2', 'maxlength'=>'800', 'placeholder' => "Опис замовлення", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
-                        <div class="simple-text size-2 simple-input-max-count">Залишилося 800 символів</div>
-
+                            <div class="simple-input-max">
+                                <?= $form1->field($model, 'descriptions')->textarea(['class' => 'simple-input height-2', 'maxlength'=>'800', 'placeholder' => "Опис замовлення", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
+                                <div class="simple-text size-2 simple-input-max-count">Залишилося 800 символів</div>
+                            </div>
                             <div class="tt-editable-form-btn">
 
                                 <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>

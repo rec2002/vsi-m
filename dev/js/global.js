@@ -327,6 +327,12 @@ $(function() {
 
 
 	/*simple-datapicker*/
+	
+    $('div.simple-input-icon img').on('click', function() {
+		$(this).parent().find('.hasDatepicker').datepicker("show");
+	});
+
+	
 
 	for(var i = 0; i<$('.simple-datapicker').length; i++){
 
@@ -462,6 +468,7 @@ $(function() {
 		if($(this).hasClass('tt-vote')){voteMaster($(this));}
 
 		var $t = $(this);
+		$('body, html').addClass('overflow-body');
 		$('.popup-content').removeClass('active');
 		$('.popup-wrapper, .popup-content[data-rel="'+$t.data('rel')+'"]').addClass('active');
 		return false;
@@ -485,7 +492,7 @@ $(function() {
 	
 
     $(document).on('click', '.open-popup-big', function(e){
-
+        $('body, html').addClass('overflow-body');
     	var url =  "/members/portfolio/detail/?id="+$(this).data('id');
     	if ($('.map-order-view').length) url =  "/orders/default/gallery/?id="+$(this).data('id');
 
@@ -528,12 +535,14 @@ $(function() {
 
     $(document).on('click', 'div.popup-container.size-5.gallery div.button-close', function(){
         $('.popup-wrapper-big, .popup-content').removeClass('active');
+        $('body, html').removeClass('overflow-body');
         return false;
     });
 
 
 	$(document).on('click', '.popup-wrapper .button-close, .popup-wrapper .popup-close, .popup-wrapper .layer-close', function(){
 		$('.popup-wrapper, .popup-content').removeClass('active');
+		$('body, html').removeClass('overflow-body');
 		$('.tt-vote-selected').removeClass('tt-vote-selected');
 		return false;
 	});
@@ -1100,14 +1109,14 @@ console.log(upload.width());
 		e.preventDefault();
 	});
     */
-
+/*
     $('input.simple-input[type="tel"]').mask("+38 (099) 999-9999", {completed:function(){
       //  $('input.simple-input[type="tel"]').next().html('1111');
 
 
     //	alert("completed!");
     }});
-
+*/
     $('.tt-phone-submit').on('click', function(e){
 
 		var obj = $(this);
@@ -2054,5 +2063,19 @@ console.log(upload.width());
         swipers['swiper-'+$(this).closest('.tt-two-slider').find('.swiper-control-top').attr('id')].slideTo(swichIndex);
 
     });
+
+    $('.input-place').focus(function(){
+	  $(this).parents('.form-group').addClass('focused');
+	});
+
+	$('.input-place').blur(function(){
+	  var inputValue = $(this).val();
+	  if ( inputValue == "" ) {
+		$(this).removeClass('filled');
+		$(this).parents('.form-group').removeClass('focused');  
+	  } else {
+		$(this).addClass('filled');
+	  }
+	}) 
 
 });

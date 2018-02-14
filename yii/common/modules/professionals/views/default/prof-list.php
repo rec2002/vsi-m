@@ -19,7 +19,7 @@ $this->title = 'Каталог майстрів';
         <div class="container">
             <div class="empty-space marg-lg-b25"></div>
 
-<? Pjax::begin();?>
+<? Pjax::begin(['scrollTo' => 0]);?>
             <!-- TT-BREADCRUMBS -->
 <?=Nav::widget([
                 'items' => $breadcrumb,

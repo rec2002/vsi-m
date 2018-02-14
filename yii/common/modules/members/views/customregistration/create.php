@@ -48,9 +48,22 @@ $this->title = 'Додати замовлення';
         </div>
     </div>
 <? } ?>
+
+
+
+                                <div class="form-group">
+                                    <label class="form-label" for="first">Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)</label>
+                                    <input id="first" class="form-input input-place simple-input light" type="text" />
+                                </div>
+
+
+
+
+
+
                             <div class="tt-autocomplete type-2">
                                 <div class="tt-autocomplete-input">
-                                    <?= $form->field($model, 'title')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['title'], 'class' => 'simple-input', 'tabindex' => '1', 'autocomplete'=>'off', 'placeholder' => "Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+                                    <?= $form->field($model, 'title')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['title'], 'class' => 'form-input input-place simple-input', 'tabindex' => '1', 'autocomplete'=>'off', 'placeholder' => "Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
 
                                 </div>
                             </div>

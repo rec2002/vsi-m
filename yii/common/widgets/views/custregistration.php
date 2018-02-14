@@ -9,6 +9,10 @@ use yii\helpers\Url;
     $model->setScenario('home-page');
     $form = ActiveForm::begin(['id' => 'reg-customer-home',
     'enableAjaxValidation'=>false,
+    'validateOnBlur'=> false,
+    'validateOnChange'=> false,
+    'validateOnType'=> false,
+    'validateOnSubmit'=> true,	
     'validationUrl'=>Url::toRoute('/members/customregistration/validation/?scenario=home-page' ),
     'action' =>[(Yii::$app->user->isGuest) ? '/members/customregistration/?scenario=home-page' : '/orders/default/addorder',
     ]]);
@@ -18,14 +22,14 @@ use yii\helpers\Url;
     <div class="simple-text size-4 darker">
         <p>Добавте замолення, щоб отримати пропозиції від зацікавлених майстрів</p>
     </div>
-    <?= $form->field($model, 'title')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['title'], 'class' => 'simple-input light', 'tabindex' => '1', 'autocomplete'=>'off', 'placeholder' => "Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+    <?= $form->field($model, 'title')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['title'], 'class' => 'form-input input-place  simple-input light', 'tabindex' => '1', 'autocomplete'=>'off', 'style' => 'margin-bottom: 0px;'])->label("Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)"); ?>
 
-    <?= $form->field($model, 'descriptions')->textarea(['value'=>@Yii::$app->session['newCustomerSession']['descriptions'], 'class' => 'simple-input height-4 light', 'tabindex' => '2', 'maxlength'=>'800', 'autocomplete'=>'off', 'placeholder' => "Опишіть завдання як омога детальніше, все що може бути корисно для майстрів (розміри, об’єм робіт, типи робіт, матеріали ... )", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
+    <?= $form->field($model, 'descriptions')->textarea(['value'=>@Yii::$app->session['newCustomerSession']['descriptions'], 'class' => 'form-input input-place  simple-input height-4 light', 'tabindex' => '2', 'maxlength'=>'800', 'autocomplete'=>'off', 'style' => 'margin-bottom: 10px;'])->label("Опишіть завдання як омога детальніше, все що може бути корисно для майстрів (розміри, об’єм робіт, типи робіт, матеріали ... )");  ?>
 
     <div class="row row10">
         <div class="col-sm-6 col-lg-7">
             <div class="simple-input-icon">
-                <?=$form->field($model, 'location')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['location'], 'class' => 'simple-input light', "id"=>"tt-google-single-autocomplete-only", 'tabindex' => '3', 'autocomplete'=>'off', 'placeholder' => "Вкажіть адресу", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+                <?=$form->field($model, 'location')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['location'], 'class' => 'form-input input-place simple-input light', "id"=>"tt-google-single-autocomplete-only", 'tabindex' => '3', 'autocomplete'=>'off', 'placeholder' => "",  'style' => 'margin-bottom: 0px;'])->label("Вкажіть адресу"); ?>
                 <?=$form->field($model, 'region')->hiddenInput(['value'=>@Yii::$app->session['newCustomerSession']['region'], 'id'=>'tt-google-single-autocomplete-region'])->label(false); ?>
             </div>
         </div>
@@ -37,12 +41,15 @@ use yii\helpers\Url;
 
 
 $this->registerCss("
+
 p.help-block.help-block-error{margin-bottom: 5px; margin-top: 10px;}
 .form-group {margin-bottom: 10px;}
 #tt-google-single-autocomplete-only {
  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAMAAACzvE1FAAAAV1BMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkLkTjgbAAAAHHRSTlMA3Z2EEHekmIsV1s9Q5KwF9sq5tWhDQTcdCmZiOw521AAAAI1JREFUGBkFwYVhw0AABDA9mJ04TL3956wEPnNJyvwBGJJtmrZkAGqmDktNhSF/AL8M9Iw4huHAOd0c9JKUzpHmtGLMsmTEWmTC9cLlihqZ8Mq25YUapxX2UnZYT1q+AHzT9IwAjOm0vAHeaVACkAKW3IBbFmDPDHN2gJYHjzQAap7PVAA4J2cA4H4H/AMiuQhmojIjvwAAAABJRU5ErkJggg==\");
  background-repeat: no-repeat;
  background-position: 17px center;}
+  .control-label {font-size:16px;}
+  .simple-input-icon .control-label {left: 44px;top: 20px;}
 ");
 ?>
 

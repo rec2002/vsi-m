@@ -15,7 +15,7 @@ $this->title = 'Список завдань';
         <div class="container">
 
             <div class="tt-pageform-wrapper">
-            <? Pjax::begin();?>
+            <? Pjax::begin(['scrollTo' => 0]);?>
                 <!-- TT-TASK -->
                 <h4 class="h4">Мої замовлення</h4>
                 <div class="empty-space marg-lg-b15"></div>

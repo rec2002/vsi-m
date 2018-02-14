@@ -9,6 +9,7 @@ use common\components\MemberHelper;
 
 
 $this->title = 'Список замовлень';
+Url::remember([strstr(Url::current(), '&_pjax=', true)], 'orders');
 
 ?>
 
@@ -136,7 +137,7 @@ $this->title = 'Список замовлень';
                             <a href="#" class="button type-1 full">Показати нові замовлення (10)</a>
                             <div class="empty-space marg-lg-b30"></div>-->
                         <? } ?>
-                        <? Pjax::begin(); ?>
+                        <? Pjax::begin(['scrollTo' => 0]); ?>
 <? if (in_array($this->context->action->id, array('myorders'))) { ?>
                             <div class="tt-order-filter-wrapper">
                                 <div class="tt-add-task">
@@ -170,12 +171,7 @@ $this->title = 'Список замовлень';
                                 </div>
                             </div>
 <? } ?>
-
-
-
-
                               <? echo Yii::$app->controller->renderPartial('list-partial', array('model' => $model))?>
-
                         <? Pjax::end(); ?>
                     </div>
                     <div class="empty-space marg-lg-b30"></div>

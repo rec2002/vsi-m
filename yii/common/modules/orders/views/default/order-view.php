@@ -4,7 +4,6 @@ use common\components\MemberHelper;
 use yii\helpers\Html;
 $this->title = 'Замовлення';
 
-
 ?>
     <div class="tt-header-margin"   style="height: 55px;"></div>
 
@@ -17,7 +16,7 @@ $this->title = 'Замовлення';
                 <li><span><?=$model->title;?></span></li>
             </ul>
             <div class="empty-space marg-lg-b30"></div>
-            <a href="<?=Yii::$app->request->referrer?>" class="button type-1 btn-simple icon-left uppercase"><span>назад</span></a>
+            <a href="<?=Url::previous('orders')?>" class="button type-1 btn-simple icon-left uppercase"><span>назад</span></a>
             <div class="empty-space marg-lg-b10"></div>
             <div class="tt-task detail">
                 <div class="tt-task-top clearfix">

@@ -121,6 +121,7 @@ class DefaultController extends Controller
     public function actionDetail($id)
     {
         $model = Orders::find()->where(['id'=>$id])->one();
+        if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
 
         $images = OrderImages::findAll(['order_id' => $model->id]);
 
@@ -201,6 +202,10 @@ class DefaultController extends Controller
 
 
     public function actionMyorders($status='')  {
+
+
+        if (Yii::$app->user->isGuest) return $this->redirect(['/members/login']);
+
 
         $param = [];
         $param[':member'] = Yii::$app->user->identity->getId();
