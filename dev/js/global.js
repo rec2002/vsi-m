@@ -1101,15 +1101,12 @@ console.log(upload.width());
 	});
     */
 
-    $('input.simple-input[type="tel"]').mask('+38 (000) 000-0000');
+    $('input.simple-input[type="tel"]').mask("+38 (099) 999-9999", {completed:function(){
+      //  $('input.simple-input[type="tel"]').next().html('1111');
 
-    $('input.simple-input[type="tel"]').click(function( event ) {
-        if ($(this).val()=='') { $(this).val('+38 (0');	}
-    }).focusin(function() {
-        if ($(this).val()=='') {
-            $(this).val('+38 (0').focus().val('+38 (0');
-        }
-    });
+
+    //	alert("completed!");
+    }});
 
     $('.tt-phone-submit').on('click', function(e){
 
@@ -1146,16 +1143,16 @@ console.log(upload.width());
         var RegX = /([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/;
         if (RegX.test(number)) {
             $(".tt-phone-submit").removeClass('disabled');
-            $(this).next().html('');
-			if ($('input#confirm_sms').val()=='' && $(this).data('phone')!=number) $(this).next().html('Підтвердіть контактний телефон через SMS.');
+            number.next().html('');
+			if ($('input#confirm_sms').val()=='' && number.data('phone')!=number && number.next().html()=='') number.next().html('Підтвердіть контактний телефон через SMS.');
 			
-			if ($(this).data('phone')!='' && $(this).data('phone')!=number) {
+			if (number.data('phone')!='' && number.data('phone')!=number) {
 				$('input#confirm_sms').val('');
-				$(this).next().html('Була спроба зміни номеру телефону, прошу підтвердити через SMS');
+                number.next().html('Була спроба зміни номеру телефону, прошу підтвердити через SMS');
 			}	
 		} else{
             $(".tt-phone-submit").addClass('disabled');
-            $(this).next().html('Невірний номер мобільного телефону');
+            number.next().html('Невірний номер мобільного телефону');
 		}
     });
 
@@ -1960,20 +1957,12 @@ console.log(upload.width());
                             $('input.simple-input[type="tel"]').closest('.phone-reg-block').prev('.tt-input-label').text('').css({'color':'#5cca47'});
 
 							if (form.hasClass('profile')) {
-
-
-
-
                                 $('div.tt-underheading-phone div.tt-underheading-item a:first').html(data_post[1]['value']);
                                 $('div.tt-underheading-phone div.tt-underheading-item a:first').attr('href', 'tel:' + data_post[1]['value'].replace(/[^0-9]/g, ''));
                                 $('.popup-wrapper, .popup-content').removeClass('active');
-
                                 return false;
                             }
-
-
                             form.find('.tt-editable-item').html(data_post[1]['value']);
-
                         break;
 					}
 

@@ -30,35 +30,6 @@ $this->title = 'Реєстрація майстра';
 </ul>
     </p>  <p>Ви можете використовувати наш сайт для пошуку замовлень, як основне чи додаткове джерело доходу.</p>
                                 </div>
-                                <!--<div class="tt-iconbox-wrapper">
-                                    <div class="tt-iconbox clearfix">
-                                        <img class="tt-iconbox-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAzCAMAAAAJihAlAAAAkFBMVEUAAAD/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igJ6owLPAAAAL3RSTlMAfgWbDwOmHGxB+BILZuazSCCiecKScxYJ8b88MCvWznBbNibs38ediYNVT7eOOYVtuosAAAIKSURBVEjHzZTJloIwEEVfBwIaRhFxnud2eP//d92AQY0tR3Z9N1mQm6qkikKJ6CxSxfeodNEReGC8JVVkvSdS5HYMjUjI2PVRh+/GZCJuQsqe3l4r9ZiWSsJvfMY3k3yJf5dPSRgDIhwO8Mh69d4YDEOBya/2SIdzvCfmBF3aeMBW7NcYNrsYKYE7YscOahBqBOUgZ1p4csQ2SqQwQIGjwG5xJQ7zs78YoMRTNChL0CX4VfYJ2ZYnHqrwe8dgipyvyoA34ohniRoMAzLjXOAzQ2M0Y62h+b/GMmtoxEyaGWumopHR53aAjwwZFC3rD+nqxuq4z4hnQ7D4sSKuqmAmmZGVd+bR6/GEG3LcNrANA3JBctGsHtdhr2kFxT/uq+aGFA0NEY3qjMOrsTcmve3iEW9iGgFbeDY26fgpT21IFJzowMAieVzfJT0T0+LoKXfSNKaMMjIMqnms9kWIiJGPPkMfJlJF8Nszch6UH+eb8tQlw3hGF69k7Oftfwy5SVZ2/lz+LfqQnOIPPD2+jyQPEldO9Kt0x/iTXShysbXhxc3vrLYS9bS5Bk6Kvb6uQBf1+LQgeH9GMeMV9VgUS555qaoaMqhPbEVLOXJJR2/z5pyt6saUmJGdPP99lVhGMrwELYPFpOrxKF9a7EHjLZ2Qr+gNa5ZuRks+hLY9+xnP05+lfs4WLTQkcH4AfvJDYzpQrMkAAAAASUVORK5CYII=" alt="">
-                                        <div class="tt-iconbox-info">
-                                            <h4 class="tt-iconbox-title">Більше 800 категорій послуг для роботи</h4>
-                                            <div class="simple-text size-2">
-                                                <p>Ви зможете працювати як по своїй спеціальності, так і пробувати свої сили в нових напрямках</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tt-iconbox clearfix">
-                                        <img class="tt-iconbox-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAMAAAANf8AYAAAAnFBMVEUAAAD/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igK5g2YRAAAAM3RSTlMABOAanRKCyDmzW6oH5B4P+O5Lcl+Ff+orCsC5pqL1r3nZxJokjFQ1KE9DMBaVbdPPiWYHGyp/AAACrUlEQVRIx6WV6XqqMBRFCaMISBAKZVbUOmvb/f7vdjNQlWKV+7l+sIGwTDgHQRFMPTCSUOkzq8Dwdr2BEquZOaNz0hshUOPZbAWnN7KY863Ntj0gJlft23OT8XgcqRnf1en3+Dcn6VgBu2qstY4HSgGbr+oIUHShEA7JxMjPZCh8/5BZfLcINN/o4k/kPOczG/m0SOvM+P0kPnGJdfd+Vq5L/KDmlbo4plxVRSk++woJQPniF2zf6ThabJrmW7xX+uxNTqj1nGFcnXiwU1ycr8FO3bROAnUosFsn8I4LfQgLvcpbB2/KUOxOT4dRvFDrF5xTYXNqXaajOyILvRZZnvoOmcPjUIhUIdMDApnqHceS/10fY5HvmIiM4IrU/8MZQ161eGGe151SHKT4ELmEJvKjXdvRu+M0Weq6LtkgdHnuMHI5ITQeaT2/49gIkiDwAlAWgVqhYpl4FAHPAPYdJ6dvjLiEZfK04Yi0cDRZhPL9V96vQXs/m1+1rqvRRkvzXBlat3SbQ/I5rNZEmQLz7cQw3kMVZTrE8UM0S0VCIlTLG0cXZ11sRU5wELmFjZNyRQP1L052njC0Hb5ERvjQeH4B3e+YQc/k2p8/cDqGzyoaXeaZjxjrCCXP/QyhOLbZGq+k/N3hUPJzP0XnedtAE2ll3S+oxofWD+tm4PbT+yEG3SB+6MjHu+UAW2TePHTWMHiB5Ww5fDG2wu/+TNs+GNdwLXzz9o7aNyNtnUadckLUIleIecTYiP7HWI2wkIob5K1TQ0K7+fMQbAHPbXuEiDsM37iDb9isGYJ1865Ipjg8fvfuWb+6pFXz7NuYyWJcqbF85qRV4t8eR+KZRbZfj/5k78BbXn9Bl9XL8ZRi6fIiazsgJKLeE+0JWyCxV2UC2EtlKGRtNqB5dGgL/w+B7m3tqKf2qQAAAABJRU5ErkJggg==" alt="">
-                                        <div class="tt-iconbox-info">
-                                            <h4 class="tt-iconbox-title">Працюйте в зручний для вас час</h4>
-                                            <div class="simple-text size-2">
-                                                <p>Складіть свій особистий графік роботи і заробляйте тільки коли вам зручно</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tt-iconbox clearfix">
-                                        <img class="tt-iconbox-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAXCAMAAACRQoc4AAAAnFBMVEUAAAD/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igL/igK5g2YRAAAAM3RSTlMAAoUHHPKO6SIRdzzT1/dG4DbsgkF/beWtdGELFc/BMcYsD9XLpFdQnJQmvrqJaEq2F7x6wcgJAAAB50lEQVQ4y1WUV5KrMBBFhYnCHlnknDE4jNPc/e/tPWMh4Hz19amu7raqIGuc3UyQ2Ks62Ek82x7JgmLjdDcMY5c8HgHQe8aE5wGxqI17yAAiUX9dSzRn7RGpFE/4RKKx8iBDrsfqVGQPE0AlxQB3kKFB1URzOCJRvgWLR/CczNigDlQRfFRZz8Q2wTw/ZFd6+83kjR5vlf4i0giLul3xPeUv0shEhmeLkyJbDDgOYjEmRa7Bf5rTXdOvYmC5ul6JAfSOSB5aC3sLbFoyJZI7mtU/WVYanfvPyCo4lXvuiRJ+TlEmiHqBJUN26FRCRFRfPPP1q29eR50YQF3/THRlAZTFz5cbB7sV3TcceKwOpjaa2hERQeLsZwY89seZEONinrxK3XfI8pTbJnEdRUKhEomqvxejFnrxDkwa8iY+kSiqD4KagxIJ1Xk/m6LDiV5qGhRV/asQ11clGvJ1j7WYthtOMT2/Gv55PDPVJM6mh/mLsTiMLD5b0f2jIri6wMV2t5XREdLy0vBwUm5DJNl2TrsEpQxvnq8PU/jsZgm0/fYeXxrrGiE94ihUxLgp4Pp6t1ZnkTmjs/8tzqzY5n3oerd89T6Hml2lQhnagvCCP88Q7F44J7NJAkAjEmf9UUk2wdstJKsN/gElrjazV5193AAAAABJRU5ErkJggg==" alt="">
-                                        <div class="tt-iconbox-info">
-                                            <h4 class="tt-iconbox-title">Заробляйте гідно</h4>
-                                            <div class="simple-text size-2">
-                                                <p>Сервіс “ВсіМайстри” може бути для вас джерелом як додаткового заробітку, так і основного фінансового доходу</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
                             </div>
                         </div>
                         <div class="col-md-6">

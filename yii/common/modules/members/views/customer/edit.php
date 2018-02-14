@@ -184,8 +184,7 @@ $this->title = 'Кабінет користувача';
                         <div class="tt-notification">
                             <div class="tt-notification-heading">
                                 <div class="tt-notification-title"></div>
-                                <div class="tt-notification-check">Пошта</div>
-                                <div class="tt-notification-check">СМС</div>
+                                <div class="tt-notification-check">На пошту</div>
                             </div>
 
 <? if (sizeof($Notices)) foreach ($Notices as $val) { ?>
@@ -196,11 +195,6 @@ $this->title = 'Кабінет користувача';
                                 <div class="tt-notification-check">
 <? if ($val['show_email']==1) {?>
                                     <label class="checkbox-entry" ><input type="checkbox" class="notices_action" data-name="email" data-type="<?=$val['type']?>" data-id="<?=$val['notice_id']?>" value="1" <?=($val['email']==1) ? 'checked' : ''?>><span></span></label>
-<? } ?>
-                                </div>
-                                <div class="tt-notification-check">
-<? if ($val['show_sms']==1) {?>
-                                    <label class="checkbox-entry"><input type="checkbox"  class="notices_action" data-name="sms" data-type="<?=$val['type']?>" data-id="<?=$val['notice_id']?>" value="1" <?=($val['sms']==1) ? 'checked' : ''?>><span></span></label>
 <? } ?>
                                 </div>
                             </div>

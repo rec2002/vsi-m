@@ -182,8 +182,8 @@ class RegistrationController extends \common\modules\members\controllers\Default
                 $session = Yii::$app->session;
                 $session->destroy();
 
-                return $this->render('master'.$id, ['email'=>$email]);
-
+                Yii::$app->user->login($member);
+                return $this->redirect(['/orders']);
 
                 break;
 

@@ -131,11 +131,11 @@ class CustomregistrationController extends \common\modules\members\controllers\D
 
                             \common\modules\members\models\PhoneCheck::deleteAll("phone ='" . Yii::$app->request->post('CustomerRegistration')['phone'] . "'");
 
-
                             //default notices settings
                             Yii::$app->db->createCommand()->insert('notices_members', ['notice_id' => 2, 'member' => $member_id, 'email'=>1, 'sms'=> 0])->execute();
 
-                            return $this->redirect(['/members/customregistration/success/']);
+                            \Yii::$app->user->login($member);
+                            return $this->redirect(['/orders/default/myorders']);
 
                         }
                         return $this->render('create', ['model'=>$model]);

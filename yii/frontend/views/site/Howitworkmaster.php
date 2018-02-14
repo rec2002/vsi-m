@@ -94,7 +94,7 @@ $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
         <!--<h3 class="h3 text-center">Скільки коштують послуги сайту</h3>-->
         <div class="empty-space marg-lg-b20"></div>
         <div class="simple-text size-3">
-            <p>«Всімайстри.укр» - сайт з пошуку ремонтно-будівельних замовлень в Україні. Щодня на сайті з'являються замовлення, які можете виконати саме Ви. Немає значення чи Ви приватний майстер, виконроб чи будівельна компанія. Ви пропонуєте свої послуги до замовлень, які цікаві саме Вам. Здобувши з часом репутацію та сформувавши портфоліо виконаних робіт, Ви створите всі умови для того, щоб замовники самі звертались до Вас за послугами. </p>
+            <p><b>«Виконроб»</b> - сайт з пошуку ремонтно-будівельних замовлень в Україні. Щодня на сайті з'являються замовлення, які можете виконати саме Ви. Немає значення чи Ви приватний майстер, виконроб чи будівельна компанія. Ви пропонуєте свої послуги до замовлень, які цікаві саме Вам. Здобувши з часом репутацію та сформувавши портфоліо виконаних робіт, Ви створите всі умови для того, щоб замовники самі звертались до Вас за послугами. </p>
         </div>
         <div class="empty-space marg-sm-b30 marg-lg-b35"></div>
 
@@ -133,7 +133,7 @@ $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
                     <ul class="list-item type-3">
                         <li>Зареєструйтесь на сайті та внесіть максимальну кількість інформації. Це допоможе Вам якомога точніше представити усі свої вміння та швидко знайти цікаве для Вас замовлення.</li>
                         <li>Після завершення реєстрації Ваш профіль стає активним і починає відображатись у пошуку сайту. Також Ви маєте можливість моніторити свіжі замовлення, які з'являються на сайті та налаштувати сповіщення про них, що робить сайт надзвичайно зручним у користуванні та економить Ваш час.</li>
-                        <li>Сайт <b>«Всімайстри.укр»</b> - безкоштовний сервіс, тому не хвилюйтесь за платежі та комісії.</li>
+                        <li>Сайт <b>«Виконроб»</b> - безкоштовний сервіс, тому не хвилюйтесь за платежі та комісії.</li>
                     </ul>
                     </p>
                 </div>
@@ -163,20 +163,6 @@ $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
             </div>
         </div>
     </div>
-    <div class="empty-space marg-sm-b30 marg-lg-b50"></div>
-    <div class="row vertical-middle">
-        <div class="col-sm-5 col-sm-push-7">
-            <img class="tt-imgbox-img center-block img-responsive" src="/img/imgbox/imgbox_3.jpg" alt="">
-        </div>
-        <div class="col-sm-7 col-sm-pull-5">
-            <div class="tt-imgbox-info style-2">
-                <a class="tt-imgbox-title h4" href="javascript:">Шукайте нові, прибуткові завдання</a>
-                <div class="simple-text size-3">
-                    <p>Nunc metus mauris, semper sit amet varius ut, posuere in ligula. Maecenas sollicitudin ullamcorper interdum. Duis consequat ut libero ut varius. Nulla augue ligula, fringilla in pharetra at, mollis ut metus.</p>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="empty-space marg-sm-b40 marg-lg-b70"></div>
 </div>
 <div class="tt-devider"></div>
@@ -184,7 +170,7 @@ $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 <div class="tt-bg-grey">
     <div class="container">
         <div class="empty-space marg-sm-b40 marg-lg-b75"></div>
-        <h3 class="h3 text-center">Часті питання по роботі на “ВсіМайстри”</h3>
+        <h3 class="h3 text-center">Часті питання по роботі на “Виконробі”</h3>
         <div class="empty-space marg-lg-b30"></div>
 
         <?=\common\widgets\Faq::widget(array('id' => '1')) ?>
@@ -196,7 +182,7 @@ $this->registerJsFile('/js/map.js', ['depends' => 'yii\web\JqueryAsset']);
 
 <div class="container">
     <div class="empty-space marg-sm-b30 marg-lg-b60"></div>
-    <h2 class="h2 text-center">Готові працювати із ВсіМайстри?</h2>
+    <h2 class="h2 text-center">Готові працювати із Викоробом?</h2>
     <div class="empty-space marg-lg-b30"></div>
     <div class="text-center">
         <a href="<?=Url::to(['/members/registration'])?>" class="button type-1 size-4 color-3 uppercase">зареєструватись зараз</a>

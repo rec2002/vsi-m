@@ -25,7 +25,7 @@ use common\components\MemberHelper;
                             <ul>
                                 <li><a href="<?=Url::to(['/orders'])?>">Замовлення</a></li>
                                 <li class="<?=in_array($this->context->action->id, array('profile')) ? 'active' : '' ?>"><a href="<?=Url::to(['/members/member/profile'])?>">Моя сторінка</a></li>
-                                <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог виконробів</a></li>
+                                <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог майстрів</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -86,7 +86,7 @@ use common\components\MemberHelper;
                     <nav class="main-nav">
                         <ul>
                             <li class="<?=in_array($this->context->action->id, array('list')) ? 'active' : '' ?>"><a href="<?=Url::to(['/orders/default/myorders'])?>">Мої замовлення</a></li>
-                            <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог виконробів</a></li>
+                            <li class="<?=in_array(Yii::$app->controller->id, array('professionals')) ? 'active' : '' ?>"><a href="<?=Url::to(['/professionals'])?>">Каталог майстрів</a></li>
                         </ul>
                     </nav>
                 </div>

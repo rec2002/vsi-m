@@ -1377,7 +1377,7 @@ div.tt-pagination ul li.active a { background: #ff8a00; color: #fff; }
 .tt-notification-entry { padding: 30px 130px 30px 95px; font-size: 0; border-bottom: 1px solid #e5e7eb; }
 .tt-notification-heading { padding: 23px 130px 23px 95px; font-size: 0; border-bottom: 1px solid #e5e7eb; }
 .tt-notification-heading .tt-notification-check { font-size: 14px; line-height: 20px; font-weight: 700; color: #2d3642; text-align: center; }
-.tt-notification-title, .tt-notification-check { display: inline-block; width: 60%; vertical-align: middle; }
+.tt-notification-title, .tt-notification-check { display: inline-block; width: 80%; vertical-align: middle; }
 .tt-notification-check { width: 20%; }
 .tt-notification-check .checkbox-entry { margin: 0 auto; }
 @media (max-width: 991px) { .tt-notification-heading, .tt-notification-entry { padding-left: 40px; padding-right: 40px; } }

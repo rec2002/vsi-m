@@ -40,8 +40,8 @@ return [
 
         'user' => [
                  'identityClass' => 'common\modules\members\models\Members',
-                    'enableAutoLogin' => true,
-                    'identityCookie' => ['name' => '_identity-member', 'httpOnly' => true],
+                 'enableAutoLogin' => true,
+                 'identityCookie' => ['name' => '_identity-member', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend

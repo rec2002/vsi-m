@@ -20,15 +20,15 @@ $this->title = 'Виконроб -  сервіс з пошуку майстрі�
                         <img class="img-responsive" src="/img/imgblock/master.png" alt="">
                         <div class="tt-banner-qoute-wrapper">
                             <div class="tt-banner-qoute active">
-                                <h5 class="tt-banner-qoute-title h5">Шукаєте нових клієнтів?</h5>
+                                <h5 class="tt-banner-qoute-title h5">Шукаєте нових клієнтів? </h5>
                                 <div class="simple-text size-2">
-                                    <p>Nunc egestas est ante. Proin temp us varius mauris. Fusce a mauris lorem. Curabitur eu sem.</p>
+                                    <p>Реєструйтесь на сайті, обирайте проект та надсилайте пропозицію безпосередньо замовнику</p>
                                 </div>
                             </div>
                             <div class="tt-banner-qoute">
-                                <h5 class="tt-banner-qoute-title h5">Яке ваше завдання?</h5>
+                                <h5 class="tt-banner-qoute-title h5">Яке ваше завдання? </h5>
                                 <div class="simple-text size-2">
-                                    <p>Nunc egestas est ante. Proin temp us varius mauris. Fusce a mauris lorem. Curabitur eu sem.</p>
+                                    <p>На сайті "Виконроб" ви можете як шукати замовників, так і додавати свої проекти для виконавців</p>
                                 </div>
                             </div>
                         </div>

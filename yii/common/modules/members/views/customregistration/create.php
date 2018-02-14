@@ -19,6 +19,11 @@ $this->title = 'Додати замовлення';
                         $model->setScenario('add-order');
                         $form = ActiveForm::begin(['id' => 'reg-customer',
                             'enableAjaxValidation'=>true,
+                            'validateOnBlur'=> false,
+                            'validateOnChange'=> false,
+                            'validateOnType'=> false,
+                            'validationDelay'=>300,
+                            'validateOnSubmit'=> true,
                             'validationUrl'=>Url::toRoute('/members/customregistration/validation/?scenario=add-order'),
                             'action' =>['/members/customregistration/?scenario=add-order'],
                             'options' => ['enctype'=>'multipart/form-data']
