@@ -166,7 +166,7 @@ $.each( $(\"div#memberedit-types li ul li label.checkbox-entry input\"), functio
              }
         })
 
-        if (!flag) $('p.help-block.help-block-error').text('Необхідно заповнити хоча б один пункт.'); else $('p.help-block.help-block-error').text('');
+        if (!flag) $('p.help-block.help-block-error').text('Необхідно вибрати мінімум один пункт.'); else $('p.help-block.help-block-error').text('');
         return flag;
     });
 

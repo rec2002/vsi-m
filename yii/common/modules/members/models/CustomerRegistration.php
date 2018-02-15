@@ -34,7 +34,7 @@ class CustomerRegistration extends Model
         return [
             [['title', 'descriptions', 'location'], 'required', 'on' => 'home-page'],
             [['region'], 'compare', 'compareValue' => 0, 'operator' => '>', 'type' => 'number', 'message' => 'Адресу не визначено. Прошу вибрати адресу зі списку', 'on' => 'home-page'],
-            ['phone', 'checkMyUniqunessPhone', 'on' => 'add-order'],
+ //           ['phone', 'checkMyUniqunessPhone', 'on' => 'add-order'],
             [['confirm_sms'], 'checkSMSCode_', 'skipOnEmpty' => false, 'on' => 'add-order'],
 			[['confirm_sms'], 'required',  'whenClient' => "function (attribute, value) { if ($('input#confirm_sms').val()=='') setTimeout(function(){  $('input.simple-input[type=\"tel\"]').next().html('Підтвердіть контактний телефон через SMS.'); }, 300); } ", 'on' => 'add-order'],
 			[['phone'], 'match', 'pattern' => '/([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/', 'message' => 'Невірний номер мобільного телефону.', 'on' => 'add-order'],

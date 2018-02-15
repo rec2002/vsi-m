@@ -67,7 +67,7 @@ $this->title = 'Кабінет користувача';
 
 
 <? foreach ($member->documents as $item) {?>
-        <a href="<?=Url::toRoute(['/members/member/file', 'id' => $item['id']])?>" class="remove_doc" data-id="<?=$item['id']?>" target="_blank"><?=$item['name']?></a><br/>
+        <a href="<?=Url::toRoute(['/members/member/file', 'id' => $item['id']])?>" class="remove_doc" data-id="<?=$item['id']?>" target="_blank"><img src="/img/photo_icon.png" alt="<?=$item['name']?>" style="display: inherit;"></a>&nbsp;
 <? } ?>
 </p>
 <? } else { ?>

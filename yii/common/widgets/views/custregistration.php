@@ -48,8 +48,16 @@ p.help-block.help-block-error{margin-bottom: 5px; margin-top: 10px;}
  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAMAAACzvE1FAAAAV1BMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkLkTjgbAAAAHHRSTlMA3Z2EEHekmIsV1s9Q5KwF9sq5tWhDQTcdCmZiOw521AAAAI1JREFUGBkFwYVhw0AABDA9mJ04TL3956wEPnNJyvwBGJJtmrZkAGqmDktNhSF/AL8M9Iw4huHAOd0c9JKUzpHmtGLMsmTEWmTC9cLlihqZ8Mq25YUapxX2UnZYT1q+AHzT9IwAjOm0vAHeaVACkAKW3IBbFmDPDHN2gJYHjzQAap7PVAA4J2cA4H4H/AMiuQhmojIjvwAAAABJRU5ErkJggg==\");
  background-repeat: no-repeat;
  background-position: 17px center;}
-  .control-label {font-size:16px;}
-  .simple-input-icon .control-label {left: 44px;top: 20px;}
+  
+.form-group {position: relative;}
+.control-label {position: absolute;left: 16px; right: 16px; top: 17px;display: block;color: #6c7076;z-index: 10;-webkit-transition: font-size 150ms ease-out, -webkit-transform 150ms ease-out;transition: font-size 150ms ease-out, -webkit-transform 150ms ease-out;transition: transform 150ms ease-out, font-size 150ms ease-out;transition: transform 150ms ease-out, font-size 150ms ease-out, -webkit-transform 150ms ease-out;}
+.focused .control-label {-webkit-transform: translateY(-125%);transform: translateY(-125%);font-size: .75em; white-space: nowrap; overflow: hidden;}
+.simple-input-icon img {z-index: 15;}
+.simple-input-icon .control-label {left: 44px; top: 20px;}
+.control-label {font-size:16px;}
+
+  
+  
 ");
 ?>
 

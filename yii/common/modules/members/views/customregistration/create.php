@@ -51,13 +51,6 @@ $this->title = 'Додати замовлення';
 
 
 
-                                <div class="form-group">
-                                    <label class="form-label" for="first">Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)</label>
-                                    <input id="first" class="form-input input-place simple-input light" type="text" />
-                                </div>
-
-
-
 
 
 

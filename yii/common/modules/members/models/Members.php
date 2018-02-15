@@ -71,7 +71,7 @@ class Members extends ActiveRecord implements IdentityInterface
 
 
             [['approved'], 'safe'],
-            [['types'], 'required',  'message' => 'Прошу вибрати хоча б вид робіт.', 'on' => 'types'],
+            [['types'], 'required',  'message' => 'Необхідно вибрати мінімум один пункт.', 'on' => 'types'],
      //       [['types'], 'exist', 'skipOnError' => true, 'targetClass' => MemberTypes::className(), 'targetAttribute' => ['member' => 'id']],
 
         ];

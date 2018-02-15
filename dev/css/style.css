@@ -484,7 +484,7 @@ body:not(.mobile) .checkbox-entry.light:hover > span, body:not(.mobile) .checkbo
   .tabs-block.style-2.wth-btn > .tab-nav { padding-right: 0; }
   .tabs-block.style-4 > .tab-nav { padding-left: 15px; padding-right: 15px; } }
 /*accordeon*/
-.accordeon-title { position: relative; font-size: 18px; line-height: 26px; font-weight: 500; color: #2d3643; border: 1px solid #e5e7eb; background: #fcfcfc; padding: 19px 0 19px 80px; margin-top: 10px; border-radius: 3px; cursor: pointer; -webkit-box-shadow: 1px 1.732px 15px 0px rgba(0, 0, 0, 0.06); box-shadow: 1px 1.732px 15px 0px rgba(0, 0, 0, 0.06); -webkit-transition: all .3s ease-in-out; transition: all .3s ease-in-out; }
+.accordeon-title { position: relative; font-size: 18px; line-height: 26px; font-weight: 500; color: #2d3643; border: 1px solid #e5e7eb; background: #fcfcfc; padding: 19px 0 19px 80px;padding-right: 10px; margin-top: 10px; border-radius: 3px; cursor: pointer; -webkit-box-shadow: 1px 1.732px 15px 0px rgba(0, 0, 0, 0.06); box-shadow: 1px 1.732px 15px 0px rgba(0, 0, 0, 0.06); -webkit-transition: all .3s ease-in-out; transition: all .3s ease-in-out; }
 .accordeon-title:first-child { margin-top: 0; }
 .accordeon-icon { position: absolute; top: 0; left: 0; width: 60px; height: 100%; border-right: 1px solid #e5e7eb; -webkit-transition: border .3s ease-in-out; transition: border .3s ease-in-out; }
 .accordeon-icon:before, .accordeon-icon:after { content: ''; display: block; position: absolute; top: 50%; left: 50%; width: 16px; height: 2px; background: #2d3643; margin-top: -1px; margin-left: -8px; }
@@ -1824,7 +1824,7 @@ body:not(.mobile) .tt-editable-wrapper.tt-task-feature:hover:before, body:not(.m
 .slider-range.style-2 .ui-slider .ui-slider-range { background: #5ba34d; }
 .slider-range.style-2 .ui-slider .ui-slider-range:before { background: #1b8307; }
 .slider-range.style-2 .ui-slider .ui-slider-handle { background: #1b8307 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaBAMAAABbZFH9AAAAKlBMVEUAAAD///////////////////////////////////////////////////+Gu8ovAAAADnRSTlMA/bekk4FNNSYYxHJfQbY+m64AAABfSURBVBjTY6APYBNgYEyA8y4GMLDKwjjsIkDCsQDKazQAEswSEA6nEJhSnACmGBeAKS4BCE8BTDFBeJzCYMpwAtQUByDBIgGzQRRIBBbALEzcwMAtBncLD9BlBxjoAgDGZwmzv413cQAAAABJRU5ErkJggg=="); }
-.amount-value { display: inline-block; width: 50px; text-align: center; }
+.amount-value { display: inline-block; width: 60px; text-align: center; }
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /* 35 - TT-BACKBLOCK */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
@@ -2399,14 +2399,16 @@ ul.pagination li.prev.disabled span, ul.pagination li.next.disabled span {line-h
 .checkbox-list .checkbox-toggle .checkbox-entry span:after {background: none;}
 .checkbox-list .checkbox-toggle.active .checkbox-entry span:before {content: '-';}
 body.overflow-body, html.overflow-body {overflow: hidden;}
+
+/*
 .form-group {position: relative;}
 .control-label {position: absolute;left: 16px; right: 16px; top: 17px;display: block;color: #6c7076;z-index: 10;-webkit-transition: font-size 150ms ease-out, -webkit-transform 150ms ease-out;transition: font-size 150ms ease-out, -webkit-transform 150ms ease-out;transition: transform 150ms ease-out, font-size 150ms ease-out;transition: transform 150ms ease-out, font-size 150ms ease-out, -webkit-transform 150ms ease-out;}
 .focused .control-label {-webkit-transform: translateY(-125%);transform: translateY(-125%);font-size: .75em; white-space: nowrap; overflow: hidden;}
-.simple-input-icon img {z-index: 15;} 
+.simple-input-icon img {z-index: 15;}
 .simple-input-icon .control-label {left: 44px; top: 20px;}
-
+*/
 @media (max-width: 480px) {
-	.nav-left {background: #f9f9f9; text-align: left; position: relative;}	
+	.nav-left {background: #f9f9f9; text-align: left; position: relative;}
 	.tt-header.user .nav-more, .tt-profile-dropdown ul, .tt-header .nav-left .button-plus, .tt-header .nav-right .button.type-1:not(.full) {background: #f9f9f9; text-align: left;  padding-left: 30px; border-left: 4px solid #ff8a00; padding-bottom: 17px; margin-bottom: 0px!important; border-radius: 0px; width: 100%;}
 	.tt-header .main-nav {margin-bottom: 0px; padding-bottom: 15px; padding-top: 15px; padding-left: 30px; border-left: 4px solid #ff8a00; }
 	.tt-header .toggle-block {padding-left: 0px; padding-right: 0px; padding-top: 70px;}

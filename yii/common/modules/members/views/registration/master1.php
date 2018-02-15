@@ -15,7 +15,7 @@ $this->title = 'Реєстрація майстра';
             <div class="tt-pageform-wrapper middle register" style="height: 827px;">
                 <div class="tt-pageform tt-register">
                     <div class="row row60">
-                        <div class="col-md-6">
+                        <div class="col-md-6 registration_mob">
                             <div class="tt-register-column left">
                                 <h3 class="tt-register-title h3">Реєстрація нового майстра</h3>
                                 <div class="tt-register-desc simple-text size-3">

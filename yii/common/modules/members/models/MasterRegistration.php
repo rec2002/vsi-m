@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace common\modules\members\models;
 
@@ -54,7 +54,7 @@ class MasterRegistration extends Model
             [['company'], 'required', 'when' => function ($model) { if ($model->forma==3) return true; else return false;}, 'whenClient' => "function (attribute, value) { if ($('#masterregistration-forma').val() == '3') return true; else return false; }", 'on' => 'step-2'],
             [['avatar'], 'image'],
             [['regions'], 'required',  'message' => 'Прошу вибрати хоча б одну область.', 'on' => 'step-3'],
-            [['types'], 'required',  'message' => 'Прошу вибрати хоча б вид робіт.', 'on' => 'step-4'],
+            [['types'], 'required',  'message' => 'Необхідно вибрати мінімум один пункт.', 'on' => 'step-4'],
             [['prices'], 'required', 'on' => 'step-5'],
 
         ];

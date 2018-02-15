@@ -1109,14 +1109,14 @@ console.log(upload.width());
 		e.preventDefault();
 	});
     */
-/*
+
     $('input.simple-input[type="tel"]').mask("+38 (099) 999-9999", {completed:function(){
       //  $('input.simple-input[type="tel"]').next().html('1111');
 
 
     //	alert("completed!");
     }});
-*/
+
     $('.tt-phone-submit').on('click', function(e){
 
 		var obj = $(this);
@@ -1152,17 +1152,17 @@ console.log(upload.width());
         var RegX = /([+]?\d[ ]?[(]?\d{3}[)]?[ ]?\d{2,3}[- ]?\d{2}[- ]?\d{2})/;
         if (RegX.test(number)) {
             $(".tt-phone-submit").removeClass('disabled');
-            number.next().html('');
-			if ($('input#confirm_sms').val()=='' && number.data('phone')!=number && number.next().html()=='') number.next().html('Підтвердіть контактний телефон через SMS.');
-			
-			if (number.data('phone')!='' && number.data('phone')!=number) {
-				$('input#confirm_sms').val('');
-                number.next().html('Була спроба зміни номеру телефону, прошу підтвердити через SMS');
-			}	
-		} else{
+            $(this).next().html('');
+            if ($('input#confirm_sms').val()=='') $(this).next().html('Підтвердіть контактний телефон через SMS.');
+
+            if ($(this).data('phone')!='' && $(this).data('phone')!=number) {
+                $('input#confirm_sms').val('');
+                $(this).next().html('Була спроба зміни номеру телефону, прошу ще раз підтвердити через SMS');
+            }
+        } else{
             $(".tt-phone-submit").addClass('disabled');
-            number.next().html('Невірний номер мобільного телефону');
-		}
+            $(this).next().html('Невірний номер мобільного телефону');
+        }
     });
 
 	

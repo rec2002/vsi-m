@@ -62,7 +62,7 @@ class MemberEdit extends \yii\db\ActiveRecord
             [['created_at', 'updated_at'], 'safe'],
             [['email', 'password', 'password_reset_token', 'first_name', 'last_name', 'surname', 'phone', 'avatar_image', 'place', 'company', 'busy_to'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
-            [['types'], 'required',  'message' => 'Прошу вибрати хоча б вид робіт.', 'on' => 'types'],
+            [['types'], 'required',  'message' => 'Необхідно вибрати мінімум один пункт.', 'on' => 'types'],
             [['prices'], 'required', 'on' => 'prices'],
             [['last_name'], 'required', 'on' =>'last_name'],
             [['first_name'], 'required', 'on' =>'first_name'],
