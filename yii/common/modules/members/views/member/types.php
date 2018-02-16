@@ -84,7 +84,7 @@ $this->title = 'Редагування послуг та цін ';
 
 
                                         if ($checked==1) $checked = 'checked';
-                                        return $header.$first."<li><label class=\"checkbox-entry\"><input type=\"checkbox\"  {$checked} name='{$name}' value='{$value}'><span>{$label}</span></label></li>";
+                                        return $header.$first."<li><label class=\"checkbox-entry\"><input type=\"checkbox\"  {$checked} name='{$name}' value='{$value}' class=\"checkbox-data\" ><span>{$label}</span></label></li>";
                                     }
                                 ])->label(false);
 
@@ -137,10 +137,27 @@ $this->title = 'Редагування послуг та цін ';
 <?
 echo $this->registerJs("(function(){
 $.each( $(\"div#memberedit-types li ul li label.checkbox-entry input\"), function() {
+
+
     if ($(this).is(':checked')) {
+        CheckAllCheckbox($(this).closest('ul'));
         $(this).closest('ul').closest('li').find('.checkbox-toggle input').prop('checked', true);
     }
 });
+
+
+    function CheckAllCheckbox(parent_dom) {
+
+        var total = parent_dom.find('.checkbox-data').length;
+        var checked = parent_dom.find('.checkbox-data:checked').length;
+        
+        if (total==checked) 
+            parent_dom.find('input[name=\"check_all\"]').prop('checked', true);
+        else 
+            parent_dom.find('input[name=\"check_all\"]').prop('checked', false);
+
+
+    } 
 
 	$('.tt-fadein-link').on('click', function(e){
 		$(this).closest('.tt-fadein-top').fadeOut(300, function(){
@@ -168,6 +185,21 @@ $.each( $(\"div#memberedit-types li ul li label.checkbox-entry input\"), functio
 
         if (!flag) $('p.help-block.help-block-error').text('Необхідно вибрати мінімум один пункт.'); else $('p.help-block.help-block-error').text('');
         return flag;
+    });
+
+    $('.checkbox-entry input[name=\"check_all\"]').on('change', function(){
+
+		if ($(this).is(\":checked\"))
+        	$(this).closest('ul').find('input[type=\"checkbox\"]').prop('checked', true);
+		else
+            $(this).closest('ul').find('input[type=\"checkbox\"]').prop('checked', false);
+
+	});
+
+
+
+    $('.checkbox-entry input[type=\"checkbox\"]').on('change', function(){
+        CheckAllCheckbox($(this).closest('ul'));
     });
 
 	$('.tt-project-new-close').on('click', function(e){

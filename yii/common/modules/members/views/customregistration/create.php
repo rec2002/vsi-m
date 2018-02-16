@@ -33,7 +33,7 @@ $this->title = 'Додати замовлення';
                             <h3 class="h3">Додати замовлення</h3>
                             <div class="empty-space marg-lg-b30"></div>
 
-<? if ($suggested['total']>0) { ?>
+<? if (@$suggested['total']>0) { ?>
     <div class="tt-news-task">
         <div class="simple-text size-3">
             <span class="tt-news-task-count">Вибрано <span><?= $suggested['total'] ?> <?=MemberHelper::NumberSufix($suggested['total'], array('майстра', 'майстри', 'майстрів'))?></span></span>
@@ -76,56 +76,12 @@ $this->title = 'Додати замовлення';
                             <div class="empty-space marg-lg-b20"></div>
 
                             <div class="tt-input-label">Коли потрібно починати</div>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <div class="simple-select task-duration">
-                                        <?
 
-                                        echo $form->field($model, 'when_start')->widget(Select2::classname(), [
-                                            'data' => MemberHelper::WHEN_START,
-                                            'language' => 'uk',
-                                            'hideSearch' => true,
-                                            'size' => Select2::LARGE,
-                                            'theme' => Select2::THEME_BOOTSTRAP,
-                                            'pluginOptions' => [
-                                                'allowClear' => false,
-                                                'tabindex' => '3'
-                                            ],
-                                        ])->label(false); ?>
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="task-duration-dates">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="tt-input-wrapper style-2">
-                                                    <div class="tt-input-label" >Від</div>
-                                                    <div class="tt-input-entry">
-                                                        <div class="simple-input-icon">
-                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" style="top: 28px;" alt="">
-
-                                                            <?= $form->field($model, 'date_from')->textInput(['class' => 'simple-input',  'id'=>"sdate", 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="tt-input-wrapper style-2">
-                                                    <div class="tt-input-label">До</div>
-                                                    <div class="tt-input-entry">
-                                                        <div class="simple-input-icon">
-                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg=="  style="top: 28px;" alt="">
-                                                            <?= $form->field($model, 'date_to')->textInput(['class' => 'simple-input',  'id'=>"edate", 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="simple-input-icon" style="width:170px;">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" style="top: 28px;" alt="">
+                                <?= $form->field($model, 'date_from')->textInput(['class' => 'simple-input',  'id'=>"sdate", 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
                             </div>
+
                             <div class="empty-space marg-lg-b30"></div>
 
                         <div class="tt-input-label">Виберіть бюджет</div>
@@ -258,7 +214,7 @@ echo $this->registerJsFile('/js/order.js', ['depends' => 'yii\web\JqueryAsset'])
 
 ?>
 
-<? if ($suggested['total']>0) { ?>
+<? if (@$suggested['total']>0) { ?>
 <div class="popup-wrapper">
     <div class="bg-layer"></div>
     <div class="popup-content" data-rel="5">

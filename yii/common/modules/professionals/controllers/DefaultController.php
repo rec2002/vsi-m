@@ -50,12 +50,12 @@ class DefaultController extends Controller
         }
 
 
-
+/*
         if (@$cat['id']>0 && @$region['id']>0) {
             $settings['title'] =  $cat['name'].' - '.$region['name'];
             $breadcrumb[] =  ['label' => $cat['name'].' - '.$region['name'], 'url' => Url::to(['/professionals/',  'cat'=>$cat['url_tag'] ,  'region'=>$region['url_tag']])];
         }
-
+*/
 
         $filter = array();
         if (sizeof($param)) foreach($param as $key=>$val){

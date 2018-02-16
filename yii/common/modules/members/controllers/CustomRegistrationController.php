@@ -85,19 +85,8 @@ class CustomregistrationController extends \common\modules\members\controllers\D
                             $orders->location = Yii::$app->request->post('CustomerRegistration')['location'];
                             $orders->budget = Yii::$app->request->post('CustomerRegistration')['budget'];
                             $orders->region = Yii::$app->request->post('CustomerRegistration')['region'];
+                            $orders->date_from = date("Y-m-d", strtotime(Yii::$app->request->post('CustomerRegistration')['date_from']));
 
-                            switch (Yii::$app->request->post('CustomerRegistration')['when_start']){
-                                case '1':
-                                    $orders->date_from = date("Y-m-d", strtotime(Yii::$app->request->post('CustomerRegistration')['date_from']));
-                                    $orders->date_to = date("Y-m-d", strtotime(Yii::$app->request->post('CustomerRegistration')['date_to']));
-                                    break;
-                                case '2':
-                                    $orders->date_from = date("Y-m-d");
-                                    break;
-                                case '3':
-                                    $orders->date_from = date("Y-m-d", strtotime("+1 day"));
-                                    break;
-                            }
 
                             $orders->save(false);
                             $order_id = Yii::$app->db->getLastInsertID();

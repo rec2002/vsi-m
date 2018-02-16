@@ -39,12 +39,12 @@ class Portfolio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'work_date', 'description'], 'required'],
+            [['title', 'description'], 'required'],
             [['member'], 'integer'],
             [['description'], 'string'],
             [['image'], 'required', 'whenClient' => "function (attribute, value) {  if ($(\".tt-project-pic-loaded\").length==0)  return true; else return false;}", 'message' => 'Додати фото'],
             [['image'], 'file'],
-            [['work_date', 'created_at', 'updated_at'], 'safe'],
+            [['capacity_term', 'created_at', 'updated_at'], 'safe'],
             [['title', 'cost'], 'string', 'max' => 255],
             [['member'], 'exist', 'skipOnError' => true, 'targetClass' => Members::className(), 'targetAttribute' => ['member' => 'id']],
         ];
@@ -61,7 +61,7 @@ class Portfolio extends \yii\db\ActiveRecord
             'title' => 'Назва робіт',
             'description' => 'Опис виконаниx робіт',
             'cost' => 'Вартість робіт',
-            'work_date' => 'Коли проводились роботи',
+            'capacity_term' => 'Терміни та об\'єми',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

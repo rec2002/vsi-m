@@ -18,8 +18,8 @@ class OrdersSearch extends Orders
     public function rules()
     {
         return [
-            [['id', 'member', 'status', 'region', 'budget', 'when_start'], 'integer'],
-            [['title', 'descriptions', 'location', 'date_from', 'date_to', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'member', 'status', 'region', 'budget'], 'integer'],
+            [['title', 'descriptions', 'location', 'date_from', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -74,9 +74,7 @@ class OrdersSearch extends Orders
             'status' => $this->status,
             'region' => $this->region,
             'budget' => $this->budget,
-            'when_start' => $this->when_start,
             'date_from' => $this->date_from,
-            'date_to' => $this->date_to,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

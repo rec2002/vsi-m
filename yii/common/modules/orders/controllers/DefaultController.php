@@ -123,6 +123,9 @@ class DefaultController extends Controller
         $model = Orders::find()->where(['id'=>$id])->one();
         if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
 
+
+
+        if ($model->date_from == '0000-00-00' || $model->date_from =='1970-01-01' || empty($model->date_from)) $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
         $images = OrderImages::findAll(['order_id' => $model->id]);
 
         $param[':order']=$model->id;
@@ -156,8 +159,7 @@ class DefaultController extends Controller
                      'member' => Yii::$app->user->identity->getId(),
                  ]);
 
-                 if ($model->date_from == '0000-00-00') $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
-                 if ($model->date_to == '0000-00-00') $model->date_to = ''; else $model->date_to = date("d.m.Y", strtotime($model->date_to));
+                 if ($model->date_from == '0000-00-00' || $model->date_from =='1970-01-01' || empty($model->date_from)) $model->date_from = ''; else $model->date_from = date("d.m.Y", strtotime($model->date_from));
 
                 $param[':order']=$model->id;
                 $categories = Yii::$app->db->createCommand('SELECT d.id, d.name, d.url_tag FROM `order_types` o LEFT JOIN `dict_category` d ON d.id = o.type AND d.types=1 WHERE d.active=1 AND o.order_id=:order', $param)->queryAll();
@@ -375,30 +377,12 @@ class DefaultController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
             $model->member = Yii::$app->user->identity->getId();
-            switch (Yii::$app->request->post('Orders')['when_start']){
-                case '1':
-                    $model->date_from = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_from']));
-                    $model->date_to = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_to']));
-                    break;
-                case '2':
-                    $model->date_from = date("Y-m-d");
-                    $model->date_to = '';
-                    break;
-                case '3':
-                    $model->date_from = date("Y-m-d", strtotime("+1 day"));
-                    $model->date_to = '';
-                    break;
-                case '4':
-                    $model->date_from = '';
-                    $model->date_to = '';
-                    break;
-            }
             $model->title = Yii::$app->request->post('Orders')['title'];
             $model->location = Yii::$app->request->post('Orders')['location'];
             $model->descriptions = Yii::$app->request->post('Orders')['descriptions'];
             $model->budget = Yii::$app->request->post('Orders')['budget'];
             $model->region = Yii::$app->request->post('Orders')['region'];
-            $model->when_start = Yii::$app->request->post('Orders')['when_start'];
+            $model->date_from = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_from']));
 
             if (!sizeof(@$_SESSION['suggested']) || !isset($_SESSION['suggested'])) $_SESSION['suggested'] = array();
 
@@ -458,25 +442,7 @@ class DefaultController extends Controller
                     $model->budget = Yii::$app->request->post('Orders')['budget'];
                     break;
                 case 'when_start':
-                    switch (Yii::$app->request->post('Orders')['when_start']){
-                        case '1':
-                            $model->date_from = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_from']));
-                            $model->date_to = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_to']));
-                            break;
-                        case '2':
-                            $model->date_from = date("Y-m-d");
-                            $model->date_to = '';
-                            break;
-                        case '3':
-                            $model->date_from = date("Y-m-d", strtotime("+1 day"));
-                            $model->date_to = '';
-                            break;
-                        case '4':
-                            $model->date_from = '';
-                            $model->date_to = '';
-                            break;
-                    }
-                    $model->when_start = Yii::$app->request->post('Orders')['when_start'];
+                    $model->date_from = date("Y-m-d", strtotime(Yii::$app->request->post('Orders')['date_from']));
                     break;
                 case 'descriptions':
                     $model->descriptions = Yii::$app->request->post('Orders')['descriptions'];
@@ -558,16 +524,6 @@ class DefaultController extends Controller
     }
 
 
-
-    public function GetStartVal($model) {
-        if ($model->when_start == 1)
-            return 'В період від ' . date('d.m.Y', strtotime( $model->date_from)) . ' до ' . date('d.m.Y', strtotime( $model->date_to));
-        elseif ($model->when_start == 2 || $model->when_start == 3)
-            return date('d.m.Y', strtotime( $model->date_from));
-        elseif ($model->when_start == 4) return 'Будь-коли';
-    }
-
-
     public function actionSuggestionsave($id=0)  {
 
         $model = new MemberSuggestion();
@@ -606,34 +562,5 @@ class DefaultController extends Controller
         return json_encode(array('status'=>'error'));
     }
 
-
-    public function actionTest()  {
-
-        if (!sizeof(@$_SESSION['suggested']) || !isset($_SESSION['suggested'])) $_SESSION['suggested'] = array();
-
-        if (sizeof($_SESSION['suggested'])) {
-            $emails = array();
-            foreach ($_SESSION['suggested'] as $key=>$val) {
-
-                $member = Yii::$app->db->createCommand('SELECT m.id, m.email, m.avatar_image  FROM `members` m
-                      LEFT JOIN `auth_assignment` a ON a.user_id = m.id
-                      WHERE m.id = "' . $val['id'] . '" AND a.item_name="majster" ')->queryOne();
-
-
-                $emails[] = $member['email'];
-
-
-                print_r($member);
-            }
-
-            echo implode(',', $emails);
-        }
-
-
-
-
-        return 1;
-
-    }
 
 }

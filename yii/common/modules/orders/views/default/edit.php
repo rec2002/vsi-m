@@ -167,49 +167,16 @@ $this->title = 'Замовлення';
 
                                     <div class="tt-task-feature-entry tt-editable tt-editable-click">
                                         Коли починати:
-                                        <span class="tt-editable-item" data-rel="title"><? echo common\modules\orders\controllers\DefaultController::GetStartVal($model); ?></span>
+                                        <span class="tt-editable-item" data-rel="title"><?=(empty($model->date_from)) ? '(не вказано)' : date('d.m.Y', strtotime( $model->date_from))?></span>
                                         <img class="tt-editable-btn" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAbFBMVEUAAAAtNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkItNkIJRPKbAAAAI3RSTlMAPAlExnwY9/Tes6tADQWv5tvPjlk07YZ5cGpOKxPruqosIBzH4BAAAACPSURBVBjTjcxZEoIwFETRJkSIQBiEoExOvf89avwiL5bl/TzV1ZClK750IEcX6UBXz0yFLkqfaiy04qH5uJ4CNQ9dep+6QDNkplC6ZRWqOhZ+v9fc6x11W0LqWyom/2kDpHu9/NBC6MwVqpMKk+dDrJbbwJtUJKOnTSj6HkCjhcK0z6o3Ui3J6zmxCHOeol5ZkAnV8yzXAAAAAABJRU5ErkJggg==" alt="">
                                     </div>
                                     <div class="tt-editable-form">
 
-                                            <div class="simple-select task-duration">
-                                                <?
+                                        <div class="simple-input-icon">
+                                            <img  style="top: 28px;"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
+                                            <?= $form5->field($model, 'date_from')->textInput(['class' => 'simple-input', 'id'=>"sdate", 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
+                                        </div>
 
-                                                echo $form5->field($model, 'when_start')->widget(Select2::classname(), [
-                                                    'data' => MemberHelper::WHEN_START,
-                                                    'language' => 'uk',
-                                                    'hideSearch' => true,
-                                                    'size' => Select2::LARGE,
-                                                    'theme' => Select2::THEME_BOOTSTRAP,
-                                                    'pluginOptions' => [
-                                                        'allowClear' => false,
-                                                        'tabindex' => '3'
-                                                    ],
-                                                ])->label(false);
-
-                                                ?>
-
-                                            </div>
-                                            <div class="task-duration-dates" <?=($model->when_start>1) ? 'style="display:none;"' : '' ?>>
-                                                <div class="tt-input-wrapper style-2">
-                                                    <div class="tt-input-label">Від</div>
-                                                    <div class="tt-input-entry">
-                                                        <div class="simple-input-icon">
-                                                            <img  style="top: 28px;"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
-                                                            <?= $form5->field($model, 'date_from')->textInput(['class' => 'simple-input', 'id'=>"sdate", 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tt-input-wrapper style-2">
-                                                    <div class="tt-input-label">До</div>
-                                                    <div class="tt-input-entry">
-                                                        <div class="simple-input-icon">
-                                                            <img style="top: 28px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
-                                                            <?= $form5->field($model, 'date_to')->textInput(['class' => 'simple-input',  'id'=>"edate", 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Виберіть дату", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="tt-editable-form-btn">
                                                 <?= Html::resetButton('Відмінити', ['class' => 'tt-editable-close button type-1']) ?>
                                                 <?= Html::submitButton('Зберегти', ['class' => 'button type-1 color-3', 'name' => 'save']) ?>

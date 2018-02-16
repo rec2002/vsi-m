@@ -31,7 +31,7 @@ class PortfolioController extends \common\modules\members\controllers\DefaultCon
     public function actionList()
     {
 
-        $items =  Portfolio::findBySql('SELECT  p.id, p.member,	p.title, p.description,	p.cost,	p.work_date, 
+        $items =  Portfolio::findBySql('SELECT  p.id, p.member,	p.title, p.description,	p.cost,	p.capacity_term, 
                                   (SELECT i.image FROM `member_portfolio_images` i WHERE i.portfolio_id = p.id ORDER BY i.created_at ASC, i.id ASC LIMIT 1) as image	 
                                   FROM `member_porfolio` p 
                                   WHERE p.member="'.Yii::$app->user->identity->getId().'" 
@@ -51,7 +51,8 @@ class PortfolioController extends \common\modules\members\controllers\DefaultCon
         $model = new Portfolio();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->work_date = date("Y-m-d", strtotime(Yii::$app->request->post('Portfolio')['work_date']));
+
+            $model->capacity_term = Yii::$app->request->post('Portfolio')['capacity_term'];
 
             $model->member = Yii::$app->user->identity->getId();
             $model->save();
@@ -99,7 +100,7 @@ class PortfolioController extends \common\modules\members\controllers\DefaultCon
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $model->work_date = date("Y-m-d", strtotime(Yii::$app->request->post('Portfolio')['work_date']));
+            $model->capacity_term = Yii::$app->request->post('Portfolio')['capacity_term'];
             $model->updated_at = date("Y-m-d H:i:s");
             $model->save();
             $model->images_uploaded = array();

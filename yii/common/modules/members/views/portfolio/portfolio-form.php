@@ -44,18 +44,8 @@ $form = ActiveForm::begin(['id' => 'edit_portfolio', 'options' => ['class'=>'for
 
     <?=$form->field($model, 'cost')->textInput(['class' => 'simple-input', 'placeholder' => "Наприклад, 2500 грн. за весь ремонт, 100 грн. за м2"])->label(false); ?>
     <div class="empty-space marg-lg-b25"></div>
-    <div class="tt-input-label">Коли проводились роботи</div>
-    <div class="simple-input-icon">
-        <img style="top:28px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAMFBMVEUDAwMAAAAAAAAyMjAzMzEyMjIyMjEwMDAvLy8xMTAvLy8wMDAxMTAxMTASEhIzMzJHP+qmAAAAD3RSTlMIBgKDgcFzREWfRjTs6w6KMeKqAAAAXklEQVQI12NQUksCQSWGLa4hIOjNcBjCsGX4BJRIFEuUZ/ikpCgIBEAGkIYwlD/Lf7A3ADLEzYUNmhv4kRjCn/mBUkCGoCADEMBFwGqYDRYvQJL6AGG8Z5j/Hwx+AgAkPyt/pO0F8gAAAABJRU5ErkJggg==" alt="">
-
-        <?= $form->field($model, 'work_date')->widget(\yii\widgets\MaskedInput::className(), [
-            'mask' => '99.99.9999',
-            'options' => [
-                'placeholder' => 'Коли проводились роботи'
-            ]
-        ])->textInput(['value' => (empty($model->work_date)) ? '' : date("d-m-Y", strtotime($model->work_date)), 'class' => 'simple-input simple-datapicker', 'readonly'=>'true', 'autocomplete'=>'off',  'data-min-date'=>'0',  'placeholder' => "Коли проводились роботи", 'style' => 'margin-bottom: 0px;'])->label(false); ?>
-
-    </div>
+    <div class="tt-input-label">Терміни та об'єми</div>
+        <?=$form->field($model, 'capacity_term')->textInput(['class' => 'simple-input', 'placeholder' => "Наприклад, 32 м/кв за 2 тиждні"])->label(false); ?>
     <div class="empty-space marg-lg-b25"></div>
     <div class="tt-input-label">Опис виконаних робіт</div>
     <?= $form->field($model, 'description')->textarea(['class' => 'simple-input height-4', 'placeholder' => "Додайте загальний опис виконаних робіт", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>
@@ -72,3 +62,5 @@ $form = ActiveForm::begin(['id' => 'edit_portfolio', 'options' => ['class'=>'for
 
     </div>
 <?php ActiveForm::end(); ?>
+
+

@@ -84,7 +84,7 @@ $this->title = 'Замовлення';
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJ1BMVEUAAAAyMjAyMjAyMjIvLy8yMjAxMTExMTAyMjEwMDAxMTAxMTAzMzIS37QgAAAADHRSTlMAQ0GREjQzYjUL2tlQexsFAAAAT0lEQVQI12NgYE1gDeAIYGCYpGwEgpoMCyEMaYYDbAmsCRwJPAwHGMAAmcF0iOeAjACQwaLCKODogMxgOgiWQihGiLCIQNRgGlhzBgyOAwAhOhym9cKdhgAAAABJRU5ErkJggg==" alt="">
                                     <div class="tt-task-feature-entry">
                                         Коли починати:
-                                        <span><? echo common\modules\orders\controllers\DefaultController::GetStartVal($model); ?></span>
+                                        <span><?=(empty($model->date_from)) ? '(не вказано)' : date('d.m.Y', strtotime( $model->date_from))?></span>
                                     </div>
                                 </div>
                             </li>

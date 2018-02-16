@@ -43,6 +43,10 @@ use yii\helpers\Url;
     <p><?= Html::encode($model->description); ?></p>
 </div>
 <div class="tt-project-slider-info-wrapper">
-    <div class="tt-project-slider-info">вартість робіт: <span><?=(empty($model->cost)) ? '(не вказано)' : $model->cost ?></span></div>
-    <div class="tt-project-slider-info">дата проведення: <span><?=date('m/Y', strtotime($model->work_date))?></span></div>
+<? if (!empty($model->cost)) { ?>
+    <div class="tt-project-slider-info">вартість робіт: <span><?=$model->cost?></span></div>
+<? } ?>
+<? if (!empty($model->capacity_term)) { ?>
+    <div class="tt-project-slider-info">Терміни та об'єми: <span><?=$model->capacity_term ?></span></div>
+<? } ?>
 </div>

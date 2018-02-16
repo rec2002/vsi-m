@@ -45,25 +45,11 @@ $(function() {
                         case 'Orders[budget]':
                             form.find('.tt-editable-item').html($("#orders-budget").find(":selected").text());
                         break;
-                        case 'Orders[when_start]':
-
-
-//                            console.log(new Date(Date.parse($("#orders-date_from").val())).format("%d-%m-%Y"));
-                            var forma = $("#sdate").find(":selected").text();
-                            if (data_post[1]['value']==1) forma = 'В період від '+$("#sdate").val()+' до '+ $("#edate").val();
-                            if (data_post[1]['value']==2) forma = new Date().format("%d.%m.%Y");
-                            if (data_post[1]['value']==3) {
-                                var today = new Date();
-                                forma = new Date(today.getTime()+1000*60*60*24).format("%d.%m.%Y");
+                        case 'Orders[date_from]':
+                            if (data_post[1]['value']=='') {
+                                data_post[1]['value'] = '(не вказано)';
                             }
-
-                            if (data_post[1]['value']!=1) {
-                                $("#sdate").val('');
-                                $("#edate").val('');
-                            }
-
-                            form.find('.tt-editable-item').html(forma);
-
+                            form.find('.tt-editable-item').html(data_post[1]['value']);
                             break;
                         case 'Orders[descriptions]':
                                 form.find('.tt-editable-item').html(data_post[1]['value'].replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, "<br>"));

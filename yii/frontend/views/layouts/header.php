@@ -82,7 +82,7 @@ use common\components\MemberHelper;
         <div class="toggle-block">
             <div class="toggle-block-container">
                 <div class="nav-left">
-                    <a href="<?=Url::to(['/orders/default/addorder'])?>" class="button type-1 button-plus color-3"><span></span>Додати замовлення</a>
+                    <a href="<?=Url::to(['/orders/default/addorder'])?>" class="button type-1 button-plus color-3" ><span></span>Додати замовлення</a>
                     <nav class="main-nav">
                         <ul>
                             <li class="<?=in_array($this->context->action->id, array('list')) ? 'active' : '' ?>"><a href="<?=Url::to(['/orders/default/myorders'])?>">Мої замовлення</a></li>
@@ -154,7 +154,7 @@ use common\components\MemberHelper;
     <div class="toggle-block">
         <div class="toggle-block-container">
             <div class="nav-left">
-                <a href="<?=Url::to(['/members/customregistration/create'])?>" class="button type-1 button-plus color-3"><span></span>Додати замовлення</a>
+                <a href="<?=Url::to(['/members/customregistration/create'])?>" class="button type-1 button-plus color-3"  <?=in_array($this->context->action->id, array('create')) ? 'style="visibility: hidden;"' : '' ?>><span></span>Додати замовлення</a>
                 <?=Nav::widget([
                     'items' => [
                         ['label' => 'Замовлення', 'url' => ['/orders'], 'class' =>'button type-1 btn-simple'],

@@ -52,14 +52,18 @@ $this->title = 'Реєстрація майстра - Крок 4';
                         echo  $form->field($model, 'types', ['enableClientValidation' => false])->checkboxList($types_arr, [
                                 'template' => "\n{input}\n",
                                 'item' => function($index, $label, $name, $checked, $value) {
+
+                                    $first = '';
                                     $types_ = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 WHERE d.active=1 AND d.types=0 ORDER BY d.priority ASC ")->queryAll();
                                     if ($index==0) {
+                                        $first = "<li><label class=\"checkbox-entry\"><input type=\"checkbox\"  {$checked} name='check_all' value='{$value}'><span><b>Вибрати усі</b></span></label></li>";
                                         $header = "<li><div class=\"checkbox-toggle\"><label class=\"checkbox-entry has-child\"><input type=\"checkbox\"><span></span></label><a href=\"javascript:\">".$types_[$index]['parent_name']."</a></div><ul>";
                                     }else if ($types_[$index]['parent']!=$types_[$index-1]['parent']){
+                                        $first = "<li><label class=\"checkbox-entry\"><input type=\"checkbox\"  {$checked} name='check_all' value='{$value}'><span><b>Вибрати усі</b></span></label></li>";
                                         $header = "</ul></li><li><div class=\"checkbox-toggle\"><label class=\"checkbox-entry has-child\"><input type=\"checkbox\"><span></span></label><a href=\"javascript:\">".$types_[$index]['parent_name']."</a></div><ul>";
                                     } else $header = '';
                                     if ($checked==1) $checked = 'checked';
-                                    return $header."<li><label class=\"checkbox-entry\"><input type=\"checkbox\"  {$checked} name='{$name}' value='{$value}'><span>{$label}</span></label></li>";
+                                    return $header.$first."<li><label class=\"checkbox-entry\"><input type=\"checkbox\"  {$checked} name='{$name}' value='{$value}' class=\"checkbox-data\"><span>{$label}</span></label></li>";
                                 }
                         ])->label(false);
 
@@ -87,10 +91,40 @@ echo "</ul>";
 
 <?
 echo $this->registerJs("(function(){
-$.each( $(\"div#masterregistration-types li ul li label.checkbox-entry input\"), function() {
-    if ($(this).is(':checked')) {
-        $(this).closest('ul').closest('li').find('.checkbox-toggle input').prop('checked', true);
-    }
-});
+    $.each( $(\"div#masterregistration-types li ul li label.checkbox-entry input\"), function() {
+        if ($(this).is(':checked')) {
+            CheckAllCheckbox($(this).closest('ul'));
+            $(this).closest('ul').closest('li').find('.checkbox-toggle input').prop('checked', true);
+        }
+    });
+
+    function CheckAllCheckbox(parent_dom) {
+
+        var total = parent_dom.find('.checkbox-data').length;
+        var checked = parent_dom.find('.checkbox-data:checked').length;
+        
+        if (total==checked) 
+            parent_dom.find('input[name=\"check_all\"]').prop('checked', true);
+        else 
+            parent_dom.find('input[name=\"check_all\"]').prop('checked', false);
+
+    } 
+
+
+    $('.checkbox-entry input[name=\"check_all\"]').on('change', function(){
+
+		if ($(this).is(\":checked\"))
+        	$(this).closest('ul').find('input[type=\"checkbox\"]').prop('checked', true);
+		else
+            $(this).closest('ul').find('input[type=\"checkbox\"]').prop('checked', false);
+
+	});
+
+    $('.checkbox-entry input[type=\"checkbox\"]').on('change', function(){
+        CheckAllCheckbox($(this).closest('ul'));
+    });
+    
+    
+
 })();" , \yii\web\View::POS_END );
 ?>
