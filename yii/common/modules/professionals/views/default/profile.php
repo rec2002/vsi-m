@@ -83,9 +83,9 @@ $this->title = 'Сторінка майстра';
                             </div>
                         </div>
 
-                        <div class="tt-underheading-phone">
+                        <div class="tt-underheading-phone ">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAUCAMAAACK2/weAAAARVBMVEUAAACqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7aqr7ZxyU2/AAAAF3RSTlMA6heZq1Xvig313LqimoF60W5p42ssBC1PkxoAAAB6SURBVBjTrY9JDsMwDAPJKJa8xU6c5f9P7cEKCvTcuQ1EQiBiUzLveya1RRxqIXSRHoLpgUoA13leAFhhOt7rUENL325qEN6Lc1OwMcKJ3CBcXl0o/9SfR5bK6pRkrrW6znDvHq58AJQC4GGd88MYYc6PTUnmTFJb/AA54QVJiz4xVAAAAABJRU5ErkJggg==" alt="">
-                            <div class="tt-underheading-item"><?=$member->phone; ?></div>
+                            <div class="tt-underheading-item phoneNumber"><?=$member->phone; ?></div>
                         </div>
                     </div>
                 </div>
@@ -181,7 +181,7 @@ if (sizeof($prices)) foreach ($prices as $key=>$val) if (@$data[$val['id']]['pri
                                                     вартість робіт <span><span><?=(empty($val['cost'])) ? '(не вказано)' : $val['cost'] ?></span></span>
                                                 </div>
                                                 <div class="tt-project-cell">
-                                                    дата проведення <span><?=date('m/Y', strtotime($val['work_date']))?></span>
+                                                    Терміни та об'єми: <span><?=(empty($val['capacity_term'])) ? '(не вказано)' : $val['capacity_term'] ?></span>
                                                 </div>
                                             </div>
                                         </div>

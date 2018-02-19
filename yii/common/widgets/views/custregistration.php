@@ -22,15 +22,15 @@ use yii\helpers\Url;
     <div class="simple-text size-4 darker">
         <p>Добавте замолення, щоб отримати пропозиції від зацікавлених майстрів</p>
     </div>
-    <?= $form->field($model, 'title')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['title'], 'class' => 'form-input input-place  simple-input light', 'tabindex' => '1', 'autocomplete'=>'off', 'style' => 'margin-bottom: 0px;'])->label("Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)"); ?>
+    <?= $form->field($model, 'title')->textInput(['class' => 'form-input input-place  simple-input light', 'tabindex' => '1', 'autocomplete'=>'off', 'style' => 'margin-bottom: 0px;'])->label("Напишіть, що потрібно зробити? (Наприклад, ремонт квартири)"); ?>
 
-    <?= $form->field($model, 'descriptions')->textarea(['value'=>@Yii::$app->session['newCustomerSession']['descriptions'], 'class' => 'form-input input-place  simple-input height-4 light', 'tabindex' => '2', 'maxlength'=>'800', 'autocomplete'=>'off', 'style' => 'margin-bottom: 10px;'])->label("Опишіть завдання як омога детальніше, все що може бути корисно для майстрів (розміри, об’єм робіт, типи робіт, матеріали ... )");  ?>
+    <?= $form->field($model, 'descriptions')->textarea(['class' => 'form-input input-place  simple-input height-4 light', 'tabindex' => '2', 'maxlength'=>'800', 'autocomplete'=>'off', 'style' => 'margin-bottom: 10px;'])->label("Опишіть завдання як омога детальніше, все що може бути корисно для майстрів (розміри, об’єм робіт, типи робіт, матеріали ... )");  ?>
 
     <div class="row row10">
         <div class="col-sm-6 col-lg-7">
             <div class="simple-input-icon">
-                <?=$form->field($model, 'location')->textInput(['value'=>@Yii::$app->session['newCustomerSession']['location'], 'class' => 'form-input input-place simple-input light', "id"=>"tt-google-single-autocomplete-only", 'tabindex' => '3', 'autocomplete'=>'off', 'placeholder' => "",  'style' => 'margin-bottom: 0px;'])->label("Вкажіть адресу"); ?>
-                <?=$form->field($model, 'region')->hiddenInput(['value'=>@Yii::$app->session['newCustomerSession']['region'], 'id'=>'tt-google-single-autocomplete-region'])->label(false); ?>
+                <?=$form->field($model, 'location')->textInput(['class' => 'form-input input-place simple-input light', "id"=>"tt-google-single-autocomplete-only", 'tabindex' => '3', 'autocomplete'=>'off', 'placeholder' => "",  'style' => 'margin-bottom: 0px;'])->label("Вкажіть адресу"); ?>
+                <?=$form->field($model, 'region')->hiddenInput(['id'=>'tt-google-single-autocomplete-region'])->label(false); ?>
             </div>
         </div>
         <div class="col-sm-6 col-lg-5">

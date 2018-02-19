@@ -2,12 +2,13 @@ $(function() {
 
 	var markers = [], infoWindows = [], map, mark_default = '/img/map/marker_3.png';
 
+    initialize();
 
 	if ($('#tt-google-single-autocomplete-only').length){
 
 
         var input = document.getElementById('tt-google-single-autocomplete-only');
-        searchbox = new google.maps.places.Autocomplete(input, {"types":["geocode"],"componentRestrictions":{"country":"ua"}});
+        searchbox = new google.maps.places.Autocomplete(input, {"types":["address"],"componentRestrictions":{"country":"ua"}});
         searchbox.addListener('place_changed', function() {
             var place = searchbox.getPlace();
             if (!place.geometry) {
@@ -15,62 +16,12 @@ $(function() {
                 $('#tt-google-single-autocomplete-region').val(0);
                 return;
             } else{
-                console.log(place.formatted_address);
 
+                map.fitBounds(searchbox.getPlace().geometry.viewport);
+
+                map.setZoom(17);
+                addMarker(place.geometry.location, place.name , place.formatted_address,mark_default,true);
                 GetRetion(place.formatted_address, input.value);
-
-
-
-/*
-				var region = '';
-                var adress_input = input.value;
-                var adress = place.formatted_address;
-				var arr = {
-                    '1' :  ['Вінницька область', 'Вінниця', 'Вінницька'],
-                    '2' :  ['Волинська область', 'Луцьк', 'Волинська'],
-                    '3' :  ['Дніпропетровська область', 'Дніпро', 'Дніпропетровська'],
-                    '4' :  ['Донецька область', 'Донецьк', 'Донецька'],
-                    '5' :  ['Житомирська область', 'Житомир', 'Житомирська'],
-                    '6' :  ['Закарпатська область', 'Ужгород', 'Закарпатська'],
-                    '7' :  ['Запорізька область', 'Запоріжжя', 'Запорізька'],
-                    '8' :  ['Івано-Франківська область', 'Івано-Франківськ', 'Івано-Франківська'],
-                    '9' :  ['Київська область', 'Київ', 'Київська'],
-                    '10' :  ['Кіровоградська область', 'Кропивницький', 'Кіровоград', 'Кіровоградська'],
-                    '11' :  ['Луганська область', 'Луганськ', 'Луганська'],
-                    '12' :  ['Львівська область', 'Львів', 'Львівcька'],
-                    '13' :  ['Миколаївська область', 'Миколаїв', 'Миколаївська'],
-                    '14' :  ['Одеська область', 'Одеса', 'Одеська'],
-                    '15' :  ['Полтавська область', 'Полтава', 'Полтавська'],
-                    '16' :  ['Рівненська область', 'Рівне', 'Рівненська'],
-                    '17' :  ['Сумська область', 'Суми', 'Сумська'],
-                    '18' :  ['Тернопільська область', 'Тернопіль', 'Тернопільська'],
-                    '19' :  ['Харківська область', 'Харків', 'Харківська'],
-                    '20' :  ['Херсонська область', 'Херсон', 'Херсонська'],
-                    '21' :  ['Хмельницька область', 'Хмельницьк', 'Хмельницька'],
-                    '22' :  ['Черкаська область', 'Черкаси', 'Черкаська'],
-                    '23' :  ['Чернівецька область', 'Чернівці', 'Чернівецька'],
-                    '24' :  ['Чернігівська область', 'Чернігів', 'Чернігівська'],
-                    '25' :  ['Крим', 'Севастополь']
-            	};
-                $.each(arr, function( index, arr1 ) {
-
-                    if (region!='') return true;
-                    $.each(arr1, function(index2, value) {
-                        if (adress.indexOf(value) !== -1) {
-							if (region=='') region = index;
-                        }
-                        if (adress_input.indexOf(value) !== -1) {
-                            if (region=='') region = index;
-                        }
-                    });
-                });
-				if (region==''){
-                    $('#tt-google-single-autocomplete-region').val(0);
-				} else {
-					$('#tt-google-single-autocomplete-region').val(region);
-				}
-
-				*/
 			}
         });
 
@@ -337,8 +288,15 @@ $(function() {
 		      	addMarker(mark_locat,mark_name,address,mark_default,true);
 
 
+
 		      	map.setCenter(mark_locat);
-		      	map.setZoom(12);
+
+
+             //   map.fitBounds(autocomplete.getPlace().geometry.viewport);
+
+
+
+		    //  	map.setZoom(12);
 		    } else {
                 GetMessage_('Адресу не визначено.', 'Прошу вибрати адресу з випадаючого списку.');
 
@@ -360,8 +318,10 @@ $(function() {
     }
 
 
-	$(window).load(function(){
-		setTimeout(function(){initialize();}, 500);
-	});
+	//$(window).load(function(){
+
+
+		//setTimeout(function(){initialize();}, 500);
+	//});
 
 });

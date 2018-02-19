@@ -45,7 +45,7 @@ $form = ActiveForm::begin(['id' => 'edit_portfolio', 'options' => ['class'=>'for
     <?=$form->field($model, 'cost')->textInput(['class' => 'simple-input', 'placeholder' => "Наприклад, 2500 грн. за весь ремонт, 100 грн. за м2"])->label(false); ?>
     <div class="empty-space marg-lg-b25"></div>
     <div class="tt-input-label">Терміни та об'єми</div>
-        <?=$form->field($model, 'capacity_term')->textInput(['class' => 'simple-input', 'placeholder' => "Наприклад, 32 м/кв за 2 тиждні"])->label(false); ?>
+        <?=$form->field($model, 'capacity_term')->textInput(['class' => 'simple-input', 'placeholder' => "Наприклад, 32 м/кв за 2 тижні"])->label(false); ?>
     <div class="empty-space marg-lg-b25"></div>
     <div class="tt-input-label">Опис виконаних робіт</div>
     <?= $form->field($model, 'description')->textarea(['class' => 'simple-input height-4', 'placeholder' => "Додайте загальний опис виконаних робіт", 'style' => 'margin-bottom: 10px;'])->label(false);  ?>

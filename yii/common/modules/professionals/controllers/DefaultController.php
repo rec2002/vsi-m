@@ -130,7 +130,7 @@ class DefaultController extends Controller
             $member->prices = ArrayHelper::index(MemberPrices::findBySql('SELECT price_id as id, price  FROM member_prices WHERE member="' . $id . '" ')->asArray()->all(), 'id');
             $member->regions = ArrayHelper::getColumn(MemberTypes::findBySql('SELECT region FROM member_regions WHERE member="' . $id . '" ')->asArray()->all(), 'region');
 
-            $portfolio = Portfolio::findBySql('SELECT  p.id, p.member,	p.title, p.description,	p.cost,	p.work_date, 
+            $portfolio = Portfolio::findBySql('SELECT  p.id, p.member,	p.title, p.description,	p.cost,	p.capacity_term, 
                                   (SELECT i.image FROM `member_portfolio_images` i WHERE i.portfolio_id = p.id ORDER BY i.created_at ASC, i.id ASC LIMIT 1) as image	 
                                   FROM `member_porfolio` p 
                                   WHERE p.member="' . $id . '"   ORDER BY p.created_at DESC')->asArray()->all();

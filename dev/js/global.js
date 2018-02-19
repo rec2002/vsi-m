@@ -1558,6 +1558,12 @@ console.log(upload.width());
   		e.preventDefault();
   	});
 */
+
+    $('.phoneNumber').on('click', function(e){
+        $(this).toggleClass('showPhone');
+        e.preventDefault();
+    });
+
   	/*tt-give-response*/
 
   	/*

@@ -227,7 +227,7 @@ $this->title = 'Кабінет користувача';
                                                             вартість робіт <span><?=(empty($val['cost'])) ? '(не вказано)' : $val['cost'] ?></span>
                                                         </div>
                                                         <div class="tt-project-cell">
-                                                            дата проведення <span><?=date('m/Y', strtotime($val['work_date']))?></span>
+                                                            Терміни та об'єми: <span><?=(empty($val['capacity_term'])) ? '(не вказано)' : $val['capacity_term'] ?></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -262,7 +262,7 @@ $this->title = 'Кабінет користувача';
                                                             вартість робіт <span><?=(empty($val['cost'])) ? '(не вказано)' : $val['cost'] ?></span>
                                                         </div>
                                                         <div class="tt-project-cell">
-                                                            дата проведення <span><?=date('m/Y', strtotime($val['work_date']))?></span>
+                                                            Терміни та об'єми: <span><?=(empty($val['capacity_term'])) ? '(не вказано)' : $val['capacity_term'] ?></span>
                                                         </div>
                                                     </div>
                                                 </div>
