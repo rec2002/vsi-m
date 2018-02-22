@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'question',
                 'vAlign' => 'middle',
+                'contentOptions' => ['style' => 'max-width:150px;white-space: normal;']
             ],
             [
                 'attribute' => 'parent',

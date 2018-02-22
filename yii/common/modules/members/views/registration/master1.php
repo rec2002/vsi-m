@@ -5,7 +5,13 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use kartik\checkbox\CheckboxX;
 use frontend\assets\AppAsset;
-$this->title = 'Реєстрація майстра';
+
+use common\models\Seo;
+$seo = new Seo([
+    'title'=>'Реєстрація нового майстра',
+]);
+$seo->title();
+
 ?>
 
     <div class="tt-header-margin"></div>
@@ -38,6 +44,10 @@ $this->title = 'Реєстрація майстра';
 
                                 <?php $form = ActiveForm::begin(['id' => 'reg-step-1',
                                     'enableAjaxValidation'=>true,
+                                    'validateOnBlur'=> false,
+                                    'validateOnChange'=> false,
+                                    'validateOnType'=> false,
+                                    'validateOnSubmit'=> true,
                                     'validationUrl'=>Url::toRoute('/members/registration/validation'),
                                     'action' =>['/members/registration',
 

@@ -894,7 +894,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     };
                     return str_replace('/admin/', '/', Html::a($name, ['professionals/default/profile', 'id' => $model->suggestion->member->id], ['target' => '_blank', 'data' => ['pjax' => 0]]));
                 },
-                'label' => 'Виконавець'
+                'label' => 'Виконавець',
+                'contentOptions' => ['style' => 'max-width:100px;white-space: normal;']
 
             ],
             [
@@ -903,8 +904,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return str_replace('/admin/', '/', Html::a($model->suggestion->order->title, ['orders/default/detail', 'id' => $model->suggestion->order->id], ['target' => '_blank', 'data' => ['pjax' => 0]])) ;
                 },
-                'label' => 'Замовлення'
-
+                'label' => 'Замовлення',
+                'contentOptions' => ['style' => 'max-width:200px;white-space: normal;']
             ],
             [
                 'attribute' => 'step',

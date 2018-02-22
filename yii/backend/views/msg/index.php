@@ -60,13 +60,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return str_replace('/admin/', '/', Html::a($model['name'], ['professionals/default/profile', 'id' => $model['member_id']], ['target' => '_blank', 'data' => ['pjax' => 0]]));
                 },
                 'filter'=>false,
-                'label' => 'Користувач'
+                'label' => 'Користувач',
+                'contentOptions' => ['style' => 'max-width:100px;white-space: normal;']
             ],
             [
                 'attribute' => 'msg',
                 'format' => 'raw',
                 'label' => 'Повідомлення',
-                'filter'=>false
+                'filter'=>false,
+                'contentOptions' => ['style' => 'max-width:200px;white-space: normal;']
             ],
             [
                 'attribute' => 'created_at',

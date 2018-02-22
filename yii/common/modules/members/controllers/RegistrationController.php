@@ -36,7 +36,7 @@ class RegistrationController extends \common\modules\members\controllers\Default
 
         if (Yii::$app->request->post('registration-reset')==1) {
             unset($_SESSION['newUserSession']);
-            return $this->redirect(['/members/registration/']);
+            return $this->redirect(['/members/registration']);
         }
 
         switch ($id) {
@@ -47,14 +47,14 @@ class RegistrationController extends \common\modules\members\controllers\Default
                         Yii::$app->session['newUserSession'] = array_merge(Yii::$app->session['newUserSession'], Yii::$app->request->post('MasterRegistration'));
                     else Yii::$app->session['newUserSession'] = array_merge(array(), Yii::$app->request->post('MasterRegistration'));
 
-                    return $this->redirect(['/members/registration/?id=2']);
+                    return $this->redirect(['/members/registration', 'id'=>2]);
                 }
                 break;
             case 2:
                 $model = new MasterRegistration(['scenario' => 'step-2']);
                 if ($model->load(Yii::$app->request->post())) {
                     Yii::$app->session['newUserSession'] = array_merge(Yii::$app->session['newUserSession'], Yii::$app->request->post('MasterRegistration'));
-                    return $this->redirect(['/members/registration/?id=3']);
+                    return $this->redirect(['/members/registration', 'id'=>3]);
                 }
 
             break;
@@ -62,14 +62,14 @@ class RegistrationController extends \common\modules\members\controllers\Default
                 $model = new MasterRegistration(['scenario' => 'step-3']);
                 if ($model->load(Yii::$app->request->post())) {
                     Yii::$app->session['newUserSession'] = array_merge(Yii::$app->session['newUserSession'], Yii::$app->request->post('MasterRegistration'));
-                    return $this->redirect(['/members/registration/?id=4']);
+                    return $this->redirect(['/members/registration', 'id'=>4]);
                 }
                 break;
             case 4:
                 $model = new MasterRegistration(['scenario' => 'step-4']);
                 if ($model->load(Yii::$app->request->post())) {
                     Yii::$app->session['newUserSession'] = array_merge(Yii::$app->session['newUserSession'], Yii::$app->request->post('MasterRegistration'));
-                    return $this->redirect(['/members/registration/?id=5']);
+                    return $this->redirect(['/members/registration', 'id'=>5]);
                 }
 
             break;
@@ -81,7 +81,7 @@ class RegistrationController extends \common\modules\members\controllers\Default
                     } else {
                         Yii::$app->session['newUserSession'] = array_merge(Yii::$app->session['newUserSession'], Yii::$app->request->post('MasterRegistration'));
                     }
-                    return $this->redirect(['/members/registration/?id=6']);
+                    return $this->redirect(['/members/registration', 'id'=>6]);
                 }
             break;
             case 6:

@@ -2,7 +2,16 @@
 use yii\helpers\Url;
 use common\components\MemberHelper;
 use yii\helpers\Html;
-$this->title = 'Замовлення';
+use common\models\Seo;
+$seo = new Seo([
+    'title'=>Html::encode( mb_strimwidth($model->title, 0, 60, '...')),
+    'desctiption'=>Html::encode( mb_strimwidth($model->descriptions, 0, 150, '...')),
+    'canonical'=> Url::toRoute(['/orders/default/detail', 'id' => $model->id, 'slug'=>MemberHelper::UrlSlug($model->title)])
+]);
+
+$seo->title();
+$seo->desctiption();
+$seo->canonical();
 
 ?>
     <div class="tt-header-margin"   style="height: 55px;"></div>

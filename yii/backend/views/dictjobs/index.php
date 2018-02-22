@@ -75,7 +75,7 @@ echo GridView::widget([
             'vAlign' => 'middle',
             'contentOptions' => function($model)  {
 
-                return ['style' => '' . (($model->job_markup==0) ? '' : 'font-weight:Bold')];
+                return ['style' => '' . (($model->job_markup==0) ? 'max-width:150px;white-space: normal;' : 'font-weight:Bold;max-width:150px;white-space: normal;')];
             },
         ],
         [
@@ -83,7 +83,7 @@ echo GridView::widget([
             'value'=>'parenTypes.name',
             'vAlign' => 'middle',
             'filter'=>Html::activeDropDownList($searchModel, 'parent', $data, ['class'=>'form-control', 'prompt'=>'-- Вибрати `Вид робіт`--']),
-
+            'contentOptions' => ['style' => 'max-width:100px;white-space: normal;'],
         ],
         [
             'attribute' => 'job_unit',

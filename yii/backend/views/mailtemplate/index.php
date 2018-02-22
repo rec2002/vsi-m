@@ -62,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'subject',
                 'vAlign' => 'middle',
+                'contentOptions' => ['style' => 'max-width:200px;white-space: normal;']
             ],
             [
                 'attribute' => 'emails',

@@ -57,6 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'title',
                 'vAlign' => 'middle',
+                'contentOptions' => ['style' => 'max-width:200px;white-space: normal;']
             ],
             [
                 'attribute' => 'image',

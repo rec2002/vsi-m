@@ -39,8 +39,8 @@ class Publish extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'short_desc', 'content', 'active', 'date_publish', 'url_tag'], 'required'],
-            ['url_tag', 'checkMyUniqunessInTag'],
+            [['title', 'short_desc', 'content', 'active', 'date_publish'], 'required'],
+   //         ['url_tag', 'checkMyUniqunessInTag'],
             [['short_desc', 'content'], 'string'],
             [['active'], 'integer'],
             [['id', 'created_at', 'updated_at'], 'safe'],
@@ -80,6 +80,7 @@ class Publish extends \yii\db\ActiveRecord
     }
     public function beforeSave($insert)
     {
+        ini_set('memory_limit', -1);
         if ($file = UploadedFile::getInstance($this, 'file')) {
 
             //-- remove old files

@@ -4,8 +4,8 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
-
-$this->title = 'Додати замовлення';
+use common\models\Seo;
+$seo = new Seo();
 ?>
     <div class="tt-header-margin" style="height: 55px;"></div>
     <div class="tt-bg-grey">

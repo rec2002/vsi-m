@@ -122,3 +122,11 @@ a.desc:after {
 .select2-container--krajee .select2-selection--single {
     padding: 9px 24px 6px 12px!important;
 }
+.skin-blue .main-header .navbar {
+    background-color: #000!important;
+}
+
+.skin-blue .main-header .logo {
+    background-color: #ecf0f5!important;
+}
+

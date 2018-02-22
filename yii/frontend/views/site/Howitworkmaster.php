@@ -4,8 +4,8 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-
-$this->title = 'Як це працює';
+use common\models\Seo;
+$seo = new Seo();
 $this->params['breadcrumbs'][] = $this->title;
 
 

@@ -4,9 +4,9 @@
 
 use yii\helpers\Html;
 use frontend\assets\AppAsset;
+use common\models\Seo;
+$seo = new Seo();
 
-
-$this->title = 'Питання та відповіді';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

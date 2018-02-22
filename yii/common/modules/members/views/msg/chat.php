@@ -4,7 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use common\components\MemberHelper;
-$this->title = 'Повідомлення';
+use common\models\Seo;
+$seo = new Seo();
 
 ?>
     <div class="tt-header-margin"></div>

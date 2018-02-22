@@ -10,7 +10,7 @@ $this->title = 'Aдміністративна частина "Всі майст�
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini"><img src="/admin/img/logo_icon.png" alt="'.Yii::$app->name.'"  style="height:40px;"></span><span class="logo-lg"><img src="/admin/img/logo_icon.png" alt="'.Yii::$app->name.'" style="height:40px;"><img src="/admin/img/logo_text.png" alt=""></span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini"><img src="/img/log1.png" height="51" alt="'.Yii::$app->name.'"></span><span class="logo-lg"><img src="/img/logo.svg" width="206" height="51" alt="'.Yii::$app->name.'"><img src="/img/log1.png" height="51" alt="'.Yii::$app->name.'"></span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 

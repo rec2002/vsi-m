@@ -95,7 +95,7 @@ class DefaultController extends Controller
                      LEFT JOIN (SELECT order_id, type FROM `order_types`  '.((sizeof($filter_join)) ?  'WHERE '.implode(' AND ', $filter_join) : '').' GROUP BY order_id) ot ON o.id = ot.order_id
                      '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' ORDER BY o.status, o.created_at DESC',
             'totalCount' => $count,
-            'pagination' => ['pageSize' => 10, 'pageParam' => 'page', 'pageSizeParam' => 'per-page']
+            'pagination' => ['pageSize' => 10, 'pageParam' => 'page', 'pageSizeParam' => 'limit']
         ]);
 
 
@@ -122,6 +122,11 @@ class DefaultController extends Controller
     {
         $model = Orders::find()->where(['id'=>$id])->one();
         if (!$model) throw new HttpException(404 ,'Замовлення не знайдено, або знаходиться на модерації');
+
+        if (MemberHelper::UrlSlug($model->title)!=Yii::$app->request->get('slug')){
+            header('Location: ' . Url::toRoute(['/orders/default/detail', 'id' => $model->id, 'slug'=>MemberHelper::UrlSlug($model->title)]));
+            exit();
+        }
 
 
 
@@ -261,9 +266,7 @@ class DefaultController extends Controller
             'sql' => $sql,
             'params' => $param,
             'totalCount' => $count,
-            'pagination' => [
-                'pageSize' => 10,
-            ]
+            'pagination' => ['pageSize' => 10, 'pageParam' => 'page', 'pageSizeParam' => 'limit']
         ]);
 
         $status = MemberHelper::GetBudgetRange();
@@ -337,9 +340,7 @@ class DefaultController extends Controller
             'sql' => $sql,
             'params' => $param,
             'totalCount' => $count,
-            'pagination' => [
-                'pageSize' => 10,
-            ]
+            'pagination' => ['pageSize' => 10, 'pageParam' => 'page', 'pageSizeParam' => 'limit']
         ]);
 
         $status = MemberHelper::GetBudgetRange();

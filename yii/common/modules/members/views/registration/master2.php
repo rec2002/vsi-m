@@ -6,11 +6,15 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
+use common\models\Seo;
+$seo = new Seo([
+    'title'=>' Крок 2 - реєстрація нового майстра',
+]);
+$seo->title();
 
-$this->title = 'Крок 2 - Реєстрація майстра';
 ?>
 
-    <div class="tt-header-margin"></div>
+    <div class="tt-header-margin"  style="height: 55px;"></div>
 
     <div class="tt-bg-grey">
         <div class="container">
@@ -27,6 +31,10 @@ $this->title = 'Крок 2 - Реєстрація майстра';
                     </ul>
                     <?php $form = ActiveForm::begin(['id' => 'reg-step-2',
                         'enableAjaxValidation'=>true,
+                        'validateOnBlur'=> false,
+                        'validateOnChange'=> false,
+                        'validateOnType'=> false,
+                        'validateOnSubmit'=> true,
                         'validationUrl'=>Url::toRoute('/members/registration/validation/?id=2'),
                         'action' =>['/members/registration/?id=2',
 

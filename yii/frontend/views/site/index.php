@@ -2,6 +2,9 @@
 
 /* @var $this yii\web\View */
 use yii\helpers\Url;
+use common\models\Seo;
+$seo = new Seo();
+
 $this->title = 'Виконроб -  сервіс з пошуку майстрів щодо ремонту квартир.';
 ?>
 

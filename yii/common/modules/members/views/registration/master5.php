@@ -3,10 +3,13 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-
 use common\components\MemberHelper;
+use common\models\Seo;
+$seo = new Seo([
+    'title'=>' Крок 5 - реєстрація нового майстра',
+]);
+$seo->title();
 
-$this->title = 'Реєстрація майстра - Крок 5';
 ?>
     <div class="tt-header-margin"></div>
     <div class="tt-bg-grey">
@@ -25,6 +28,10 @@ $this->title = 'Реєстрація майстра - Крок 5';
 
                     <?php $form = ActiveForm::begin(['id' => 'reg-step-5',
                         'enableAjaxValidation'=>true,
+                        'validateOnBlur'=> false,
+                        'validateOnChange'=> false,
+                        'validateOnType'=> false,
+                        'validateOnSubmit'=> true,
                         'validationUrl'=>Url::toRoute('/members/registration/validation/?id=5'),
                         'action' =>['/members/registration/?id=5',
                     ]]); ?>

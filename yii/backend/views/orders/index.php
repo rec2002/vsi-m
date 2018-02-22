@@ -200,10 +200,16 @@ Modal::end();
                         return $model->member0->id.' : '.$model->member0->first_name.' '.$model->member0->last_name.' '.$model->member0->surname;
                     };
                 },
-                'label' => 'Коритувач'
+                'label' => 'Коритувач',
+                'contentOptions' => ['style' => 'max-width:100px;white-space: normal;'],
 
             ],
-            'title',
+            [
+                'attribute' => 'title',
+                'format' => 'html',
+                'label' => 'Заголовок',
+                'contentOptions' => ['style' => 'max-width:300px;white-space: normal;'],
+            ],
             [
                 'attribute' => 'status',
                 'format' => 'html',
@@ -215,6 +221,7 @@ Modal::end();
 
                 'vAlign' => 'middle',
                 'filter'=>Html::activeDropDownList($searchModel, 'status', MemberHelper::STATUS, ['class'=>'form-control', 'prompt'=>'-- Вибрати `Статус`--']),
+                'contentOptions' => ['style' => 'max-width:100px;white-space: normal;']
 
             ],
             [

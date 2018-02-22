@@ -3,8 +3,9 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use common\widgets\Alert;
+use common\models\Seo;
+$seo = new Seo();
 
-$this->title = 'Відновити пароль';
 
 ?>
     <div class="tt-header-margin"></div>

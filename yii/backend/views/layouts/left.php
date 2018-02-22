@@ -1,8 +1,4 @@
 <aside class="main-sidebar">
-<?
-
-echo $this->context->route;
-?>
     <section class="sidebar">
         <?= dmstr\widgets\Menu::widget(
             [

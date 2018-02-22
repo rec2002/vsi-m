@@ -4,7 +4,11 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use common\widgets\Alert;
-$this->title = 'Вхід на сайт';
+
+use common\models\Seo;
+$seo = new Seo();
+
+
 ?>
     <div class="tt-header-margin"></div>
     <div class="tt-bg-grey">

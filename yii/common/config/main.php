@@ -12,7 +12,7 @@ return [
         ],
         'turbosms' => [
             'class' => 'avator\turbosms\Turbosms',
-            'sender' => 'VsiMastry',
+            'sender' => 'Vykonrob',
             'login' => 'rec2002',
             'password' => '74002abc',
             'debug' => true,

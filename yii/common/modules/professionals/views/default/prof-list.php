@@ -10,7 +10,6 @@ use backend\models\DictRegions;
 use yii\widgets\Pjax;
 use yii\bootstrap\Nav;
 
-$this->title = 'Каталог майстрів';
 ?>
     <div class="tt-header-margin"></div>
 
@@ -49,9 +48,10 @@ $this->registerCss(".nav > li > a {padding:0}
                         <div class="simple-select">
 <?
 
+
                             $ProfSearch->region = $settings['region'];
 
-                            $region = ArrayHelper::toArray(DictRegions::findBySql('SELECT \'0\' as id, \'Вся Україна\' as name, \'\' as url_tag UNION SELECT id, name, url_tag FROM `dict_regions`  ')->all());
+                  //          $region = ArrayHelper::toArray(DictRegions::findBySql('SELECT \'0\' as id, \'Вся Україна\' as name, \'\' as url_tag UNION SELECT id, name, url_tag FROM `dict_regions`  ')->all());
 
                             echo $form->field($ProfSearch, 'region')->widget(Select2::classname(), [
                                 'data' => ArrayHelper::map($region, 'id', 'name'),
@@ -80,7 +80,7 @@ $this->registerCss(".nav > li > a {padding:0}
 
 <?
 
-    $types = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.url_tag, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 WHERE d.active=1 AND d1.active=1 AND d.types=0 ORDER BY d.priority ASC, d1.priority ASC ")->queryAll();
+//    $types = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.url_tag, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 WHERE d.active=1 AND d1.active=1 AND d.types=0 ORDER BY d.priority ASC, d1.priority ASC ")->queryAll();
     $types_temp = array();
 
     foreach ($types as $key=>$val) {
@@ -210,8 +210,6 @@ $this->registerCss(".nav > li > a {padding:0}
 
                                 <? echo \common\modules\professionals\controllers\DefaultController::ButtonSuggest($val['id']); ?>
 
-                                <?//=\common\widgets\SuggestButton::widget($val['id']) ?>
-                                <!--<a class="button type-1 add-to-informer" data-user-id="<?=$val['id']?>" >Замовити послугу</a>-->
                             </div>
                         </div>
 

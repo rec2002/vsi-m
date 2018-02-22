@@ -21,7 +21,7 @@ use kartik\date\DatePicker;
         'options' => ['enctype'=>'multipart/form-data']]); ?>
     <?= $form->field($model, 'id')->hiddenInput(['value'=> $model->isNewRecord ? '' : $model->id])->label(false); ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true,  'class' => 'form-control name_tag']) ?>
-    <?= $form->field($model, 'url_tag')->textInput(['maxlength' => true,  'class' => 'form-control name_tag_value']) ?>
+    <?//= $form->field($model, 'url_tag')->textInput(['maxlength' => true,  'class' => 'form-control name_tag_value']) ?>
 
     <?= $form->field($model, 'short_desc')->textarea(['rows' => 3]) ?>
 

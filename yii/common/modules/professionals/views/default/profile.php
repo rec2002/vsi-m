@@ -6,14 +6,27 @@ use yii\helpers\Url;
 use frontend\assets\AppAsset;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
+use common\models\Seo;
+$seo = new Seo([
+    'title'=>Html::encode( mb_strimwidth(((!empty($member->company)) ? $member->company : $member->first_name.' '.$member->last_name.' '.$member->surname).
+        (($member->forma!=3) ? ' - '.@MemberHelper::FORMA[$member->forma] : '').
+        (($member->forma==2) ? ' - '.@MemberHelper::BRYGADA[$member->brygada] : '').
+        (($member->forma==3) ? ' - Юридична особа ' : ''), 0, 60, '...')),
+    'desctiption'=>Html::encode( mb_strimwidth($member->about, 0, 150, '...')),
+    'canonical'=> Url::toRoute(['/professionals/default/profile', 'id' => $member->id])
+]);
 
-$this->title = 'Сторінка майстра';
+$seo->title();
+$seo->desctiption();
+$seo->canonical();
 
 
 ?>
     <div class="tt-header-margin"></div>
 
-    <?  $regions = Yii::$app->db->createCommand("SELECT id, name, name_short, url_tag  FROM `dict_regions` ORDER BY `id` ASC")->queryAll();?>
+    <?  $regions = Yii::$app->db->createCommand("SELECT id, name, name_short, url_tag  FROM `dict_regions` ORDER BY `id` ASC")->queryAll();
+        foreach ($regions as $key=>$value) $regions[$key]['url_tag'] = MemberHelper::UrlSlug($value['name_short']);
+    ?>
 
     <!-- TT-HEADING -->
     <div class="tt-heading background-block" style="background-image:url(/img/bg/bg_3.jpg);">

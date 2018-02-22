@@ -4,8 +4,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use common\widgets\Alert;
-
-$this->title = 'Сповіщення користувача  - Кабінет користувача';
+use common\models\Seo;
+$seo = new Seo();
 
 ?>
 

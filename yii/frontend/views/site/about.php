@@ -3,8 +3,10 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use common\models\Seo;
+$seo = new Seo();
 
-$this->title = 'Про нас';
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

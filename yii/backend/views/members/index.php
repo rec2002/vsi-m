@@ -156,7 +156,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['class' => 'kartik-sheet-style'],
                 'expandOneOnly' => true
             ],
-            'email:email',
+
+            [
+                'attribute' => 'email',
+                'format' => 'email',
+                'contentOptions' => ['style' => 'max-width:150px;white-space: normal;']
+            ],
             [
                 'attribute' => 'member',
                 'format' => 'html',
@@ -168,7 +173,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->id.' : '.$model->first_name.' '.$model->last_name.' '.$model->surname;
                     };
                 },
-                'label' => 'Коритувач'
+                'label' => 'Коритувач',
+                'contentOptions' => ['style' => 'max-width:150px;white-space: normal;']
 
             ],
 
@@ -199,7 +205,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                 },
-                'label' => 'Ідентифікований',
+                'label' => 'Ідент-ний',
                 'filter'=>false
             ],
             [

@@ -1,6 +1,7 @@
 <?
 
 use yii\helpers\Url;
+use common\components\MemberHelper;
 
 $j=$i=1; $arr = array();
 
@@ -32,7 +33,7 @@ if (sizeof($dataTotal)) foreach ($dataProvider as $val){
                         <ul class="simple-list city">
                             <? if (sizeof($arr[1])) foreach ($arr[1] as $val) { ?>
                                 <li>
-                                    <a href="<?= Url::to(['professionals/', 'region' => $val['url_tag']]) ?>"><?= $val['name'] ?></a>
+                                    <a href="<?= Url::to(['professionals/', 'region' => MemberHelper::UrlSlug($val['name'])]) ?>"><?= $val['name'] ?></a>
                                 </li>
                             <? } ?>
                         </ul>
@@ -42,7 +43,7 @@ if (sizeof($dataTotal)) foreach ($dataProvider as $val){
                         <ul class="simple-list city">
                             <? if (sizeof($arr[2])) foreach ($arr[2] as $val) { ?>
                                 <li>
-                                    <a href="<?= Url::to(['professionals/', 'region' => $val['url_tag']]) ?>"><?= $val['name'] ?></a>
+                                    <a href="<?= Url::to(['professionals/', 'region' => MemberHelper::UrlSlug($val['name'])]) ?>"><?= $val['name'] ?></a>
                                 </li>
                             <? } ?>
                         </ul>
@@ -52,7 +53,7 @@ if (sizeof($dataTotal)) foreach ($dataProvider as $val){
                         <ul class="simple-list city">
                             <? if (sizeof($arr[3])) foreach ($arr[3] as $val) { ?>
                                 <li>
-                                    <a href="<?= Url::to(['professionals/', 'region' => $val['url_tag']]) ?>"><?= $val['name'] ?></a>
+                                    <a href="<?= Url::to(['professionals/', 'region' => MemberHelper::UrlSlug($val['name'])]) ?>"><?= $val['name'] ?></a>
                                 </li>
                             <? } ?>
                         </ul>
@@ -62,7 +63,7 @@ if (sizeof($dataTotal)) foreach ($dataProvider as $val){
                         <ul class="simple-list city">
                             <? if (sizeof($arr[4])) foreach ($arr[4] as $val) { ?>
                                 <li>
-                                    <a href="<?= Url::to(['professionals/', 'region' => $val['url_tag']]) ?>"><?= $val['name'] ?></a>
+                                    <a href="<?= Url::to(['professionals/', 'region' => MemberHelper::UrlSlug($val['name'])]) ?>"><?= $val['name'] ?></a>
                                 </li>
                             <? } ?>
                         </ul>
@@ -72,7 +73,7 @@ if (sizeof($dataTotal)) foreach ($dataProvider as $val){
                         <ul class="simple-list city">
                             <? if (sizeof($arr[5])) foreach ($arr[5] as $val) { ?>
                                 <li>
-                                    <a href="<?= Url::to(['professionals/', 'region' => $val['url_tag']]) ?>"><?= $val['name'] ?></a>
+                                    <a href="<?= Url::to(['professionals/', 'region' => MemberHelper::UrlSlug($val['name'])]) ?>"><?= $val['name'] ?></a>
                                 </li>
                             <? } ?>
 
@@ -83,7 +84,7 @@ if (sizeof($dataTotal)) foreach ($dataProvider as $val){
                         <ul class="simple-list city">
                             <? if (@sizeof($arr[6])) foreach ($arr[6] as $val) { ?>
                                 <li>
-                                    <a href="<?= Url::to(['professionals/', 'region' => $val['url_tag']]) ?>"><?= $val['name'] ?></a>
+                                    <a href="<?= Url::to(['professionals/', 'region' => MemberHelper::UrlSlug($val['name'])]) ?>"><?= $val['name'] ?></a>
                                 </li>
                             <? } ?>
                         </ul>

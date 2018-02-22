@@ -3,8 +3,9 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use common\models\Seo;
+$seo = new Seo();
 
-$this->title = 'Всі категорії майстрів';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

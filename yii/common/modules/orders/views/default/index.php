@@ -6,9 +6,9 @@ use yii\helpers\Url;
 use frontend\assets\AppAsset;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
+use common\models\Seo;
+$seo = new Seo();
 
-
-$this->title = 'Список замовлень';
 Url::remember([strstr(Url::current(), '&_pjax=', true)], 'orders');
 
 ?>
@@ -148,7 +148,7 @@ Url::remember([strstr(Url::current(), '&_pjax=', true)], 'orders');
                                         <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==false) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders'])?>">Всі <span class="count-large">(<?=$count_total['total']?>)</span></a></div>
 
 <? foreach (MemberHelper::STATUS as $key=>$val) if ($key>1) { ?>
-                                        <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==$key) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders?status='.$key])?>"><?=$val?> <span class="count-large">(<?=$count_total['status_'.$key]?>)</span></a></div>
+                                        <div class="tab-menu redirect tab-fadeout <?=(((Yii::$app->getRequest()->getQueryParam('status'))==$key) ? 'active' : '' )?>"><a href="<?=Url::to(['/orders/default/myorders', 'status'=>$key])?>"><?=$val?> <span class="count-large">(<?=$count_total['status_'.$key]?>)</span></a></div>
 <? } ?>
 
 

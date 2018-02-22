@@ -2,6 +2,17 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\components\MemberHelper;
+use common\models\Seo;
+$seo = new Seo([
+        'title'=>$publish_detail[0]->attributes['title'],
+        'desctiption'=>$publish_detail[0]->attributes['short_desc'],
+        'canonical'=> Url::toRoute(['site/publish', 'id' => $publish_detail[0]->attributes['id'], 'slug'=>MemberHelper::UrlSlug($publish_detail[0]->attributes['title'])])
+]);
+
+$seo->title();
+$seo->desctiption();
+$seo->canonical();
 ?>
     <div class="tt-header-margin"></div>
     <!-- TT-BANNER TYPE-6 -->
@@ -32,7 +43,7 @@ use yii\helpers\Url;
                         <?=$publish_detail[0]->attributes['content']; ?>
                     </div>
                     <div class="empty-space marg-lg-b35"></div>
-                    <div class="tt-footer-social style-3">
+                    <!--<div class="tt-footer-social style-3">
                         <div class="tt-footer-social-label">Поділитись:</div>
                         <ul class="tt-social">
                             <li>
@@ -48,7 +59,7 @@ use yii\helpers\Url;
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <div class="empty-space marg-sm-b40 marg-lg-b80"></div>
@@ -61,9 +72,6 @@ use yii\helpers\Url;
                     'dataProvider' => $publish_last,
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render('publishitem',['model' => $model]);
-
-                        // or just do some echo
-                        // return $model->title . ' posted by ' . $model->author;
                     },
                     'layout' => "\n{items}\n",
                 ])

@@ -14,6 +14,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\FaqForm;
+use common\components\MemberHelper;
+use yii\helpers\Url;
 
 /**
  * Site controller
@@ -136,11 +138,13 @@ class SiteController extends Controller
      */
     public function actionPublish($id=0)
     {
-
-
-
         if ($id>0) {
             $publish = new ActiveDataProvider(['query' => \backend\models\Publish::find()->where(['id' => $id, 'active' => 1])]);
+            $model = $publish->getModels();
+            if (MemberHelper::UrlSlug($model[0]->attributes['title'])!=Yii::$app->request->get('slug')){
+                header('Location: ' . Url::toRoute(['site/publish', 'id' => $model[0]->attributes['id'], 'slug'=>MemberHelper::UrlSlug($model[0]->attributes['title'])]));
+                exit();
+            }
 
             $publish_last = new ActiveDataProvider(['query' => \backend\models\Publish::find()->where(['active' => 1])->andWhere(['!=', 'id', $id]),
                 'pagination' => ['pageSize' => 3],
@@ -152,12 +156,11 @@ class SiteController extends Controller
                 ]
             ]);
 
-
-            return $this->render('publish_detail', ['publish_detail'=>$publish->getModels(), 'publish_last'=>$publish_last]);
+            return $this->render('publish_detail', ['publish_detail'=>$model, 'publish_last'=>$publish_last]);
 
         }   else  {
             $publish = new ActiveDataProvider(['query' => \backend\models\Publish::find()->where(['active' => 1]),
-                'pagination' => ['pageSize' => 9, 'pageParam' => 'стр', 'pageSizeParam' => 'лім'],
+                'pagination' => ['pageSize' => 9, 'pageParam' => 'page', 'pageSizeParam' => 'limit'],
                 'sort' => [
                     'defaultOrder' => [
                         'date_publish' => SORT_DESC,
@@ -168,8 +171,6 @@ class SiteController extends Controller
 
             return $this->render('publish', ['publish_items'=>$publish]);
         }
-
-
     }
 
     /**

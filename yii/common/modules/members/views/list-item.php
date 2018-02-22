@@ -8,7 +8,7 @@ use common\components\MemberHelper;
 <div class="tt-task">
     <div class="tt-task-top clearfix">
         <div class="tt-task-info">
-            <a class="tt-task-proposed tt-icon-hover" href="<?=Url::to([$url, 'id'=>$model['id']])?>">
+            <a class="tt-task-proposed tt-icon-hover" href="<?=Url::to([$url, 'id'=>$model['id'], 'slug'=>MemberHelper::UrlSlug($model['title'])])?>">
                  <span class="tt-icon-entry">
                       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAP1BMVEUAAAAxMTEyMjIzMzMxMTEtLS0zMzMyMjItLS0xMTExMTExMTExMTExMTEvLy8xMTEyMjIyMjIyMjIyMjIzMzMbMuNVAAAAFHRSTlMARENAPAbELw/lx1VPNA71w5FnGgwCepEAAABeSURBVBjTrY9LDoAwCAXra9Ha1vrj/mcVjBDj2gkbJsOCQCk6ZxBK830fJxEcnEhiRMzMvHSgx6CGtQG0oIpjNZFlVLKd5AFCuoVjRQKGh/QVf52UBimMusn7eJlIF5lqBFlg3cLVAAAAAElFTkSuQmCC" alt="">
                       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAM1BMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAW1g65AAAAEHRSTlMAQ0E8Bg7EL+XHVU80kWcaBaFkNAAAAFRJREFUGNOty8kNwCAMRFFvkABZpv9qg5FiuQD+zU9jMpXopVkbcd/1mACKxFxAJ4CrMBchF/iG2RfW+cEPvnBEepnpgtwC5UgTbH1pg1O9kmkGsQ8IpwNo1189CgAAAABJRU5ErkJggg==" alt="">
@@ -17,10 +17,10 @@ use common\components\MemberHelper;
             </a>
             <div class="tt-task-status status<?=$model['status']?>"><?=MemberHelper::STATUS[$model['status']]?></div>
         </div>
-        <div class="tt-task-title"><a class="h5" href="<?=Url::to([$url, 'id'=>$model['id']])?>"><?= Html::encode($model['title']); ?></a></div>
+        <div class="tt-task-title"><a class="h5" href="<?=Url::to([$url, 'id'=>$model['id'], 'slug'=>MemberHelper::UrlSlug($model['title'])])?>"><?= Html::encode($model['title']); ?></a></div>
     </div>
     <div class="tt-task-txt simple-text size-3 blue-links">
-        <p><?= Html::encode( mb_strimwidth($model['descriptions'], 0, 300, '...')); ?> <a href="<?=Url::to([$url, 'id'=>$model['id']])?>">Дізнатись більше</a></p>
+        <p><?= Html::encode( mb_strimwidth($model['descriptions'], 0, 300, '...')); ?> <a href="<?=Url::to([$url, 'id'=>$model['id'], 'slug'=>MemberHelper::UrlSlug($model['title'])])?>">Дізнатись більше</a></p>
     </div>
     <div class="tt-task-bottom">
         <div class="tt-task-table">

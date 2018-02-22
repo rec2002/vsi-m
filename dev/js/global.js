@@ -1088,9 +1088,11 @@ console.log(upload.width());
 
     $(document).on('change', 'select#profsearch-region', function(e){
         var $t = $(this);
+
+
         $.each(region, function( index, value ) {
         	if (value['id']==$t.val())  {
-				var url = '?region='+value['url_tag']+($t.data('cat')=='' ? '' : '&cat='+$t.data('cat'))
+				var url = '?'+((value['url_tag']=='' || value['url_tag']=='undefined') ? '' : 'region='+value['url_tag']) +(($t.data('cat')=='' || $t.data('cat')=='undefined')? '' : '&cat='+$t.data('cat'))
                 $('a#hidden-region-regirect').attr('href', url).click();
 				return;
 			}

@@ -7,8 +7,8 @@ use frontend\assets\AppAsset;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
 use common\modules\members\models\MemberResponse;
-
-$this->title = 'Кабінет користувача';
+use common\models\Seo;
+$seo = new Seo();
 
 ?>
     <div class="tt-header-margin"  style="height: 55px;"></div>
@@ -459,7 +459,10 @@ $form_f = ActiveForm::begin(['options' => ['class'=>'response_feedback'], 'enabl
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAATlBMVEUAAAD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igD/igAP+0nkAAAAGnRSTlMABmCnjjSZQMMWzrevK8ef/OHXyIVwW1YdSoUZvnoAAABYSURBVAjXTclXDoAgEADRpa0gvYr3v6iJgQ3z9zJAmfbCEdrACaw79GQWQxRS2iUhZ3aijC2jObp5SOnr1L2Ep2CkZn+t2Z0gga/e57IFT6o2KiAiV4z0AW2MA6Ezq1d1AAAAAElFTkSuQmCC" alt="">
                             </a></h5>
                         <ul class="simple-list size-2 profile">
-<?  $regions = Yii::$app->db->createCommand("SELECT id, name, name_short, url_tag  FROM `dict_regions` ORDER BY `id` ASC")->queryAll();?>
+<?  $regions = Yii::$app->db->createCommand("SELECT id, name, name_short, url_tag  FROM `dict_regions` ORDER BY `id` ASC")->queryAll();
+    foreach ($regions as $key=>$value) $regions[$key]['url_tag'] = MemberHelper::UrlSlug($value['name_short']);
+
+?>
 <? if (!is_array($member->regions)) $member->regions = array(); foreach ($regions as $val) if (in_array($val['id'], $member->regions)) { ?><li><a href="<?=Url::to(['/professionals',  'region'=>$val['url_tag']])?>"><?=$val['name_short']?></a></li><? } ?>
                         </ul>
                     </div>

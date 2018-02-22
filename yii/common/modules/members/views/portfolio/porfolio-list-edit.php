@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use frontend\assets\AppAsset;
-$this->title = 'Виконані проекти  - Кабінет користувача';
+use common\models\Seo;
+$seo = new Seo();
 
 ?>
     <div class="tt-header-margin"></div>

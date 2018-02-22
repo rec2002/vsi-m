@@ -84,17 +84,59 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                /*'каталог-майстрів/<region:\w+>/<cat:\w+>' =>'/members/professionals/',
-                 'каталог-майстрів/' =>'/members/professionals',*/
+
+                'login'=>'members/login',
+                'login/reset'=>'members/login/reset',
+                'login/resetpassword'=>'/members/login/resetpassword',
+
+                'new-order'=>'/orders/default/addorder',
 
 
+                'orders-suggested/<page:\d+>/<limit:\d+>/status/<status:\d+>'=>'orders/default/suggested',
+                'orders-suggested/<page:\d+>/<limit:\d+>'=>'orders/default/suggested',
+                'orders-suggested/status/<status:\d+>'=>'orders/default/suggested',
+                'orders-suggested'=>'orders/default/suggested',
 
-                /*'кабінет/виконані-проекти' =>'/members/portfolio/list',*/
-                /*'кабінет/мої-замовлення' =>'members/customer/list',*/
-                'orders'=>'orders/default/index',
+                'myorders/<page:\d+>/<limit:\d+>/status/<status:\d+>'=>'orders/default/myorders',
+                'myorders/<page:\d+>/<limit:\d+>'=>'orders/default/myorders',
+                'myorders/status/<status:\d+>'=>'orders/default/myorders',
+                'myorders'=>'orders/default/myorders',
+
+                'order/<id:\d+>/<slug>'=>'orders/default/detail',
+                'orders/list/<page:\d+>/<limit:\d+>'=>'orders/default/index',
+                'orders/list'=>'orders/default/index',
+
                 'blog/<id:\d+>/<slug>'=>'site/publish',
-                'blog'=>'site/publish',
+                'blog/list/<page:\d+>/<limit:\d+>'=>'site/publish',
+                'blog/list'=>'site/publish',
+
+
+                'account/msg/filter/<filter:\w+>'=>'members/msg',
+                'account/msg'=>'members/msg',
+                'account/edit'=>'members/member',
+                'account/prices'=>'members/member/types',
+                'account/projects'=>'members/portfolio/list',
+                'account/change-pwd'=>'members/member/resetpwd',
+                'account/notices'=>'members/member/noticesettings',
+                'account/billing'=>'members/member/billing',
+                'account/billing-history'=>'members/member/billinghistory',
+                'account/payment'=>'members/member/billingpayment',
+                'account/profile'=>'members/member/profile',
+                'account/edit'=>'members/customer',
+
+
+                'create-order'=>'members/customregistration/create',
+                'registration/<id:\d+>'=>'members/registration',
+                'registration'=>'members/registration',
+#                'professionals/region/<region:[\wd-]+>/cat/<cat:[\wd-]+>'=>'professionals',
+#                'professionals/region/<region:[\wd-]+>'=>'professionals',
+#                'professionals/cat/<cat:[\wd-]+>'=>'professionals',
+                'professionals/profile/<id:\d+>'=>'/professionals/default/profile',
+                'professionals/<page:\d+>/<limit:\d+>'=>'professionals/default/index',
+                'professionals'=>'professionals/default/index',
+
                 'category'=>'site/category',
+
                 'howitwork'=>'site/howitwork',
                 'howitworkmaster'=>'site/howitworkmaster',
                 'privacy'=>'site/privacy',

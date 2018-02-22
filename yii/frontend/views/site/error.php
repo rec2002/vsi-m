@@ -6,7 +6,8 @@
 /* @var $exception Exception */
 
 use yii\helpers\Html;
-
+use common\models\Seo;
+$seo = new Seo();
 $this->title = $name;
 ?>
 

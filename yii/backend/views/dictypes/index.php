@@ -61,11 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'name',
                 'vAlign' => 'middle',
+                'contentOptions' => ['style' => 'max-width:150px;white-space: normal;']
             ],
             [
                 'attribute' => 'parent',
                 'value'=>'parentCat.name',
                 'vAlign' => 'middle',
+                'contentOptions' => ['style' => 'max-width:100px;white-space: normal;'],
                 'filter'=>Html::activeDropDownList($searchModel, 'parent', ArrayHelper::map(Dictcategory::findBySql('SELECT id, name FROM dict_category WHERE active=1 AND parent=0 AND types=0 ORDER BY priority ASC ')->all(), 'id', 'name'), ['class'=>'form-control', 'prompt'=>'--Вибрати категорію--']),
 
             ],

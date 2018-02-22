@@ -4,10 +4,9 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\bootstrap\Button;
-
 use common\components\MemberHelper;
-
-$this->title = 'Редагування послуг та цін ';
+use common\models\Seo;
+$seo = new Seo();
 ?>
 
     <div class="tt-header-margin"></div>

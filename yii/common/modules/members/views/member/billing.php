@@ -6,8 +6,8 @@ use yii\helpers\Url;
 use common\widgets\Alert;
 use kartik\select2\Select2;
 use common\components\MemberHelper;
-
-$this->title = 'Доступ до замовлень  - Кабінет користувача';
+use common\models\Seo;
+$seo = new Seo();
 
 ?>
 

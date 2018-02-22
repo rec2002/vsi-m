@@ -11,9 +11,12 @@ use common\modules\members\models\MemberTypes;
 use common\modules\members\models\MemberPrices;
 use common\modules\members\models\Portfolio;
 use common\components\MemberHelper;
+use backend\models\DictRegions;
+
 use yii\data\SqlDataProvider;
 use yii\helpers\ArrayHelper;
 use \yii\web\HttpException;
+use common\models\Seo;
 
 /**
  * Default controller for the `Professionals` module
@@ -23,39 +26,65 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
+
+        $title = ' Каталог майстрів ';
+        $canonical = Url::to(['/professionals/default/index']);
+
+        $cat = $region = array();
+
+        $regions = ArrayHelper::toArray(DictRegions::findBySql('SELECT \'0\' as id, \'Вся Україна\' as name, \'\' as url_tag, \'\' as name_short UNION SELECT id, name, url_tag, name_short FROM `dict_regions`  ')->all());
+        foreach ($regions as $key=>$value) $regions[$key]['url_tag'] = MemberHelper::UrlSlug($value['name_short']);
+
+        $types = Yii::$app->db->createCommand("SELECT d1.id, d1.name, d.name as parent_name, d1.url_tag, d1.parent FROM dict_category d LEFT JOIN dict_category d1 ON d.id=d1.parent AND d1.types=1 WHERE d.active=1 AND d1.active=1 AND d.types=0 ORDER BY d.priority ASC, d1.priority ASC ")->queryAll();
+        foreach ($types as $key=>$value) $types[$key]['url_tag'] = MemberHelper::UrlSlug($value['name']);
+
         $settings = array('title'=>'', 'cat'=>'0', 'region'=>0);
         $breadcrumb[] =  ['label' => 'Головна сторінка', 'url' => ['/']];
         $breadcrumb[] =  ['label' => 'Каталог майстрів', 'url' => ['/professionals']];
 
         $param = [];
         if (!empty(Yii::$app->request->get('region'))) {
-            $region =  Yii::$app->db->createCommand('SELECT id, name, url_tag FROM `dict_regions` WHERE `url_tag`="'.Yii::$app->request->get('region').'" ')->queryOne();
-            if ($region['id']>0) {
+            foreach ($regions as $value) if (Yii::$app->request->get('region')==$value['url_tag']) $region = $value;
+
+//            $region =  Yii::$app->db->createCommand('SELECT id, name, url_tag FROM `dict_regions` WHERE `url_tag`="'.Yii::$app->request->get('region').'" ')->queryOne();
+            if (sizeof($region)) {
                 $settings['region'] = $region['id'];
                 $settings['title'] = $region['name'];
                 $param[':region'] = $region['id'];
                 $breadcrumb[] =  ['label' => $region['name'], 'url' => Url::to(['/professionals/',  'region'=>$region['url_tag']])];
+
+                $title = ' Каталог майстрів / '.$region['name'];
+                $canonical = Url::to(['/professionals/default/index', 'region'=>$region['url_tag']]);
             }
         }
 
         if (!empty(Yii::$app->request->get('cat'))) {
-            $cat =  Yii::$app->db->createCommand('SELECT id, name, url_tag FROM `dict_category` WHERE `url_tag`="'.Yii::$app->request->get('cat').'" AND active=1  AND types=1 ')->queryOne();
 
-            if ($cat['id']>0) {
+            foreach ($types as $value) if (Yii::$app->request->get('cat')==$value['url_tag']) $cat = $value;
+            //$cat =  Yii::$app->db->createCommand('SELECT id, name, url_tag FROM `dict_category` WHERE `url_tag`="'.Yii::$app->request->get('cat').'" AND active=1  AND types=1 ')->queryOne();
+
+            if (sizeof($cat)) {
                 $param[':type'] = $cat['id'];
                 $settings['title'] = $cat['name'];
                 $settings['cat'] = $cat['id'];
                 $breadcrumb[] =  ['label' => $cat['name'], 'url' => Url::to(['/professionals/',  'cat'=>$cat['url_tag']])];
+
+                $title = $cat['name'].' - каталог майстрів ';
+                $canonical = Url::to(['/professionals/default/index',  'cat'=>$cat['url_tag']]);
             }
         }
 
 
-/*
-        if (@$cat['id']>0 && @$region['id']>0) {
-            $settings['title'] =  $cat['name'].' - '.$region['name'];
-            $breadcrumb[] =  ['label' => $cat['name'].' - '.$region['name'], 'url' => Url::to(['/professionals/',  'cat'=>$cat['url_tag'] ,  'region'=>$region['url_tag']])];
+
+        if (sizeof($cat) && sizeof($region)) {
+            $title = $cat['name'].' - каталог майстрів / '.$region['name'];
+            $canonical = Url::to(['/professionals/default/index',  'region'=>$region['url_tag'], 'cat'=>$cat['url_tag']]);
         }
-*/
+
+        $seo = new Seo(['title'=>$title, 'canonical'=>$canonical]);
+        $seo->title();
+        $seo->canonical();
+
 
         $filter = array();
         if (sizeof($param)) foreach($param as $key=>$val){
@@ -94,7 +123,7 @@ class DefaultController extends Controller
                       '.((sizeof($filter)) ?  'WHERE '.implode(' AND ', $filter) : '').' GROUP BY m.id ORDER BY m.online DESC, m.created_at DESC',
             'params' => $param,
             'totalCount' => $count,
-            'pagination' => ['pageSize' => 10, 'pageParam' => 'стр', 'pageSizeParam' => 'лім'],
+            'pagination' => ['pageSize' => 10, 'pageParam' => 'page', 'pageSizeParam' => 'limit']
         ]);
 
         $arr = array();
@@ -112,7 +141,7 @@ class DefaultController extends Controller
         }
         $provider->models =  $arr;
         $ProfSearch = new ProfSearch();
-        return $this->render('prof-list', ['provider'=>$provider->getModels(), 'pagination'=>$provider->pagination, 'ProfSearch'=>$ProfSearch, 'breadcrumb'=>$breadcrumb, 'settings'=>$settings]);
+        return $this->render('prof-list', ['provider'=>$provider->getModels(), 'pagination'=>$provider->pagination, 'ProfSearch'=>$ProfSearch, 'breadcrumb'=>$breadcrumb, 'settings'=>$settings, 'region'=>$regions, 'types'=>$types]);
     }
 
 

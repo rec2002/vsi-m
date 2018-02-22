@@ -7,10 +7,10 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\widgets\Alert;
-
-$this->title = 'Контакти';
+use common\models\Seo;
+$seo = new Seo();
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerMetaTag(['name' => 'description', 'content' => 'Description 1',], 'description');
+
 
 
 ?>
